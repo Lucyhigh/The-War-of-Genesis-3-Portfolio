@@ -1,0 +1,361 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="GameNode.cpp">
+      <Filter>API\GameNode</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyManager.cpp">
+      <Filter>API\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame.cpp">
+      <Filter>MainGame</Filter>
+    </ClCompile>
+    <ClCompile Include="WinMain.cpp">
+      <Filter>API</Filter>
+    </ClCompile>
+    <ClCompile Include="Stdafx.cpp">
+      <Filter>API\Stdafx</Filter>
+    </ClCompile>
+    <ClCompile Include="Image.cpp">
+      <Filter>API\Image</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageManager.cpp">
+      <Filter>API\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="FontManager.cpp">
+      <Filter>API\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="TempSoundManager.cpp">
+      <Filter>API\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="TempSoundTest.cpp">
+      <Filter>API\ExamClass</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>API\ExamClass\ShootingGame\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Rocket.cpp">
+      <Filter>API\ExamClass\ShootingGame\Rocket</Filter>
+    </ClCompile>
+    <ClCompile Include="Flame.cpp">
+      <Filter>API\ExamClass\ShootingGame\Rocket</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils.cpp">
+      <Filter>API\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageClass.cpp">
+      <Filter>API\ExamClass</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullets.cpp">
+      <Filter>API\ExamClass\ShootingGame\Rocket</Filter>
+    </ClCompile>
+    <ClCompile Include="TileMap.cpp">
+      <Filter>API\ExamClass\ShootingGame</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyManager.cpp">
+      <Filter>API\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Minion.cpp">
+      <Filter>API\ExamClass\ShootingGame\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>API\Timer</Filter>
+    </ClCompile>
+    <ClCompile Include="ProgressBar.cpp">
+      <Filter>API\ProgressBar</Filter>
+    </ClCompile>
+    <ClCompile Include="TimeManager.cpp">
+      <Filter>API\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="AniTestScene.cpp">
+      <Filter>Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation.cpp">
+      <Filter>Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="ShootingEffect.cpp">
+      <Filter>API\ExamClass\ShootingGame\ShootingEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="collision.cpp">
+      <Filter>API\ExamClass\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="StartScene.cpp">
+      <Filter>API\ExamClass\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>API\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="PixelScene.cpp">
+      <Filter>API\Pixel</Filter>
+    </ClCompile>
+    <ClCompile Include="PixelCollision.cpp">
+      <Filter>API\Pixel</Filter>
+    </ClCompile>
+    <ClCompile Include="TextDataManager.cpp">
+      <Filter>API\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="SecondScene.cpp">
+      <Filter>API\ExamClass\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="ThirdScene.cpp">
+      <Filter>API\ExamClass\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="FirstScene.cpp">
+      <Filter>API\ExamClass\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="ShootingScene.cpp">
+      <Filter>API\ExamClass\ShootingGame</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>API\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Inventory.cpp">
+      <Filter>API\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>Store</Filter>
+    </ClCompile>
+    <ClCompile Include="Store.cpp">
+      <Filter>Store</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="SoundManager.cpp">
+      <Filter>API\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Text.cpp" />
+    <ClCompile Include="SoundScene.cpp">
+      <Filter>API\ExamClass\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="JsonSaveLoader.cpp">
+      <Filter>JSON\schema</Filter>
+    </ClCompile>
+    <ClCompile Include="Quest.cpp" />
+    <ClCompile Include="QuestSample.cpp" />
+    <ClCompile Include="JsonDataScene.cpp">
+      <Filter>API\ExamClass\Json</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GameNode.h">
+      <Filter>API\GameNode</Filter>
+    </ClInclude>
+    <ClInclude Include="CommonMacroFunction.h">
+      <Filter>API\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="RandomFunction.h">
+      <Filter>API\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="SingletonBase.h">
+      <Filter>API\DesignPattern</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyManager.h">
+      <Filter>API\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame.h">
+      <Filter>MainGame</Filter>
+    </ClInclude>
+    <ClInclude Include="Stdafx.h">
+      <Filter>API\Stdafx</Filter>
+    </ClInclude>
+    <ClInclude Include="Image.h">
+      <Filter>API\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageManager.h">
+      <Filter>API\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="FontManager.h">
+      <Filter>API\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="TempSoundManager.h">
+      <Filter>API\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="TempSoundTest.h">
+      <Filter>API\ExamClass</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>API\ExamClass\ShootingGame\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Rocket.h">
+      <Filter>API\ExamClass\ShootingGame\Rocket</Filter>
+    </ClInclude>
+    <ClInclude Include="Flame.h">
+      <Filter>API\ExamClass\ShootingGame\Rocket</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils.h">
+      <Filter>API\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageClass.h">
+      <Filter>API\ExamClass</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullets.h">
+      <Filter>API\ExamClass\ShootingGame\Rocket</Filter>
+    </ClInclude>
+    <ClInclude Include="TileMap.h">
+      <Filter>API\ExamClass\ShootingGame</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyManager.h">
+      <Filter>API\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Minion.h">
+      <Filter>API\ExamClass\ShootingGame\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>API\Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="ProgressBar.h">
+      <Filter>API\ProgressBar</Filter>
+    </ClInclude>
+    <ClInclude Include="TimeManager.h">
+      <Filter>API\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="AniTestScene.h">
+      <Filter>Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="ShootingEffect.h">
+      <Filter>API\ExamClass\ShootingGame\ShootingEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="StartScene.h">
+      <Filter>API\ExamClass\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>API\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="PixelCollision.h">
+      <Filter>API\Pixel</Filter>
+    </ClInclude>
+    <ClInclude Include="PixelScene.h">
+      <Filter>API\Pixel</Filter>
+    </ClInclude>
+    <ClInclude Include="TextDataManager.h">
+      <Filter>API\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="SecondScene.h">
+      <Filter>API\ExamClass\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdScene.h">
+      <Filter>API\ExamClass\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="FirstScene.h">
+      <Filter>API\ExamClass\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="ShootingScene.h">
+      <Filter>API\ExamClass\ShootingGame</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>API\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Inventory.h">
+      <Filter>API\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>Store</Filter>
+    </ClInclude>
+    <ClInclude Include="Store.h">
+      <Filter>Store</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h" />
+    <ClInclude Include="SoundManager.h">
+      <Filter>API\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Text.h" />
+    <ClInclude Include="SoundScene.h">
+      <Filter>API\ExamClass\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="JsonSaveLoader.h" />
+    <ClInclude Include="Quest.h" />
+    <ClInclude Include="QuestSample.h" />
+    <ClInclude Include="JsonDataScene.h">
+      <Filter>API\ExamClass\Json</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="API">
+      <UniqueIdentifier>{c4cbdbdf-a3f5-443c-a292-314b607bc0e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="API\GameNode">
+      <UniqueIdentifier>{67442a1c-806f-41ef-813c-0de14b734860}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="API\Utility">
+      <UniqueIdentifier>{41cc903a-8127-4ab3-aefa-95f747b36e7c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="API\DesignPattern">
+      <UniqueIdentifier>{ddfcb838-f3d6-435b-bb55-d794a3fddc43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="API\Manager">
+      <UniqueIdentifier>{fd7088a5-c60e-496b-8bb8-16893861a2aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame">
+      <UniqueIdentifier>{3659e94e-c15f-4f2a-a005-dd8f48d76e5b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="API\Stdafx">
+      <UniqueIdentifier>{86133b6d-3090-4dfd-9207-7bd41a85c82f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="API\Image">
+      <UniqueIdentifier>{8d922d20-6355-46b1-8bdb-4e7951c55ed6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="API\ExamClass">
+      <UniqueIdentifier>{ce243ada-8677-40d8-b61e-44530ea6d6b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="API\ExamClass\ShootingGame">
+      <UniqueIdentifier>{408bc134-7ea0-4bb3-bf1b-1933646ca1c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="API\ExamClass\ShootingGame\Rocket">
+      <UniqueIdentifier>{cb63210e-b68e-4152-a9b8-1f543b85cefb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="API\ExamClass\ShootingGame\Enemy">
+      <UniqueIdentifier>{e41ec2b4-efce-4d15-b917-39c0635f522b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="API\Timer">
+      <UniqueIdentifier>{b94c673f-b8d9-40cd-bbbb-5d108b009938}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="API\ProgressBar">
+      <UniqueIdentifier>{905cfd2d-6e67-4e37-945e-a6de492133cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Animation">
+      <UniqueIdentifier>{3248fe14-aa4d-4119-9af6-8a6f638706b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="API\ExamClass\ShootingGame\ShootingEffect">
+      <UniqueIdentifier>{e21da2b0-3546-453c-9be7-502611ab946f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="API\Pixel">
+      <UniqueIdentifier>{bb1b2208-3ac4-410e-92d3-4e03e2195b4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="API\ExamClass\Scene">
+      <UniqueIdentifier>{5d595346-4a13-4989-8775-c38e4ab68e16}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Store">
+      <UniqueIdentifier>{da616956-659c-4cc2-9f3c-1886e6c9f3f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="API\Player">
+      <UniqueIdentifier>{5cb9168e-f640-42a5-8957-b0b3f38ef300}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JSON">
+      <UniqueIdentifier>{cb8c2fbf-f61c-4fcf-ad8e-ed1897b11b40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JSON\schema">
+      <UniqueIdentifier>{ae0371a8-e154-46e3-af96-dc578d0b2e4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="API\ExamClass\Json">
+      <UniqueIdentifier>{ac22e39c-2cbb-4337-bc9c-95dd7bcc5f4a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\MatricFunction.txt">
+      <Filter>API\Utility</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="jItem.json">
+      <Filter>JSON\schema</Filter>
+    </None>
+    <None Include="character.json">
+      <Filter>JSON\schema</Filter>
+    </None>
+    <None Include="quest.json">
+      <Filter>JSON\schema</Filter>
+    </None>
+  </ItemGroup>
+</Project>

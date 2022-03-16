@@ -1,0 +1,15 @@
+{
+  "item":
+  [
+    {
+      "name": "지팡이",
+      "type": "WEAPON",
+      "frameX": 0,
+      "frameY": 1,
+      "option": 
+      {
+        "체력": 1000
+      }
+    }
+  ]
+}
