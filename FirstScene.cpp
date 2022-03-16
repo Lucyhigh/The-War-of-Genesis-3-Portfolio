@@ -21,10 +21,11 @@ HRESULT FirstScene::init(void)
 	_y = WINSIZE_Y - 120;
 	_npcRc = RectMakeCenter(_x, _y, _npcImage->getFrameWidth(), _npcImage->getFrameHeight());
 
+
 	_camera = new Camera;
 	_camera->init();
-	_camera->setLimits(CENTER_X, _image->getWidth()); //ÁÂ¿ì º®¸Â±â
-
+	_camera->setLimitsX(CENTER_X, _image->getWidth());
+	_camera->setLimitsY(CENTER_Y, _image->getHeight());
 	return S_OK;
 }
 

@@ -1,24 +1,38 @@
 #pragma once
 #pragma once
 #include "GameNode.h"
-#define TILESIZE 50
+#include "Camera.h"
+#include "Player.h"
+
+#define TILESIZEX 40
+#define TILESIZEY 32
+enum class TILEINDEX
+{
+	NORMAL =0,
+	START,
+	END,
+	WALL
+};
 struct tagTile
 {
 	int x;
 	int y;
-	//int info;
-	int sizeX;
-	int sizeY;
 	RECT rect;
+	int info;
 };
 class TileScene : public GameNode
 {
 private:
+	Camera* _camera;
+	Player* _player;
+	Image* _image;
+	RECT _mouseRc;
+
 	int numX;
 	int numY;
 	int index;
 	int x, y;
-	POINT pt;
+	//POINT pt;
 	vector<tagTile> _tile;
 	vector<tagTile>::iterator _tIter;
 
