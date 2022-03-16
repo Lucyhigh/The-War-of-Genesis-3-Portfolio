@@ -16,7 +16,6 @@ HRESULT Player::init(void)
     _playerPos.y = WINSIZE_Y-140;
 	_rcPlayer = RectMakeCenter(_playerPos.x, _playerPos.y, _image->getFrameWidth(), _image->getFrameHeight());
     
-    //_camera->setCameraPos(_playerPos);
 
 	_currentHp = 10;
 	_maxHp = 10;
