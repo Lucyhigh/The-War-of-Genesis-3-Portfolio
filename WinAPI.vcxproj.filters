@@ -118,7 +118,6 @@
     <ClCompile Include="Store.cpp">
       <Filter>Store</Filter>
     </ClCompile>
-    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="SoundManager.cpp">
       <Filter>API\Manager</Filter>
     </ClCompile>
@@ -134,6 +133,10 @@
     <ClCompile Include="JsonDataScene.cpp">
       <Filter>API\ExamClass\Json</Filter>
     </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="TileScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameNode.h">
@@ -256,7 +259,6 @@
     <ClInclude Include="Store.h">
       <Filter>Store</Filter>
     </ClInclude>
-    <ClInclude Include="Camera.h" />
     <ClInclude Include="SoundManager.h">
       <Filter>API\Manager</Filter>
     </ClInclude>
@@ -270,6 +272,10 @@
     <ClInclude Include="JsonDataScene.h">
       <Filter>API\ExamClass\Json</Filter>
     </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="TileScene.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="API">
@@ -340,6 +346,9 @@
     </Filter>
     <Filter Include="API\ExamClass\Json">
       <UniqueIdentifier>{ac22e39c-2cbb-4337-bc9c-95dd7bcc5f4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Camera">
+      <UniqueIdentifier>{756836a5-9ce4-435c-a130-1305d420f581}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -9,7 +9,7 @@
 #include "PixelScene.h"
 #include "SoundScene.h"
 #include "JsonDataScene.h"
-
+#include "TileScene.h"
 HRESULT MainGame::init(void)
 {
 	GameNode::init(TRUE);
@@ -24,8 +24,9 @@ HRESULT MainGame::init(void)
 	SCENEMANAGER->addScene("픽셀", new PixelScene);
 	SCENEMANAGER->addScene("사운드", new SoundScene);
 	SCENEMANAGER->addScene("제이슨", new JsonDataScene);
+	SCENEMANAGER->addScene("타일", new TileScene);
 
-	SCENEMANAGER->changeScene("제이슨");
+	SCENEMANAGER->changeScene("타일");
 	return S_OK;
 }
 

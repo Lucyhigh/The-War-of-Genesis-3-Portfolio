@@ -107,7 +107,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>Jsoncpp/lib/jsoncpp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -197,6 +197,7 @@
     <ClCompile Include="TextDataManager.cpp" />
     <ClCompile Include="ThirdScene.cpp" />
     <ClCompile Include="TileMap.cpp" />
+    <ClCompile Include="TileScene.cpp" />
     <ClCompile Include="TimeManager.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Utils.cpp" />
@@ -256,6 +257,7 @@
     <ClInclude Include="TextDataManager.h" />
     <ClInclude Include="ThirdScene.h" />
     <ClInclude Include="TileMap.h" />
+    <ClInclude Include="TileScene.h" />
     <ClInclude Include="TimeManager.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="Utils.h" />
