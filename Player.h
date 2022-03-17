@@ -36,9 +36,10 @@ public:
 	void render(void);
 
 	float getPlayerPosX();
+	float getPlayerPosY();
 	void setPlayerPosX(float x);
-
     void setPlayerPosY(float y);
+
 	RECT getPlayerRect();
 
     void setCameraRect(RECT rect);

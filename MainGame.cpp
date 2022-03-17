@@ -16,7 +16,7 @@ HRESULT MainGame::init(void)
 
 	//SCENEMANAGER->addScene("타이틀", new StartScene);
 	//SCENEMANAGER->addScene("시작", new FirstScene);
-	//SCENEMANAGER->addScene("마을", new SecondScene);
+	SCENEMANAGER->addScene("마을", new SecondScene);
 	//SCENEMANAGER->addScene("죽음땅", new ThirdScene);
 
 	SCENEMANAGER->addScene("인벤토리", new Inventory);

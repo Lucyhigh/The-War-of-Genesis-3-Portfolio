@@ -1,6 +1,5 @@
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "QuestSample.h"
-#include "Quest.h"
 
 void QuestSample::init(void)
 {

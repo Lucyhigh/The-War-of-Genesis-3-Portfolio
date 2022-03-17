@@ -3,26 +3,24 @@
 #include "GameNode.h"
 #include "Camera.h"
 #include "Player.h"
+#include "MapTileInfo.h"
 
-#define TILESIZEX 40
-#define TILESIZEY 32
-enum class TILEINDEX
-{
-	NORMAL =0,
-	START,
-	END,
-	WALL
-};
+//enum class TILEINDEX
+//{
+//	NORMAL =0,
+//	START,
+//	END,
+//	WALL
+//};
 struct tagTile
 {
 	int x;
 	int y;
-	RECT rect;
-	int info;
 };
 class TileScene : public GameNode
 {
 private:
+	MapTileInfo* _mapTileInfo;
 	Camera* _camera;
 	Player* _player;
 	Image* _image;
@@ -32,7 +30,6 @@ private:
 	int numY;
 	int index;
 	int x, y;
-	//POINT pt;
 	vector<tagTile> _tile;
 	vector<tagTile>::iterator _tIter;
 
@@ -41,6 +38,9 @@ public:
 	void release(void);
 	void update(void);
 	void render(void);
+
+	void drawMapCellInfo();
+	void curMap();
 public:
 	TileScene() {}
 	~TileScene() {}

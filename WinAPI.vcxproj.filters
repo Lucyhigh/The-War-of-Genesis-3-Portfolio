@@ -137,6 +137,8 @@
       <Filter>Camera</Filter>
     </ClCompile>
     <ClCompile Include="TileScene.cpp" />
+    <ClCompile Include="Cell.cpp" />
+    <ClCompile Include="MapTileInfo.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameNode.h">
@@ -276,6 +278,8 @@
       <Filter>Camera</Filter>
     </ClInclude>
     <ClInclude Include="TileScene.h" />
+    <ClInclude Include="Cell.h" />
+    <ClInclude Include="MapTileInfo.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="API">
@@ -366,5 +370,6 @@
     <None Include="quest.json">
       <Filter>JSON\schema</Filter>
     </None>
+    <None Include="map.json" />
   </ItemGroup>
 </Project>

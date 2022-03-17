@@ -13,7 +13,6 @@ HRESULT FirstScene::init(void)
 	_player = new Player;
 	_player->init();
 	_player->setPlayerPosX(0);
-	_player->setPlayerPosY(WINSIZE_Y - 100);
 	_count = 0;
 	_indexA = 0;
 	_npcImage = IMAGEMANAGER->addFrameImage("°í¾çÀÌ", "Resources/Images/Object/NPC.bmp", 884, 442, 4, 2, true, RGB(255, 0, 255));
@@ -22,6 +21,7 @@ HRESULT FirstScene::init(void)
 	_npcRc = RectMakeCenter(_x, _y, _npcImage->getFrameWidth(), _npcImage->getFrameHeight());
 
 
+	_player->setPlayerPosY(WINSIZE_Y - 100);
 	_camera = new Camera;
 	_camera->init();
 	_camera->setLimitsX(CENTER_X, _image->getWidth());

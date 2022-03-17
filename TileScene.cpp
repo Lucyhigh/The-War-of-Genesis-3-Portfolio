@@ -3,85 +3,98 @@
 
 HRESULT TileScene::init(void)
 {
-	_image = IMAGEMANAGER->addImage("초원", "Resources/Images/BackGround/Field.bmp", WINSIZE_X, WINSIZE_Y);
-	IMAGEMANAGER->addFrameImage("타일 표시", "Resources/Images/UI/Tile.bmp", 240, 32,6,1,true);
-	IMAGEMANAGER->addImage("타일 표시2", "Resources/Images/Object/buttomE.bmp", 35, 38);
-	numX = WINSIZE_X / TILESIZEX;
-	numY = WINSIZE_Y / TILESIZEY;
+	_mapTileInfo = new MapTileInfo;
+	_mapTileInfo->init();
+	_image = IMAGEMANAGER->addImage("초원", "Resources/Images/BackGround/Field.bmp", 2120, 1536);
+
+	IMAGEMANAGER->addFrameImage("타일 표시", "Resources/Images/UI/Tile.bmp", 240, 32, 6, 1, true);
+	IMAGEMANAGER->addImage("타일 표시2", "Resources/Images/UI/1.bmp", 40, 32);
+
+	numX =53;
+	numY = 48;//_image/TileSize
 	index = x = y = 0;
-	
 
 	for (x = 0; x < numX; x++)
 	{
 		for (y = 0; y < numY; y++)
 		{
-			tagTile tileInfo = {x, y,RectMake(x*TILESIZEX, y*TILESIZEY,TILESIZEX,TILESIZEY),0 };
+			tagTile tileInfo = { x, y };
 			_tile.push_back(tileInfo);
 		}
 	}
 
-	//_player = new Player;
-	//_player->init();
-	//_player->setPlayerPosX(150);
+	_player = new Player;
+	_player->init();
+	_player->setPlayerPosX(250);
+	_player->setPlayerPosY(WINSIZE_Y - 200);
 
-	//_camera = new Camera;
-	//_camera->init();
-	//_camera->setLimitsX(CENTER_X, _image->getWidth());
-	//_camera->setLimitsY(CENTER_Y, _image->getHeight());
-
+	_camera = new Camera;
+	_camera->init();
+	_camera->setLimitsX(CENTER_X, _image->getWidth());
+	_camera->setLimitsY(CENTER_Y, _image->getHeight());
+	
 	return S_OK;
 }
 
 void TileScene::release(void)
 {
 	_tile.clear();
+	_player->release();
+	_camera->release();
 }
 
 void TileScene::update(void)
 {
-	/*if (KEYMANAGER->isOnceKeyDown('W'))
-	{
-	}
-*/
 	_tIter = _tile.begin();
 	for (; _tIter != _tile.end(); _tIter++)
 	{
-		if (PtInRect(&_tIter->rect, _ptMouse))
+		if (PtInRect(&node->getRect(), _ptMouse) )//&&  node->getType() ==0)
 		{
-				_mouseRc = _tIter->rect;
-				cout << _mouseRc.left << " , " << _mouseRc.top << endl;
-				break;
-			if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
-			{
-				_tIter->info++;
-
-
-			}
+			_mouseRc = node->getRect();
+			
+			//cout << _mouseRc.left << " , " << _mouseRc.top << endl;
+			break;
 		}
 	}
+
+	POINT cameraPos;
+	cameraPos.x = _player->getPlayerPosX();
+	cameraPos.y = _player->getPlayerPosY();
+	_camera->setCameraPos(cameraPos);
+	_camera->update();
+	_player->setCameraRect(_camera->getScreenRect());
+	_player->update();
+
 }
 
 void TileScene::render(void)
 {
-	char pos[258];
-	SetTextColor(getMemDC(), RGB(0,0,0));
-	//IMAGEMANAGER->render("초원", getMemDC());
+	drawMapCellInfo();
+	_camera->render();
+
+	char pos[256];
+	SetTextColor(getMemDC(), RGB(0, 0, 0));
+
+	IMAGEMANAGER->render("초원", getMemDC(), 0, 0,
+								_camera->getScreenRect().left,
+								_camera->getScreenRect().top,
+								WINSIZE_X, WINSIZE_Y);
 	_tIter = _tile.begin();
-	for (; _tIter !=_tile.end(); _tIter++)
+	for (; _tIter != _tile.end(); _tIter++)
 	{
-		Rectangle(getMemDC(),_tIter->rect.left, _tIter->rect.top, _tIter->rect.right, _tIter->rect.bottom);
-	/*	if (KEYMANAGER->isOnceKeyDown(VK_F1))
+		if (KEYMANAGER->isToggleKey(VK_F2))
 		{
-
-		}*/
-		if(KEYMANAGER->isToggleKey(VK_F2))
-		{
+			Rectangle(getMemDC(), node->getRect().left - _camera->getScreenRect().left,
+								  node->getRect().top - _camera->getScreenRect().top,
+								  node->getRect().right- _camera->getScreenRect().left,
+								  node->getRect().bottom - _camera->getScreenRect().top);
+	
 			sprintf(pos, "%d, %d", _tIter->x, _tIter->y);
-			TextOut(getMemDC(), _tIter->x * TILESIZEX, _tIter->y * TILESIZEY, pos, strlen(pos));
+			TextOut(getMemDC(), _tIter->x * TILESIZEX - _camera->getScreenRect().left,
+								_tIter->y * TILESIZEY - _camera->getScreenRect().top,
+								pos, strlen(pos));
 		}
-
-		
-		
+		//카메라 달면 위치이상해짐
 		//HBRUSH brush = CreateSolidBrush(RGB(255, 0, 0)); // 색 설정
 		//switch (_tIter->info)
 		//{
@@ -110,6 +123,23 @@ void TileScene::render(void)
 		//	break;
 		//}
 	}
-	IMAGEMANAGER->render("타일 표시2", getMemDC(), _mouseRc.left, _mouseRc.top);
+	IMAGEMANAGER->render("타일 표시2", getMemDC(), _mouseRc.left, _mouseRc.top);//카메라 달면 위치이상해짐
 
+	_player->render();
+}
+
+void TileScene::drawMapCellInfo()
+{
+	char cellIndex[256];
+	vector<Cell*>* temp = _mapTileInfo->getCell();
+	Cell* node = temp->front();
+
+	sprintf(cellIndex, "X : %d, Y : %d", node->getCellX(), node->getCellY());
+	TextOut(getMemDC(), node->getRect().left - _camera->getScreenRect().left,
+						node->getRect().top - _camera->getScreenRect().top,
+						cellIndex, strlen(cellIndex));
+}
+
+void TileScene::curMap()
+{
 }
