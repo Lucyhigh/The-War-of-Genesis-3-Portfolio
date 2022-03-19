@@ -8,12 +8,12 @@ class TileScene : public GameNode
 {
 private:
 	MapTileInfo* _mapTileInfo;
-	vector<Cell*>* cells;
+	vector<Cell*>* _cells;
 	Image* _image;
 	Player* _player;
 	Camera* _camera;
-
 	RECT _mouseRc;
+	int _mouseIndex;
 
 
 public:

@@ -1,7 +1,7 @@
 #include "Stdafx.h"
-#include "AniTestScene.h"
+#include "AniScene.h"
 
-HRESULT AniTestScene::init(void)
+HRESULT AniScene::init(void)
 {
     //프레임 이미지가 아닌 그냥 이미지를 받고있다
     _image = IMAGEMANAGER->addImage("꼬끼리", "Resources/Images/Object/Elephant.bmp",
@@ -17,13 +17,13 @@ HRESULT AniTestScene::init(void)
     return S_OK;
 }
 
-void AniTestScene::release(void)
+void AniScene::release(void)
 {
     _ani->release();
     SAFE_DELETE(_ani);
 }
 
-void AniTestScene::update(void)
+void AniScene::update(void)
 {
     if (KEYMANAGER->isOnceKeyDown('B'))
     {
@@ -32,7 +32,7 @@ void AniTestScene::update(void)
     _ani->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
 }
 
-void AniTestScene::render(void)
+void AniScene::render(void)
 {
     _image->aniRender(getMemDC(), CENTER_X - 50, CENTER_Y, _ani);
 }

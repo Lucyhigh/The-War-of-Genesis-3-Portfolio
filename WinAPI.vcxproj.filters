@@ -61,9 +61,6 @@
     <ClCompile Include="TimeManager.cpp">
       <Filter>API\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="AniTestScene.cpp">
-      <Filter>API\Animation</Filter>
-    </ClCompile>
     <ClCompile Include="Animation.cpp">
       <Filter>API\Animation</Filter>
     </ClCompile>
@@ -157,6 +154,9 @@
     <ClCompile Include="Inventory.cpp">
       <Filter>Portfolio\UI\Inventory</Filter>
     </ClCompile>
+    <ClCompile Include="AniScene.cpp">
+      <Filter>API\Animation</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameNode.h">
@@ -226,9 +226,6 @@
       <Filter>API\Manager</Filter>
     </ClInclude>
     <ClInclude Include="Animation.h">
-      <Filter>API\Animation</Filter>
-    </ClInclude>
-    <ClInclude Include="AniTestScene.h">
       <Filter>API\Animation</Filter>
     </ClInclude>
     <ClInclude Include="ShootingEffect.h">
@@ -317,6 +314,9 @@
     </ClInclude>
     <ClInclude Include="Inventory.h">
       <Filter>Portfolio\UI\Inventory</Filter>
+    </ClInclude>
+    <ClInclude Include="AniScene.h">
+      <Filter>API\Animation</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

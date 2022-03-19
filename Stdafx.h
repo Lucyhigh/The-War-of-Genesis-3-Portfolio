@@ -117,7 +117,7 @@ using namespace MY_UTIL;
 //============================
 #define CENTER_X WINSIZE_X/2
 #define CENTER_Y WINSIZE_Y/2
-
+#define MGT true,RGB(255,0,255)
 
 //===============================================
 // # 매크로 함수 # (클래스에서 동적할당된 부분 해제)

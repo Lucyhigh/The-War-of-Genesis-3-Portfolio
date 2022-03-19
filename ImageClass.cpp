@@ -3,9 +3,20 @@
 
 HRESULT ImageClass::init(void)
 {
-	IMAGEMANAGER->addImage("초원", "Resources/Images/BackGround/Field.bmp", 2120, 1536);
-	IMAGEMANAGER->addFrameImage("타일 표시", "Resources/Images/UI/Tile.bmp", 240, 32, 6, 1, true);
-	IMAGEMANAGER->addImage("타일 표시2", "Resources/Images/UI/1.bmp", 40, 32);
+#pragma region PlayerImage
+#pragma endregion
+
+#pragma region Stage Scene
+	// Stage 1
+	IMAGEMANAGER->addImage("Field", "Resources/Images/BackGround/Field.bmp", 2120, 1536);
+	IMAGEMANAGER->addFrameImage("curTile", "Resources/Images/UI/Tile.bmp", 240, 32, 6, 1);
+	IMAGEMANAGER->addImage("curTile2", "Resources/Images/UI/1.bmp", 40, 32);
+#pragma endregion
+
+#pragma region UI Scene
+	IMAGEMANAGER->addImage("curMap", "Resources/Images/UI/curMap.bmp", 241, 111, MGT);
+	IMAGEMANAGER->addImage("introtext", "Resources/Images/UI/introtext.bmp", 230, 105);
+#pragma endregion
 	return S_OK;
 }
 

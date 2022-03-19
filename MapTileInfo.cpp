@@ -6,7 +6,7 @@ void MapTileInfo::init(void)
 	mapSetup();
 }
 
-void MapTileInfo::mapSetup(Cell * pMap)
+void MapTileInfo::mapSetup()
 {
 	Json::Value root = JSONDATAMANAGER->loadJsonFile("map.json");
 
@@ -15,10 +15,11 @@ void MapTileInfo::mapSetup(Cell * pMap)
 	{
 		for (int x = 0; x < map[y].size(); ++x)
 		{
-			//cout << map[i][j].asInt() << ", ";//
+			//cout << map[y][x].asInt() << ", ";//
 
 			Cell* cell = new Cell;
-			cell->init(x, y, (CELL_TYPE)map[y][x].asInt(), RectMake(x*TILESIZEX, y*TILESIZEY, TILESIZEX, TILESIZEY));
+			cell->init(x, y, (CELL_TYPE)map[y][x].asInt(), 
+					   RectMake(x*TILESIZEX, y*TILESIZEY, TILESIZEX, TILESIZEY));
 			_vCell.push_back(cell);
 		}
 		//cout << endl;//

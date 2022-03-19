@@ -8,7 +8,7 @@ private:
 	vector<Cell*> _vCell;
 public:
 	void init(void);
-	void mapSetup(Cell* pMap = nullptr);
+	void mapSetup();
 
 	vector<Cell*>* getCell() { return &this->_vCell; }
 	Cell* getCell(int x, int y) 

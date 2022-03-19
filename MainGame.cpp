@@ -1,5 +1,9 @@
 #include "Stdafx.h"
 #include "MainGame.h"
+#pragma region include Scene
+//UI
+#include "ImageClass.h"
+//Stage
 #include "StartScene.h"
 #include "FirstScene.h"
 #include "SecondScene.h"
@@ -10,9 +14,13 @@
 #include "SoundScene.h"
 #include "JsonDataScene.h"
 #include "TileScene.h"
+#pragma endregion 
 HRESULT MainGame::init(void)
 {
 	GameNode::init(TRUE);
+
+	ImageClass imageClass = ImageClass();
+	imageClass.init();
 
 	//SCENEMANAGER->addScene("타이틀", new StartScene);
 	//SCENEMANAGER->addScene("시작", new FirstScene);
@@ -33,6 +41,7 @@ HRESULT MainGame::init(void)
 void MainGame::release(void)
 {
 	GameNode::release();
+	SCENEMANAGER->release();
 }
 
 void MainGame::update(void)
