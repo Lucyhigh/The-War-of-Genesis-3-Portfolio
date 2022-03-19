@@ -19,7 +19,7 @@ public:
 	int getCellY() { return this->_y; }
 
 	CELL_TYPE getType() { return this->_cellType; }
-	RECT getRECT() { return this->_cellRc; }
+	RECT getRect() { return this->_cellRc; }
 public:
 	Cell() {}
 	~Cell() {}

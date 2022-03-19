@@ -168,6 +168,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="Cell.cpp" />
+    <ClCompile Include="MapScene.cpp" />
     <ClCompile Include="MapTileInfo.cpp" />
     <ClCompile Include="Minion.cpp" />
     <ClCompile Include="PixelCollision.cpp" />
@@ -202,6 +203,7 @@
     <ClCompile Include="TileScene.cpp" />
     <ClCompile Include="TimeManager.cpp" />
     <ClCompile Include="Timer.cpp" />
+    <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="Utils.cpp" />
     <ClCompile Include="WinMain.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
@@ -231,6 +233,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="Cell.h" />
+    <ClInclude Include="MapScene.h" />
     <ClInclude Include="MapTileInfo.h" />
     <ClInclude Include="Minion.h" />
     <ClInclude Include="PixelCollision.h" />
@@ -264,6 +267,7 @@
     <ClInclude Include="TileScene.h" />
     <ClInclude Include="TimeManager.h" />
     <ClInclude Include="Timer.h" />
+    <ClInclude Include="TitleScene.h" />
     <ClInclude Include="Utils.h" />
   </ItemGroup>
   <ItemGroup>

@@ -3,9 +3,9 @@
 
 HRESULT ImageClass::init(void)
 {
-	//이미지를 전부 여기에 저장 
-	//IMAGEMANAGER->addImage();
-
+	IMAGEMANAGER->addImage("초원", "Resources/Images/BackGround/Field.bmp", 2120, 1536);
+	IMAGEMANAGER->addFrameImage("타일 표시", "Resources/Images/UI/Tile.bmp", 240, 32, 6, 1, true);
+	IMAGEMANAGER->addImage("타일 표시2", "Resources/Images/UI/1.bmp", 40, 32);
 	return S_OK;
 }
 

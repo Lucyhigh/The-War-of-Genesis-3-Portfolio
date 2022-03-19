@@ -6,8 +6,6 @@ HRESULT Player::init(void)
 	_image = IMAGEMANAGER->addFrameImage("캐릭터대기", "Resources/Images/Object/playerIdle.bmp", 1664, 146, 13, 2, true, RGB(255, 0, 255));
 	_image = IMAGEMANAGER->addFrameImage("캐릭터이동", "Resources/Images/Object/playerRun.bmp", 1106, 140, 14, 2, true, RGB(255, 0, 255));
 	
-	//_rcPlayer = RectMakeCenter(_x, _y, _image->getWidth(), _image->getHeight());
-	
 	_count = 0;
 	_indexA = _indexB = 0;
 	_alphaA = 0;
