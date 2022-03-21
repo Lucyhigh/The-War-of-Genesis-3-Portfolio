@@ -160,7 +160,6 @@
     <ClCompile Include="Astar.cpp">
       <Filter>Portfolio\A%2a</Filter>
     </ClCompile>
-    <ClCompile Include="practice.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameNode.h">
@@ -325,7 +324,7 @@
     <ClInclude Include="Astar.h">
       <Filter>Portfolio\A%2a</Filter>
     </ClInclude>
-    <ClInclude Include="practice.h" />
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="API">
@@ -429,6 +428,12 @@
     <Text Include="..\MatricFunction.txt">
       <Filter>API\Utility</Filter>
     </Text>
+    <Text Include="Text.txt">
+      <Filter>Portfolio\A%2a</Filter>
+    </Text>
+    <Text Include="Text1.txt">
+      <Filter>Portfolio\A%2a</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <None Include="jItem.json">
@@ -443,5 +448,8 @@
     <None Include="map.json">
       <Filter>Portfolio\JSON</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="WinAPI.rc" />
   </ItemGroup>
 </Project>
