@@ -1,20 +1,15 @@
 #pragma once
 #include "GameNode.h"
-#include "MapTileInfo.h"
+#include "Cell.h"
 
 struct tagAStarTile
 {
 	int tileNum;
 	int parentNodeTileNum;
-	int totalCost;//F
-	int costFromStart;//G
-	int costToGoal;//H
+	int totalCost;          //F
+	int costFromStart;      //G
+	int costToGoal;         //H
 	bool isOpen;
-};
-
-struct isoTile
-{
-	//타일정보값
 };
 
 struct tagTilePoint
@@ -30,21 +25,13 @@ struct tagTempTile
 	int fY;
 };
 
-struct tagSample
-{
-	RECT rc;
-	int fX;
-	int fY;
-};
-
 class Astar : public GameNode
 {
 private:
 
-	isoTile		_isoTile[TILESIZEX * TILESIZEY];//타일갯수 배열?
-	tagTilePoint	_tilePoint;
-	tagSample		_sample[TILESIZEX * TILESIZEY];
-	tagTempTile		_tempTile;
+    Cell		_cell[TILESIZEX * TILESIZEY];//타일갯수
+	tagTilePoint	_tilePoint;//현 캐릭터 시작점 타일
+	tagTempTile		_tempTile;//클릭한 타일
 
 	/////////////////////////////////////
 	POINT			_pickingPt;

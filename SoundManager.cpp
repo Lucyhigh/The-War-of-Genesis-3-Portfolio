@@ -1,4 +1,4 @@
-//#include "Stdafx.h"
+#include "Stdafx.h"
 //#include "SoundManager.h"
 //
 //SoundManager::SoundManager():_system(nullptr),

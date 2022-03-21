@@ -12,9 +12,11 @@ private:
 	Image* _image;
 	Player* _player;
 	Camera* _camera;
-	RECT _mouseRc;
-	int _mouseIndex;
 
+    POINT _endPoint;
+	RECT _mouseRc;
+	RECT _endRc;
+	int _mouseIndex;
 
 public:
 	HRESULT init(void);
@@ -23,6 +25,7 @@ public:
 	void render(void);
 
 	void drawMapCellInfo();
+    void AstarTileInfo();
 	void curMap();
 public:
 	TileScene() {}

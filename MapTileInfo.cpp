@@ -15,7 +15,6 @@ void MapTileInfo::mapSetup()
 	{
 		for (int x = 0; x < map[y].size(); ++x)
 		{
-
 			Cell* cell = new Cell;
 			cell->init(x, y, (CELL_TYPE)map[y][x].asInt(), 
 					   RectMake(x*TILESIZEX, y*TILESIZEY, TILESIZEX, TILESIZEY));
