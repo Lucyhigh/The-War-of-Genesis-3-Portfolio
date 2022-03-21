@@ -37,7 +37,7 @@ HRESULT GameNode::init(bool managerInit)
 		//씬 매니저 초기화
 		SCENEMANAGER->init();
 		//사운드 매니저 초기화
-		SOUNDMANAGER->init();
+		//SOUNDMANAGER->init();
 
 		//JSONDATAMANAGER->init();
        // PLAYER->init();
@@ -78,8 +78,8 @@ void GameNode::release(void)
 		SCENEMANAGER->releaseSingleton();
 		
         //사운드 매니저 헤제, 싱글톤 해제
-		SOUNDMANAGER->release();
-		SOUNDMANAGER->releaseSingleton();
+		//SOUNDMANAGER->release();
+		//SOUNDMANAGER->releaseSingleton();
         //사운드 매니저 헤제, 싱글톤 해제
 		JSONDATAMANAGER->release();
 		JSONDATAMANAGER->releaseSingleton();

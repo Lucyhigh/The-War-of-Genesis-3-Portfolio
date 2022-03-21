@@ -157,6 +157,10 @@
     <ClCompile Include="AniScene.cpp">
       <Filter>API\Animation</Filter>
     </ClCompile>
+    <ClCompile Include="Astar.cpp">
+      <Filter>Portfolio\A%2a</Filter>
+    </ClCompile>
+    <ClCompile Include="practice.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameNode.h">
@@ -318,6 +322,10 @@
     <ClInclude Include="AniScene.h">
       <Filter>API\Animation</Filter>
     </ClInclude>
+    <ClInclude Include="Astar.h">
+      <Filter>Portfolio\A%2a</Filter>
+    </ClInclude>
+    <ClInclude Include="practice.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="API">
@@ -412,6 +420,9 @@
     </Filter>
     <Filter Include="API\Animation">
       <UniqueIdentifier>{3248fe14-aa4d-4119-9af6-8a6f638706b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Portfolio\A%2a">
+      <UniqueIdentifier>{c2e60e67-13fa-4bb9-afd3-2554d52d8e05}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

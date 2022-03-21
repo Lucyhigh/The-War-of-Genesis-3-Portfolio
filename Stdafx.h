@@ -14,11 +14,11 @@
 //!라이브러리
 #pragma comment(linker,"/entry:WinMainCRTStartup /subsystem:console")
 #pragma comment(lib,"Winmm.lib")
-#pragma comment(lib,"lib/FMOD/fmodex_vc.lib")
+//#pragma comment(lib,"lib/FMOD/fmodex_vc.lib")
 #pragma comment (lib, "Jsoncpp/lib/json_vc71_libmtd.lib")
 //#pragma comment (lib, "lib/FMOD/fmodex64_vc.lib")
 //!외부 헤더 파일
-#include "inc/FMOD/fmod.hpp"
+//#include "inc/FMOD/fmod.hpp"
 #include "Jsoncpp/inc/json.h"
 
 // 알파 블렌드를 사용하기 위한 라이브러리 추가 
@@ -52,6 +52,8 @@
 #include <fstream>
 #include <queue>
 using namespace std;
+//A*
+#include <list>
 
 //===================================
 // # 내가 만든 헤더파일을 이곳에 추가 #
@@ -66,7 +68,7 @@ using namespace std;
 #include "TimeManager.h"
 #include "TextDataManager.h"
 #include "SceneManager.h"
-#include "SoundManager.h"
+//#include "SoundManager.h"
 #include "JsonSaveLoader.h"
 
 using namespace MY_UTIL;
@@ -82,7 +84,7 @@ using namespace MY_UTIL;
 #define TIMEMANAGER TimeManager::getSingleton()
 #define TEXTDATAMANAGER TextDataManager::getSingleton()
 #define SCENEMANAGER SceneManager::getSingleton()
-#define SOUNDMANAGER SoundManager::getSingleton()
+//#define SOUNDMANAGER SoundManager::getSingleton()
 #define JSONDATAMANAGER JsonSaveLoader::getSingleton()
 //#define PLAYER Player::getSingleton()
 

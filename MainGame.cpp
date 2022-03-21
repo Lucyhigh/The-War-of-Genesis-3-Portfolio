@@ -11,7 +11,7 @@
 #include "Inventory.h"
 #include "Store.h"
 #include "PixelScene.h"
-#include "SoundScene.h"
+//#include "SoundScene.h"
 #include "JsonDataScene.h"
 #include "TileScene.h"
 #pragma endregion 
@@ -30,7 +30,7 @@ HRESULT MainGame::init(void)
 	SCENEMANAGER->addScene("인벤토리", new Inventory);
 	SCENEMANAGER->addScene("상점", new Store);
 	//SCENEMANAGER->addScene("픽셀", new PixelScene);
-	SCENEMANAGER->addScene("사운드", new SoundScene);
+	//SCENEMANAGER->addScene("사운드", new SoundScene);
 	SCENEMANAGER->addScene("제이슨", new JsonDataScene);
 	SCENEMANAGER->addScene("타일", new TileScene);
 

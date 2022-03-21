@@ -42,24 +42,26 @@ void TileScene::update(void)
 	_player->setCameraRect(_camera->getScreenRect());
 	_player->update();
 
+	POINT playerPoint = { _player->getPlayerPosX(),_player->getPlayerPosY() };
+
 	for (auto cellsIter = _cells->begin(); cellsIter != _cells->end(); ++cellsIter)
 	{
 		Cell* cell = (*cellsIter);
-		RECT temp;
-		if (IntersectRect(&temp, &cell->getRect(), &_player->getPlayerRect()))//pt로 변경
+
+		if (PtInRect(&cell->getRect(), playerPoint))
 		{
-			
-			_mouseIndex = (int)cell->getType();
+			//_mouseIndex = (int)cell->getType();
 			if (cell->getType() != CELL_TYPE::WALL)
 			{
 				cell->setType(CELL_TYPE::START);
 			}
-
+			cout << playerPoint.x << " , " << playerPoint.y << endl;
 		}
 		else if (cell->getType() == CELL_TYPE::START)
 		{
 			cell->setType(CELL_TYPE::NORMAL);
 		}
+
 		POINT cameraMouse = { 
 							  _ptMouse.x + _camera->getScreenRect().left,
 							  _ptMouse.y + _camera->getScreenRect().top 
@@ -71,11 +73,18 @@ void TileScene::update(void)
 				if (cell->getType() == CELL_TYPE::NORMAL)
 					cell->setType(CELL_TYPE::GOAL);
 			}
-			cout << cameraMouse.x <<" , " << cameraMouse.y<< endl;
+			
 			break;
 		}
 	}
 
+	//Astar::Coordinate A(0, 0);
+	//Astar::Coordinate B(5, 4);
+
+	//Astar astar(A, B);
+
+	//astar.PrintNavi();
+	
 
 }
 
@@ -85,7 +94,6 @@ void TileScene::render(void)
 
 	int cameraLeft = _camera->getScreenRect().left;
 	int cameraTop = _camera->getScreenRect().top;
-	//cout << cameraLeft << " , " << cameraTop << endl;
 	IMAGEMANAGER->render("Field", getMemDC(), 0, 0,
 		cameraLeft,
 		cameraTop,
@@ -105,7 +113,6 @@ void TileScene::render(void)
 		int left = cell->getRect().left - cameraLeft;
 		int top = cell->getRect().top - cameraTop;
 		RECT rect = RectMake(left, top, TILESIZEX, TILESIZEY);
-		//cout << left << " , " << top << endl;
 		switch (cell->getType())
 		{
 		case(CELL_TYPE::NORMAL):
@@ -128,7 +135,6 @@ void TileScene::render(void)
 		}
 		DeleteObject(brush);
 	}
-	//IMAGEMANAGER->render("curTile2", getMemDC(), _mouseRc.left, _mouseRc.top);//카메라 달면 위치이상해짐
 
 	_player->render();
 }
