@@ -3,7 +3,6 @@
 
 // Astar 내부의 클래스
 
-
 Astar::Node::Node(int _x, int _y, Node* _pParent, Coordinate _EndPoint)
 {
 	point.x = _x;
@@ -15,23 +14,17 @@ Astar::Node::Node(int _x, int _y, Node* _pParent, Coordinate _EndPoint)
 	{
 		G = 0;
 	}
-	else if ( // 십자 방향인 경우
+	else if (
 		(pParent->point.x == point.x - 1 && pParent->point.y == point.y) || // 부모가 '상'방향에 있거나
 		(pParent->point.x == point.x + 1 && pParent->point.y == point.y) || // 부모가 '하'방향에 있거나
-		(pParent->point.x == point.x && pParent->point.y == point.y - 1) || // 부모가 '좌'방향에 있거나
-		(pParent->point.x == point.x && pParent->point.y == point.y + 1)) // 부모가 '우'방향에 있으면		
+		(pParent->point.x == point.x     && pParent->point.y == point.y - 1) || // 부모가 '좌'방향에 있거나
+		(pParent->point.x == point.x     && pParent->point.y == point.y + 1)) // 부모가 '우'방향에 있으면		
 	{
-		G = pParent->G + 10;
+		G = pParent-> G + 10;
 	}
-	else if ( // 대각선 방향인 경우
-		(pParent->point.x == point.x - 1 && pParent->point.y == point.y - 1) || // 부모가 '좌상'방향에 있거나
-		(pParent->point.x == point.x - 1 && pParent->point.y == point.y + 1) || // 부모가 '우상'방향에 있거나
-		(pParent->point.x == point.x + 1 && pParent->point.y == point.y - 1) || // 부모가 '좌하'방향에 있거나
-		(pParent->point.x == point.x + 1 && pParent->point.y == point.y + 1)) // 부모가 '우하'방향에 있으면
-	{
-		G = pParent->G + 14;
-	}
-	else {
+	
+	else 
+    {
 		cout << " 부모 설정 오류 " << endl;
 		F = -100000;  H = -100000; G = -100000;
 	}
@@ -50,10 +43,10 @@ Astar::Map::Map()
 	sizeX = atoi(csizeX); sizeY = atoi(csizeY);
 
 	// 맵 크기 할당
-	map = new int*[sizeX]; // 행 할당
+	nMap = new int*[sizeX]; // 행 할당
 	for (int i = 0; i < sizeX; i++) // 열 할당
 	{
-		map[i] = new int[sizeY];
+		nMap[i] = new int[sizeY];
 	}
 
 	FILE* stream = fopen("../Data/Map.txt", "rt"); // 맵의 자료를 불러옴 0=지나갈 수 있는 곳 , 1=장애물
@@ -61,10 +54,32 @@ Astar::Map::Map()
 	{
 		for (int j = 0; j < sizeY; j++)
 		{
-			fscanf(stream, "%d", &map[i][j]);
+			fscanf(stream, "%d", &nMap[i][j]);
 		}
 	}
 	fclose(stream);
+}
+
+void Astar::Map::init(void)
+{
+    mapSetup();
+}
+
+void Astar::Map::mapSetup()
+{
+    Json::Value root = JSONDATAMANAGER->loadJsonFile("map.json");
+
+    auto map = root["map"];
+    for (int y = 0; y < map.size(); ++y)
+    {
+        for (int x = 0; x < map[y].size(); ++x)
+        {
+            Cell* cell = new Cell;
+            cell->init(x, y, (CELL_TYPE)map[y][x].asInt(),
+                RectMake(x*TILESIZEX, y*TILESIZEY, TILESIZEX, TILESIZEY));
+            _vCell.push_back(cell);
+        }
+    }
 }
 
 void Astar::Map::Copy(Map* _map)
@@ -77,7 +92,7 @@ void Astar::Map::Copy(Map* _map)
 	{
 		for (int j = 0; j < sizeY; j++)
 		{
-			map[i][j] = _map->map[i][j];
+			nMap[i][j] = _map->nMap[i][j];
 		}
 	}
 }
@@ -86,9 +101,9 @@ Astar::Map::~Map()
 {
 	for (int i = 0; i < sizeX; i++)
 	{
-		delete[] map[i]; // 맵의 열 동적할당 해제, 열은 행의 갯수만큼 동적할당 되었으므로 sizeX만큼 반복
+		delete[] nMap[i]; // 맵의 열 동적할당 해제, 열은 행의 갯수만큼 동적할당 되었으므로 sizeX만큼 반복
 	}
-	delete[] map; // 맵의 행 동적할당 해제
+	delete[] nMap; // 맵의 행 동적할당 해제
 }
 
 void Astar::Map::PrintMap()
@@ -97,7 +112,7 @@ void Astar::Map::PrintMap()
 	{
 		for (int j = 0; j < sizeY; j++)
 		{
-			printf("%d ", map[i][j]);
+			printf("%d ", nMap[i][j]);
 		}
 		printf("\n");
 	}
@@ -124,7 +139,7 @@ list<Astar::Coordinate*> Astar::FindPath(Map* Navi, Coordinate StartPoint, Coord
 		iter = FindNextNode(&OpenNode); // 열린노드 중 F값이 제일 작은 노드의 주소를 찾아서 iter 에 저장
 		SNode = *iter; // 열린노드 중 F값이 제일 작은 노드를 SNode에 저장
 
-					   // 선택된 SNode 주변의 8방향 노드 탐색, 값이 수정될 수 있는 것은 열린 노드 뿐이므로 열린 노드는 주소를 전달.
+					   // 선택된 SNode 주변의 4방향 노드 탐색, 값이 수정될 수 있는 것은 열린 노드 뿐이므로 열린 노드는 주소를 전달.
 		ExploreNode(Navi, SNode, &OpenNode, &CloseNode, EndPoint);
 
 		CloseNode.push_back(SNode); // 현재 탐색한 노드를 닫힌 노드에 추가
@@ -174,7 +189,7 @@ void Astar::ExploreNode(Map* Navi, Node* SNode, list<Node*>* OpenNode, list<Node
 
 	// '상' 방향 탐색
 	point.x = SNode->point.x - 1;	point.y = SNode->point.y;
-	if (SNode->point.x > 0 && Navi->map[point.x][point.y] == 0) // '상' 방향에 맵이 존재하고 장애물이 없을 경우
+	if (SNode->point.x > 0 && Navi->nMap[point.x][point.y] == 0) // '상' 방향에 맵이 존재하고 장애물이 없을 경우
 	{
 		// 장애물이 없는 경우에 해당하므로 장애물 false 세팅
 		up = false;
@@ -203,7 +218,7 @@ void Astar::ExploreNode(Map* Navi, Node* SNode, list<Node*>* OpenNode, list<Node
 	}
 	// '우' 방향 탐색
 	point.x = SNode->point.x;	point.y = SNode->point.y + 1;
-	if (SNode->point.y < (Navi->sizeY - 1) && Navi->map[point.x][point.y] == 0) // '우' 방향에 맵이 존재하고 장애물이 없을 경우
+	if (SNode->point.y < (Navi->sizeY - 1) && Navi->nMap[point.x][point.y] == 0) // '우' 방향에 맵이 존재하고 장애물이 없을 경우
 	{
 		// 장애물이 없는 경우에 해당하므로 장애물 false 세팅
 		right = false;
@@ -232,7 +247,7 @@ void Astar::ExploreNode(Map* Navi, Node* SNode, list<Node*>* OpenNode, list<Node
 	}
 	// '하' 방향 탐색
 	point.x = SNode->point.x + 1;	point.y = SNode->point.y;
-	if (SNode->point.x < (Navi->sizeX - 1) && Navi->map[point.x][point.y] == 0) // '하' 방향에 맵이 존재하고 장애물이 없을 경우
+	if (SNode->point.x < (Navi->sizeX - 1) && Navi->nMap[point.x][point.y] == 0) // '하' 방향에 맵이 존재하고 장애물이 없을 경우
 	{
 		// 장애물이 없는 경우에 해당하므로 장애물 false 세팅
 		down = false;
@@ -261,7 +276,7 @@ void Astar::ExploreNode(Map* Navi, Node* SNode, list<Node*>* OpenNode, list<Node
 	}
 	// '좌' 방향 탐색
 	point.x = SNode->point.x;	point.y = SNode->point.y - 1;
-	if (SNode->point.y > 0 && Navi->map[point.x][point.y] == 0) // '좌' 방향에 맵이 존재하고 장애물이 없을 경우
+	if (SNode->point.y > 0 && Navi->nMap[point.x][point.y] == 0) // '좌' 방향에 맵이 존재하고 장애물이 없을 경우
 	{
 		// 장애물이 없는 경우에 해당하므로 장애물 false 세팅
 		left = false;
@@ -291,7 +306,7 @@ void Astar::ExploreNode(Map* Navi, Node* SNode, list<Node*>* OpenNode, list<Node
 
 	// '우상' 방향 탐색
 	point.x = SNode->point.x - 1;	point.y = SNode->point.y + 1;
-	if (SNode->point.x > 0 && SNode->point.y < (Navi->sizeY - 1) && Navi->map[point.x][point.y] == 0 &&
+	if (SNode->point.x > 0 && SNode->point.y < (Navi->sizeY - 1) && Navi->nMap[point.x][point.y] == 0 &&
 		up == false && right == false) // '우상' 방향에 맵이 존재하고 장애물이 없으며, 우방향과 상방향에도 장애물이 없을 경우
 	{
 		// 이미 열린 노드에 있는 경우
@@ -319,7 +334,7 @@ void Astar::ExploreNode(Map* Navi, Node* SNode, list<Node*>* OpenNode, list<Node
 	// '우하' 방향 탐색
 	point.x = SNode->point.x + 1;	point.y = SNode->point.y + 1;
 	if (SNode->point.x < (Navi->sizeX - 1) && SNode->point.y < (Navi->sizeY - 1) &&
-		Navi->map[point.x][point.y] == 0 && right == false && down == false)
+		Navi->nMap[point.x][point.y] == 0 && right == false && down == false)
 		// '우하' 방향에 맵이 존재하고 장애물이 없으며, 우방향과 하방향에도 장애물이 없을 경우
 	{
 		// 이미 열린 노드에 있는 경우
@@ -346,7 +361,7 @@ void Astar::ExploreNode(Map* Navi, Node* SNode, list<Node*>* OpenNode, list<Node
 	}
 	// '좌하' 방향 탐색
 	point.x = SNode->point.x + 1;	point.y = SNode->point.y - 1;
-	if (SNode->point.x < (Navi->sizeX - 1) && SNode->point.y > 0 && Navi->map[point.x][point.y] == 0 &&
+	if (SNode->point.x < (Navi->sizeX - 1) && SNode->point.y > 0 && Navi->nMap[point.x][point.y] == 0 &&
 		left == false && down == false) // '좌하' 방향에 맵이 존재하고 장애물이 없으며, 좌방향과 하방향에도 장애물이 없을 경우
 	{
 		// 이미 열린 노드에 있는 경우
@@ -373,7 +388,7 @@ void Astar::ExploreNode(Map* Navi, Node* SNode, list<Node*>* OpenNode, list<Node
 	}
 	// '좌상' 방향 탐색
 	point.x = SNode->point.x - 1;	point.y = SNode->point.y - 1;
-	if (SNode->point.x > 0 && SNode->point.y > 0 && Navi->map[point.x][point.y] == 0 &&
+	if (SNode->point.x > 0 && SNode->point.y > 0 && Navi->nMap[point.x][point.y] == 0 &&
 		left == false && up == false) // '좌상' 방향에 맵이 존재하고 장애물이 없으며, 좌방향과 상방향에도 장애물이 없을 경우
 	{
 		// 이미 열린 노드에 있는 경우
@@ -461,12 +476,16 @@ Astar::Coordinate Astar::GetPos(int order)
 
 void Astar::SetFree(int _x, int _y)
 {
-	Navi.map[_x][_y] = 0;
+	Navi.nMap[_x][_y] = 0;
 }
 
 void Astar::SetObstacle(int _x, int _y)
 {
-	Navi.map[_x][_y] = 1;
+	Navi.nMap[_x][_y] = 1;
+}
+
+void Astar::PrintMoveAbleTile()
+{
 }
 
 void Astar::PrintPath()
@@ -489,7 +508,7 @@ void Astar::PrintNavi()
 
 	for (int i = 0; iter != path.end(); iter++) // 맵에서 경로에 해당하는 곳은 7로 표시
 	{
-		printNavi.map[(*iter)->x][(*iter)->y] = 7;
+		printNavi.nMap[(*iter)->x][(*iter)->y] = 7;
 	}
 	iter = path.begin(); // iter 값 원래대로 돌려주기
 

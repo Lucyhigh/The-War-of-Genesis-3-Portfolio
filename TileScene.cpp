@@ -18,6 +18,7 @@ HRESULT TileScene::init(void)
 	_camera->setLimitsX(CENTER_X, _image->getWidth());
 	_camera->setLimitsY(CENTER_Y, _image->getHeight());
 
+    _endPointIndex = 0;
     //_endPoint = { 0,0 };
 	//_ani = new AniTestScene;
 	//_ani->init();
@@ -26,6 +27,7 @@ HRESULT TileScene::init(void)
 
 void TileScene::release(void)
 {
+    SAFE_DELETE(_mapTileInfo);
 	_player->release();
 	SAFE_DELETE(_player);
 	_camera->release();
@@ -67,26 +69,19 @@ void TileScene::update(void)
 							};
 		if (PtInRect(&cell->getRect(), cameraMouse))
 		{
-			if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
-			{
-				if (cell->getType() == CELL_TYPE::NORMAL)
-                {
-                    cell->setType(CELL_TYPE::GOAL);
-                }
-                
-                cell->setEndCellX(cell->getCellX());
-                cell->setEndCellY(cell->getCellY());
-       
-                _endPoint = cameraMouse;
-            }
-            /*else
+            if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
             {
-                if (cell->getType() == CELL_TYPE::GOAL)
+                if (_endPointIndex == 0 && cell->getType() == CELL_TYPE::NORMAL)
                 {
-                    cell->setType(CELL_TYPE::NORMAL);
-                }
+                    _endPointIndex = 1;
+                    cell->setType(CELL_TYPE::GOAL);
+                
+                    cell->setEndCellX(cell->getCellX());
+                    cell->setEndCellY(cell->getCellY());
 
-            }*/
+                    _endPoint = { cell->getRect().left, cell->getRect().top };
+                }
+            }
 			break;
 		}
 	}
@@ -168,12 +163,11 @@ void TileScene::drawMapCellInfo()
 
 void TileScene::AstarTileInfo()
 {
-    char endTile[512];
-    SetTextColor(getMemDC(), RGB(0, 0, 0));
-
-    sprintf(endTile, "%d,%d", _endPoint.x, _endPoint.y);
-    IMAGEMANAGER->render("curTile2", getMemDC(), _endPoint.x , _endPoint.y );
-    cout << _endPoint.x << " || " << _endPoint.y << endl;
+    POINT cameraEndPoint = { 
+                             _endPoint.x - _camera->getScreenRect().left,
+                             _endPoint.y - _camera->getScreenRect().top
+                           };
+    IMAGEMANAGER->render("curTile2", getMemDC(), cameraEndPoint.x , cameraEndPoint.y );
 }
 
 void TileScene::curMap()

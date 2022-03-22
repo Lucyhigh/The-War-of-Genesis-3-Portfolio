@@ -17,7 +17,7 @@ private:
 	RECT _mouseRc;
 	RECT _endRc;
 	int _mouseIndex;
-
+    int _endPointIndex;
 public:
 	HRESULT init(void);
 	void release(void);
