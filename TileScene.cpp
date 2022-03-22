@@ -1,6 +1,5 @@
 #include "Stdafx.h"
 #include "TileScene.h"
-
 HRESULT TileScene::init(void)
 {
 	_mapTileInfo = new MapTileInfo;
@@ -18,6 +17,20 @@ HRESULT TileScene::init(void)
 	_camera->setLimitsX(CENTER_X, _image->getWidth());
 	_camera->setLimitsY(CENTER_Y, _image->getHeight());
 
+	_generator = new AStar::Generator;
+	_generator->setWorldSize({ STAGE1TILEX, STAGE1TILEY });
+
+	cout << "Generate path ... \n";
+	for (auto cellsIter = _cells->begin(); cellsIter != _cells->end(); ++cellsIter)
+	{
+		Cell* cell = (*cellsIter);
+		if (cell->getType() == CELL_TYPE::WALL)
+		{
+			_generator->addCollision({ cell->getCellX(),cell->getCellY() });
+		}
+	}
+
+	_endPointIndex = 0;
     //_endPoint = { 0,0 };
 	//_ani = new AniTestScene;
 	//_ani->init();
@@ -26,10 +39,12 @@ HRESULT TileScene::init(void)
 
 void TileScene::release(void)
 {
+	SAFE_DELETE(_mapTileInfo);
 	_player->release();
 	SAFE_DELETE(_player);
 	_camera->release();
 	SAFE_DELETE(_camera);
+	SAFE_DELETE(_generator);
 }
 
 void TileScene::update(void)
@@ -43,18 +58,19 @@ void TileScene::update(void)
 	_player->setCameraRect(_camera->getScreenRect());
 	_player->update();
 
-	POINT playerPoint = { _player->getPlayerPosX(),_player->getPlayerPosY() };
+	POINT playerPos = { _player->getPlayerPosX(),_player->getPlayerPosY() };
 
 	for (auto cellsIter = _cells->begin(); cellsIter != _cells->end(); ++cellsIter)
 	{
 		Cell* cell = (*cellsIter);
 
-		if (PtInRect(&cell->getRect(), playerPoint))
+		if (PtInRect(&cell->getRect(), playerPos))
 		{
 			if (cell->getType() != CELL_TYPE::WALL)
 			{
 				cell->setType(CELL_TYPE::START);
 			}
+			_pPlayer = { cell->getCellX(),cell->getCellY() };
 		}
 		else if (cell->getType() == CELL_TYPE::START)
 		{
@@ -69,35 +85,32 @@ void TileScene::update(void)
 		{
 			if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 			{
-				if (cell->getType() == CELL_TYPE::NORMAL)
-                {
-                    cell->setType(CELL_TYPE::GOAL);
-                }
+			/*	if (_endPointIndex == 0 && cell->getType() == CELL_TYPE::NORMAL)
+				{
+					_endPointIndex = 1;
+					cell->setType(CELL_TYPE::GOAL);
+				}
+			*/
+
                 
                 cell->setEndCellX(cell->getCellX());
                 cell->setEndCellY(cell->getCellY());
-       
-                _endPoint = cameraMouse;
+				_endPoint = { cell->getRect().left, cell->getRect().top };
+				
+				auto path = _generator->findPath({ _pPlayer.x,_pPlayer.y}, { cell->getCellX(),cell->getCellY() });
+				_check.clear();
+				for (auto &coordinate : path)
+				{
+					cout << coordinate.x << " " << coordinate.y << "\n";
+					_check.push_back(RectMake(coordinate.x, coordinate.y, TILESIZEX, TILESIZEY));
+				}
             }
-            /*else
-            {
-                if (cell->getType() == CELL_TYPE::GOAL)
-                {
-                    cell->setType(CELL_TYPE::NORMAL);
-                }
-
-            }*/
 			break;
 		}
+           
+
+           
 	}
-
-	//Astar::Coordinate A(0, 0);
-	//Astar::Coordinate B(5, 4);
-
-	//Astar astar(A, B);
-
-	//astar.PrintNavi();
-	
 
 }
 
@@ -147,7 +160,9 @@ void TileScene::render(void)
             DeleteObject(brush);
         }
     }
+	curAstar();
     AstarTileInfo();
+
 	_player->render();
 }
 
@@ -161,21 +176,33 @@ void TileScene::drawMapCellInfo()
 		Cell* cell = (*cellsIter);
 		sprintf(cellIndex, "%d,%d", cell->getCellX(), cell->getCellY());
 		TextOut(getMemDC(), cell->getRect().left - _camera->getScreenRect().left,
-							cell->getRect().top - _camera->getScreenRect().top,
-							cellIndex, strlen(cellIndex));
+			cell->getRect().top - _camera->getScreenRect().top,
+			cellIndex, strlen(cellIndex));
 	}
 }
 
 void TileScene::AstarTileInfo()
 {
-    char endTile[512];
-    SetTextColor(getMemDC(), RGB(0, 0, 0));
-
-    sprintf(endTile, "%d,%d", _endPoint.x, _endPoint.y);
-    IMAGEMANAGER->render("curTile2", getMemDC(), _endPoint.x , _endPoint.y );
-    cout << _endPoint.x << " || " << _endPoint.y << endl;
+	POINT cameraEndPoint = {
+							 _endPoint.x - _camera->getScreenRect().left,
+							 _endPoint.y - _camera->getScreenRect().top
+	};
+	IMAGEMANAGER->render("curTile2", getMemDC(), cameraEndPoint.x, cameraEndPoint.y);
 }
 
-void TileScene::curMap()
+void TileScene::curAstar()
 {
+	int cameraLeft = _camera->getScreenRect().left;
+	int cameraTop = _camera->getScreenRect().top;
+	for (auto checkIter = _check.begin(); checkIter != _check.end(); ++checkIter)
+	{
+		HBRUSH rectBrush = CreateSolidBrush(RGB(0, 255, 0)); // »ö ¼³Á¤
+		HBRUSH oldRectBrush = (HBRUSH)SelectObject(getMemDC(), rectBrush);
+		int left = (checkIter->left * TILESIZEX) - cameraLeft;
+		int top  = (checkIter->top * TILESIZEY)- cameraTop;
+		RECT rect = RectMake(left, top, TILESIZEX, TILESIZEY);
+		FillRect(getMemDC(), &rect, rectBrush);
+		DeleteObject(rectBrush);
+
+	}
 }

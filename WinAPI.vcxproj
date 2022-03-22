@@ -215,7 +215,7 @@
   <ItemGroup>
     <ClInclude Include="Animation.h" />
     <ClInclude Include="AniScene.h" />
-    <ClInclude Include="Astar.h" />
+    <ClInclude Include="AStar.h" />
     <ClInclude Include="Bullets.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CommonMacroFunction.h" />

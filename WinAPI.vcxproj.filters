@@ -321,10 +321,10 @@
     <ClInclude Include="AniScene.h">
       <Filter>API\Animation</Filter>
     </ClInclude>
-    <ClInclude Include="Astar.h">
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="AStar.h">
       <Filter>Portfolio\A%2a</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="API">
