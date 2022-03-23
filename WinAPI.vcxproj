@@ -153,7 +153,6 @@
     <ClCompile Include="collision.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyManager.cpp" />
-    <ClCompile Include="FirstScene.cpp" />
     <ClCompile Include="Flame.cpp" />
     <ClCompile Include="FontManager.cpp" />
     <ClCompile Include="GameNode.cpp" />
@@ -180,14 +179,12 @@
     <ClCompile Include="QuestSample.cpp" />
     <ClCompile Include="Rocket.cpp" />
     <ClCompile Include="SceneManager.cpp" />
-    <ClCompile Include="SecondScene.cpp" />
     <ClCompile Include="ShootingEffect.cpp" />
     <ClCompile Include="ShootingScene.cpp" />
     <ClCompile Include="SoundManager.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="SoundScene.cpp" />
-    <ClCompile Include="StartScene.cpp" />
     <ClCompile Include="Stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -201,9 +198,8 @@
     </ClCompile>
     <ClCompile Include="Text.cpp" />
     <ClCompile Include="TextDataManager.cpp" />
-    <ClCompile Include="ThirdScene.cpp" />
     <ClCompile Include="TileMap.cpp" />
-    <ClCompile Include="TileScene.cpp" />
+    <ClCompile Include="FirstScene.cpp" />
     <ClCompile Include="TimeManager.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="TitleScene.cpp" />
@@ -221,7 +217,6 @@
     <ClInclude Include="CommonMacroFunction.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyManager.h" />
-    <ClInclude Include="FirstScene.h" />
     <ClInclude Include="Flame.h" />
     <ClInclude Include="FontManager.h" />
     <ClInclude Include="GameNode.h" />
@@ -250,7 +245,6 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="Rocket.h" />
     <ClInclude Include="SceneManager.h" />
-    <ClInclude Include="SecondScene.h" />
     <ClInclude Include="ShootingEffect.h" />
     <ClInclude Include="ShootingScene.h" />
     <ClInclude Include="SingletonBase.h" />
@@ -258,7 +252,6 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="SoundScene.h" />
-    <ClInclude Include="StartScene.h" />
     <ClInclude Include="Stdafx.h" />
     <ClInclude Include="Store.h" />
     <ClInclude Include="TempSoundManager.h">
@@ -269,9 +262,8 @@
     </ClInclude>
     <ClInclude Include="Text.h" />
     <ClInclude Include="TextDataManager.h" />
-    <ClInclude Include="ThirdScene.h" />
     <ClInclude Include="TileMap.h" />
-    <ClInclude Include="TileScene.h" />
+    <ClInclude Include="FirstScene.h" />
     <ClInclude Include="TimeManager.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="TitleScene.h" />

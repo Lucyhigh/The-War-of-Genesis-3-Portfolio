@@ -1,6 +1,5 @@
 #include <functional>
 #include <set>
-
 namespace AStar
 {
     struct Vec2i

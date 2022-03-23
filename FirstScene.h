@@ -1,27 +1,44 @@
 #pragma once
 #include "GameNode.h"
+#include "MapTileInfo.h"
 #include "Player.h"
 #include "Camera.h"
+#include "AStar.h"
 
 class FirstScene : public GameNode
 {
 private:
+	MapTileInfo* _mapTileInfo;
+	vector<Cell*>* _cells;
 	Image* _image;
-	Image* _npcImage;
 	Player* _player;
-	RECT _npcRc;
-    Camera* _camera;
-	float _x, _y;
-	int _count;
-	int _indexA;
-	int _indexB;
-	int _alphaA;
+	Camera* _camera;
+	AStar::Generator* _generator;
+
+	POINT _pPlayer;
+    POINT _endPoint;
+	RECT _mouseRc;
+	RECT _endRc;
+    RECT _moveRc;
+	vector<RECT> _check;
+	int _mouseIndex;
+	int _endPointIndex;
+    int _moveCount;
+    int _count;
+    bool _isMove;
+
 public:
 	HRESULT init(void);
 	void release(void);
 	void update(void);
 	void render(void);
 
+	void drawMapCellInfo();
+    void AstarTileInfo();
+    void rectMoveToPath(int speed);
+	void curAstar();
+public:
 	FirstScene() {}
 	~FirstScene() {}
 };
+

@@ -20,7 +20,6 @@ public:
         }
 	}
 
-
 public:
 	MapTileInfo() {}
 	~MapTileInfo() {}

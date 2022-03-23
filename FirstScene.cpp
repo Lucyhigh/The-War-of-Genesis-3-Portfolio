@@ -3,127 +3,283 @@
 
 HRESULT FirstScene::init(void)
 {
-	_image = IMAGEMANAGER->addImage("시작화면", "Resources/Images/BackGround/boss1floor.bmp", 2460, 800, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("기도", "Resources/Images/Object/object.bmp", 272, 304, 2, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("기도E", "Resources/Images/Object/objectE.bmp", 392, 411, 2, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("버튼", "Resources/Images/Object/buttomE.bmp", 35, 38, true, RGB(255, 0, 255));
+	_mapTileInfo = new MapTileInfo;
+	_mapTileInfo->init();
+	_image = IMAGEMANAGER->findImage("Field");
+	_cells = _mapTileInfo->getCell();
 
-	IMAGEMANAGER->addImage("선택창1", "Resources/Images/Object/SelectBox1.bmp", 392, 411);
-	IMAGEMANAGER->addImage("선택창2", "Resources/Images/Object/SelectBox2.bmp", 392, 411);
 	_player = new Player;
 	_player->init();
-	_player->setPlayerPosX(0);
-	_count = 0;
-	_indexA = 0;
-	_npcImage = IMAGEMANAGER->addFrameImage("고양이", "Resources/Images/Object/NPC.bmp", 884, 442, 4, 2, true, RGB(255, 0, 255));
-	_x = 1000;
-	_y = WINSIZE_Y - 120;
-	_npcRc = RectMakeCenter(_x, _y, _npcImage->getFrameWidth(), _npcImage->getFrameHeight());
+	_player->setPlayerPosX(2*TILESIZEX);
+	_player->setPlayerPosY(10* TILESIZEY);
 
-
-	_player->setPlayerPosY(WINSIZE_Y - 100);
 	_camera = new Camera;
 	_camera->init();
 	_camera->setLimitsX(CENTER_X, _image->getWidth());
 	_camera->setLimitsY(CENTER_Y, _image->getHeight());
+
+	_generator = new AStar::Generator;
+	_generator->setWorldSize({ STAGE1TILEX, STAGE1TILEY });
+
+	for (auto cellsIter = _cells->begin(); cellsIter != _cells->end(); ++cellsIter)
+	{
+		Cell* cell = (*cellsIter);
+		if (cell->getType() == CELL_TYPE::WALL)
+		{
+			_generator->addCollision({ cell->getCellX(),cell->getCellY() });
+		}
+	}
+    _moveRc = RectMake(-50, -50, TILESIZEX, TILESIZEY);
+	_endPointIndex = 0;
+    _moveCount = 0;
+    _isMove = false;
 	return S_OK;
 }
 
 void FirstScene::release(void)
 {
+	SAFE_DELETE(_mapTileInfo);
 	_player->release();
+	SAFE_DELETE(_player);
 	_camera->release();
 	SAFE_DELETE(_camera);
+	SAFE_DELETE(_generator);
 }
 
 void FirstScene::update(void)
 {
-	_count++;
-	_player->update();
-	if (getDistance(_npcRc.left, 0, _player->getPlayerPosX(), 0) < 100)
-	{
-		if (KEYMANAGER->isToggleKey('E'))
-		{
-			if (_ptMouse.x > CENTER_X - 300 && _ptMouse.y > CENTER_Y)
-			{
-				if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
-				{
-
-				}
-			}
-			else if (_ptMouse.x > CENTER_X - 300 && _ptMouse.y < CENTER_Y)
-			{
-				if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
-				{
-
-				}
-			}
-		}
-	}
-	if (_count % 10 == 0)
-	{
-		_indexA++;
-		IMAGEMANAGER->findImage("고양이")->setFrameY(1);
-		if (_indexA >= 4)
-		{
-			_indexA = 0;
-		}
-		IMAGEMANAGER->findImage("고양이")->setFrameX(_indexA);
-	}
-	//if (KEYMANAGER->isOnceKeyDown(VK_RBUTTON) || _player->getPlayerPosX() > 2050)
-	//{
-	//	//SCENEMANAGER->changeScene("마을");
- //       _player->setPlayerPosX(2050);
-	//}
-
-	//if (_player->getPlayerPosX() < 450)
-	//{
-	//	_player->setPlayerPosX(450);
-	//}
 
 	POINT cameraPos;
 	cameraPos.x = _player->getPlayerPosX();
-	cameraPos.y = _camera->getCameraPos().y;
+	cameraPos.y = _player->getPlayerPosY();
 	_camera->setCameraPos(cameraPos);
 	_camera->update();
 	_player->setCameraRect(_camera->getScreenRect());
+	_player->update();
+
+	POINT playerPos = { _player->getPlayerPosX(),_player->getPlayerPosY()+TILESIZEY};
+
+    for (auto cellsIter = _cells->begin(); cellsIter != _cells->end(); ++cellsIter)
+    {
+        Cell* cell = (*cellsIter);
+
+        if (PtInRect(&cell->getRect(), playerPos))
+        {
+            if (cell->getType() != CELL_TYPE::WALL)
+            {
+                cell->setType(CELL_TYPE::START);
+            }
+            _pPlayer = { cell->getCellX(),cell->getCellY() };
+        }
+        else if (cell->getType() == CELL_TYPE::START)
+        {
+            cell->setType(CELL_TYPE::NORMAL);
+        }
+
+        POINT cameraMouse = {
+                              _ptMouse.x + _camera->getScreenRect().left,
+                              _ptMouse.y + _camera->getScreenRect().top
+        };
+        if (PtInRect(&cell->getRect(), cameraMouse))
+        {
+            if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+            {
+                cell->setEndCellX(cell->getCellX());
+                cell->setEndCellY(cell->getCellY());
+                cell->setType(CELL_TYPE::GOAL);
+                _endPoint = { cell->getRect().left, cell->getRect().top };
+
+                auto path = _generator->findPath({ _pPlayer.x,_pPlayer.y },
+                    { cell->getCellX(),cell->getCellY() });
+                _check.clear();
+                for (auto &coordinate : path)
+                {
+                    if (cell->getType() == CELL_TYPE::NORMAL)
+                    {
+                        cell->setType(CELL_TYPE::MOVEABLE);
+                    }
+                    _check.push_back(RectMake(coordinate.x, coordinate.y, TILESIZEX, TILESIZEY));
+                }
+                _isMove = true;
+                break;
+            }
+
+
+        }
+    }
+    if (KEYMANAGER->isOnceKeyDown(VK_SPACE)&&_isMove)
+    {
+        rectMoveToPath(5);
+    }
+   
+    //if (_isMove)
+    //{
+    //    _count++;
+    //    _moveCount = _check.size()-1;
+    //    int centerCheckX = _check[_moveCount].right - _check[_moveCount].left;
+    //    int centerCheckY = _check[_moveCount].bottom - _check[_moveCount].top;
+    //    POINT movePlayer = {centerCheckX,centerCheckY};
+
+    //    _player->setPlayerPosX(movePlayer.x);
+    //    _player->setPlayerPosY(movePlayer.y);
+    //        
+    //    if(_count%30 == 0 && _moveCount > 0)_moveCount--;
+    //    else if(_moveCount == 0)
+    //    {
+    //        _count = 0;
+    //        _isMove = false;
+    //    }
+    //    cout << _moveCount << endl;
+
+    //        //if(_player->getPlayerPosX() == _check.begin()
+    //           // _isMove = false;
+    //    
+    //}
+	
 }
 
 void FirstScene::render(void)
 {
-	IMAGEMANAGER->render("시작화면", getMemDC(), 0, 0,
-		_camera->getScreenRect().left, _camera->getScreenRect().top,
-		WINSIZE_X, WINSIZE_Y);
-
 	_camera->render();
 
-	cout << _camera->getScreenRect().right << " " << _camera->getScreenRect().bottom << endl;
-	int npcPosX = _npcRc.left - _camera->getScreenRect().left;
-	int npcPosY = _npcRc.top - _camera->getScreenRect().top;
-	int npcPosCenterX = (_npcRc.left + _npcRc.right) / 2 - _camera->getScreenRect().left;
+	int cameraLeft = _camera->getScreenRect().left;
+	int cameraTop = _camera->getScreenRect().top;
+	IMAGEMANAGER->render("Field", getMemDC(), 0, 0,
+		                                      cameraLeft,
+		                                      cameraTop,
+		                                      WINSIZE_X, WINSIZE_Y);
+    if (KEYMANAGER->isToggleKey(VK_F2))
+    {
+        drawMapCellInfo();
 
-	IMAGEMANAGER->frameRender("고양이", getMemDC(), npcPosX, npcPosY);
-	if (getDistance(npcPosX, npcPosY, _player->getPlayerPosX(), 0) < 100)
-	{
-		if (KEYMANAGER->isToggleKey('E'))
-		{
-			if (_ptMouse.x > CENTER_X - 300 && _ptMouse.y > CENTER_Y)
-			{
-				//IMAGEMANAGER->render("선택창2", getMemDC(), CENTER_X - 300, CENTER_Y - 250);
-			}
-			else
-			{
-				//IMAGEMANAGER->render("선택창1", getMemDC(), CENTER_X - 300, CENTER_Y - 250);
-			}
-		}
-		else
-		{
-		}
-	}
-	IMAGEMANAGER->render("버튼", getMemDC(), npcPosCenterX, npcPosY - 40);
-	//Rectangle(getMemDC(),_npcRc.left, _npcRc.top, _npcRc.right, _npcRc.bottom);
+        for (auto cellsIter = _cells->begin(); cellsIter != _cells->end(); ++cellsIter)
+        {
+            Cell* cell = (*cellsIter);
+            HBRUSH brush = CreateSolidBrush(RGB(255, 0, 0)); // 색 설정
+            HBRUSH oldBrush = (HBRUSH)SelectObject(getMemDC(), brush);
+
+            int left = cell->getRect().left - cameraLeft;
+            int top = cell->getRect().top - cameraTop;
+            RECT rect = RectMake(left, top, TILESIZEX, TILESIZEY);
+            switch (cell->getType())
+            {
+            case(CELL_TYPE::NORMAL):
+                break;
+            case(CELL_TYPE::WALL):
+                oldBrush = (HBRUSH)SelectObject(getMemDC(), brush);
+                FillRect(getMemDC(), &rect, brush); // 사각형에 브러쉬색으로 채우기
+                break;
+            case(CELL_TYPE::START):
+                brush = CreateSolidBrush(RGB(0, 0, 255)); // 색 설정
+                oldBrush = (HBRUSH)SelectObject(getMemDC(), brush);
+                FillRect(getMemDC(), &rect, brush); // 사각형에 브러쉬색으로 채우기
+                SelectObject(getMemDC(), oldBrush);
+                break;
+            case(CELL_TYPE::GOAL):
+                brush = CreateSolidBrush(RGB(0, 255, 0)); // 색 설정
+                oldBrush = (HBRUSH)SelectObject(getMemDC(), brush);
+                FillRect(getMemDC(), &rect, brush); // 사각형에 브러쉬색으로 채우기
+                break;
+            case(CELL_TYPE::MOVEABLE):
+                brush = CreateSolidBrush(RGB(255, 255, 0)); // 색 설정
+                oldBrush = (HBRUSH)SelectObject(getMemDC(), brush);
+                FillRect(getMemDC(), &rect, brush); // 사각형에 브러쉬색으로 채우기
+                break;
+            }
+            DeleteObject(brush);
+        }
+    }
+	//curAstar();
+    AstarTileInfo();
+
 	_player->render();
-	/* cout << npcPosX <<", 카메라x"<< _camera->getCameraPos().x<< ", 카메라 y"<< _camera->getCameraPos().y<<
-		 ", 넴모왼" << _camera->getScreenRect().left << ", 넴모탑 " << _camera->getScreenRect().top <<
-		 ", 길이" << (getDistance(npcPosX, npcPosY, _player->getPlayerPosX(), 0)) << ", 냥왼 " << _npcRc.left << endl;*/
+    IMAGEMANAGER->render("mapInfoAll", getMemDC(), WINSIZE_X - 230, 0);
+    char cellIndex[512];
+    for (auto cellsIter = _cells->begin(); cellsIter != _cells->end(); ++cellsIter)
+    {
+        POINT cameraMouse = {
+                              _ptMouse.x + _camera->getScreenRect().left,
+                              _ptMouse.y + _camera->getScreenRect().top
+                            };
+
+        Cell* cell = (*cellsIter);
+        if (PtInRect(&cell->getRect(), cameraMouse))
+        {
+            sprintf(cellIndex, "%d", cell->getCellX());
+            TextOut(getMemDC(), WINSIZE_X - 210, 80, cellIndex, strlen(cellIndex));
+            sprintf(cellIndex, "%d", cell->getCellY());
+            TextOut(getMemDC(), WINSIZE_X - 130, 65, cellIndex, strlen(cellIndex));
+            int zPos = cell->getCellX() - cell->getCellY();
+
+            if (zPos < 0)      zPos = 1;
+            else if (zPos >= 5)      zPos = 3;
+            sprintf(cellIndex, "%d", zPos);//z축위치
+            TextOut(getMemDC(), WINSIZE_X - 150, 45, cellIndex, strlen(cellIndex));
+            break;
+        }
+    }
+    if (_isMove)
+    {
+        Rectangle(getMemDC(), _moveRc.left - _camera->getScreenRect().left,
+                              _moveRc.top - _camera->getScreenRect().top,
+                              _moveRc.right - _camera->getScreenRect().left,
+                              _moveRc.bottom - _camera->getScreenRect().top);
+    }
+
+}
+
+void FirstScene::drawMapCellInfo()
+{
+	char cellIndex[1024];
+	SetTextColor(getMemDC(), RGB(0, 0, 0));
+
+	for (auto cellsIter = _cells->begin(); cellsIter != _cells->end(); ++cellsIter)
+	{
+		Cell* cell = (*cellsIter);
+		sprintf(cellIndex, "%d,%d", cell->getCellX(), cell->getCellY());
+		TextOut(getMemDC(), cell->getRect().left - _camera->getScreenRect().left,
+			cell->getRect().top - _camera->getScreenRect().top,
+			cellIndex, strlen(cellIndex));
+	}
+}
+
+void FirstScene::AstarTileInfo()
+{
+	POINT cameraEndPoint = {
+							 _endPoint.x - _camera->getScreenRect().left,
+							 _endPoint.y - _camera->getScreenRect().top
+	};
+	IMAGEMANAGER->render("curTile2", getMemDC(), cameraEndPoint.x, cameraEndPoint.y);
+}
+
+void FirstScene::rectMoveToPath(int speed)
+{
+    //네모가 path를 따라서 이동한다.
+    //속도는 speed로 조절한다.
+    //x += speed;
+    for (auto cellsIter = _cells->begin(); cellsIter != _cells->end(); ++cellsIter)
+    {
+        Cell* cell = (*cellsIter);
+        if (cell->getType() == CELL_TYPE::START)
+        {
+            _moveRc = cell->getRect();
+        }
+    }
+}
+
+void FirstScene::curAstar()
+{
+	int cameraLeft = _camera->getScreenRect().left;
+	int cameraTop = _camera->getScreenRect().top;
+	for (auto checkIter = _check.begin(); checkIter != _check.end(); ++checkIter)
+	{
+		HBRUSH rectBrush = CreateSolidBrush(RGB(0, 120, 120)); // 색 설정
+		HBRUSH oldRectBrush = (HBRUSH)SelectObject(getMemDC(), rectBrush);
+		int left = (checkIter->left * TILESIZEX) - cameraLeft;
+		int top  = (checkIter->top * TILESIZEY)- cameraTop;
+		RECT rect = RectMake(left, top, TILESIZEX, TILESIZEY);
+		FillRect(getMemDC(), &rect, rectBrush);
+		DeleteObject(rectBrush);
+
+	}
 }

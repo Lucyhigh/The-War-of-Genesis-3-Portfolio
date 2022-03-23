@@ -33,7 +33,7 @@ HRESULT ImageClass::init(void)
 	IMAGEMANAGER->addImage("curMap", "Resources/Images/UI/curMap.bmp", 241, 111, MGT);
 	IMAGEMANAGER->addImage("introtext", "Resources/Images/UI/introtext.bmp", 230, 105);
 	IMAGEMANAGER->addImage("mapInfoAll", "Resources/Images/UI/mapInfoAll.bmp", 230, 105);
-	IMAGEMANAGER->addImage("mapInfoAll", "Resources/Images/UI/mapInfo.bmp", 230, 105);
+	IMAGEMANAGER->addImage("mapInfobg", "Resources/Images/UI/mapInfo.bmp", 230, 105);
 	IMAGEMANAGER->addImage("button", "Resources/Images/UI/UI_button.bmp", 102, 28, MGT);
 	IMAGEMANAGER->addImage("blockCell", "Resources/Images/UI/blockCell.bmp", 38, 24);//40 32으로 써야할지도
 

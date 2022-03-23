@@ -37,7 +37,7 @@ void Player::update(void)
 	//}
 	if (_isLive)
 	{
-		if (_isWaiting && _count % 30 == 0)
+		if (_isWaiting && _count % 20 == 0)
 		{
 			if (_isLeft)
 			{
@@ -67,7 +67,7 @@ void Player::update(void)
           
             _playerPos.x -= _speed;
 			_hpBar->setX(_hpBar->getX() - _speed);
-			if(_count%30 ==0)	_indexB++;
+			if(_count%20 ==0)	_indexB++;
 			IMAGEMANAGER->findImage("pRightMove")->setFrameY(1);
 			if (_indexB >= 6)
 			{
@@ -82,7 +82,7 @@ void Player::update(void)
      
             _playerPos.x += _speed;
 			_hpBar->setX(_hpBar->getX() + _speed);
-			if (_count % 30 == 0)	_indexB--;
+			if (_count % 20 == 0)	_indexB--;
 			IMAGEMANAGER->findImage("pRightMove")->setFrameY(0);
 			if (_indexB < 0)
 			{
@@ -97,7 +97,7 @@ void Player::update(void)
 
 			_playerPos.y -= _speed;
 			_hpBar->setY(_hpBar->getY() - _speed);
-			if (_count % 30 == 0)	_indexB++;
+			if (_count % 20 == 0)	_indexB++;
 			IMAGEMANAGER->findImage("pRightMove")->setFrameY(1);
 			if (_indexB >= 6)
 			{
@@ -112,7 +112,7 @@ void Player::update(void)
 
 			_playerPos.y += _speed;
 			_hpBar->setY(_hpBar->getY() + _speed);
-			if (_count % 30 == 0)	_indexB--;
+			if (_count % 20 == 0)	_indexB--;
 			IMAGEMANAGER->findImage("pRightMove")->setFrameY(0);
 			if (_indexB < 0)
 			{
