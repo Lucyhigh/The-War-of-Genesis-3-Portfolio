@@ -107,7 +107,9 @@ void TileScene::update(void)
             }
 			break;
 		}
-           
+		//이동 포문돌면서 end ->start까지
+		//--iterator하면서 이동시키고 그러는 동안 카운터돌때마다 이미지 전환해주기?
+         //  _player->setPlayerPosX(_generator->)
 
            
 	}
