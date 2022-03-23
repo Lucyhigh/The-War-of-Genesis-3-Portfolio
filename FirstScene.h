@@ -20,10 +20,12 @@ private:
 	RECT _mouseRc;
 	RECT _endRc;
     RECT _moveRc;
-	vector<RECT> _check;
+	vector<POINT> _check;
+
+	float _lerpPercentage;
 	int _mouseIndex;
 	int _endPointIndex;
-    int _moveCount;
+    int _moveIndex;
     int _count;
     bool _isMove;
 
@@ -35,8 +37,9 @@ public:
 
 	void drawMapCellInfo();
     void AstarTileInfo();
-    void rectMoveToPath(int speed);
+    void rectMoveToPath();
 	void curAstar();
+	POINT lerp(POINT start, POINT end, float percentage);
 public:
 	FirstScene() {}
 	~FirstScene() {}

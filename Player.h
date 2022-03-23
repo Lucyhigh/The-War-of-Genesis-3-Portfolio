@@ -36,6 +36,7 @@ public:
 
 	float getPlayerPosX();
 	float getPlayerPosY();
+	void setPlayerPos(POINT pos);
 	void setPlayerPosX(float x);
     void setPlayerPosY(float y);
 

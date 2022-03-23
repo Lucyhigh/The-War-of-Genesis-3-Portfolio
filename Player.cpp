@@ -163,6 +163,11 @@ float Player::getPlayerPosY()
 	return _playerPos.y;
 }
 
+void Player::setPlayerPos(POINT pos)
+{
+	_playerPos = pos;
+}
+
 void Player::setPlayerPosX(float x)
 {
     _playerPos.x = x;

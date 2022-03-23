@@ -10,8 +10,8 @@ HRESULT FirstScene::init(void)
 
 	_player = new Player;
 	_player->init();
-	_player->setPlayerPosX(2*TILESIZEX);
-	_player->setPlayerPosY(10* TILESIZEY);
+	_player->setPlayerPosX(4 * TILESIZEX);
+	_player->setPlayerPosY(10 * TILESIZEY);
 
 	_camera = new Camera;
 	_camera->init();
@@ -31,7 +31,8 @@ HRESULT FirstScene::init(void)
 	}
     _moveRc = RectMake(-50, -50, TILESIZEX, TILESIZEY);
 	_endPointIndex = 0;
-    _moveCount = 0;
+    _moveIndex = 0;
+	_lerpPercentage = 0.0f;
     _isMove = false;
 	return S_OK;
 }
@@ -98,18 +99,19 @@ void FirstScene::update(void)
                     {
                         cell->setType(CELL_TYPE::MOVEABLE);
                     }
-                    _check.push_back(RectMake(coordinate.x, coordinate.y, TILESIZEX, TILESIZEY));
+					_check.push_back({ coordinate.x, coordinate.y });
                 }
-                _isMove = true;
+				_isMove = true;
+				_moveIndex = _check.size()-1;
                 break;
             }
 
 
         }
     }
-    if (KEYMANAGER->isOnceKeyDown(VK_SPACE)&&_isMove)
+    if (_isMove)
     {
-        rectMoveToPath(5);
+        rectMoveToPath();
     }
    
     //if (_isMove)
@@ -189,7 +191,7 @@ void FirstScene::render(void)
             DeleteObject(brush);
         }
     }
-	//curAstar();
+	curAstar();
     AstarTileInfo();
 
 	_player->render();
@@ -252,19 +254,28 @@ void FirstScene::AstarTileInfo()
 	IMAGEMANAGER->render("curTile2", getMemDC(), cameraEndPoint.x, cameraEndPoint.y);
 }
 
-void FirstScene::rectMoveToPath(int speed)
+void FirstScene::rectMoveToPath()
 {
-    //네모가 path를 따라서 이동한다.
-    //속도는 speed로 조절한다.
-    //x += speed;
-    for (auto cellsIter = _cells->begin(); cellsIter != _cells->end(); ++cellsIter)
-    {
-        Cell* cell = (*cellsIter);
-        if (cell->getType() == CELL_TYPE::START)
-        {
-            _moveRc = cell->getRect();
-        }
-    }
+	
+	if (_moveIndex - 1 < 0)
+	{
+		_isMove = false;
+		_moveIndex = 0;
+		_lerpPercentage = 0.0f;
+		return;
+	}
+
+	float speed = TIMEMANAGER->getElapsedTime() / 1;
+	_lerpPercentage += speed;
+
+	POINT start = { _check[_moveIndex].x * TILESIZEX, _check[_moveIndex].y * TILESIZEY };
+	POINT end = { _check[_moveIndex-1].x * TILESIZEX, _check[_moveIndex-1].y * TILESIZEY };
+	_player->setPlayerPos(lerp(start, end, _lerpPercentage));
+	if (_lerpPercentage >= 1)
+	{
+		_moveIndex--;
+		_lerpPercentage = 0;
+	}
 }
 
 void FirstScene::curAstar()
@@ -275,11 +286,21 @@ void FirstScene::curAstar()
 	{
 		HBRUSH rectBrush = CreateSolidBrush(RGB(0, 120, 120)); // 색 설정
 		HBRUSH oldRectBrush = (HBRUSH)SelectObject(getMemDC(), rectBrush);
-		int left = (checkIter->left * TILESIZEX) - cameraLeft;
-		int top  = (checkIter->top * TILESIZEY)- cameraTop;
+		int left = (checkIter->x * TILESIZEX) - cameraLeft;
+		int top  = (checkIter->y * TILESIZEY)- cameraTop;
 		RECT rect = RectMake(left, top, TILESIZEX, TILESIZEY);
 		FillRect(getMemDC(), &rect, rectBrush);
 		DeleteObject(rectBrush);
 
 	}
+}
+
+POINT FirstScene::lerp(POINT start,POINT end,float percentage)
+{
+	if (0 > percentage) percentage = 0;
+	else if (percentage > 1)percentage = 1;
+	LONG x = start.x + (end.x - start.x) * percentage;
+	LONG y = start.y+ (end.y - start.y) * percentage;
+
+	return {x,y};
 }
