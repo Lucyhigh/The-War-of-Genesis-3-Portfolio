@@ -28,7 +28,6 @@ private:
 	bool _isLeft;
 	bool _isWaiting;
 	bool _isLive;
-	bool _isThird;
 public:
 	HRESULT init(void);
 	void release(void);
@@ -41,18 +40,18 @@ public:
     void setPlayerPosY(float y);
 
 	RECT getPlayerRect();
-
     void setCameraRect(RECT rect);
+
 
 
 	bool getLeft();
 	bool getWaiting();
 	bool getLive();
 	bool setLive(bool status);
-	bool getThird();
-	bool setThird(bool isThird);
+
 	void hitDamage(float damage);
 	
-	Player():_isLeft(false),_isWaiting(true),_isLive(true), _isThird(false){}
+public:
+	Player():_isLeft(false),_isWaiting(true),_isLive(true){}
 	~Player() {}
 };

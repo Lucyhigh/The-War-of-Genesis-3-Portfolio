@@ -1,0 +1,25 @@
+{
+  "character": [
+    {
+      "playerIdle": 
+      {
+        "left": "pLeftIdle",
+        "right": "pRightIdle",
+        "up": "pUpIdle",
+        "down": "pDownIdle"
+      },
+      "playerMove": {
+        "left": "pLeftMove",
+        "right": "pRightMove",
+        "up": "pUpMove",
+        "down": "pDownMove"
+      },
+      "playerAttack": {
+        "left": "pLeftAtt",
+        "right": "pRightAtt",
+        "up": "pUpAtt",
+        "down": "pDownAtt"
+      }
+    }
+  ]
+}

@@ -1,5 +1,6 @@
 #include "Stdafx.h"
 #include "TileScene.h"
+
 HRESULT TileScene::init(void)
 {
 	_mapTileInfo = new MapTileInfo;
@@ -10,7 +11,7 @@ HRESULT TileScene::init(void)
 	_player = new Player;
 	_player->init();
 	_player->setPlayerPosX(250);
-	_player->setPlayerPosY(WINSIZE_Y - 200);
+	_player->setPlayerPosY(CENTER_Y- 200);
 
 	_camera = new Camera;
 	_camera->init();
@@ -20,7 +21,6 @@ HRESULT TileScene::init(void)
 	_generator = new AStar::Generator;
 	_generator->setWorldSize({ STAGE1TILEX, STAGE1TILEY });
 
-	cout << "Generate path ... \n";
 	for (auto cellsIter = _cells->begin(); cellsIter != _cells->end(); ++cellsIter)
 	{
 		Cell* cell = (*cellsIter);
@@ -164,6 +164,7 @@ void TileScene::render(void)
     AstarTileInfo();
 
 	_player->render();
+	IMAGEMANAGER->render
 }
 
 void TileScene::drawMapCellInfo()
