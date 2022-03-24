@@ -16,6 +16,8 @@ HRESULT TitleScene::init(void)
 	_ani->init();
 	_menuIndex = 0;
 
+	_alpha = 0;
+	_isAlphaIncrese = false;
 
 	return S_OK;
 }
@@ -70,11 +72,12 @@ void TitleScene::update(void)
 
 	if (KEYMANAGER->isOnceKeyDown(VK_RETURN))
 	{
-		TEMPSOUNDMANAGER->stopMp3WithKey("Mia");
 		if (_menuIndex == 0)SCENEMANAGER->changeScene("Map");
 		//if (_menuIndex == 1)SCENEMANAGER->changeScene("save");
 		if (_menuIndex == 2)PostQuitMessage(0);
 	}
+	if (_alpha == 0 || _alpha == 255) _isAlphaIncrese = !_isAlphaIncrese;
+	if (_isAlphaIncrese)_alpha += 1.0f; else _alpha -= 1.5f;
 }
 
 void TitleScene::render(void)

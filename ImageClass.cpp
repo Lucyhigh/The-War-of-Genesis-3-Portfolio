@@ -26,6 +26,10 @@ HRESULT ImageClass::init(void)
 #pragma endregion
 
 #pragma region Stage Scene
+	//Title
+	IMAGEMANAGER->addFrameImage("TitleEfx", "Resources/Images/UI/titleEfx.bmp", 996, 225, 4, 1, MGT);
+
+
 	//Scene List
 	IMAGEMANAGER->addImage("TitleBg", "Resources/Images/BackGround/Title.bmp", 640, 480);
 	IMAGEMANAGER->addImage("SceneList", "Resources/Images/BackGround/SceneList.bmp", 640, 480);

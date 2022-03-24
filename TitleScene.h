@@ -11,7 +11,7 @@ private:
 	RECT _logoRc;
 	bool _pushButton;
 	int _alpha;
-
+	bool _isAlphaIncrese;
 	AniSceneTitle* _ani;
 	int _menuIndex;
 public:

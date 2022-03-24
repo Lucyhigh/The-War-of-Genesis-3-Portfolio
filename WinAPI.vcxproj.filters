@@ -417,6 +417,12 @@
     <Filter Include="Portfolio\Enemy">
       <UniqueIdentifier>{e41ec2b4-efce-4d15-b917-39c0635f522b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Portfolio\UI\BattleUI">
+      <UniqueIdentifier>{b1eb2d5e-7b2c-4a51-9f0e-5f3621370e2b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Portfolio\UI\MapUI">
+      <UniqueIdentifier>{4b27e0f5-bed1-4fde-8e0f-5d82c34487cf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\MatricFunction.txt">

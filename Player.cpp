@@ -182,13 +182,13 @@ void Player::render(void)
 		}
 		else
 		{
-			IMAGEMANAGER->frameRender("pLeftMove", getMemDC(), left, top);
+			IMAGEMANAGER->frameRender("pLeftMove", getMemDC(), left - 40, top);
 		}
 		break;
 	case IMAGESTATE::TOP:
 		if (_isWaiting)
 		{	
-			IMAGEMANAGER->frameRender("pUpIdle", getMemDC(), left, top);
+			IMAGEMANAGER->frameRender("pUpIdle", getMemDC(), left+7, top);
 		}
 		else
 		{
@@ -198,11 +198,11 @@ void Player::render(void)
 	case IMAGESTATE::BOTTOM:
 		if (_isWaiting)
 		{
-			IMAGEMANAGER->frameRender("pDownIdle", getMemDC(), left, top);
+			IMAGEMANAGER->frameRender("pDownIdle", getMemDC(), left-12, top);
 		}
 		else
 		{
-			IMAGEMANAGER->frameRender("pDownMove", getMemDC(), left, top);
+			IMAGEMANAGER->frameRender("pDownMove", getMemDC(), left-12, top);
 		}
 		break;
 	}

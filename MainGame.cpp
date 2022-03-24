@@ -28,6 +28,7 @@ HRESULT MainGame::init(void)
 	//SCENEMANAGER->addScene("ÇÈ¼¿", new PixelScene);
 	//SCENEMANAGER->addScene("»ç¿îµå", new SoundScene);
 	SCENEMANAGER->addScene("json", new JsonDataScene);
+	//Scene
 	SCENEMANAGER->addScene("title", new TitleScene);
 	SCENEMANAGER->addScene("first", new FirstScene);
 	SCENEMANAGER->addScene("secind", new SecondScene);
@@ -35,7 +36,7 @@ HRESULT MainGame::init(void)
 	SCENEMANAGER->addScene("ending", new EndingScene);
 	SCENEMANAGER->addScene("Map", new MapScene);
 
-	SCENEMANAGER->changeScene("final");
+	SCENEMANAGER->changeScene("title");
 	return S_OK;
 }
 
