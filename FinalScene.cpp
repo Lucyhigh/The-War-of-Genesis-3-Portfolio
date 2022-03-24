@@ -205,6 +205,7 @@ void FinalScene::render(void)
 	}
 
 	_player->render();
+    IMAGEMANAGER->render("test", getMemDC());
 }
 
 void FinalScene::drawMapCellInfo()
@@ -237,28 +238,31 @@ void FinalScene::rectMoveToPath()
 	if (_moveIndex - 1 < 0)
 	{
 		_isMove = false;
+        _player->setWaiting(true);
 		_moveIndex = 0;
 		_lerpPercentage = 0.0f;
 		return;
 	}
+    else
+    {
+        float time = 0.5f;
+        float speed = TIMEMANAGER->getElapsedTime() / time;
+        _lerpPercentage += speed;
 
-	float time = 0.5f;
-	float speed = TIMEMANAGER->getElapsedTime() / time;
-	_lerpPercentage += speed;
+        POINT start = { _check[_moveIndex].x * TILESIZEX, _check[_moveIndex].y * TILESIZEY };
+        POINT end = { _check[_moveIndex - 1].x * TILESIZEX, _check[_moveIndex - 1].y * TILESIZEY };
+        changeImage();
+        _moveRc = RectMake(lerp(start, end, _lerpPercentage).x,
+            lerp(start, end, _lerpPercentage).y,
+            TILESIZEX, TILESIZEY);
 
-	POINT start = { _check[_moveIndex].x * TILESIZEX, _check[_moveIndex].y * TILESIZEY };
-	POINT end = { _check[_moveIndex - 1].x * TILESIZEX, _check[_moveIndex - 1].y * TILESIZEY };
-
-	_moveRc = RectMake(lerp(start, end, _lerpPercentage).x,
-		lerp(start, end, _lerpPercentage).y,
-		TILESIZEX, TILESIZEY);
-
-	_player->setPlayerPos({ _moveRc.right,_moveRc.top });
-	if (_lerpPercentage >= 1)
-	{
-		_moveIndex--;
-		_lerpPercentage = 0;
-	}
+        _player->setPlayerPos({ _moveRc.right,_moveRc.top });
+        if (_lerpPercentage >= 1)
+        {
+            _moveIndex--;
+            _lerpPercentage = 0;
+        }
+    }
 }
 
 void FinalScene::curAstar()
@@ -276,6 +280,19 @@ void FinalScene::curAstar()
 		DeleteObject(rectBrush);
 
 	}
+}
+
+void FinalScene::changeImage()
+{
+    _player->setWaiting(false);
+    
+    int compareBtoAX = _check[_moveIndex - 1].x - _check[_moveIndex].x;
+    int compareBtoAY = _check[_moveIndex - 1].y - _check[_moveIndex].y;
+
+    if (compareBtoAX > 0 && compareBtoAY == 0)      _player->setImageStage(IMAGESTATE::RIGHT);
+    else if (compareBtoAX < 0 && compareBtoAY == 0) _player->setImageStage(IMAGESTATE::LEFT);
+    else if (compareBtoAY > 0 && compareBtoAX == 0) _player->setImageStage(IMAGESTATE::BOTTOM);
+    else if (compareBtoAY < 0 && compareBtoAX == 0) _player->setImageStage(IMAGESTATE::TOP);
 }
 
 POINT FinalScene::lerp(POINT start, POINT end, float percentage)

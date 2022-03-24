@@ -39,6 +39,7 @@ public:
 	void AstarTileInfo();
 	void rectMoveToPath();
 	void curAstar();
+    void changeImage();
 	POINT lerp(POINT start, POINT end, float percentage);
 public:
 	FinalScene() {}

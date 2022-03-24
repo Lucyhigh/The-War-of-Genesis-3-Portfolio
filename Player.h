@@ -32,7 +32,6 @@ private:
 	float _currentHp;
 	float _maxHp;
 
-	bool _isLeft;
 	bool _isWaiting;
 	bool _isLive;
 public:
@@ -53,8 +52,7 @@ public:
 	IMAGESTATE getImageState();
 	void setImageStage(IMAGESTATE state);
 
-	bool getLeft();
-	void setLeft(bool left);
+	
 	bool getWaiting();
 	void setWaiting(bool isWaiting);
 	bool getLive();
@@ -63,6 +61,6 @@ public:
 	void hitDamage(float damage);
 	
 public:
-	Player():_isLeft(false),_isWaiting(true),_isLive(true){}
+	Player():_isWaiting(true),_isLive(true){}
 	~Player() {}
 };

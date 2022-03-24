@@ -30,7 +30,7 @@ AStar::uint AStar::Node::getScore()
 AStar::Generator::Generator()
 {
     setDiagonalMovement(false);
-    setHeuristic(&Heuristic::octagonal);
+    setHeuristic(&Heuristic::manhattan);
     direction = {
         { 0, 1 }, { 1, 0 }, { 0, -1 }, { -1, 0 },
         { -1, -1 }, { 1, 1 }, { -1, 1 }, { 1, -1 }
