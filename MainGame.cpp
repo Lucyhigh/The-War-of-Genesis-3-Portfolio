@@ -4,7 +4,12 @@
 //UI
 #include "ImageClass.h"
 //Stage
+#include "TitleScene.h"
 #include "FirstScene.h"
+#include "SecondScene.h"
+#include "FinalScene.h"
+#include "EndingScene.h"
+#include "MapScene.h"
 #include "Inventory.h"
 #include "Store.h"
 #include "PixelScene.h"
@@ -18,14 +23,19 @@ HRESULT MainGame::init(void)
 	ImageClass imageClass = ImageClass();
 	imageClass.init();
 
-	SCENEMANAGER->addScene("인벤토리", new Inventory);
-	SCENEMANAGER->addScene("상점", new Store);
+	SCENEMANAGER->addScene("inven", new Inventory);
+	SCENEMANAGER->addScene("store", new Store);
 	//SCENEMANAGER->addScene("픽셀", new PixelScene);
 	//SCENEMANAGER->addScene("사운드", new SoundScene);
-	SCENEMANAGER->addScene("제이슨", new JsonDataScene);
-	SCENEMANAGER->addScene("타일", new FirstScene);
+	SCENEMANAGER->addScene("json", new JsonDataScene);
+	SCENEMANAGER->addScene("title", new TitleScene);
+	SCENEMANAGER->addScene("first", new FirstScene);
+	SCENEMANAGER->addScene("secind", new SecondScene);
+	SCENEMANAGER->addScene("final", new FinalScene);
+	SCENEMANAGER->addScene("ending", new EndingScene);
+	SCENEMANAGER->addScene("Map", new MapScene);
 
-	SCENEMANAGER->changeScene("타일");
+	SCENEMANAGER->changeScene("final");
 	return S_OK;
 }
 

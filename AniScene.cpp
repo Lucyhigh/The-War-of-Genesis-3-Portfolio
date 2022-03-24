@@ -1,38 +1,138 @@
 #include "Stdafx.h"
 #include "AniScene.h"
 
+#pragma region TitleScene Animation
+HRESULT AniSceneTitle::init(void)
+{
+	_aITitleBg = IMAGEMANAGER->findImage("TitleBg");
+	_aITitleMain = IMAGEMANAGER->findImage("titleMain");
+	_aITitleEff = IMAGEMANAGER->findImage("titleEffect");
+	_aITitleSelecte = IMAGEMANAGER->findImage("titleSelecte");
+
+	_aMTitleBg = new Animation;
+	_aMTitleBg->init(_aITitleBg->getWidth(), _aITitleBg->getHeight(), 1200, 675);
+	_aMTitleMain = new Animation;
+	_aMTitleMain->init(_aITitleMain->getWidth(), _aITitleMain->getHeight(), 1200, 675);
+	_aMTitleEff = new Animation;
+	_aMTitleEff->init(_aITitleEff->getWidth(), _aITitleEff->getHeight(), 1200, 675);
+	_aMTitleSelecte = new Animation;
+	_aMTitleSelecte->init(_aITitleSelecte->getWidth(), _aITitleSelecte->getHeight(), 48, 48);
+
+	_aMTitleBg->setDefPlayFrame(false, true);
+	_aMTitleBg->setFPS(5);
+	_aMTitleMain->setDefPlayFrame(false, true);
+	_aMTitleMain->setFPS(1);
+	_aMTitleEff->setDefPlayFrame(false, true);
+	_aMTitleEff->setFPS(2);
+	_aMTitleSelecte->setDefPlayFrame(false, true);
+	_aMTitleSelecte->setFPS(2);
+
+
+	_aMTitleBg->AniStart();
+	_aMTitleMain->AniStart();
+	_aMTitleEff->AniStart();
+	_aMTitleSelecte->AniStart();
+
+	_isAniStart = false;
+	return S_OK;
+}
+
+void AniSceneTitle::release(void)
+{
+	_aMTitleBg->release();
+	SAFE_DELETE(_aMTitleBg);
+	_aMTitleMain->release();
+	SAFE_DELETE(_aMTitleMain);
+	_aMTitleEff->release();
+	SAFE_DELETE(_aMTitleEff);
+	_aMTitleSelecte->release();
+	SAFE_DELETE(_aMTitleSelecte);
+}
+
+void AniSceneTitle::update(void)
+{
+	_aMTitleBg->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
+	_aMTitleMain->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
+	_aMTitleEff->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
+	_aMTitleSelecte->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
+}
+
+void AniSceneTitle::render(void)
+{
+	_aITitleBg->aniRender(getMemDC(), 0, 0, _aMTitleBg);
+	_aITitleMain->aniRender(getMemDC(), 0, 0, _aMTitleMain);
+	_aITitleEff->aniRender(getMemDC(), 0, 0, _aMTitleEff);
+}
+
+void AniSceneTitle::render(int x, int y)
+{
+	_aITitleSelecte->aniRender(getMemDC(), x, y, _aMTitleSelecte);
+}
+#pragma endregion
+
+#pragma region Item Select Animation
+HRESULT AniSceneItem::init(void)
+{
+	_aIItemSelect = IMAGEMANAGER->findImage("itemsCursor");
+
+	_aMItemSelect = new Animation;
+	_aMItemSelect->init(_aIItemSelect->getWidth(), _aIItemSelect->getHeight(), 57, 57);
+
+	_aMItemSelect->setDefPlayFrame(false, true);
+	_aMItemSelect->setFPS(3);
+
+	_aMItemSelect->AniStart();
+
+	return S_OK;
+}
+
+void AniSceneItem::release(void)
+{
+	_aMItemSelect->release();
+	SAFE_DELETE(_aMItemSelect);
+}
+
+void AniSceneItem::update(void)
+{
+	_aMItemSelect->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
+
+}
+
+void AniSceneItem::render(int x, int y)
+{
+	_aIItemSelect->aniRender(getMemDC(), x, y, _aMItemSelect);
+
+}
+#pragma endregion
+
+#pragma region AniScene
 HRESULT AniScene::init(void)
 {
-    //프레임 이미지가 아닌 그냥 이미지를 받고있다
-    _image = IMAGEMANAGER->addImage("꼬끼리", "Resources/Images/Object/Elephant.bmp",
-        660, 268, true, RGB(255, 0, 255));
-    _ani = new Animation;
+	_aITitleBg = IMAGEMANAGER->findImage("titleBg");
 
-    //x 6 y 4 프레임
-    _ani->init(_image->getWidth(), _image->getHeight(), 110, 67);
-    //_image->getWidth() / 6, _image->getHeight() / 4);<<연산은 쓰면 안좋다..
-    //확장성을 위해 상수보다 변수를 쓰라햇지만 리소스엔 예외임 특히 나누기 개안조음
-    _ani->setDefPlayFrame(false, true);
-    _ani->setFPS(12);
-    return S_OK;
+	_aMTitleBg = new Animation;
+	_aMTitleBg->init(_aITitleBg->getWidth(), _aITitleBg->getHeight(), 640, 360);
+
+	_aMTitleBg->setDefPlayFrame(false, true);
+	_aMTitleBg->setFPS(12);
+
+	return S_OK;
 }
 
 void AniScene::release(void)
 {
-    _ani->release();
-    SAFE_DELETE(_ani);
+	_aMTitleBg->release();
+	SAFE_DELETE(_aMTitleBg);
 }
 
 void AniScene::update(void)
 {
-    if (KEYMANAGER->isOnceKeyDown('B'))
-    {
-        _ani->AniStart();
-    }
-    _ani->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
+	_aMTitleBg->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
 }
 
 void AniScene::render(void)
 {
-    _image->aniRender(getMemDC(), CENTER_X - 50, CENTER_Y, _ani);
+	_aITitleBg->aniRender(getMemDC(), 0, 0, _aMTitleBg);
 }
+
+#pragma endregion

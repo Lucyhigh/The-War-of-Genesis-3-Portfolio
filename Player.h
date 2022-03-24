@@ -54,6 +54,7 @@ public:
 	void setImageStage(IMAGESTATE state);
 
 	bool getLeft();
+	void setLeft(bool left);
 	bool getWaiting();
 	void setWaiting(bool isWaiting);
 	bool getLive();

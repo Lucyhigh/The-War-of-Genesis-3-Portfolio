@@ -148,6 +148,15 @@
     <ClCompile Include="FirstScene.cpp">
       <Filter>Portfolio\GameScene</Filter>
     </ClCompile>
+    <ClCompile Include="EndingScene.cpp">
+      <Filter>Portfolio\GameScene</Filter>
+    </ClCompile>
+    <ClCompile Include="SecondScene.cpp">
+      <Filter>Portfolio\GameScene</Filter>
+    </ClCompile>
+    <ClCompile Include="FinalScene.cpp">
+      <Filter>Portfolio\GameScene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameNode.h">
@@ -299,6 +308,15 @@
       <Filter>Portfolio\A%2a</Filter>
     </ClInclude>
     <ClInclude Include="FirstScene.h">
+      <Filter>Portfolio\GameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="EndingScene.h">
+      <Filter>Portfolio\GameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="SecondScene.h">
+      <Filter>Portfolio\GameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="FinalScene.h">
       <Filter>Portfolio\GameScene</Filter>
     </ClInclude>
   </ItemGroup>

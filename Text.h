@@ -6,3 +6,10 @@ struct tagTextWithSound
     string soundVec;
     LPCWSTR script;
 };
+
+struct tagTextWithImage
+{
+	LPCWSTR name;
+	vector<string> ImageVec;
+	LPCWSTR script;
+};

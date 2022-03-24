@@ -1,5 +1,7 @@
 #pragma once
-class MapScene
+#include "GameNode.h"
+#include "Camera.h"
+class MapScene:public GameNode
 {
 };
 

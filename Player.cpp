@@ -31,11 +31,6 @@ void Player::release(void)
 void Player::update(void)
 {
 	_count++;
-	//if (_isThird)
-	//{
-	//	_hpBar->update();
-	//	_hpBar->setGauge(_currentHp, _maxHp);
-	//}
 
 	if (KEYMANAGER->isOnceKeyDown('1'))
 	{
@@ -53,9 +48,15 @@ void Player::update(void)
 	{
 		_imageState = IMAGESTATE::BOTTOM;
 	}
-	else if (KEYMANAGER->isToggleKey('5'))
+	else if (KEYMANAGER->isOnceKeyDown('5'))
 	{
 		_isWaiting=false;
+		
+	}
+	else if (KEYMANAGER->isOnceKeyDown('6'))
+	{
+		_isWaiting = true;
+
 	}
 	cout << (int)_imageState <<" , " << _isWaiting << endl;
 	switch(_imageState)
@@ -72,13 +73,9 @@ void Player::update(void)
 			}
 			IMAGEMANAGER->findImage("pRightIdle")->setFrameX(_indexA);
 		}
-		else if (!_isWaiting)
+		else if (!_isWaiting &&_count % 20 == 0)
 		{
-			_isLeft = true;
-			_isWaiting = false;
-
-			//_hpBar->setX(_hpBar->getX() - _speed);
-			if (_count % 20 == 0)	_indexB++;
+			_indexB++;
 			IMAGEMANAGER->findImage("pRightMove")->setFrameY(1);
 			if (_indexB >= 6)
 			{
@@ -99,12 +96,9 @@ void Player::update(void)
 			}
 			IMAGEMANAGER->findImage("pLeftIdle")->setFrameX(_indexA);
 		}
-		else if (!_isWaiting)
+		else if (!_isWaiting &&_count % 20 == 0)
 		{
-			_isLeft = true;
-
-			//_hpBar->setX(_hpBar->getX() - _speed);
-			if (_count % 20 == 0)	_indexB++;
+			_indexB++;
 			IMAGEMANAGER->findImage("pLeftMove")->setFrameY(1);
 			if (_indexB >= 6)
 			{
@@ -124,11 +118,10 @@ void Player::update(void)
 			}
 			IMAGEMANAGER->findImage("pUpIdle")->setFrameX(_indexA);
 		}
-		else if (!_isWaiting)
+		else if (!_isWaiting &&_count % 20 == 0)
 		{
 
-			//_hpBar->setX(_hpBar->getX() - _speed);
-			if (_count % 20 == 0)	_indexB++;
+			_indexB++;
 			IMAGEMANAGER->findImage("pUpMove")->setFrameY(1);
 			if (_indexB >= 6)
 			{
@@ -148,11 +141,9 @@ void Player::update(void)
 			}
 			IMAGEMANAGER->findImage("pDownIdle")->setFrameX(_indexA);
 		}
-		else if (!_isWaiting)
+		else if (!_isWaiting &&_count % 20 == 0)
 		{
-
-			//_hpBar->setX(_hpBar->getX() - _speed);
-			if (_count % 20 == 0)	_indexB++;
+			_indexB++;
 			IMAGEMANAGER->findImage("pDownMove")->setFrameY(1);
 			if (_indexB >= 6)
 			{
@@ -179,17 +170,7 @@ void Player::render(void)
 	}*/
     float left = _rcPlayer.left - _cameraRect.left;
     float top = _rcPlayer.top - _cameraRect.top;
-	if (_isLive)
-	{
-		if (_isWaiting)
-		{
-			IMAGEMANAGER->frameRender("pRightIdle", getMemDC(), left, top);
-		}
-		else
-		{
-			IMAGEMANAGER->frameRender("pRightMove", getMemDC(), left, top);
-		}
-	}
+
 	switch (_imageState)
 	{
 	case IMAGESTATE::RIGHT:
@@ -267,6 +248,11 @@ RECT Player::getPlayerRect()
 bool Player::getLeft()
 {
 	return _isLeft;
+}
+
+void Player::setLeft(bool left)
+{
+	_isLeft = left;
 }
 
 bool Player::getWaiting()

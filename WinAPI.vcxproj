@@ -151,8 +151,10 @@
     <ClCompile Include="Bullets.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="collision.cpp" />
+    <ClCompile Include="EndingScene.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyManager.cpp" />
+    <ClCompile Include="FinalScene.cpp" />
     <ClCompile Include="Flame.cpp" />
     <ClCompile Include="FontManager.cpp" />
     <ClCompile Include="GameNode.cpp" />
@@ -179,6 +181,7 @@
     <ClCompile Include="QuestSample.cpp" />
     <ClCompile Include="Rocket.cpp" />
     <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="SecondScene.cpp" />
     <ClCompile Include="ShootingEffect.cpp" />
     <ClCompile Include="ShootingScene.cpp" />
     <ClCompile Include="SoundManager.cpp">
@@ -215,8 +218,10 @@
     <ClInclude Include="Bullets.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CommonMacroFunction.h" />
+    <ClInclude Include="EndingScene.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyManager.h" />
+    <ClInclude Include="FinalScene.h" />
     <ClInclude Include="Flame.h" />
     <ClInclude Include="FontManager.h" />
     <ClInclude Include="GameNode.h" />
@@ -245,6 +250,7 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="Rocket.h" />
     <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="SecondScene.h" />
     <ClInclude Include="ShootingEffect.h" />
     <ClInclude Include="ShootingScene.h" />
     <ClInclude Include="SingletonBase.h" />
