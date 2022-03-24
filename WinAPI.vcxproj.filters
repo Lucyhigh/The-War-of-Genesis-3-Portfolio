@@ -404,12 +404,6 @@
     <Text Include="..\MatricFunction.txt">
       <Filter>API\Utility</Filter>
     </Text>
-    <Text Include="Text.txt">
-      <Filter>Portfolio\A%2a</Filter>
-    </Text>
-    <Text Include="Text1.txt">
-      <Filter>Portfolio\A%2a</Filter>
-    </Text>
   </ItemGroup>
   <ItemGroup>
     <None Include="jItem.json">

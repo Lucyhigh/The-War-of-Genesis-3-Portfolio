@@ -18,6 +18,7 @@ HRESULT Player::init(void)
 	_maxHp = 10;
 	_hpBar = new ProgressBar;
 	_hpBar->init(280, WINSIZE_Y - 250, 52, 4);
+	_imageState = IMAGESTATE::RIGHT;
 	return S_OK;
 }
 
@@ -35,68 +36,48 @@ void Player::update(void)
 	//	_hpBar->update();
 	//	_hpBar->setGauge(_currentHp, _maxHp);
 	//}
-	if (_isLive)
+
+	if (KEYMANAGER->isOnceKeyDown('1'))
 	{
-		if (_isWaiting && _count % 20 == 0)
+		_imageState = IMAGESTATE::RIGHT;
+	}
+	else if (KEYMANAGER->isOnceKeyDown('2'))
+	{
+		_imageState = IMAGESTATE::LEFT;
+	}
+	else if (KEYMANAGER->isOnceKeyDown('3'))
+	{
+		_imageState = IMAGESTATE::TOP;
+	}
+	else if (KEYMANAGER->isOnceKeyDown('4'))
+	{
+		_imageState = IMAGESTATE::BOTTOM;
+	}
+	else if (KEYMANAGER->isToggleKey('5'))
+	{
+		_isWaiting=false;
+	}
+	cout << (int)_imageState <<" , " << _isWaiting << endl;
+	switch(_imageState)
+	{
+	case IMAGESTATE::RIGHT:
+		if (_isWaiting &&_count % 20 == 0)
 		{
-			if (_isLeft)
+
+			_indexA--;
+			IMAGEMANAGER->findImage("pRightIdle")->setFrameY(0);
+			if (_indexA < 0)
 			{
-				_indexA++;
-				IMAGEMANAGER->findImage("pRightIdle")->setFrameY(1);
-				if (_indexA >= 3)
-				{
-					_indexA = 0;
-				}
-				IMAGEMANAGER->findImage("pRightIdle")->setFrameX(_indexA);
+				_indexA = 3;
 			}
-			else if (!_isLeft)
-			{
-				_indexA--;
-				IMAGEMANAGER->findImage("pRightIdle")->setFrameY(0);
-				if (_indexA < 0)
-				{
-					_indexA = 3;
-				}
-				IMAGEMANAGER->findImage("pRightIdle")->setFrameX(_indexA);
-			}
+			IMAGEMANAGER->findImage("pRightIdle")->setFrameX(_indexA);
 		}
-		if (KEYMANAGER->isStayKeyDown(VK_LEFT))
-		{
-			_isLeft = true;
-			_isWaiting = false;
-          
-            _playerPos.x -= _speed;
-			_hpBar->setX(_hpBar->getX() - _speed);
-			if(_count%20 ==0)	_indexB++;
-			IMAGEMANAGER->findImage("pRightMove")->setFrameY(1);
-			if (_indexB >= 6)
-			{
-				_indexB = 0;
-			}
-			IMAGEMANAGER->findImage("pRightMove")->setFrameX(_indexB);
-		}
-		else if (KEYMANAGER->isStayKeyDown(VK_RIGHT))
-		{
-			_isLeft = false;
-			_isWaiting = false;
-     
-            _playerPos.x += _speed;
-			_hpBar->setX(_hpBar->getX() + _speed);
-			if (_count % 20 == 0)	_indexB--;
-			IMAGEMANAGER->findImage("pRightMove")->setFrameY(0);
-			if (_indexB < 0)
-			{
-				_indexB = 6;
-			}
-			IMAGEMANAGER->findImage("pRightMove")->setFrameX(_indexB);
-		}
-		else if (KEYMANAGER->isStayKeyDown(VK_UP))
+		else if (!_isWaiting)
 		{
 			_isLeft = true;
 			_isWaiting = false;
 
-			_playerPos.y -= _speed;
-			_hpBar->setY(_hpBar->getY() - _speed);
+			//_hpBar->setX(_hpBar->getX() - _speed);
 			if (_count % 20 == 0)	_indexB++;
 			IMAGEMANAGER->findImage("pRightMove")->setFrameY(1);
 			if (_indexB >= 6)
@@ -105,31 +86,89 @@ void Player::update(void)
 			}
 			IMAGEMANAGER->findImage("pRightMove")->setFrameX(_indexB);
 		}
-		else if (KEYMANAGER->isStayKeyDown(VK_DOWN))
+		break;
+	case IMAGESTATE::LEFT:
+		if (_isWaiting &&_count % 20 == 0)
 		{
-			_isLeft = false;
-			_isWaiting = false;
 
-			_playerPos.y += _speed;
-			_hpBar->setY(_hpBar->getY() + _speed);
-			if (_count % 20 == 0)	_indexB--;
-			IMAGEMANAGER->findImage("pRightMove")->setFrameY(0);
-			if (_indexB < 0)
+			_indexA++;
+			IMAGEMANAGER->findImage("pLeftIdle")->setFrameY(1);
+			if (_indexA >= 3)
 			{
-				_indexB = 6;
+				_indexA = 0;
 			}
-			IMAGEMANAGER->findImage("pRightMove")->setFrameX(_indexB);
+			IMAGEMANAGER->findImage("pLeftIdle")->setFrameX(_indexA);
 		}
-		else
+		else if (!_isWaiting)
 		{
-			_isWaiting = true;
+			_isLeft = true;
+
+			//_hpBar->setX(_hpBar->getX() - _speed);
+			if (_count % 20 == 0)	_indexB++;
+			IMAGEMANAGER->findImage("pLeftMove")->setFrameY(1);
+			if (_indexB >= 6)
+			{
+				_indexB = 0;
+			}
+			IMAGEMANAGER->findImage("pLeftMove")->setFrameX(_indexB);
 		}
+		break;
+	case IMAGESTATE::TOP:
+		if (_isWaiting &&_count % 20 == 0)
+		{
+			_indexA--;
+			IMAGEMANAGER->findImage("pUpIdle")->setFrameY(0);
+			if (_indexA < 0)
+			{
+				_indexA = 3;
+			}
+			IMAGEMANAGER->findImage("pUpIdle")->setFrameX(_indexA);
+		}
+		else if (!_isWaiting)
+		{
+
+			//_hpBar->setX(_hpBar->getX() - _speed);
+			if (_count % 20 == 0)	_indexB++;
+			IMAGEMANAGER->findImage("pUpMove")->setFrameY(1);
+			if (_indexB >= 6)
+			{
+				_indexB = 0;
+			}
+			IMAGEMANAGER->findImage("pUpMove")->setFrameX(_indexB);
+		}
+		break;
+	case IMAGESTATE::BOTTOM:
+		if (_isWaiting &&_count % 20 == 0)
+		{
+			_indexA--;
+			IMAGEMANAGER->findImage("pDownIdle")->setFrameY(0);
+			if (_indexA < 0)
+			{
+				_indexA = 3;
+			}
+			IMAGEMANAGER->findImage("pDownIdle")->setFrameX(_indexA);
+		}
+		else if (!_isWaiting)
+		{
+
+			//_hpBar->setX(_hpBar->getX() - _speed);
+			if (_count % 20 == 0)	_indexB++;
+			IMAGEMANAGER->findImage("pDownMove")->setFrameY(1);
+			if (_indexB >= 6)
+			{
+				_indexB = 0;
+			}
+			IMAGEMANAGER->findImage("pDownMove")->setFrameX(_indexB);
+		}
+		break;
+	}
+		
 	/*	if (_isThird && _count % 20 == 0)
 		{
 			hitDamage(0.5f);
 		}*/
 		_rcPlayer = RectMakeCenter(_playerPos.x, _playerPos.y, _image->getFrameWidth(), _image->getFrameHeight());
-	}
+	
 }
 
 void Player::render(void)
@@ -138,10 +177,10 @@ void Player::render(void)
 	{
 		_hpBar->render();
 	}*/
+    float left = _rcPlayer.left - _cameraRect.left;
+    float top = _rcPlayer.top - _cameraRect.top;
 	if (_isLive)
 	{
-        float left = _rcPlayer.left - _cameraRect.left;
-        float top = _rcPlayer.top - _cameraRect.top;
 		if (_isWaiting)
 		{
 			IMAGEMANAGER->frameRender("pRightIdle", getMemDC(), left, top);
@@ -150,6 +189,49 @@ void Player::render(void)
 		{
 			IMAGEMANAGER->frameRender("pRightMove", getMemDC(), left, top);
 		}
+	}
+	switch (_imageState)
+	{
+	case IMAGESTATE::RIGHT:
+		if (_isWaiting )
+		{
+			IMAGEMANAGER->frameRender("pRightIdle", getMemDC(), left, top);
+		}
+		else
+		{
+			IMAGEMANAGER->frameRender("pRightMove", getMemDC(), left, top);
+		}
+		break;
+	case IMAGESTATE::LEFT:
+		if (_isWaiting)
+		{
+			IMAGEMANAGER->frameRender("pLeftIdle", getMemDC(), left, top);
+		}
+		else
+		{
+			IMAGEMANAGER->frameRender("pLeftMove", getMemDC(), left, top);
+		}
+		break;
+	case IMAGESTATE::TOP:
+		if (_isWaiting)
+		{	
+			IMAGEMANAGER->frameRender("pUpIdle", getMemDC(), left, top);
+		}
+		else
+		{
+			IMAGEMANAGER->frameRender("pUpMove", getMemDC(), left, top);
+		}
+		break;
+	case IMAGESTATE::BOTTOM:
+		if (_isWaiting)
+		{
+			IMAGEMANAGER->frameRender("pDownIdle", getMemDC(), left, top);
+		}
+		else
+		{
+			IMAGEMANAGER->frameRender("pDownMove", getMemDC(), left, top);
+		}
+		break;
 	}
 }
 
@@ -192,6 +274,11 @@ bool Player::getWaiting()
 	return _isWaiting;
 }
 
+void Player::setWaiting(bool isWaiting)
+{
+	_isWaiting = isWaiting;
+}
+
 bool Player::getLive()
 {
 	return _isLive;
@@ -216,4 +303,14 @@ void Player::hitDamage(float damage)
 void Player::setCameraRect(RECT rect)
 {
     _cameraRect = rect;
+}
+
+IMAGESTATE Player::getImageState()
+{
+	return _imageState;
+}
+
+void Player::setImageStage(IMAGESTATE state)
+{
+	_imageState = state;
 }

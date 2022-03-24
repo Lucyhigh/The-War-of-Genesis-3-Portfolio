@@ -271,8 +271,6 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\MatricFunction.txt" />
-    <Text Include="Text.txt" />
-    <Text Include="Text1.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="character.json" />

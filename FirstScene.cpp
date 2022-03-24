@@ -49,7 +49,6 @@ void FirstScene::release(void)
 
 void FirstScene::update(void)
 {
-
 	POINT cameraPos;
 	cameraPos.x = _player->getPlayerPosX();
 	cameraPos.y = _player->getPlayerPosY();
@@ -58,7 +57,7 @@ void FirstScene::update(void)
 	_player->setCameraRect(_camera->getScreenRect());
 	_player->update();
 
-	POINT playerPos = { _player->getPlayerPosX(),_player->getPlayerPosY()+TILESIZEY};
+	POINT playerPos = { _player->getPlayerPosX(),_player->getPlayerPosY()};
 
     for (auto cellsIter = _cells->begin(); cellsIter != _cells->end(); ++cellsIter)
     {
@@ -114,29 +113,6 @@ void FirstScene::update(void)
         rectMoveToPath();
     }
    
-    //if (_isMove)
-    //{
-    //    _count++;
-    //    _moveCount = _check.size()-1;
-    //    int centerCheckX = _check[_moveCount].right - _check[_moveCount].left;
-    //    int centerCheckY = _check[_moveCount].bottom - _check[_moveCount].top;
-    //    POINT movePlayer = {centerCheckX,centerCheckY};
-
-    //    _player->setPlayerPosX(movePlayer.x);
-    //    _player->setPlayerPosY(movePlayer.y);
-    //        
-    //    if(_count%30 == 0 && _moveCount > 0)_moveCount--;
-    //    else if(_moveCount == 0)
-    //    {
-    //        _count = 0;
-    //        _isMove = false;
-    //    }
-    //    cout << _moveCount << endl;
-
-    //        //if(_player->getPlayerPosX() == _check.begin()
-    //           // _isMove = false;
-    //    
-    //}
 	
 }
 
@@ -194,7 +170,6 @@ void FirstScene::render(void)
 	curAstar();
     AstarTileInfo();
 
-	_player->render();
     IMAGEMANAGER->render("mapInfoAll", getMemDC(), WINSIZE_X - 230, 0);
     char cellIndex[512];
     for (auto cellsIter = _cells->begin(); cellsIter != _cells->end(); ++cellsIter)
@@ -228,6 +203,7 @@ void FirstScene::render(void)
                               _moveRc.bottom - _camera->getScreenRect().top);
     }
 
+	_player->render();
 }
 
 void FirstScene::drawMapCellInfo()
@@ -265,12 +241,18 @@ void FirstScene::rectMoveToPath()
 		return;
 	}
 
-	float speed = TIMEMANAGER->getElapsedTime() / 1;
+	float time = 0.5f;
+	float speed = TIMEMANAGER->getElapsedTime() / time;
 	_lerpPercentage += speed;
 
 	POINT start = { _check[_moveIndex].x * TILESIZEX, _check[_moveIndex].y * TILESIZEY };
 	POINT end = { _check[_moveIndex-1].x * TILESIZEX, _check[_moveIndex-1].y * TILESIZEY };
-	_player->setPlayerPos(lerp(start, end, _lerpPercentage));
+
+	_moveRc = RectMake(lerp(start, end, _lerpPercentage).x,
+					   lerp(start, end, _lerpPercentage).y,
+					  TILESIZEX, TILESIZEY);
+
+	_player->setPlayerPos({ _moveRc.right,_moveRc.top });
 	if (_lerpPercentage >= 1)
 	{
 		_moveIndex--;
