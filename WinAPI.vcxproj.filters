@@ -29,7 +29,7 @@
       <Filter>API\ExamClass</Filter>
     </ClCompile>
     <ClCompile Include="Enemy.cpp">
-      <Filter>API\ExamClass\ShootingGame\Enemy</Filter>
+      <Filter>Portfolio\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="Rocket.cpp">
       <Filter>API\ExamClass\ShootingGame\Rocket</Filter>
@@ -46,11 +46,8 @@
     <ClCompile Include="TileMap.cpp">
       <Filter>API\ExamClass\ShootingGame</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyManager.cpp">
-      <Filter>API\Manager</Filter>
-    </ClCompile>
     <ClCompile Include="Minion.cpp">
-      <Filter>API\ExamClass\ShootingGame\Enemy</Filter>
+      <Filter>Portfolio\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="Timer.cpp">
       <Filter>API\Timer</Filter>
@@ -157,6 +154,9 @@
     <ClCompile Include="FinalScene.cpp">
       <Filter>Portfolio\GameScene</Filter>
     </ClCompile>
+    <ClCompile Include="EnemyManager.cpp">
+      <Filter>Portfolio\Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameNode.h">
@@ -193,7 +193,7 @@
       <Filter>API\ExamClass</Filter>
     </ClInclude>
     <ClInclude Include="Enemy.h">
-      <Filter>API\ExamClass\ShootingGame\Enemy</Filter>
+      <Filter>Portfolio\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="Rocket.h">
       <Filter>API\ExamClass\ShootingGame\Rocket</Filter>
@@ -210,11 +210,8 @@
     <ClInclude Include="TileMap.h">
       <Filter>API\ExamClass\ShootingGame</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyManager.h">
-      <Filter>API\Manager</Filter>
-    </ClInclude>
     <ClInclude Include="Minion.h">
-      <Filter>API\ExamClass\ShootingGame\Enemy</Filter>
+      <Filter>Portfolio\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="Timer.h">
       <Filter>API\Timer</Filter>
@@ -319,6 +316,9 @@
     <ClInclude Include="FinalScene.h">
       <Filter>Portfolio\GameScene</Filter>
     </ClInclude>
+    <ClInclude Include="EnemyManager.h">
+      <Filter>Portfolio\Enemy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="API">
@@ -350,9 +350,6 @@
     </Filter>
     <Filter Include="API\ExamClass\ShootingGame\Rocket">
       <UniqueIdentifier>{cb63210e-b68e-4152-a9b8-1f543b85cefb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="API\ExamClass\ShootingGame\Enemy">
-      <UniqueIdentifier>{e41ec2b4-efce-4d15-b917-39c0635f522b}</UniqueIdentifier>
     </Filter>
     <Filter Include="API\Timer">
       <UniqueIdentifier>{b94c673f-b8d9-40cd-bbbb-5d108b009938}</UniqueIdentifier>
@@ -416,6 +413,9 @@
     </Filter>
     <Filter Include="Portfolio\A%2a">
       <UniqueIdentifier>{c2e60e67-13fa-4bb9-afd3-2554d52d8e05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Portfolio\Enemy">
+      <UniqueIdentifier>{e41ec2b4-efce-4d15-b917-39c0635f522b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
