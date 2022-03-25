@@ -283,9 +283,6 @@
     <ClInclude Include="Text.h">
       <Filter>Portfolio\Text</Filter>
     </ClInclude>
-    <ClInclude Include="Cell.h">
-      <Filter>Portfolio\TileMap</Filter>
-    </ClInclude>
     <ClInclude Include="Quest.h">
       <Filter>Portfolio\JSON</Filter>
     </ClInclude>
@@ -333,6 +330,9 @@
       <Filter>Portfolio\UI</Filter>
     </ClInclude>
     <ClInclude Include="Saladin.h" />
+    <ClInclude Include="Cell.h">
+      <Filter>Portfolio\JSON</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="API">

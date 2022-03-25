@@ -10,12 +10,23 @@ HRESULT TurnSystem::init(void)
 
 void TurnSystem::release(void)
 {
-
+   
 }
 
 void TurnSystem::update(void)
 {
+    switch (_changingStatus)
+    {
+    case CHANGINGSTATUS::WAIT :
+            break;
+    case CHANGINGSTATUS::PLAYERTURN :
 
+            break;
+           
+    case CHANGINGSTATUS::ENEMYTURN :
+            break;
+
+    }
 }
 
 void TurnSystem::render(void)
@@ -30,11 +41,22 @@ void TurnSystem::changeState()
 void TurnSystem::changeToPlayer()
 {
 	_playerbit.reset();
+    _enemybit.reset();
 	_changingStatus = CHANGINGSTATUS::PLAYERTURN;
 }
 
 void TurnSystem::changeToEnemy()
 {
+    _playerbit.reset();
 	_enemybit.reset();
 	_changingStatus = CHANGINGSTATUS::ENEMYTURN;
+}
+
+CHANGINGSTATUS TurnSystem::getStatus()
+{
+    return CHANGINGSTATUS();
+}
+
+void TurnSystem::setStatus(CHANGINGSTATUS state)
+{
 }

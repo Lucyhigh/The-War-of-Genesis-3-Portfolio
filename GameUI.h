@@ -30,7 +30,7 @@ public:
 	POINT getPos();
 	void showBattleMenu(POINT menuPos);
 public:
-    GameUI() :_uiText{"","","",""} {}
+    GameUI() :_uiText{"스 킬","휴 식","아이템","상 태"} {}
 	~GameUI() {}
 };
 
