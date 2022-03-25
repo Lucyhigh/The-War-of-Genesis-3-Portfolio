@@ -15,7 +15,7 @@ private:
 	vector<Cell*>* _cells;
 	Image* _image;
 	Player* _player;
-	Saladin* _saladin;
+	//Saladin* _saladin;
 	Camera* _camera;
 	AStar::Generator* _generator;
 

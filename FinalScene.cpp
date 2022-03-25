@@ -17,15 +17,15 @@ HRESULT FinalScene::init(void)
 	_player->setPlayerPosX(16 * TILESIZEX);
 	_player->setPlayerPosY(18 * TILESIZEY);
 
-	_saladin = new Saladin;
-	_saladin->init();
-	_saladin->setSaladinPosX(20 * TILESIZEX);
-	_saladin->setSaladinPosY(18 * TILESIZEY);
+	//_saladin = new Saladin;
+	//_saladin->init();
+	//_saladin->setSaladinPosX(20 * TILESIZEX);
+	//_saladin->setSaladinPosY(18 * TILESIZEY);
 
 	_camera = new Camera;
-	_camera->init();/*
+	_camera->init();
 	_camera->setLimitsX(CENTER_X, _image->getWidth());
-	_camera->setLimitsY(CENTER_Y, _image->getHeight());*/
+	_camera->setLimitsY(CENTER_Y, _image->getHeight());
 
 	_generator = new AStar::Generator;
 	_generator->setWorldSize({ STAGE3TILEX, STAGE3TILEY });
@@ -70,12 +70,16 @@ void FinalScene::update(void)
 	_player->setCameraRect(_camera->getScreenRect());
 	_player->update();
 
-	POINT playerUI = {
-						_player->getPlayerPosX() - _camera->getScreenRect().left,
-						_player->getPlayerPosY() - _camera->getScreenRect().top
-					 };
-	_gameUI->setPos(playerUI);
 	_gameUI->update();
+    if (KEYMANAGER->isOnceKeyDown(VK_RBUTTON))
+    {
+        int posUI = 50;
+	    POINT playerUI = {
+						    _player->getPlayerPosX()+posUI - _camera->getScreenRect().left,
+						    _player->getPlayerPosY()+posUI - _camera->getScreenRect().top
+					     };
+	    _gameUI->showBattleMenu(playerUI);
+    }
 
 
 	POINT playerPos = { _player->getPlayerPosX(),_player->getPlayerPosY() };
@@ -128,11 +132,11 @@ void FinalScene::update(void)
 
 		}
 	}
+
 	if (_isMove)
 	{
 		rectMoveToPath();
 	}
-
 
 }
 
@@ -190,14 +194,16 @@ void FinalScene::render(void)
 	curAstar();
 	AstarTileInfo();
 
-	IMAGEMANAGER->render("mapInfoAll", getMemDC(), WINSIZE_X - 230, 0);
+    _player->render();
+    _gameUI->render();
+    //¹Ø ÁÂÇ¥µµ ui·Î ÀÌµ¿ÇØ¾ßÇÔ
 	char cellIndex[512];
 	for (auto cellsIter = _cells->begin(); cellsIter != _cells->end(); ++cellsIter)
 	{
 		POINT cameraMouse = {
 							  _ptMouse.x + _camera->getScreenRect().left,
 							  _ptMouse.y + _camera->getScreenRect().top
-		};
+		                    };
 
 		Cell* cell = (*cellsIter);
 		if (PtInRect(&cell->getRect(), cameraMouse))
@@ -223,8 +229,8 @@ void FinalScene::render(void)
 			_moveRc.bottom - _camera->getScreenRect().top);
 	}
 
-	_player->render();
-	_gameUI->render();
+	
+
     IMAGEMANAGER->render("test", getMemDC());
 }
 

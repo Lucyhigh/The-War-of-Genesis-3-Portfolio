@@ -57,7 +57,6 @@ void Saladin::update(void)
 		_isWaiting = true;
 
 	}
-	cout << (int)_imageState << " , " << _isWaiting << endl;
 
 	switch (_imageState)
 	{
