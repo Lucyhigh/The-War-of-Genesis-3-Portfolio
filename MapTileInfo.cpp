@@ -10,7 +10,7 @@ void MapTileInfo::mapSetup()
 {
 	Json::Value root = JSONDATAMANAGER->loadJsonFile("map.json");
 
-	auto map = root["finalMap"];
+	auto map = root["FinalMap"];
 	for (int y = 0; y < map.size(); ++y)
 	{
 		for (int x = 0; x < map[y].size(); ++x)

@@ -29,7 +29,7 @@
       <Filter>API\ExamClass</Filter>
     </ClCompile>
     <ClCompile Include="Enemy.cpp">
-      <Filter>Portfolio\Enemy</Filter>
+      <Filter>Portfolio\Character</Filter>
     </ClCompile>
     <ClCompile Include="Rocket.cpp">
       <Filter>API\ExamClass\ShootingGame\Rocket</Filter>
@@ -47,7 +47,7 @@
       <Filter>API\ExamClass\ShootingGame</Filter>
     </ClCompile>
     <ClCompile Include="Minion.cpp">
-      <Filter>Portfolio\Enemy</Filter>
+      <Filter>Portfolio\Character</Filter>
     </ClCompile>
     <ClCompile Include="Timer.cpp">
       <Filter>API\Timer</Filter>
@@ -155,8 +155,15 @@
       <Filter>Portfolio\GameScene</Filter>
     </ClCompile>
     <ClCompile Include="EnemyManager.cpp">
-      <Filter>Portfolio\Enemy</Filter>
+      <Filter>Portfolio\Character</Filter>
     </ClCompile>
+    <ClCompile Include="TurnSystem.cpp">
+      <Filter>Portfolio\Turn</Filter>
+    </ClCompile>
+    <ClCompile Include="GameUI.cpp">
+      <Filter>Portfolio\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Saladin.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameNode.h">
@@ -193,7 +200,7 @@
       <Filter>API\ExamClass</Filter>
     </ClInclude>
     <ClInclude Include="Enemy.h">
-      <Filter>Portfolio\Enemy</Filter>
+      <Filter>Portfolio\Character</Filter>
     </ClInclude>
     <ClInclude Include="Rocket.h">
       <Filter>API\ExamClass\ShootingGame\Rocket</Filter>
@@ -211,7 +218,7 @@
       <Filter>API\ExamClass\ShootingGame</Filter>
     </ClInclude>
     <ClInclude Include="Minion.h">
-      <Filter>Portfolio\Enemy</Filter>
+      <Filter>Portfolio\Character</Filter>
     </ClInclude>
     <ClInclude Include="Timer.h">
       <Filter>API\Timer</Filter>
@@ -317,8 +324,15 @@
       <Filter>Portfolio\GameScene</Filter>
     </ClInclude>
     <ClInclude Include="EnemyManager.h">
-      <Filter>Portfolio\Enemy</Filter>
+      <Filter>Portfolio\Character</Filter>
     </ClInclude>
+    <ClInclude Include="TurnSystem.h">
+      <Filter>Portfolio\Turn</Filter>
+    </ClInclude>
+    <ClInclude Include="GameUI.h">
+      <Filter>Portfolio\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Saladin.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="API">
@@ -414,14 +428,17 @@
     <Filter Include="Portfolio\A%2a">
       <UniqueIdentifier>{c2e60e67-13fa-4bb9-afd3-2554d52d8e05}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Portfolio\Enemy">
-      <UniqueIdentifier>{e41ec2b4-efce-4d15-b917-39c0635f522b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Portfolio\UI\BattleUI">
       <UniqueIdentifier>{b1eb2d5e-7b2c-4a51-9f0e-5f3621370e2b}</UniqueIdentifier>
     </Filter>
     <Filter Include="Portfolio\UI\MapUI">
       <UniqueIdentifier>{4b27e0f5-bed1-4fde-8e0f-5d82c34487cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Portfolio\Turn">
+      <UniqueIdentifier>{89794040-647c-4721-a51f-70ab7862a6ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Portfolio\Character">
+      <UniqueIdentifier>{e41ec2b4-efce-4d15-b917-39c0635f522b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

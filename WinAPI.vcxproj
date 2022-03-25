@@ -158,6 +158,7 @@
     <ClCompile Include="Flame.cpp" />
     <ClCompile Include="FontManager.cpp" />
     <ClCompile Include="GameNode.cpp" />
+    <ClCompile Include="GameUI.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="ImageClass.cpp" />
     <ClCompile Include="ImageManager.cpp" />
@@ -180,6 +181,7 @@
     <ClCompile Include="Quest.cpp" />
     <ClCompile Include="QuestSample.cpp" />
     <ClCompile Include="Rocket.cpp" />
+    <ClCompile Include="Saladin.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SecondScene.cpp" />
     <ClCompile Include="ShootingEffect.cpp" />
@@ -206,6 +208,7 @@
     <ClCompile Include="TimeManager.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="TitleScene.cpp" />
+    <ClCompile Include="TurnSystem.cpp" />
     <ClCompile Include="Utils.cpp" />
     <ClCompile Include="WinMain.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
@@ -225,6 +228,7 @@
     <ClInclude Include="Flame.h" />
     <ClInclude Include="FontManager.h" />
     <ClInclude Include="GameNode.h" />
+    <ClInclude Include="GameUI.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageClass.h" />
     <ClInclude Include="ImageManager.h" />
@@ -249,6 +253,7 @@
     <ClInclude Include="RandomFunction.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Rocket.h" />
+    <ClInclude Include="Saladin.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="SecondScene.h" />
     <ClInclude Include="ShootingEffect.h" />
@@ -273,6 +278,7 @@
     <ClInclude Include="TimeManager.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="TitleScene.h" />
+    <ClInclude Include="TurnSystem.h" />
     <ClInclude Include="Utils.h" />
   </ItemGroup>
   <ItemGroup>

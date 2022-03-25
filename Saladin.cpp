@@ -1,68 +1,67 @@
 #include "Stdafx.h"
-#include "Player.h"
+#include "Saladin.h"
 
-HRESULT Player::init(void)
+HRESULT Saladin::init(void)
 {
 	_image = IMAGEMANAGER->findImage("pRightIdle");
 	_image = IMAGEMANAGER->findImage("pRightMove");
-	
+
 	_count = 0;
 	_indexA = _indexB = 0;
 	_alphaA = 0;
-    _speed = 5;
-    _playerPos.x = 0;
-    _playerPos.y = WINSIZE_Y-140;
-	_rcPlayer = RectMakeCenter(_playerPos.x, _playerPos.y, _image->getFrameWidth(), _image->getFrameHeight());
+	_speed = 5;
+	_saladinPos.x = 0;
+	_saladinPos.y = WINSIZE_Y - 140;
+	_rcSaladin = RectMakeCenter(_saladinPos.x, _saladinPos.y, _image->getFrameWidth(), _image->getFrameHeight());
 
 	_currentHp = 10;
 	_maxHp = 10;
-	_hpBar = new ProgressBar;
-	_hpBar->init(280, WINSIZE_Y - 250, 52, 4);
-	_imageState = PLAYERSTATE::BOTTOM;
+	//_hpBar = new ProgressBar;
+	//_hpBar->init(280, WINSIZE_Y - 250, 52, 4);
+	_imageState = SALADINSTATE::BOTTOM;
+	return S_OK;
 	return S_OK;
 }
 
-void Player::release(void)
+void Saladin::release(void)
 {
-	_hpBar->release();
-	SAFE_DELETE(_hpBar);
 }
 
-void Player::update(void)
+void Saladin::update(void)
 {
 	_count++;
 
 	if (KEYMANAGER->isOnceKeyDown('1'))
 	{
-		_imageState = PLAYERSTATE::RIGHT;
+		_imageState = SALADINSTATE::RIGHT;
 	}
 	else if (KEYMANAGER->isOnceKeyDown('2'))
 	{
-		_imageState = PLAYERSTATE::LEFT;
+		_imageState = SALADINSTATE::LEFT;
 	}
 	else if (KEYMANAGER->isOnceKeyDown('3'))
 	{
-		_imageState = PLAYERSTATE::TOP;
+		_imageState = SALADINSTATE::TOP;
 	}
 	else if (KEYMANAGER->isOnceKeyDown('4'))
 	{
-		_imageState = PLAYERSTATE::BOTTOM;
+		_imageState = SALADINSTATE::BOTTOM;
 	}
 	else if (KEYMANAGER->isOnceKeyDown('5'))
 	{
-		_isWaiting=false;
-		
+		_isWaiting = false;
+
 	}
 	else if (KEYMANAGER->isOnceKeyDown('6'))
 	{
 		_isWaiting = true;
 
 	}
-	cout << (int)_imageState <<" , " << _isWaiting << endl;
+	cout << (int)_imageState << " , " << _isWaiting << endl;
 
-	switch(_imageState)
+	switch (_imageState)
 	{
-	case PLAYERSTATE::RIGHT:
+	case SALADINSTATE::RIGHT:
 		if (_isWaiting &&_count % 10 == 0)
 		{
 
@@ -85,7 +84,7 @@ void Player::update(void)
 			IMAGEMANAGER->findImage("pRightMove")->setFrameX(_indexB);
 		}
 		break;
-	case PLAYERSTATE::LEFT:
+	case SALADINSTATE::LEFT:
 		if (_isWaiting &&_count % 10 == 0)
 		{
 
@@ -108,7 +107,7 @@ void Player::update(void)
 			IMAGEMANAGER->findImage("pLeftMove")->setFrameX(_indexB);
 		}
 		break;
-	case PLAYERSTATE::TOP:
+	case SALADINSTATE::TOP:
 		if (_isWaiting &&_count % 10 == 0)
 		{
 			_indexA--;
@@ -131,7 +130,7 @@ void Player::update(void)
 			IMAGEMANAGER->findImage("pUpMove")->setFrameX(_indexB);
 		}
 		break;
-	case PLAYERSTATE::BOTTOM:
+	case SALADINSTATE::BOTTOM:
 		if (_isWaiting &&_count % 10 == 0)
 		{
 			_indexA--;
@@ -154,19 +153,19 @@ void Player::update(void)
 		}
 		break;
 	}
-		_rcPlayer = RectMakeCenter(_playerPos.x, _playerPos.y, _image->getFrameWidth(), _image->getFrameHeight());
-	
+	_rcSaladin = RectMakeCenter(_saladinPos.x, _saladinPos.y, _image->getFrameWidth(), _image->getFrameHeight());
+
 }
 
-void Player::render(void)
+void Saladin::render(void)
 {
-    float left = _rcPlayer.left - _cameraRect.left;
-    float top = _rcPlayer.top - _cameraRect.top;
+	float left = _rcSaladin.left - _cameraRect.left;
+	float top = _rcSaladin.top - _cameraRect.top;
 
 	switch (_imageState)
 	{
-	case PLAYERSTATE::RIGHT:
-		if (_isWaiting )
+	case SALADINSTATE::RIGHT:
+		if (_isWaiting)
 		{
 			IMAGEMANAGER->frameRender("pRightIdle", getMemDC(), left, top);
 		}
@@ -175,7 +174,7 @@ void Player::render(void)
 			IMAGEMANAGER->frameRender("pRightMove", getMemDC(), left, top);
 		}
 		break;
-	case PLAYERSTATE::LEFT:
+	case SALADINSTATE::LEFT:
 		if (_isWaiting)
 		{
 			IMAGEMANAGER->frameRender("pLeftIdle", getMemDC(), left, top);
@@ -185,80 +184,80 @@ void Player::render(void)
 			IMAGEMANAGER->frameRender("pLeftMove", getMemDC(), left - 40, top);
 		}
 		break;
-	case PLAYERSTATE::TOP:
+	case SALADINSTATE::TOP:
 		if (_isWaiting)
-		{	
-			IMAGEMANAGER->frameRender("pUpIdle", getMemDC(), left+7, top);
+		{
+			IMAGEMANAGER->frameRender("pUpIdle", getMemDC(), left + 7, top);
 		}
 		else
 		{
 			IMAGEMANAGER->frameRender("pUpMove", getMemDC(), left, top);
 		}
 		break;
-	case PLAYERSTATE::BOTTOM:
+	case SALADINSTATE::BOTTOM:
 		if (_isWaiting)
 		{
-			IMAGEMANAGER->frameRender("pDownIdle", getMemDC(), left-12, top);
+			IMAGEMANAGER->frameRender("pDownIdle", getMemDC(), left - 12, top);
 		}
 		else
 		{
-			IMAGEMANAGER->frameRender("pDownMove", getMemDC(), left-12, top);
+			IMAGEMANAGER->frameRender("pDownMove", getMemDC(), left - 12, top);
 		}
 		break;
 	}
 }
 
-float Player::getPlayerPosX()
+float Saladin::getSaladinPosX()
 {
-	return _playerPos.x;
+	return _saladinPos.x;
 }
 
-float Player::getPlayerPosY()
+float Saladin::getSaladinPosY()
 {
-	return _playerPos.y;
+	return _saladinPos.y;
 }
 
-void Player::setPlayerPos(POINT pos)
+void Saladin::setSaladinPos(POINT pos)
 {
-	_playerPos = pos;
+	_saladinPos = pos;
 }
 
-void Player::setPlayerPosX(float x)
+void Saladin::setSaladinPosX(float x)
 {
-    _playerPos.x = x;
+    _saladinPos.x = x;
 }
-void Player::setPlayerPosY(float y)
+void Saladin::setSaladinPosY(float y)
 {
-    _playerPos.y = y;
-}
-
-RECT Player::getPlayerRect()
-{
-	return _rcPlayer;
+    _saladinPos.y = y;
 }
 
+RECT Saladin::getSaladinRect()
+{
+	return _rcSaladin;
+}
 
-bool Player::getWaiting()
+
+bool Saladin::getWaiting()
 {
 	return _isWaiting;
 }
 
-void Player::setWaiting(bool isWaiting)
+void Saladin::setWaiting(bool isWaiting)
 {
 	_isWaiting = isWaiting;
 }
 
-bool Player::getLive()
+bool Saladin::getLive()
 {
 	return _isLive;
 }
 
-bool Player::setLive(bool status)
+bool Saladin::setLive(bool status)
 {
 	return _isLive = status;
 }
 
-void Player::hitDamage(float damage)
+void Saladin::hitDamage(float damage)
 {
 	if (_currentHp <= 0)
 	{
@@ -269,17 +268,17 @@ void Player::hitDamage(float damage)
 	_currentHp -= damage;
 }
 
-void Player::setCameraRect(RECT rect)
+void Saladin::setCameraRect(RECT rect)
 {
     _cameraRect = rect;
 }
 
-PLAYERSTATE Player::getImageState()
+SALADINSTATE Saladin::getImageState()
 {
 	return _imageState;
 }
 
-void Player::setImageStage(PLAYERSTATE state)
+void Saladin::setImageStage(SALADINSTATE state)
 {
 	_imageState = state;
 }

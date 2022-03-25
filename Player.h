@@ -3,7 +3,7 @@
 #include "ProgressBar.h"
 #include "Inventory.h"
 //#include "Camera.h"
-enum class IMAGESTATE
+enum class PLAYERSTATE
 {
 	RIGHT,
 	LEFT,
@@ -17,7 +17,7 @@ private:
 	ProgressBar* _hpBar;
 	RECT _rcPlayer;
     Inventory* _inventory;
-	IMAGESTATE _imageState;
+	PLAYERSTATE _imageState;
 
     POINT _playerPos;
     RECT _cameraRect;
@@ -49,8 +49,8 @@ public:
 	RECT getPlayerRect();
     void setCameraRect(RECT rect);
 
-	IMAGESTATE getImageState();
-	void setImageStage(IMAGESTATE state);
+	PLAYERSTATE getImageState();
+	void setImageStage(PLAYERSTATE state);
 
 	
 	bool getWaiting();

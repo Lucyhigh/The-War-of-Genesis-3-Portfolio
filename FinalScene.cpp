@@ -6,6 +6,9 @@ HRESULT FinalScene::init(void)
 {
 	_mapTileInfo = new MapTileInfo;
 	_mapTileInfo->init();
+
+	_gameUI = new GameUI;
+	_gameUI->init();
 	_image = IMAGEMANAGER->findImage("Final");
 	_cells = _mapTileInfo->getCell();
 
@@ -14,10 +17,15 @@ HRESULT FinalScene::init(void)
 	_player->setPlayerPosX(16 * TILESIZEX);
 	_player->setPlayerPosY(18 * TILESIZEY);
 
+	_saladin = new Saladin;
+	_saladin->init();
+	_saladin->setSaladinPosX(20 * TILESIZEX);
+	_saladin->setSaladinPosY(18 * TILESIZEY);
+
 	_camera = new Camera;
-	_camera->init();
+	_camera->init();/*
 	_camera->setLimitsX(CENTER_X, _image->getWidth());
-	_camera->setLimitsY(CENTER_Y, _image->getHeight());
+	_camera->setLimitsY(CENTER_Y, _image->getHeight());*/
 
 	_generator = new AStar::Generator;
 	_generator->setWorldSize({ STAGE3TILEX, STAGE3TILEY });
@@ -41,6 +49,7 @@ HRESULT FinalScene::init(void)
 void FinalScene::release(void)
 {
 	SAFE_DELETE(_mapTileInfo);
+	SAFE_DELETE(_gameUI);
 	_player->release();
 	SAFE_DELETE(_player);
 	_camera->release();
@@ -50,16 +59,26 @@ void FinalScene::release(void)
 
 void FinalScene::update(void)
 {
+
 	POINT cameraPos;
 	cameraPos.x = _player->getPlayerPosX();
 	cameraPos.y = _player->getPlayerPosY();
+
 	_camera->setCameraPos(cameraPos);
 	_camera->update();
+
 	_player->setCameraRect(_camera->getScreenRect());
 	_player->update();
 
-	POINT playerPos = { _player->getPlayerPosX(),_player->getPlayerPosY() };
+	POINT playerUI = {
+						_player->getPlayerPosX() - _camera->getScreenRect().left,
+						_player->getPlayerPosY() - _camera->getScreenRect().top
+					 };
+	_gameUI->setPos(playerUI);
+	_gameUI->update();
 
+
+	POINT playerPos = { _player->getPlayerPosX(),_player->getPlayerPosY() };
 	for (auto cellsIter = _cells->begin(); cellsIter != _cells->end(); ++cellsIter)
 	{
 		Cell* cell = (*cellsIter);
@@ -205,6 +224,7 @@ void FinalScene::render(void)
 	}
 
 	_player->render();
+	_gameUI->render();
     IMAGEMANAGER->render("test", getMemDC());
 }
 
@@ -289,10 +309,10 @@ void FinalScene::changeImage()
     int compareBtoAX = _check[_moveIndex - 1].x - _check[_moveIndex].x;
     int compareBtoAY = _check[_moveIndex - 1].y - _check[_moveIndex].y;
 
-    if (compareBtoAX > 0 && compareBtoAY == 0)      _player->setImageStage(IMAGESTATE::RIGHT);
-    else if (compareBtoAX < 0 && compareBtoAY == 0) _player->setImageStage(IMAGESTATE::LEFT);
-    else if (compareBtoAY > 0 && compareBtoAX == 0) _player->setImageStage(IMAGESTATE::BOTTOM);
-    else if (compareBtoAY < 0 && compareBtoAX == 0) _player->setImageStage(IMAGESTATE::TOP);
+    if (compareBtoAX > 0 && compareBtoAY == 0)      _player->setImageStage(PLAYERSTATE::RIGHT);
+    else if (compareBtoAX < 0 && compareBtoAY == 0) _player->setImageStage(PLAYERSTATE::LEFT);
+    else if (compareBtoAY > 0 && compareBtoAX == 0) _player->setImageStage(PLAYERSTATE::BOTTOM);
+    else if (compareBtoAY < 0 && compareBtoAX == 0) _player->setImageStage(PLAYERSTATE::TOP);
 }
 
 POINT FinalScene::lerp(POINT start, POINT end, float percentage)
