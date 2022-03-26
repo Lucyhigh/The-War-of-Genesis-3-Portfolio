@@ -4,7 +4,6 @@ HRESULT GameUI::init(void)
 {
     _image = new Image;
 	_image = IMAGEMANAGER->findImage("button");
-	//vector -248,-68 1 // 76,30 4
     _buttonIndex = 0;
     _uiPos = { 0,0 };
 	for (int i = -1; i < 1; i++)

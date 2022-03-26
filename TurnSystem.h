@@ -1,6 +1,6 @@
 #pragma once
 #include "GameNode.h"
-#include <bitset>
+
 enum class CHANGINGSTATUS
 {
 	WAIT,
@@ -16,26 +16,29 @@ private:
 
 #pragma region playerbit status
 
-   	// 0000 0000 : 대기
+   	// 0000 0000 : 이동대기
    	// 0000 0001 : 이동중
     // 0000 0010 : 공격모션발동
     // 0000 0100 : 피격모션발동
-    // 0000 1000 : 턴넘김
+    // 0000 1000 : 메뉴창염
     // 0001 0000 : 스킬 (전체스킬)
     // 0010 0000 : 스킬 (한명스킬)
-    // 0100 0000 : 
+    // 0100 0000 : 회복(휴식 후 턴넘김)
     // 1000 0000 : 죽음
+	//혹은
+	//0001 0000 : 스킬 (전체스킬)
+	//0001 0001 : 스킬 (전체스킬)
 #pragma endregion
 #pragma region enemy status
 
-// 0000 0000 : 대기
+// 0000 0000 : 이동대기
 // 0000 0001 : 이동중
 // 0000 0010 : 공격모션발동
 // 0000 0100 : 피격모션발동
-// 0000 1000 : 턴넘김
+// 0000 1000 : 
 // 0001 0000 : 스킬 (전체스킬)
 // 0010 0000 : 스킬 (한명스킬)
-// 0100 0000 : 
+// 0100 0000 : 회복(휴식 후 턴넘김)
 // 1000 0000 : 죽음
 #pragma endregion
 
@@ -48,6 +51,11 @@ public:
 	void changeState();
 	void changeToPlayer();
 	void changeToEnemy();
+
+	unsigned int getPlayerBit(int index);
+	unsigned int getEnemyBit(int index);
+	void setPlayerBit(int index);
+	void setEnemyBit(int index);
 
     CHANGINGSTATUS getStatus();
     void setStatus(CHANGINGSTATUS state);

@@ -5,33 +5,33 @@
 HRESULT AniSceneTitle::init(void)
 {
 	_aITitleBg = IMAGEMANAGER->findImage("TitleBg");
-	_aITitleMain = IMAGEMANAGER->findImage("titleMain");
-	_aITitleEff = IMAGEMANAGER->findImage("titleEffect");
-	_aITitleSelecte = IMAGEMANAGER->findImage("titleSelecte");
+	//_aITitleMain = IMAGEMANAGER->findImage("titleMain");
+	//_aITitleEff = IMAGEMANAGER->findImage("titleEffect");
+	//_aITitleSelecte = IMAGEMANAGER->findImage("titleSelecte");
 
 	_aMTitleBg = new Animation;
 	_aMTitleBg->init(_aITitleBg->getWidth(), _aITitleBg->getHeight(), 1200, 675);
-	_aMTitleMain = new Animation;
-	_aMTitleMain->init(_aITitleMain->getWidth(), _aITitleMain->getHeight(), 1200, 675);
-	_aMTitleEff = new Animation;
-	_aMTitleEff->init(_aITitleEff->getWidth(), _aITitleEff->getHeight(), 1200, 675);
-	_aMTitleSelecte = new Animation;
-	_aMTitleSelecte->init(_aITitleSelecte->getWidth(), _aITitleSelecte->getHeight(), 48, 48);
+	//_aMTitleMain = new Animation;
+	//_aMTitleMain->init(_aITitleMain->getWidth(), _aITitleMain->getHeight(), 1200, 675);
+	//_aMTitleEff = new Animation;
+	//_aMTitleEff->init(_aITitleEff->getWidth(), _aITitleEff->getHeight(), 1200, 675);
+	//_aMTitleSelecte = new Animation;
+	//_aMTitleSelecte->init(_aITitleSelecte->getWidth(), _aITitleSelecte->getHeight(), 48, 48);
 
 	_aMTitleBg->setDefPlayFrame(false, true);
 	_aMTitleBg->setFPS(5);
-	_aMTitleMain->setDefPlayFrame(false, true);
-	_aMTitleMain->setFPS(1);
-	_aMTitleEff->setDefPlayFrame(false, true);
-	_aMTitleEff->setFPS(2);
-	_aMTitleSelecte->setDefPlayFrame(false, true);
-	_aMTitleSelecte->setFPS(2);
+	//_aMTitleMain->setDefPlayFrame(false, true);
+	//_aMTitleMain->setFPS(1);
+	//_aMTitleEff->setDefPlayFrame(false, true);
+	//_aMTitleEff->setFPS(2);
+	//_aMTitleSelecte->setDefPlayFrame(false, true);
+	//_aMTitleSelecte->setFPS(2);
 
 
 	_aMTitleBg->AniStart();
-	_aMTitleMain->AniStart();
-	_aMTitleEff->AniStart();
-	_aMTitleSelecte->AniStart();
+	//_aMTitleMain->AniStart();
+	//_aMTitleEff->AniStart();
+	//_aMTitleSelecte->AniStart();
 
 	_isAniStart = false;
 	return S_OK;
@@ -41,39 +41,39 @@ void AniSceneTitle::release(void)
 {
 	_aMTitleBg->release();
 	SAFE_DELETE(_aMTitleBg);
-	_aMTitleMain->release();
-	SAFE_DELETE(_aMTitleMain);
-	_aMTitleEff->release();
-	SAFE_DELETE(_aMTitleEff);
-	_aMTitleSelecte->release();
-	SAFE_DELETE(_aMTitleSelecte);
+	//_aMTitleMain->release();
+	//SAFE_DELETE(_aMTitleMain);
+	//_aMTitleEff->release();
+	//SAFE_DELETE(_aMTitleEff);
+	//_aMTitleSelecte->release();
+	//SAFE_DELETE(_aMTitleSelecte);
 }
 
 void AniSceneTitle::update(void)
 {
 	_aMTitleBg->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
-	_aMTitleMain->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
-	_aMTitleEff->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
-	_aMTitleSelecte->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
+	//_aMTitleMain->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
+	//_aMTitleEff->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
+	//_aMTitleSelecte->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
 }
 
 void AniSceneTitle::render(void)
 {
 	_aITitleBg->aniRender(getMemDC(), 0, 0, _aMTitleBg);
-	_aITitleMain->aniRender(getMemDC(), 0, 0, _aMTitleMain);
-	_aITitleEff->aniRender(getMemDC(), 0, 0, _aMTitleEff);
+	//_aITitleMain->aniRender(getMemDC(), 0, 0, _aMTitleMain);
+	//_aITitleEff->aniRender(getMemDC(), 0, 0, _aMTitleEff);
 }
 
 void AniSceneTitle::render(int x, int y)
 {
-	_aITitleSelecte->aniRender(getMemDC(), x, y, _aMTitleSelecte);
+	//_aITitleSelecte->aniRender(getMemDC(), x, y, _aMTitleSelecte);
 }
 #pragma endregion
 
 #pragma region Item Select Animation
 HRESULT AniSceneItem::init(void)
 {
-	_aIItemSelect = IMAGEMANAGER->findImage("itemsCursor");
+	/*_aIItemSelect = IMAGEMANAGER->findImage("itemsCursor");
 
 	_aMItemSelect = new Animation;
 	_aMItemSelect->init(_aIItemSelect->getWidth(), _aIItemSelect->getHeight(), 57, 57);
@@ -82,25 +82,25 @@ HRESULT AniSceneItem::init(void)
 	_aMItemSelect->setFPS(3);
 
 	_aMItemSelect->AniStart();
-
+*/
 	return S_OK;
 }
 
 void AniSceneItem::release(void)
 {
-	_aMItemSelect->release();
-	SAFE_DELETE(_aMItemSelect);
+	//_aMItemSelect->release();
+	//SAFE_DELETE(_aMItemSelect);
 }
 
 void AniSceneItem::update(void)
 {
-	_aMItemSelect->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
+	//_aMItemSelect->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
 
 }
 
 void AniSceneItem::render(int x, int y)
 {
-	_aIItemSelect->aniRender(getMemDC(), x, y, _aMItemSelect);
+	//_aIItemSelect->aniRender(getMemDC(), x, y, _aMItemSelect);
 
 }
 #pragma endregion

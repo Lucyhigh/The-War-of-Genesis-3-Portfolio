@@ -17,10 +17,10 @@ HRESULT FinalScene::init(void)
 	_player->setPlayerPosX(16 * TILESIZEX);
 	_player->setPlayerPosY(18 * TILESIZEY);
 
-	//_saladin = new Saladin;
-	//_saladin->init();
-	//_saladin->setSaladinPosX(20 * TILESIZEX);
-	//_saladin->setSaladinPosY(18 * TILESIZEY);
+	_saladin = new Saladin;
+	_saladin->init();
+	_saladin->setSaladinPosX(22 * TILESIZEX);
+	_saladin->setSaladinPosY(18 * TILESIZEY);
 
 	_camera = new Camera;
 	_camera->init();
@@ -43,6 +43,12 @@ HRESULT FinalScene::init(void)
 	_moveIndex = 0;
 	_lerpPercentage = 0.0f;
 	_isMove = false;
+
+
+	_turnSystem = new TurnSystem();
+	_turnSystem->init();
+	_enemyBit = 0;
+
 	return S_OK;
 }
 
@@ -52,6 +58,8 @@ void FinalScene::release(void)
 	SAFE_DELETE(_gameUI);
 	_player->release();
 	SAFE_DELETE(_player);
+	_saladin->release();
+	SAFE_DELETE(_saladin);
 	_camera->release();
 	SAFE_DELETE(_camera);
 	SAFE_DELETE(_generator);
@@ -59,16 +67,44 @@ void FinalScene::release(void)
 
 void FinalScene::update(void)
 {
+	if (KEYMANAGER->isOnceKeyDown('H'))
+	{
+		_turnSystem->setEnemyBit(0);
+		_turnSystem->changeToEnemy();
+		//cout << (int)_turnSystem->getStatus() << endl;
+
+	}
+	if (KEYMANAGER->isOnceKeyDown('N'))
+	{
+		_turnSystem->setPlayerBit(0);
+		_turnSystem->changeToPlayer();
+		//cout << (int)_turnSystem->getStatus() << endl;
+
+	}
 
 	POINT cameraPos;
 	cameraPos.x = _player->getPlayerPosX();
 	cameraPos.y = _player->getPlayerPosY();
+	if (_turnSystem->getStatus() == CHANGINGSTATUS::PLAYERTURN)
+	{
+		cameraPos.x = _player->getPlayerPosX();
+		cameraPos.y = _player->getPlayerPosY();
+	}
+	else if (_turnSystem->getStatus() == CHANGINGSTATUS::ENEMYTURN)
+	{
+		cameraPos.x = _saladin->getSaladinPosX();
+		cameraPos.y = _saladin->getSaladinPosY();
+	}
+
+
 
 	_camera->setCameraPos(cameraPos);
 	_camera->update();
 
 	_player->setCameraRect(_camera->getScreenRect());
 	_player->update();
+	_saladin->setCameraRect(_camera->getScreenRect());
+	_saladin->update();
 
 	_gameUI->update();
     if (KEYMANAGER->isOnceKeyDown(VK_RBUTTON))
@@ -79,8 +115,8 @@ void FinalScene::update(void)
 						    _player->getPlayerPosY()+posUI - _camera->getScreenRect().top
 					     };
 	    _gameUI->showBattleMenu(playerUI);
-    }
 
+    }
 
 	POINT playerPos = { _player->getPlayerPosX(),_player->getPlayerPosY() };
 	for (auto cellsIter = _cells->begin(); cellsIter != _cells->end(); ++cellsIter)
@@ -106,26 +142,29 @@ void FinalScene::update(void)
 		};
 		if (PtInRect(&cell->getRect(), cameraMouse))
 		{
-			if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+			if ( KEYMANAGER->isOnceKeyDown(VK_LBUTTON))//_turnSystem->getPlayerBit(0) == 0 &&
 			{
-				cell->setEndCellX(cell->getCellX());
-				cell->setEndCellY(cell->getCellY());
-				cell->setType(CELL_TYPE::GOAL);
-				_endPoint = { cell->getRect().left, cell->getRect().top };
-
-				auto path = _generator->findPath({ _pPlayer.x,_pPlayer.y },
-					{ cell->getCellX(),cell->getCellY() });
-				_check.clear();
-				for (auto &coordinate : path)
+				if (cell->getType() == CELL_TYPE::NORMAL)
 				{
-					if (cell->getType() == CELL_TYPE::NORMAL)
+					cell->setEndCellX(cell->getCellX());
+					cell->setEndCellY(cell->getCellY());
+					cell->setType(CELL_TYPE::GOAL);
+					_endPoint = { cell->getRect().left, cell->getRect().top };
+
+					auto path = _generator->findPath({ _pPlayer.x,_pPlayer.y },
+						{ cell->getCellX(),cell->getCellY() });
+					_check.clear();
+					for (auto &coordinate : path)
 					{
-						cell->setType(CELL_TYPE::MOVEABLE);
+						if (cell->getType() == CELL_TYPE::NORMAL)
+						{
+							cell->setType(CELL_TYPE::MOVEABLE);
+						}
+						_check.push_back({ coordinate.x, coordinate.y });
 					}
-					_check.push_back({ coordinate.x, coordinate.y });
+					_isMove = true;
+					_moveIndex = _check.size() - 1;
 				}
-				_isMove = true;
-				_moveIndex = _check.size() - 1;
 				break;
 			}
 
@@ -150,6 +189,7 @@ void FinalScene::render(void)
 		cameraLeft,
 		cameraTop,
 		WINSIZE_X, WINSIZE_Y);
+
 	if (KEYMANAGER->isToggleKey(VK_F2))
 	{
 		drawMapCellInfo();
@@ -195,6 +235,7 @@ void FinalScene::render(void)
 	AstarTileInfo();
 
     _player->render();
+	_saladin->render();
     _gameUI->render();
     //¹Ø ÁÂÇ¥µµ ui·Î ÀÌµ¿ÇØ¾ßÇÔ
 	char cellIndex[512];
@@ -231,7 +272,6 @@ void FinalScene::render(void)
 
 	
 
-    IMAGEMANAGER->render("test", getMemDC());
 }
 
 void FinalScene::drawMapCellInfo()

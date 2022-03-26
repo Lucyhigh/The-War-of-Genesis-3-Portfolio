@@ -32,32 +32,32 @@ void Player::update(void)
 {
 	_count++;
 
-	if (KEYMANAGER->isOnceKeyDown('1'))
-	{
-		_imageState = PLAYERSTATE::RIGHT;
-	}
-	else if (KEYMANAGER->isOnceKeyDown('2'))
-	{
-		_imageState = PLAYERSTATE::LEFT;
-	}
-	else if (KEYMANAGER->isOnceKeyDown('3'))
-	{
-		_imageState = PLAYERSTATE::TOP;
-	}
-	else if (KEYMANAGER->isOnceKeyDown('4'))
-	{
-		_imageState = PLAYERSTATE::BOTTOM;
-	}
-	else if (KEYMANAGER->isOnceKeyDown('5'))
-	{
-		_isWaiting=false;
-		
-	}
-	else if (KEYMANAGER->isOnceKeyDown('6'))
-	{
-		_isWaiting = true;
+	//if (KEYMANAGER->isOnceKeyDown('1'))
+	//{
+	//	_imageState = PLAYERSTATE::RIGHT;
+	//}
+	//else if (KEYMANAGER->isOnceKeyDown('2'))
+	//{
+	//	_imageState = PLAYERSTATE::LEFT;
+	//}
+	//else if (KEYMANAGER->isOnceKeyDown('3'))
+	//{
+	//	_imageState = PLAYERSTATE::TOP;
+	//}
+	//else if (KEYMANAGER->isOnceKeyDown('4'))
+	//{
+	//	_imageState = PLAYERSTATE::BOTTOM;
+	//}
+	//else if (KEYMANAGER->isOnceKeyDown('5'))
+	//{
+	//	_isWaiting=false;
+	//	
+	//}
+	//else if (KEYMANAGER->isOnceKeyDown('6'))
+	//{
+	//	_isWaiting = true;
 
-	}
+	//}
 
 	switch(_imageState)
 	{

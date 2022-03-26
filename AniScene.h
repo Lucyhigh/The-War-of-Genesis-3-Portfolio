@@ -7,13 +7,9 @@ class AniSceneTitle : public GameNode
 {
 private:
 	Image* _aITitleBg;
-	Image* _aITitleMain;
-	Image* _aITitleEff;
-	Image* _aITitleSelecte;
+	
 	Animation* _aMTitleBg;
-	Animation* _aMTitleMain;
-	Animation* _aMTitleEff;
-	Animation* _aMTitleSelecte;
+
 
 	bool _isAniStart;
 

@@ -5,11 +5,11 @@
 class TitleScene : public GameNode
 {
 private:
+	Image* _image;
 	bool _anyButton;
 	bool _title;
 
-	RECT _logoRc;
-	bool _pushButton;
+	//bool _pushButton;
 	int _alpha;
 	bool _isAlphaIncrese;
 	AniSceneTitle* _ani;

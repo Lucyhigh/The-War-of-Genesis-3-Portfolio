@@ -1,5 +1,6 @@
 #pragma once
 #include "GameNode.h"
+#include "TurnSystem.h"
 #include "MapTileInfo.h"
 #include "GameUI.h"
 #include "Player.h"
@@ -10,12 +11,13 @@
 class FinalScene : public GameNode
 {
 private:
+	TurnSystem* _turnSystem;
 	MapTileInfo* _mapTileInfo;
 	GameUI* _gameUI;
 	vector<Cell*>* _cells;
 	Image* _image;
 	Player* _player;
-	//Saladin* _saladin;
+	Saladin* _saladin;
 	Camera* _camera;
 	AStar::Generator* _generator;
 
@@ -32,6 +34,8 @@ private:
 	int _moveIndex;
 	int _count;
 	bool _isMove;
+
+	int _enemyBit;
 
 public:
 	HRESULT init(void);

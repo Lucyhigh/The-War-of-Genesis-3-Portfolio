@@ -6,10 +6,9 @@ HRESULT TitleScene::init(void)
 	_anyButton = true;
 	_title = false;
 
-	_pushButton = false;
+	//_pushButton = false;
 
-	int w = IMAGEMANAGER->findImage("TitleBg")->getWidth();
-	int h = IMAGEMANAGER->findImage("TitleBg")->getHeight();
+	_image= IMAGEMANAGER->findImage("TitleBg");
 
 	_alpha = 255;
 	_ani = new AniSceneTitle;
@@ -29,17 +28,14 @@ void TitleScene::release(void)
 
 void TitleScene::update(void)
 {
-	TEMPSOUNDMANAGER->stopMp3WithKey("Peldanos");
-	TEMPSOUNDMANAGER->playSoundWithKey("Mia");
-
-	if (!_pushButton)
+	/*if (!_pushButton)
 	{
 		if (KEYMANAGER->isOnceKeyDown(VK_RETURN))
 		{
 			_pushButton = true;
 		}
 	}
-	else
+	else*/
 	{
 		_alpha--;
 		if (_alpha <= 0)
@@ -50,7 +46,7 @@ void TitleScene::update(void)
 	}
 
 
-	if (_title)
+	/*if (_title)
 	{
 		IMAGEMANAGER->findImage("titleMenu")->setFrameY(0);
 		IMAGEMANAGER->findImage("titleMenu")->setFrameX(0);
@@ -69,13 +65,13 @@ void TitleScene::update(void)
 		}
 		IMAGEMANAGER->findImage("titleMenu")->setFrameX(_menuIndex);
 	}
-
-	if (KEYMANAGER->isOnceKeyDown(VK_RETURN))
-	{
-		if (_menuIndex == 0)SCENEMANAGER->changeScene("Map");
-		//if (_menuIndex == 1)SCENEMANAGER->changeScene("save");
-		if (_menuIndex == 2)PostQuitMessage(0);
-	}
+*/
+	//if (KEYMANAGER->isOnceKeyDown(VK_RETURN))
+	//{
+	//	if (_menuIndex == 0)SCENEMANAGER->changeScene("Map");
+	//	//if (_menuIndex == 1)SCENEMANAGER->changeScene("save");
+	//	if (_menuIndex == 2)PostQuitMessage(0);
+	//}
 	if (_alpha == 0 || _alpha == 255) _isAlphaIncrese = !_isAlphaIncrese;
 	if (_isAlphaIncrese)_alpha += 1.0f; else _alpha -= 1.5f;
 }
