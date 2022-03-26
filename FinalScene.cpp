@@ -19,8 +19,8 @@ HRESULT FinalScene::init(void)
 
 	_saladin = new Saladin;
 	_saladin->init();
-	_saladin->setSaladinPosX(32 * TILESIZEX);
-	_saladin->setSaladinPosY(25 * TILESIZEY);
+	_saladin->setSaladinPosX(25 * TILESIZEX);
+	_saladin->setSaladinPosY(8 * TILESIZEY);
 
 	_camera = new Camera;
 	_camera->init();
@@ -83,7 +83,7 @@ void FinalScene::update(void)
 		// : 대기- 대기이미지 타일클릭시 이동가능상태 /메뉴창 열수있고 공격타일 만들수잇음
 		if (_turnSystem->isPlayerIdle() == 1)
 		{
-			POINT playerPos = { _player->getPlayerPosX(),_player->getPlayerPosY() };
+			POINT playerPos = { _player->getPlayerPosX()-TILESIZEX,_player->getPlayerPosY() };
 			for (auto cellsIter = _cells->begin(); cellsIter != _cells->end(); ++cellsIter)
 			{
 				Cell* cell = (*cellsIter);
@@ -94,12 +94,13 @@ void FinalScene::update(void)
 					{
 						cell->setType(CELL_TYPE::START);
 					}
-					_pPlayer = { cell->getCellX(),cell->getCellY() };
+					_pMoveStart = { cell->getCellX(), cell->getCellY() };
 				}
 				else if (cell->getType() == CELL_TYPE::START)
 				{
 					cell->setType(CELL_TYPE::NORMAL);
 				}
+
 				POINT cameraMouse = {
 								  _ptMouse.x + _camera->getScreenRect().left,
 								  _ptMouse.y + _camera->getScreenRect().top
@@ -110,13 +111,11 @@ void FinalScene::update(void)
 					{
 						if (cell->getType() == CELL_TYPE::NORMAL)
 						{
-							cell->setEndCellX(cell->getCellX());
-							cell->setEndCellY(cell->getCellY());
 							cell->setType(CELL_TYPE::GOAL);
 							_endPoint = { cell->getRect().left, cell->getRect().top };
 
-							auto path = _generator->findPath({ _pPlayer.x,_pPlayer.y },
-								{ cell->getCellX(),cell->getCellY() });
+							auto path = _generator->findPath({ _pMoveStart.x,_pMoveStart.y },
+															 { cell->getCellX(),cell->getCellY() });
 							_check.clear();
 							for (auto &coordinate : path)
 							{
@@ -166,16 +165,23 @@ void FinalScene::update(void)
 		// 0000 1000 : 이동중 - 메뉴창 뜨면 안됨 다른곳으로 이동못함
 		else if (_turnSystem->getPlayerBit(3) == 1)
 		{
-			{
-				rectMoveToPath();
-			}
+			
+			rectMoveToPath();
+			
 		}
-
-
 	}
 	else if (_turnSystem->getStatus() == CHANGINGSTATUS::ENEMYTURN)
 	{
-
+		if (_turnSystem->isEnemyIdle() == 1)
+		{
+			// : 대기- 대기이미지 - 캐릭터 시작타일 파악후 캐릭터 좌우상하 4개 타일 중 가까운 타일 선택해 그곳을 목표로 3칸씩 이동?
+			findPlayerTile();
+		}
+		else if (_turnSystem->getEnemyBit(3) == 1)
+		{
+			rectMoveToPath();
+		}
+		// 0000 1000 : 이동중 - 자동이동 후 자동공격 / 자동이동 후 자동 턴 넘김
 	}
 
 	
@@ -237,23 +243,23 @@ void FinalScene::render(void)
 				break;
 			case(CELL_TYPE::WALL):
 				oldBrush = (HBRUSH)SelectObject(getMemDC(), brush);
-				FillRect(getMemDC(), &rect, brush); // 사각형에 브러쉬색으로 채우기
+				FillRect(getMemDC(), &rect, brush); 
 				break;
 			case(CELL_TYPE::START):
-				brush = CreateSolidBrush(RGB(0, 0, 255)); // 색 설정
+				brush = CreateSolidBrush(RGB(0, 0, 255));
 				oldBrush = (HBRUSH)SelectObject(getMemDC(), brush);
-				FillRect(getMemDC(), &rect, brush); // 사각형에 브러쉬색으로 채우기
+				FillRect(getMemDC(), &rect, brush); 
 				SelectObject(getMemDC(), oldBrush);
 				break;
 			case(CELL_TYPE::GOAL):
-				brush = CreateSolidBrush(RGB(0, 255, 0)); // 색 설정
+				brush = CreateSolidBrush(RGB(0, 255, 0)); 
 				oldBrush = (HBRUSH)SelectObject(getMemDC(), brush);
-				FillRect(getMemDC(), &rect, brush); // 사각형에 브러쉬색으로 채우기
+				FillRect(getMemDC(), &rect, brush);
 				break;
 			case(CELL_TYPE::MOVEABLE):
-				brush = CreateSolidBrush(RGB(255, 255, 0)); // 색 설정
+				brush = CreateSolidBrush(RGB(205, 255, 100)); 
 				oldBrush = (HBRUSH)SelectObject(getMemDC(), brush);
-				FillRect(getMemDC(), &rect, brush); // 사각형에 브러쉬색으로 채우기
+				FillRect(getMemDC(), &rect, brush);
 				break;
 			}
 			DeleteObject(brush);
@@ -299,7 +305,10 @@ void FinalScene::render(void)
 			_moveRc.bottom - _camera->getScreenRect().top);
 	}
 
-	
+	Rectangle(getMemDC(), _saladin->getSaladinPosX() - _camera->getScreenRect().left,
+						  _saladin->getSaladinPosY() - _camera->getScreenRect().top,
+						  _saladin->getSaladinPosX()+40 - _camera->getScreenRect().left,
+						  _saladin->getSaladinPosY()+10 - _camera->getScreenRect().top);
 
 }
 
@@ -329,18 +338,26 @@ void FinalScene::AstarTileInfo()
 
 void FinalScene::rectMoveToPath()
 {
-
 	if (_moveIndex - 1 < 0)
 	{
-		_turnSystem->changeToPlayer();
-        _player->setWaiting(true);
+		if (_turnSystem->getStatus() == CHANGINGSTATUS::PLAYERTURN)
+		{
+			_turnSystem->changeToPlayer();
+			 _player->setWaiting(true);
+		}
+		else if (_turnSystem->getStatus() == CHANGINGSTATUS::ENEMYTURN) 
+		{
+			//_turnSystem->changeToPlayer();//일단 이동후 턴 종료 - 3칸씩 이동하며 3칸안에 플레이어 있을 경우에 +공격
+			_turnSystem->changeToPlayer();
+			_saladin->setWaiting(true);
+			
+		}
 		_moveIndex = 0;
 		_lerpPercentage = 0.0f;
 		return;
 	}
     else
     {
-		
         float time = 0.5f;
         float speed = TIMEMANAGER->getElapsedTime() / time;
         _lerpPercentage += speed;
@@ -353,12 +370,16 @@ void FinalScene::rectMoveToPath()
             lerp(start, end, _lerpPercentage).y,
             TILESIZEX, TILESIZEY);
 
-        _player->setPlayerPos({ _moveRc.right,_moveRc.top });
+		if (_turnSystem->getStatus() == CHANGINGSTATUS::PLAYERTURN) _player->setPlayerPos({ _moveRc.right,_moveRc.top });
+		else if (_turnSystem->getStatus() == CHANGINGSTATUS::ENEMYTURN) _saladin->setSaladinPos({ _moveRc.right,_moveRc.top }); 
         if (_lerpPercentage >= 1)
         {
             _moveIndex--;
             _lerpPercentage = 0;
+			cout<<_saladin->getSaladinPosX() << endl;
         }
+		
+
     }
 }
 
@@ -381,15 +402,67 @@ void FinalScene::curAstar()
 
 void FinalScene::changeImage()
 {
-    _player->setWaiting(false);
-    
-    int compareBtoAX = _check[_moveIndex - 1].x - _check[_moveIndex].x;
-    int compareBtoAY = _check[_moveIndex - 1].y - _check[_moveIndex].y;
+	if (_turnSystem->getStatus() == CHANGINGSTATUS::PLAYERTURN)
+	{
+		_player->setWaiting(false);
 
-    if (compareBtoAX > 0 && compareBtoAY == 0)      _player->setImageStage(PLAYERSTATE::RIGHT);
-    else if (compareBtoAX < 0 && compareBtoAY == 0) _player->setImageStage(PLAYERSTATE::LEFT);
-    else if (compareBtoAY > 0 && compareBtoAX == 0) _player->setImageStage(PLAYERSTATE::BOTTOM);
-    else if (compareBtoAY < 0 && compareBtoAX == 0) _player->setImageStage(PLAYERSTATE::TOP);
+		int compareBtoAX = _check[_moveIndex - 1].x - _check[_moveIndex].x;
+		int compareBtoAY = _check[_moveIndex - 1].y - _check[_moveIndex].y;
+
+		if (compareBtoAX > 0 && compareBtoAY == 0)      _player->setImageStage(PLAYERSTATE::RIGHT);
+		else if (compareBtoAX < 0 && compareBtoAY == 0) _player->setImageStage(PLAYERSTATE::LEFT);
+		else if (compareBtoAY > 0 && compareBtoAX == 0) _player->setImageStage(PLAYERSTATE::BOTTOM);
+		else if (compareBtoAY < 0 && compareBtoAX == 0) _player->setImageStage(PLAYERSTATE::TOP);
+	}
+	else if (_turnSystem->getStatus() == CHANGINGSTATUS::ENEMYTURN)
+	{
+		_saladin->setWaiting(false);
+
+		int compareBtoAX = _check[_moveIndex - 1].x - _check[_moveIndex].x;
+		int compareBtoAY = _check[_moveIndex - 1].y - _check[_moveIndex].y;
+
+		if (compareBtoAX > 0 && compareBtoAY == 0)      _saladin->setImageStage(SALADINSTATE::RIGHT);
+		else if (compareBtoAX < 0 && compareBtoAY == 0) _saladin->setImageStage(SALADINSTATE::LEFT);
+		else if (compareBtoAY > 0 && compareBtoAX == 0) _saladin->setImageStage(SALADINSTATE::BOTTOM);
+		else if (compareBtoAY < 0 && compareBtoAX == 0) _saladin->setImageStage(SALADINSTATE::TOP);
+	}
+}
+
+void FinalScene::findPlayerTile()
+{
+	POINT enemyPoint = { _saladin->getSaladinPosX()-TILESIZEX,_saladin->getSaladinPosY() };
+	POINT enemyPathGoal;
+	for (auto cellsIter = _cells->begin(); cellsIter != _cells->end(); ++cellsIter)
+	{
+		Cell* cell = (*cellsIter);
+		if (PtInRect(&cell->getRect(), enemyPoint))
+		{
+			_pMoveStart = { cell->getCellX(), cell->getCellY() };
+			cout << _pMoveStart.x << ", " << _pMoveStart.y << endl;
+		}
+
+		if (cell->getType() == CELL_TYPE::START)
+		{
+			_endPoint = { cell->getRect().left, cell->getRect().top };
+			enemyPathGoal = { cell->getCellX(), cell->getCellY() };
+
+		}
+
+	}
+	auto path = _generator->findPath(
+		{ _pMoveStart.x,_pMoveStart.y },
+		{ enemyPathGoal.x,enemyPathGoal.y } );
+
+	_check.clear();
+	int pathSize = path.size() < 3 ? path.size() : 3;
+	for (int i = path.size() - pathSize; i < path.size(); ++i)
+	{
+		auto coordinate = path[i];
+		_check.push_back({ coordinate.x, coordinate.y });
+	}
+	_moveIndex = _check.size() - 1;
+	cout << "문도! 탐색한다!" << _moveIndex << endl;
+	_turnSystem->setEnemyBit(3);
 }
 
 POINT FinalScene::lerp(POINT start, POINT end, float percentage)

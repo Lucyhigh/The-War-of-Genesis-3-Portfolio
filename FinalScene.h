@@ -23,7 +23,7 @@ private:
 	Camera* _camera;
 	AStar::Generator* _generator;
 
-	POINT _pPlayer;
+	POINT _pMoveStart;
 	POINT _endPoint;
 	RECT _mouseRc;
 	RECT _endRc;
@@ -50,6 +50,7 @@ public:
 	void rectMoveToPath();
 	void curAstar();
     void changeImage();
+	void findPlayerTile();
 	POINT lerp(POINT start, POINT end, float percentage);
 public:
 	FinalScene() {}
