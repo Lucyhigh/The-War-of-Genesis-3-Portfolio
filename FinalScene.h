@@ -1,9 +1,10 @@
 #pragma once
 #include "GameNode.h"
 #include "TurnSystem.h"
+#include "Player.h"
+
 #include "MapTileInfo.h"
 #include "GameUI.h"
-#include "Player.h"
 #include "Saladin.h"
 #include "Camera.h"
 #include "AStar.h"
@@ -11,12 +12,13 @@
 class FinalScene : public GameNode
 {
 private:
-	TurnSystem* _turnSystem;
+	
 	MapTileInfo* _mapTileInfo;
+	Player* _player;
+	TurnSystem* _turnSystem;
 	GameUI* _gameUI;
 	vector<Cell*>* _cells;
 	Image* _image;
-	Player* _player;
 	Saladin* _saladin;
 	Camera* _camera;
 	AStar::Generator* _generator;

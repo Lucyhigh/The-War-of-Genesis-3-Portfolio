@@ -19,7 +19,6 @@
 HRESULT MainGame::init(void)
 {
 	GameNode::init(TRUE);
-
 	ImageClass imageClass = ImageClass();
 	imageClass.init();
 

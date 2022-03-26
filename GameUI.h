@@ -1,12 +1,12 @@
 #pragma once
 #include "GameNode.h"
-struct ImgInfo
+struct battleImgInfo
 {
 	Image* _image;
 	RECT _buttonRect;
 	POINT _imgPos;
 	POINT _defaultPos;
-    string _textInfo;
+    LPCWSTR _textInfo;
 	int _index;
 };
 
@@ -14,13 +14,14 @@ class GameUI:public GameNode
 {
 private:
 	Image* _image;
-	vector<ImgInfo> _vMenuButton;
-    vector<ImgInfo>::iterator _viMenuButton;
+	vector<battleImgInfo> _vMenuButton;
+    vector<battleImgInfo>::iterator _viMenuButton;
 	POINT _uiPos;
 	
-    string _uiText[4];
+	LPCWSTR _uiText[4];
     int _buttonIndex;
-	bool _isTurn;
+	bool _isMenu;
+	bool _isPlayerTurn;
 public:
 	HRESULT init(void);
 	void release(void);
@@ -28,9 +29,11 @@ public:
 	void render(void);
 
 	POINT getPos();
+	bool getPlayerTurn();
+	bool getMenu();
 	void showBattleMenu(POINT menuPos);
 public:
-    GameUI() :_uiText{"스 킬","휴 식","아이템","상 태"} {}
+    GameUI() :_uiText{L"스 킬",L"아이템",L"휴 식",L"상 태"} {}
 	~GameUI() {}
 };
 

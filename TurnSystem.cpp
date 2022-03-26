@@ -25,6 +25,7 @@ void TurnSystem::update(void)
             break;
            
     case CHANGINGSTATUS::ENEMYTURN :
+
             break;
 
     }
@@ -44,7 +45,6 @@ void TurnSystem::changeToPlayer()
 	_playerbit.reset();
     _enemybit.reset();
 	_changingStatus = CHANGINGSTATUS::PLAYERTURN;
-	cout << (int)_changingStatus << endl;
 }
 
 void TurnSystem::changeToEnemy()
@@ -52,7 +52,6 @@ void TurnSystem::changeToEnemy()
     _playerbit.reset();
 	_enemybit.reset();
 	_changingStatus = CHANGINGSTATUS::ENEMYTURN;
-	cout << (int)_changingStatus << endl;
 }
 
 unsigned int TurnSystem::getPlayerBit(int index)
@@ -77,9 +76,21 @@ void TurnSystem::setEnemyBit(int index)
 	_enemybit.set(index);
 }
 
+unsigned int TurnSystem::isPlayerIdle()
+{
+	return _playerbit.none();
+}
+
+unsigned int TurnSystem::isEnemyIdle()
+{
+	return _enemybit.none();
+}
+
+
+
 CHANGINGSTATUS TurnSystem::getStatus()
 {
-    return CHANGINGSTATUS();
+    return _changingStatus;
 }
 
 void TurnSystem::setStatus(CHANGINGSTATUS state)

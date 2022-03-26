@@ -14,13 +14,13 @@ HRESULT FinalScene::init(void)
 
 	_player = new Player;
 	_player->init();
-	_player->setPlayerPosX(16 * TILESIZEX);
-	_player->setPlayerPosY(18 * TILESIZEY);
+	_player->setPlayerPosX(6 * TILESIZEX);
+	_player->setPlayerPosY(8 * TILESIZEY);
 
 	_saladin = new Saladin;
 	_saladin->init();
-	_saladin->setSaladinPosX(22 * TILESIZEX);
-	_saladin->setSaladinPosY(18 * TILESIZEY);
+	_saladin->setSaladinPosX(32 * TILESIZEX);
+	_saladin->setSaladinPosY(25 * TILESIZEY);
 
 	_camera = new Camera;
 	_camera->init();
@@ -44,7 +44,6 @@ HRESULT FinalScene::init(void)
 	_lerpPercentage = 0.0f;
 	_isMove = false;
 
-
 	_turnSystem = new TurnSystem();
 	_turnSystem->init();
 	_enemyBit = 0;
@@ -55,6 +54,7 @@ HRESULT FinalScene::init(void)
 void FinalScene::release(void)
 {
 	SAFE_DELETE(_mapTileInfo);
+	SAFE_DELETE(_turnSystem);
 	SAFE_DELETE(_gameUI);
 	_player->release();
 	SAFE_DELETE(_player);
@@ -69,22 +69,118 @@ void FinalScene::update(void)
 {
 	if (KEYMANAGER->isOnceKeyDown('H'))
 	{
-		_turnSystem->setEnemyBit(0);
 		_turnSystem->changeToEnemy();
-		//cout << (int)_turnSystem->getStatus() << endl;
 
 	}
 	if (KEYMANAGER->isOnceKeyDown('N'))
 	{
-		_turnSystem->setPlayerBit(0);
 		_turnSystem->changeToPlayer();
-		//cout << (int)_turnSystem->getStatus() << endl;
 
 	}
 
+	if (_turnSystem->getStatus() == CHANGINGSTATUS::PLAYERTURN)
+	{
+		// : 대기- 대기이미지 타일클릭시 이동가능상태 /메뉴창 열수있고 공격타일 만들수잇음
+		if (_turnSystem->isPlayerIdle() == 1)
+		{
+			POINT playerPos = { _player->getPlayerPosX(),_player->getPlayerPosY() };
+			for (auto cellsIter = _cells->begin(); cellsIter != _cells->end(); ++cellsIter)
+			{
+				Cell* cell = (*cellsIter);
+
+				if (PtInRect(&cell->getRect(), playerPos))
+				{
+					if (cell->getType() != CELL_TYPE::WALL)
+					{
+						cell->setType(CELL_TYPE::START);
+					}
+					_pPlayer = { cell->getCellX(),cell->getCellY() };
+				}
+				else if (cell->getType() == CELL_TYPE::START)
+				{
+					cell->setType(CELL_TYPE::NORMAL);
+				}
+				POINT cameraMouse = {
+								  _ptMouse.x + _camera->getScreenRect().left,
+								  _ptMouse.y + _camera->getScreenRect().top
+				};
+				if (PtInRect(&cell->getRect(), cameraMouse))
+				{
+					if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+					{
+						if (cell->getType() == CELL_TYPE::NORMAL)
+						{
+							cell->setEndCellX(cell->getCellX());
+							cell->setEndCellY(cell->getCellY());
+							cell->setType(CELL_TYPE::GOAL);
+							_endPoint = { cell->getRect().left, cell->getRect().top };
+
+							auto path = _generator->findPath({ _pPlayer.x,_pPlayer.y },
+								{ cell->getCellX(),cell->getCellY() });
+							_check.clear();
+							for (auto &coordinate : path)
+							{
+								if (cell->getType() == CELL_TYPE::NORMAL)
+								{
+									cell->setType(CELL_TYPE::MOVEABLE);
+								}
+								_check.push_back({ coordinate.x, coordinate.y });
+							}
+							_moveIndex = _check.size() - 1;
+							_turnSystem->setPlayerBit(3);
+						}
+						break;
+					}
+				}
+			}
+
+			if (KEYMANAGER->isOnceKeyDown(VK_RBUTTON))
+			{
+				int posUI = 60;
+				POINT playerUI = {
+									_player->getPlayerPosX() + posUI - _camera->getScreenRect().left,
+									_player->getPlayerPosY() + posUI - _camera->getScreenRect().top
+				};
+				_gameUI->showBattleMenu(playerUI);
+				_turnSystem->setPlayerBit(0);
+			}
+		}
+		// 0000 0001 : 메뉴창염 - 타일클릭해도 이동안됨 버튼클릭상태
+		else if (_turnSystem->getPlayerBit(0) == 1)
+		{
+			cout << "메뉴" << endl;
+			_gameUI->update();
+			if (!_gameUI->getMenu())
+			{
+
+				if (_gameUI->getPlayerTurn())
+				{
+					_turnSystem->changeToPlayer();
+				}
+				else
+				{
+					_turnSystem->changeToEnemy();
+				}
+			}
+		}
+		// 0000 1000 : 이동중 - 메뉴창 뜨면 안됨 다른곳으로 이동못함
+		else if (_turnSystem->getPlayerBit(3) == 1)
+		{
+			{
+				rectMoveToPath();
+			}
+		}
+
+
+	}
+	else if (_turnSystem->getStatus() == CHANGINGSTATUS::ENEMYTURN)
+	{
+
+	}
+
+	
+
 	POINT cameraPos;
-	cameraPos.x = _player->getPlayerPosX();
-	cameraPos.y = _player->getPlayerPosY();
 	if (_turnSystem->getStatus() == CHANGINGSTATUS::PLAYERTURN)
 	{
 		cameraPos.x = _player->getPlayerPosX();
@@ -95,88 +191,20 @@ void FinalScene::update(void)
 		cameraPos.x = _saladin->getSaladinPosX();
 		cameraPos.y = _saladin->getSaladinPosY();
 	}
-
-
-
+	else
+	{
+		cameraPos.x = _player->getPlayerPosX();
+		cameraPos.y = _player->getPlayerPosY();
+	}
 	_camera->setCameraPos(cameraPos);
 	_camera->update();
+
+	_turnSystem->update();
 
 	_player->setCameraRect(_camera->getScreenRect());
 	_player->update();
 	_saladin->setCameraRect(_camera->getScreenRect());
 	_saladin->update();
-
-	_gameUI->update();
-    if (KEYMANAGER->isOnceKeyDown(VK_RBUTTON))
-    {
-        int posUI = 50;
-	    POINT playerUI = {
-						    _player->getPlayerPosX()+posUI - _camera->getScreenRect().left,
-						    _player->getPlayerPosY()+posUI - _camera->getScreenRect().top
-					     };
-	    _gameUI->showBattleMenu(playerUI);
-
-    }
-
-	POINT playerPos = { _player->getPlayerPosX(),_player->getPlayerPosY() };
-	for (auto cellsIter = _cells->begin(); cellsIter != _cells->end(); ++cellsIter)
-	{
-		Cell* cell = (*cellsIter);
-
-		if (PtInRect(&cell->getRect(), playerPos))
-		{
-			if (cell->getType() != CELL_TYPE::WALL)
-			{
-				cell->setType(CELL_TYPE::START);
-			}
-			_pPlayer = { cell->getCellX(),cell->getCellY() };
-		}
-		else if (cell->getType() == CELL_TYPE::START)
-		{
-			cell->setType(CELL_TYPE::NORMAL);
-		}
-
-		POINT cameraMouse = {
-							  _ptMouse.x + _camera->getScreenRect().left,
-							  _ptMouse.y + _camera->getScreenRect().top
-		};
-		if (PtInRect(&cell->getRect(), cameraMouse))
-		{
-			if ( KEYMANAGER->isOnceKeyDown(VK_LBUTTON))//_turnSystem->getPlayerBit(0) == 0 &&
-			{
-				if (cell->getType() == CELL_TYPE::NORMAL)
-				{
-					cell->setEndCellX(cell->getCellX());
-					cell->setEndCellY(cell->getCellY());
-					cell->setType(CELL_TYPE::GOAL);
-					_endPoint = { cell->getRect().left, cell->getRect().top };
-
-					auto path = _generator->findPath({ _pPlayer.x,_pPlayer.y },
-						{ cell->getCellX(),cell->getCellY() });
-					_check.clear();
-					for (auto &coordinate : path)
-					{
-						if (cell->getType() == CELL_TYPE::NORMAL)
-						{
-							cell->setType(CELL_TYPE::MOVEABLE);
-						}
-						_check.push_back({ coordinate.x, coordinate.y });
-					}
-					_isMove = true;
-					_moveIndex = _check.size() - 1;
-				}
-				break;
-			}
-
-
-		}
-	}
-
-	if (_isMove)
-	{
-		rectMoveToPath();
-	}
-
 }
 
 void FinalScene::render(void)
@@ -237,7 +265,8 @@ void FinalScene::render(void)
     _player->render();
 	_saladin->render();
     _gameUI->render();
-    //밑 좌표도 ui로 이동해야함
+	IMAGEMANAGER->render("mapInfoAll", getMemDC(), WINSIZE_X - 230, 0);
+
 	char cellIndex[512];
 	for (auto cellsIter = _cells->begin(); cellsIter != _cells->end(); ++cellsIter)
 	{
@@ -262,7 +291,7 @@ void FinalScene::render(void)
 			break;
 		}
 	}
-	if (_isMove)
+	if (_turnSystem->getStatus() == CHANGINGSTATUS::PLAYERTURN && _isMove)
 	{
 		Rectangle(getMemDC(), _moveRc.left - _camera->getScreenRect().left,
 			_moveRc.top - _camera->getScreenRect().top,
@@ -303,7 +332,7 @@ void FinalScene::rectMoveToPath()
 
 	if (_moveIndex - 1 < 0)
 	{
-		_isMove = false;
+		_turnSystem->changeToPlayer();
         _player->setWaiting(true);
 		_moveIndex = 0;
 		_lerpPercentage = 0.0f;
@@ -311,12 +340,14 @@ void FinalScene::rectMoveToPath()
 	}
     else
     {
+		
         float time = 0.5f;
         float speed = TIMEMANAGER->getElapsedTime() / time;
         _lerpPercentage += speed;
 
         POINT start = { _check[_moveIndex].x * TILESIZEX, _check[_moveIndex].y * TILESIZEY };
         POINT end = { _check[_moveIndex - 1].x * TILESIZEX, _check[_moveIndex - 1].y * TILESIZEY };
+
         changeImage();
         _moveRc = RectMake(lerp(start, end, _lerpPercentage).x,
             lerp(start, end, _lerpPercentage).y,

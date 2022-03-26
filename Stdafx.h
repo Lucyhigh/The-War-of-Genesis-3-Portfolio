@@ -70,7 +70,10 @@ using namespace std;
 //#include "SoundManager.h"
 #include "JsonSaveLoader.h"
 
+
 using namespace MY_UTIL;
+
+
 
 //========================
 // # 싱글톤을 이곳에 추가 #
@@ -85,8 +88,6 @@ using namespace MY_UTIL;
 #define SCENEMANAGER SceneManager::getSingleton()
 //#define SOUNDMANAGER SoundManager::getSingleton()
 #define JSONDATAMANAGER JsonSaveLoader::getSingleton()
-//#define PLAYER Player::getSingleton()
-
 //============================
 // # 매크로 # (윈도우창 초기화)
 //============================
@@ -133,3 +134,10 @@ using namespace MY_UTIL;
 extern HINSTANCE	_hInstance;
 extern HWND			_hWnd;
 extern POINT		_ptMouse;
+
+
+////전역클래스 
+//#include "TurnSystem.h"
+//#include "Player.h"
+//Player _player;
+//TurnSystem _turnSystem;

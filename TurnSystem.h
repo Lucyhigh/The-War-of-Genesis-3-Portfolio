@@ -3,7 +3,7 @@
 
 enum class CHANGINGSTATUS
 {
-	WAIT,
+	WAIT,//대사칠때
 	PLAYERTURN,
 	ENEMYTURN
 };
@@ -17,10 +17,10 @@ private:
 #pragma region playerbit status
 
    	// 0000 0000 : 이동대기
-   	// 0000 0001 : 이동중
+   	// 0000 0001 : 메뉴창염
     // 0000 0010 : 공격모션발동
     // 0000 0100 : 피격모션발동
-    // 0000 1000 : 메뉴창염
+    // 0000 1000 : 이동중
     // 0001 0000 : 스킬 (전체스킬)
     // 0010 0000 : 스킬 (한명스킬)
     // 0100 0000 : 회복(휴식 후 턴넘김)
@@ -57,10 +57,13 @@ public:
 	void setPlayerBit(int index);
 	void setEnemyBit(int index);
 
+	unsigned int isPlayerIdle();
+	unsigned int isEnemyIdle();
+
     CHANGINGSTATUS getStatus();
     void setStatus(CHANGINGSTATUS state);
 public:
-	TurnSystem() {}
+	TurnSystem (){}
 	~TurnSystem(){}
 };
 
