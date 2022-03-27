@@ -3,19 +3,43 @@
 
 HRESULT TitleScene::init(void)
 {
-	_anyButton = true;
-	_title = false;
-
-	//_pushButton = false;
+    _startBit = 0;
 
 	_image= IMAGEMANAGER->findImage("TitleBg");
+    _buttonSize = {140, 30};
+    _SceneBoxSize = {150, 50};
+    _fadeAlpha = 0;
+    int buttonNum = 3;
+    for (int i = 0; i < buttonNum; i++)
+    {
+            TitlebuttomInfo _titleButtomInfo;
+            POINT _buttomPos = { CENTER_X, (WINSIZE_Y - 200) + i*50 };
+           _titleButtomInfo._buttonRect = RectMakeCenter(_buttomPos.x, _buttomPos.y, _buttonSize.x, _buttonSize.y);
+           _titleButtomInfo._index = i;
 
-	_alpha = 255;
+           _vTitleButton.push_back(_titleButtomInfo);
+           _vTitleButton[i]._textInfo = _uiText[i];
+    }
+
+    int SceneIndex = 0;
+    for (int x = 0; x < 3; x++)
+    {
+        for (int y = 0; y < 7; y++)
+        {
+            TitlebuttomInfo _sceneButtomInfo;
+            POINT _buttomPos = { 200 + x* 280,  200 + y * 80 };
+            _sceneButtomInfo._buttonRect = RectMakeCenter(_buttomPos.x, _buttomPos.y, _buttonSize.x, _buttonSize.y);
+            _sceneButtomInfo._index = SceneIndex;
+
+            _vSceneButton.push_back(_sceneButtomInfo);
+            _vSceneButton[SceneIndex]._textInfo = _sceneText[SceneIndex];
+            SceneIndex++;
+        }
+    }
 	_ani = new AniSceneTitle;
 	_ani->init();
-	_menuIndex = 0;
-
-	_alpha = 0;
+    _isfadeOut = false;
+	_alpha = 0.0f;
 	_isAlphaIncrese = false;
 
 	return S_OK;
@@ -28,61 +52,133 @@ void TitleScene::release(void)
 
 void TitleScene::update(void)
 {
-	/*if (!_pushButton)
-	{
-		if (KEYMANAGER->isOnceKeyDown(VK_RETURN))
-		{
-			_pushButton = true;
-		}
-	}
-	else*/
-	{
-		_alpha--;
-		if (_alpha <= 0)
-		{
-			_alpha = 0;
-			_title = true;
-		}
-	}
+    // 0000 타이틀화면
+    if (_startBit.none() == 1)
+    {
+                    _ani->update();
+        for(_viTitleButton = _vTitleButton.begin(); _viTitleButton != _vTitleButton.end(); ++_viTitleButton)
+        {
+            if (PtInRect(&_viTitleButton->_buttonRect, _ptMouse) && KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+            {
+                    //애니메이션이 다 돌면 다른 화면으로 넘어가야함
+                switch (_viTitleButton->_index)
+                {
+                case 0:
+                    _isfadeOut = true;
+                    if (_fadeAlpha > 248)
+                    {
+                        _startBit.reset();
+                        _startBit.set(0);
+                    }
+                    break;
+                case 1:
+                    _startBit.reset();
+                    _startBit.set(1);
+                    break;
+                case 2:
+                    PostQuitMessage(0);
+                    break;
+                }
+            }
+        }
+    }
+    // 0001 스타트게임
+    else if (_startBit.test(0) == 1)
+    {
+        for (_viSceneButton = _vSceneButton.begin(); _viSceneButton != _vSceneButton.end(); ++_viSceneButton)
+        {
+            if (PtInRect(&_viSceneButton->_buttonRect, _ptMouse) && KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+            {
+                cout << _viSceneButton->_index << endl;
+                switch (_viSceneButton->_index)
+                {
+                case 13:
+                    _isfadeOut = true;
+                    if (_fadeAlpha > 248) SCENEMANAGER->changeScene("final");
+                    break;
+                }
+            }
+        }
+    }
+    // 0010 로드게임
+    else if (_startBit.test(1) == 1)
+    {
 
-
-	/*if (_title)
-	{
-		IMAGEMANAGER->findImage("titleMenu")->setFrameY(0);
-		IMAGEMANAGER->findImage("titleMenu")->setFrameX(0);
-
-		_ani->update();
-
-		if (KEYMANAGER->isOnceKeyDown(VK_UP))
-		{
-			_menuIndex--;
-			if (_menuIndex < 0) _menuIndex = 2;
-		}
-		if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
-		{
-			_menuIndex++;
-			if (_menuIndex > 2) _menuIndex = 0;
-		}
-		IMAGEMANAGER->findImage("titleMenu")->setFrameX(_menuIndex);
-	}
-*/
-	//if (KEYMANAGER->isOnceKeyDown(VK_RETURN))
-	//{
-	//	if (_menuIndex == 0)SCENEMANAGER->changeScene("Map");
-	//	//if (_menuIndex == 1)SCENEMANAGER->changeScene("save");
-	//	if (_menuIndex == 2)PostQuitMessage(0);
-	//}
+    }
 	if (_alpha == 0 || _alpha == 255) _isAlphaIncrese = !_isAlphaIncrese;
-	if (_isAlphaIncrese)_alpha += 1.0f; else _alpha -= 1.5f;
+	if (_isAlphaIncrese)_alpha += 1.0f; 
+    else _alpha -= 1.0f;
+
+    if (_isfadeOut)
+    {
+        fadeout();
+    }
 }
 
 void TitleScene::render(void)
 {
+    int _textPosY = 5;
+    if (_startBit.none() == 1)
+    {
+        IMAGEMANAGER->render("TitleBg", getMemDC());
+        _ani->render(CENTER_X - 180, CENTER_Y -50);//왜 사이즈가 0이냐곸ㅋㅋㅋㅋㅋㅋㅋ이미지는 확인했음 
+        IMAGEMANAGER->alphaRender("TitleName",getMemDC(),CENTER_X,CENTER_Y-50,_alpha);
+        for (_viTitleButton = _vTitleButton.begin(); _viTitleButton != _vTitleButton.end(); ++_viTitleButton)
+        {
+            if (PtInRect(&_viTitleButton->_buttonRect, _ptMouse))
+            {
+                FONTMANAGER->drawText(getMemDC(), 
+                    (_viTitleButton->_buttonRect.left + _viTitleButton->_buttonRect.right) / 2,
+                    _viTitleButton->_buttonRect.top , "가을체", 28, 13, _viTitleButton->_textInfo,
+                    wcslen(_viTitleButton->_textInfo), TA_CENTER, RGB(170, 170, 170));
+            }
+            else
+            {
+                FONTMANAGER->drawText(getMemDC(),
+                    (_viTitleButton->_buttonRect.left + _viTitleButton->_buttonRect.right) / 2,
+                    _viTitleButton->_buttonRect.top, "가을체", 28, 13, _viTitleButton->_textInfo,
+                    wcslen(_viTitleButton->_textInfo), TA_CENTER, RGB(255, 255, 255));
+            }
+        }
+    }
+    else if (_startBit.test(0) == 1)
+    {
+        IMAGEMANAGER->render("SceneList", getMemDC());
 
-	_ani->render();
-	IMAGEMANAGER->findImage("titleMenu")->frameRender(getMemDC(), WINSIZE_X - 200, CENTER_Y + 150);
-	_ani->render(WINSIZE_X - 100, CENTER_Y + 140 + (_menuIndex * 45));
-	
-	IMAGEMANAGER->render("SceneList",getMemDC());//클릭으로 일로올수잇음
+        for (_viSceneButton = _vSceneButton.begin(); _viSceneButton != _vSceneButton.end(); ++_viSceneButton)
+        {
+            if (PtInRect(&_viSceneButton->_buttonRect, _ptMouse))
+            {
+                FONTMANAGER->drawText(getMemDC(),
+                    (_viSceneButton->_buttonRect.left + _viSceneButton->_buttonRect.right) / 2,
+                    _viSceneButton->_buttonRect.top, "가을체", 28, 13, _viSceneButton->_textInfo,
+                    wcslen(_viSceneButton->_textInfo), TA_CENTER, RGB(255, 255, 255));
+            }
+            else
+            {
+                FONTMANAGER->drawText(getMemDC(),
+                    (_viSceneButton->_buttonRect.left + _viSceneButton->_buttonRect.right) / 2,
+                    _viSceneButton->_buttonRect.top, "가을체", 28, 13, _viSceneButton->_textInfo,
+                    wcslen(_viSceneButton->_textInfo), TA_CENTER, RGB(170, 170, 170));
 
+            }
+        }//인덱스 클릭시에 업데이트에서 체인지 씬해주면됨 이제 ㅅㅅ
+    }
+    else if (_startBit.test(1) == 1)
+    {
+        IMAGEMANAGER->render("Devil", getMemDC());
+    }
+    IMAGEMANAGER->alphaRender("cutChange", getMemDC(), _fadeAlpha);
+}
+
+void TitleScene::fadeout()
+{
+    _fadeAlpha += 2.0f;
+   
+    if (_fadeAlpha >= 254)
+    {
+        _fadeAlpha = 0;
+        _isfadeOut = false; //false로 변환이 안됨...;
+        cout << _isfadeOut << endl;
+    }
 }

@@ -67,6 +67,7 @@ void FinalScene::release(void)
 
 void FinalScene::update(void)
 {
+    //검사용 버튼
 	if (KEYMANAGER->isOnceKeyDown('H'))
 	{
 		_turnSystem->changeToEnemy();

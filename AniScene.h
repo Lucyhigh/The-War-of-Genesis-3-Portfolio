@@ -6,13 +6,11 @@
 class AniSceneTitle : public GameNode
 {
 private:
-	Image* _aITitleBg;
+	Image* _titleEff;
+	Animation* _aniTitleEff;
 	
-	Animation* _aMTitleBg;
-
-
 	bool _isAniStart;
-
+       
 public:
 	AniSceneTitle() {}
 	~AniSceneTitle() {}

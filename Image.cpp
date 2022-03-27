@@ -393,33 +393,33 @@ void Image::render(HDC hdc, int destX, int destY)
 	}
 }
 
-//클리핑 렌더
 void Image::render(HDC hdc, int destX, int destY, int sourX, int sourY, int sourWidth, int sourHeight)
 {
-	if (_isTrans) 
-	{
-		GdiTransparentBlt 
-		(
-			hdc,					// 복사할 장소의 DC(화면DC(화면에 보여줄))
-			destX, destY,			// 복사될 좌표 시작 : X, Y
-			sourWidth,				// 복사할 이미지 크기 : 가로, 세로
-			sourHeight,
-			//------------------------------------------------------------------
-			_imageInfo->hMemDC,		// 복사될 대상의 메모리DC
-			sourX, sourY,			// 복사 시작 지점 : X, Y
-			sourWidth,				// 복사 영역 크기 : 가로, 세로 
-			sourHeight,
-			//------------------------------------------------------------------
-			_transColor				// 복사할 때 제외할 색상
-		);
-	}
+    if (_isTrans)
+    {
+        GdiTransparentBlt
+        (
+            hdc,					// 복사할 장소의 DC(화면DC(화면에 보여줄))
+            destX, destY,			// 복사될 좌표 시작 : X, Y
+            sourWidth,				// 복사할 이미지 크기 : 가로, 세로
+            sourHeight,
+            //------------------------------------------------------------------
+            _imageInfo->hMemDC,		// 복사될 대상의 메모리DC
+            sourX, sourY,			// 복사 시작 지점 : X, Y
+            sourWidth,				// 복사 영역 크기 : 가로, 세로 
+            sourHeight,
+            //------------------------------------------------------------------
+            _transColor				// 복사할 때 제외할 색상
+        );
+    }
 
-	else // 맵, 화면 전체적으로 들어가는 이미지 등 ...
-	{
-		BitBlt(hdc, destX, destY, sourWidth, sourHeight,
-			_imageInfo->hMemDC, sourX, sourY, SRCCOPY);
-	}
+    else // 맵, 화면 전체적으로 들어가는 이미지 등 ...
+    {
+        BitBlt(hdc, destX, destY, sourWidth, sourHeight,
+            _imageInfo->hMemDC, sourX, sourY, SRCCOPY);
+    }
 }
+
 
 // 알파렌더(배경)
 void Image::alphaRender(HDC hdc, BYTE alpha)
@@ -713,6 +713,6 @@ void Image::loopAlphaRender(HDC hdc, const LPRECT dramaArea, int offsetX, int of
 void Image::aniRender(HDC hdc, int destX, int destY, Animation* ani)
 {
     render(hdc, destX, destY, ani->getFramePos().x, ani->getFramePos().y,
-        ani->getFrameWidth(), ani->getFrameHeight());
+                              ani->getFrameWidth(), ani->getFrameHeight());
 }
 

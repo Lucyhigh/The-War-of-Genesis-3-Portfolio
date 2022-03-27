@@ -106,9 +106,9 @@ using namespace MY_UTIL;
 //1200*800
 #else
 #define WINSTART_X	 200
-#define WINSTART_Y	 100
-#define WINSIZE_X	 1200
-#define WINSIZE_Y	 800
+#define WINSTART_Y	 0
+#define WINSIZE_X	 960
+#define WINSIZE_Y	 720
 #define WINSTYLE	 WS_CAPTION  | WS_SYSMENU   // WS_CAPTION  | WS_SYSMENU |WS_POPUP | WS_BORDER | WS_SYSMENU 
 //=========================이걸 바꿔주면 변화생김 엠피플레이어처럼
 #endif 

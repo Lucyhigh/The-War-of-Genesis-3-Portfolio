@@ -35,10 +35,8 @@ void GameUI::release(void)
 
 void GameUI::update(void)
 {
-	
     if (_isMenu)
     {
-
         for (_viMenuButton = _vMenuButton.begin(); _viMenuButton != _vMenuButton.end(); ++_viMenuButton)
         {
 			if (PtInRect(&_viMenuButton->_buttonRect, _ptMouse) && KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
