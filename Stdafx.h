@@ -1,45 +1,45 @@
 #pragma once
 #include <sdkddkver.h>
 
-// °ÅÀÇ »ç¿ëµÇÁö ¾Ê´Â ³»¿ëÀº Windows Çì´õ¿¡¼­ Á¦¿Ü
+// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Windows ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 #define WIN32_LEAN_AND_MEAN 
 
-// Çüº¯È¯ µ¥ÀÌÅÍ ¼Õ½Ç 
+// ï¿½ï¿½ï¿½ï¿½È¯ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Õ½ï¿½ 
 #pragma warning(disable:4244)
 
-//! Windows Çì´õ ÆÄÀÏ
+//! Windows ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 #include <Windows.h>
 
-// µð¹ö±ë¿ë ÄÜ¼ÖÃ¢
-//!¶óÀÌºê·¯¸®
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ü¼ï¿½Ã¢
+//!ï¿½ï¿½ï¿½Ìºê·¯ï¿½ï¿½
 #pragma comment(linker,"/entry:WinMainCRTStartup /subsystem:console")
 #pragma comment(lib,"Winmm.lib")
 //#pragma comment(lib,"lib/FMOD/fmodex_vc.lib")
 #pragma comment (lib, "Jsoncpp/lib/json_vc71_libmtd.lib")
 //#pragma comment (lib, "lib/FMOD/fmodex64_vc.lib")
-//!¿ÜºÎ Çì´õ ÆÄÀÏ
+//!ï¿½Üºï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 //#include "inc/FMOD/fmod.hpp"
 #include "Jsoncpp/inc/json.h"
 
-// ¾ËÆÄ ºí·»µå¸¦ »ç¿ëÇÏ±â À§ÇÑ ¶óÀÌºê·¯¸® Ãß°¡ 
+// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½å¸¦ ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºê·¯ï¿½ï¿½ ï¿½ß°ï¿½ 
 #pragma comment (lib,"msimg32.lib")
 //
-//! C ·±Å¸ÀÓ Çì´õ ÆÄÀÏ
+//! C ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 #include <stdlib.h>
 #include <stdio.h>
 #include <memory.h>
 #include <tchar.h>
 #include <time.h>
 
-// À©µµ¿ì ³»Àå Àç»ý ¶óÀÌºê·¯¸® 
-// PlaySound()¸¦ »ç¿ëÇÏ±â À§ÇØ 
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºê·¯ï¿½ï¿½ 
+// PlaySound()ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ 
 #include <mmsystem.h>
 
-// Media Control Interface(ÀåÄ¡°ü¸®ÀÚ) API 
-// mciSendString()À» »ç¿ëÇÏ±â À§ÇØ 
+// Media Control Interface(ï¿½ï¿½Ä¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½) API 
+// mciSendString()ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ 
 #include <mciapi.h>
 
-//! C++ ·±Å¸ÀÓ Çì´õ ÆÄÀÏ
+//! C++ ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 #include <iostream>
 #include <random>
 #include <bitset>
@@ -47,7 +47,7 @@
 #include <map>
 #include <cassert>
 #include <algorithm>
-// bind ÇÔ¼ö ±â´É ¹­¾îÁÖ´Â
+// bind ï¿½Ô¼ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½
 #include <functional>
 #include <fstream>
 #include <queue>
@@ -55,7 +55,7 @@ using namespace std;
 #include <bitset>
 
 //===================================
-// # ³»°¡ ¸¸µç Çì´õÆÄÀÏÀ» ÀÌ°÷¿¡ Ãß°¡ #
+// # ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì°ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ #
 //===================================
 #include "commonMacroFunction.h"
 #include "randomFunction.h"
@@ -76,7 +76,7 @@ using namespace MY_UTIL;
 
 
 //========================
-// # ½Ì±ÛÅæÀ» ÀÌ°÷¿¡ Ãß°¡ #
+// # ï¿½Ì±ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì°ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ #
 //========================
 #define RND RandomFunction::getSingleton()
 #define KEYMANAGER KeyManager::getSingleton()
@@ -89,54 +89,54 @@ using namespace MY_UTIL;
 //#define SOUNDMANAGER SoundManager::getSingleton()
 #define JSONDATAMANAGER JsonSaveLoader::getSingleton()
 //============================
-// # ¸ÅÅ©·Î # (À©µµ¿ìÃ¢ ÃÊ±âÈ­)
+// # ï¿½ï¿½Å©ï¿½ï¿½ # (ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¢ ï¿½Ê±ï¿½È­)
 //============================
 #define WINNAME		 (LPTSTR)(TEXT("WindowsAPI"))
 
 //#define FULLSCREEN
 
 #ifdef FULLSCREEN
-#define WINSTART_X	 1920 // ¸ð´ÏÅÍ¿¡ µû¶ó ´Ù¸§ 
+#define WINSTART_X	 1920 // ï¿½ï¿½ï¿½ï¿½Í¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¸ï¿½ 
 #define WINSTART_Y	 1080
-// GetSystemMetrics ÀÎÀÚ·Î Àü´ÞµÇ´Â ½Ã½ºÅÛ ¼³Á¤ Á¤º¸ ÇöÈ²
-// ¤¤SM_CXSCREEN / SM_CYSCREEN :  ÇöÀç È­¸é ÇØ»óµµ X, YÃà ¹ÝÈ¯ 
+// GetSystemMetrics ï¿½ï¿½ï¿½Ú·ï¿½ ï¿½ï¿½ï¿½ÞµÇ´ï¿½ ï¿½Ã½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È²
+// ï¿½ï¿½SM_CXSCREEN / SM_CYSCREEN :  ï¿½ï¿½ï¿½ï¿½ È­ï¿½ï¿½ ï¿½Ø»ï¿½ X, Yï¿½ï¿½ ï¿½ï¿½È¯ 
 #define WINSIZE_X	 GetSystemMetrics(SM_CXSCREEN)
 #define WINSIZE_Y	 GetSystemMetrics(SM_CYSCREEN)
 #define WINSTYLE	 WS_POPUPWINDOW | WS_MAXWIZE
 //1200*800
 #else
 #define WINSTART_X	 200
-#define WINSTART_Y	 100
-#define WINSIZE_X	 640
-#define WINSIZE_Y	 480
+#define WINSTART_Y	 0
+#define WINSIZE_X	 960
+#define WINSIZE_Y	 720
 #define WINSTYLE	 WS_CAPTION  | WS_SYSMENU   // WS_CAPTION  | WS_SYSMENU |WS_POPUP | WS_BORDER | WS_SYSMENU 
-//=========================ÀÌ°É ¹Ù²ãÁÖ¸é º¯È­»ý±è ¿¥ÇÇÇÃ·¹ÀÌ¾îÃ³·³
+//=========================ï¿½Ì°ï¿½ ï¿½Ù²ï¿½ï¿½Ö¸ï¿½ ï¿½ï¿½È­ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ã·ï¿½ï¿½Ì¾ï¿½Ã³ï¿½ï¿½
 #endif 
 
 
 //============================
-// # ¸ÅÅ©·Î # (±â´É ¹× È¿À²)
+// # ï¿½ï¿½Å©ï¿½ï¿½ # (ï¿½ï¿½ï¿½ ï¿½ï¿½ È¿ï¿½ï¿½)
 //============================
 #define CENTER_X WINSIZE_X/2
 #define CENTER_Y WINSIZE_Y/2
 #define MGT true,RGB(255,0,255)
 
 //===============================================
-// # ¸ÅÅ©·Î ÇÔ¼ö # (Å¬·¡½º¿¡¼­ µ¿ÀûÇÒ´çµÈ ºÎºÐ ÇØÁ¦)
+// # ï¿½ï¿½Å©ï¿½ï¿½ ï¿½Ô¼ï¿½ # (Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ò´ï¿½ï¿½ ï¿½Îºï¿½ ï¿½ï¿½ï¿½ï¿½)
 //===============================================
 #define SAFE_DELETE(p)			{if(p) {delete (p); (p) = nullptr;}}
 #define SAFE_DELETE_ARRAY(p)	{if(p) {delete[] (p); (p) = nullptr;}}
 #define SAFE_RELEASE(p)			{if(p) {(p)->release(); (p) = nullptr;}}
 
 //=============
-// # Àü¿ªº¯¼ö #
+// # ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ #
 //=============
 extern HINSTANCE	_hInstance;
 extern HWND			_hWnd;
 extern POINT		_ptMouse;
 
 
-////Àü¿ªÅ¬·¡½º 
+////ï¿½ï¿½ï¿½ï¿½Å¬ï¿½ï¿½ï¿½ï¿½ 
 //#include "TurnSystem.h"
 //#include "Player.h"
 //Player _player;

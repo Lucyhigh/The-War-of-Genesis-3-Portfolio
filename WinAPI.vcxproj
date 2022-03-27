@@ -289,6 +289,7 @@
     <None Include="map.json" />
     <None Include="quest.json" />
     <None Include="jItem.json" />
+    <None Include="Script.json" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="WinAPI.rc" />

@@ -459,6 +459,9 @@
     <None Include="map.json">
       <Filter>Portfolio\JSON</Filter>
     </None>
+    <None Include="Script.json">
+      <Filter>Portfolio\JSON</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="WinAPI.rc" />

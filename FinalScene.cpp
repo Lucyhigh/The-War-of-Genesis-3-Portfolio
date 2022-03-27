@@ -67,6 +67,7 @@ void FinalScene::release(void)
 
 void FinalScene::update(void)
 {
+    //검사용 버튼
 	if (KEYMANAGER->isOnceKeyDown('H'))
 	{
 		_turnSystem->changeToEnemy();
@@ -147,7 +148,6 @@ void FinalScene::update(void)
 		// 0000 0001 : 메뉴창염 - 타일클릭해도 이동안됨 버튼클릭상태
 		else if (_turnSystem->getPlayerBit(0) == 1)
 		{
-			cout << "메뉴" << endl;
 			_gameUI->update();
 			if (!_gameUI->getMenu())
 			{
@@ -165,13 +165,12 @@ void FinalScene::update(void)
 		// 0000 1000 : 이동중 - 메뉴창 뜨면 안됨 다른곳으로 이동못함
 		else if (_turnSystem->getPlayerBit(3) == 1)
 		{
-			
 			rectMoveToPath();
-			
 		}
 	}
 	else if (_turnSystem->getStatus() == CHANGINGSTATUS::ENEMYTURN)
 	{
+        //캐릭터 위치 파악 후 이동 / 이동 후 공격 / 스킬 사용 고름
 		if (_turnSystem->isEnemyIdle() == 1)
 		{
 			// : 대기- 대기이미지 - 캐릭터 시작타일 파악후 캐릭터 좌우상하 4개 타일 중 가까운 타일 선택해 그곳을 목표로 3칸씩 이동?
@@ -181,10 +180,7 @@ void FinalScene::update(void)
 		{
 			rectMoveToPath();
 		}
-		// 0000 1000 : 이동중 - 자동이동 후 자동공격 / 자동이동 후 자동 턴 넘김
 	}
-
-	
 
 	POINT cameraPos;
 	if (_turnSystem->getStatus() == CHANGINGSTATUS::PLAYERTURN)
@@ -218,7 +214,7 @@ void FinalScene::render(void)
 	_camera->render();
 
 	int cameraLeft = _camera->getScreenRect().left;
-	int cameraTop = _camera->getScreenRect().top;
+	int cameraTop =  _camera->getScreenRect().top;
 	IMAGEMANAGER->render("Final", getMemDC(), 0, 0,
 		cameraLeft,
 		cameraTop,
@@ -231,7 +227,7 @@ void FinalScene::render(void)
 		for (auto cellsIter = _cells->begin(); cellsIter != _cells->end(); ++cellsIter)
 		{
 			Cell* cell = (*cellsIter);
-			HBRUSH brush = CreateSolidBrush(RGB(255, 0, 0)); // 색 설정
+			HBRUSH brush = CreateSolidBrush(RGB(255, 0, 0)); 
 			HBRUSH oldBrush = (HBRUSH)SelectObject(getMemDC(), brush);
 
 			int left = cell->getRect().left - cameraLeft;
@@ -310,7 +306,6 @@ void FinalScene::render(void)
 						  _saladin->getSaladinPosY() - _camera->getScreenRect().top,
 						  _saladin->getSaladinPosX()+40 - _camera->getScreenRect().left,
 						  _saladin->getSaladinPosY()+10 - _camera->getScreenRect().top);
-
 }
 
 void FinalScene::drawMapCellInfo()
@@ -348,7 +343,11 @@ void FinalScene::rectMoveToPath()
 		}
 		else if (_turnSystem->getStatus() == CHANGINGSTATUS::ENEMYTURN) 
 		{
-			//_turnSystem->changeToPlayer();//일단 이동후 턴 종료 - 3칸씩 이동하며 3칸안에 플레이어 있을 경우에 +공격
+            //일단 이동후 턴 종료 - 3칸씩 이동하며 3칸안에 플레이어 있을 경우에 +공격
+			//if(_saladin->getPos가 GOAL에 있을때 )
+            //_saladin->attackPlayer();
+            //_player->damage(); //쉐이킹 모션과 피 감소 숫자 
+            //else 
 			_turnSystem->changeToPlayer();
 			_saladin->setWaiting(true);
 			
@@ -371,16 +370,20 @@ void FinalScene::rectMoveToPath()
             lerp(start, end, _lerpPercentage).y,
             TILESIZEX, TILESIZEY);
 
-		if (_turnSystem->getStatus() == CHANGINGSTATUS::PLAYERTURN) _player->setPlayerPos({ _moveRc.right,_moveRc.top });
-		else if (_turnSystem->getStatus() == CHANGINGSTATUS::ENEMYTURN) _saladin->setSaladinPos({ _moveRc.right,_moveRc.top }); 
+        if (_turnSystem->getStatus() == CHANGINGSTATUS::PLAYERTURN)
+        {
+            _player->setPlayerPos({ _moveRc.right,_moveRc.top });
+        }
+        else if (_turnSystem->getStatus() == CHANGINGSTATUS::ENEMYTURN)
+        {
+            _saladin->setSaladinPos({ _moveRc.right,_moveRc.top });
+        }
+
         if (_lerpPercentage >= 1)
         {
             _moveIndex--;
             _lerpPercentage = 0;
-			cout<<_saladin->getSaladinPosX() << endl;
         }
-		
-
     }
 }
 
