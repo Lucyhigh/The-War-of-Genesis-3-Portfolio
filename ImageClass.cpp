@@ -42,8 +42,8 @@ HRESULT ImageClass::init(void)
 #pragma region Stage Scene
 	//Title
 	IMAGEMANAGER->addImage("TitleBg", "Resources/Images/BackGround/Title.bmp", WINSIZE_X, WINSIZE_Y);
-	IMAGEMANAGER->addImage("TitleEfx", "Resources/Images/UI/titleEfx.bmp", 996, 225);
-	//IMAGEMANAGER->addImage("TitleEfx", "Resources/Images/UI/titleEfx.bmp", 996, 225, 4, 1,true,RGB(4, 0, 4));
+	//IMAGEMANAGER->addImage("TitleEfx", "Resources/Images/UI/titleEfx.bmp", 996, 225);
+	IMAGEMANAGER->addImage("TitleEfx", "Resources/Images/UI/titleEfx.bmp", 996, 225,true,RGB(4, 0, 4));// 4, 1,
 	IMAGEMANAGER->addImage("TitleName", "Resources/Images/UI/ui1-2.bmp", 222, 225);//이미지 다시 저장
 
 

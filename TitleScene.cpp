@@ -47,6 +47,7 @@ HRESULT TitleScene::init(void)
 
 void TitleScene::release(void)
 {
+   // _ani->release();
 	SAFE_DELETE(_ani);
 }
 
@@ -55,8 +56,8 @@ void TitleScene::update(void)
     // 0000 타이틀화면
     if (_startBit.none() == 1)
     {
-                    _ani->update();
-        for(_viTitleButton = _vTitleButton.begin(); _viTitleButton != _vTitleButton.end(); ++_viTitleButton)
+        _ani->update();
+        for (_viTitleButton = _vTitleButton.begin(); _viTitleButton != _vTitleButton.end(); ++_viTitleButton)
         {
             if (PtInRect(&_viTitleButton->_buttonRect, _ptMouse) && KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
             {
@@ -121,7 +122,7 @@ void TitleScene::render(void)
     if (_startBit.none() == 1)
     {
         IMAGEMANAGER->render("TitleBg", getMemDC());
-        _ani->render(CENTER_X - 180, CENTER_Y -50);//왜 사이즈가 0이냐곸ㅋㅋㅋㅋㅋㅋㅋ이미지는 확인했음 
+        _ani->render(CENTER_X - 110, CENTER_Y-90);
         IMAGEMANAGER->alphaRender("TitleName",getMemDC(),CENTER_X,CENTER_Y-50,_alpha);
         for (_viTitleButton = _vTitleButton.begin(); _viTitleButton != _vTitleButton.end(); ++_viTitleButton)
         {
@@ -162,7 +163,7 @@ void TitleScene::render(void)
                     wcslen(_viSceneButton->_textInfo), TA_CENTER, RGB(170, 170, 170));
 
             }
-        }//인덱스 클릭시에 업데이트에서 체인지 씬해주면됨 이제 ㅅㅅ
+        }
     }
     else if (_startBit.test(1) == 1)
     {
@@ -178,7 +179,7 @@ void TitleScene::fadeout()
     if (_fadeAlpha >= 254)
     {
         _fadeAlpha = 0;
-        _isfadeOut = false; //false로 변환이 안됨...;
+        _isfadeOut = false; 
         cout << _isfadeOut << endl;
     }
 }
