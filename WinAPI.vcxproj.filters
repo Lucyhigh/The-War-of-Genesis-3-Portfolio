@@ -163,7 +163,9 @@
     <ClCompile Include="GameUI.cpp">
       <Filter>Portfolio\UI</Filter>
     </ClCompile>
-    <ClCompile Include="Saladin.cpp" />
+    <ClCompile Include="Saladin.cpp">
+      <Filter>Portfolio\Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameNode.h">
@@ -329,9 +331,11 @@
     <ClInclude Include="GameUI.h">
       <Filter>Portfolio\UI</Filter>
     </ClInclude>
-    <ClInclude Include="Saladin.h" />
     <ClInclude Include="Cell.h">
       <Filter>Portfolio\JSON</Filter>
+    </ClInclude>
+    <ClInclude Include="Saladin.h">
+      <Filter>Portfolio\Player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

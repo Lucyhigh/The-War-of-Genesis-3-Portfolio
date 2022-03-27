@@ -32,20 +32,18 @@ HRESULT ImageClass::init(void)
 	IMAGEMANAGER->addFrameImage("sDownIdle", "Resources/Images/Saladin/downIdle.bmp", 280, 90, 4, 1, MGT);
 
     //move
-    /*IMAGEMANAGER->addFrameImage("sRightMove", "Resources/Images/Saladin/rightMove.bmp", 272, 90, 4, 1, RGB(168, 208, 168));
-    IMAGEMANAGER->addFrameImage("sLeftMove", "Resources/Images/Saladin/leftMove.bmp", 272, 90, 4, 1, RGB(168, 208, 168));
-    IMAGEMANAGER->addFrameImage("sUpMove", "Resources/Images/Saladin/upMove.bmp", 280, 90, 4, 1, RGB(168,208,168));
-    IMAGEMANAGER->addFrameImage("sDownMove", "Resources/Images/Saladin/downMove.bmp", 280, 90, 4, 1, RGB(168, 208, 168));*/
-    IMAGEMANAGER->addImage("sMovesheet", "Resources/Images/Saladin/movesheet.bmp", 720, 480, 6, 4, RGB(168, 208, 168));
+    IMAGEMANAGER->addFrameImage("sMovesheet", "Resources/Images/Saladin/movesheet.bmp", 720, 480, 6, 4,true, RGB(168, 208, 168));
 
 #pragma endregion
 #pragma region Stage Scene
 	//Title
 	IMAGEMANAGER->addImage("TitleBg", "Resources/Images/BackGround/Title.bmp", WINSIZE_X, WINSIZE_Y);
-	//IMAGEMANAGER->addImage("TitleEfx", "Resources/Images/UI/titleEfx.bmp", 996, 225);
 	IMAGEMANAGER->addImage("TitleEfx", "Resources/Images/UI/titleEfx.bmp", 996, 225,true,RGB(4, 0, 4));// 4, 1,
-	IMAGEMANAGER->addImage("TitleName", "Resources/Images/UI/ui1-2.bmp", 222, 225);//이미지 다시 저장
+	IMAGEMANAGER->addImage("TitleName", "Resources/Images/UI/TitleGameName.bmp", WINSIZE_X, WINSIZE_Y, MGT);
 
+	//Map
+	IMAGEMANAGER->addImage("Map", "Resources/Images/UI/map.bmp", WINSIZE_X, WINSIZE_Y, MGT);
+	IMAGEMANAGER->addImage("Sea", "Resources/Images/UI/sea.bmp", WINSIZE_X, WINSIZE_Y);
 
 	//Scene List
 	IMAGEMANAGER->addImage("SceneList", "Resources/Images/BackGround/SceneList.bmp", WINSIZE_X, WINSIZE_Y);

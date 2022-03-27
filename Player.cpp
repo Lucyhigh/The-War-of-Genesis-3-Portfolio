@@ -16,16 +16,16 @@ HRESULT Player::init(void)
 
 	_currentHp = 10;
 	_maxHp = 10;
-	_hpBar = new ProgressBar;
-	_hpBar->init(280, WINSIZE_Y - 250, 52, 4);
+	//_hpBar = new ProgressBar;
+	//_hpBar->init(280, WINSIZE_Y - 250, 52, 4);
 	_imageState = PLAYERSTATE::BOTTOM;
 	return S_OK;
 }
 
 void Player::release(void)
 {
-	_hpBar->release();
-	SAFE_DELETE(_hpBar);
+	//_hpBar->release();
+	//SAFE_DELETE(_hpBar);
 }
 
 void Player::update(void)

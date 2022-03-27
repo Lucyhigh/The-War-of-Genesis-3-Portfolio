@@ -30,8 +30,6 @@ private:
 	int _menuIndex;
 	
     bool _isfadeOut;
-	bool _isAlphaIncrese;
-	bool _anyButton;
 public:
 	HRESULT init(void);
 	void release(void);

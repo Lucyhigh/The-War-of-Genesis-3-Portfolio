@@ -11,7 +11,7 @@ HRESULT AniSceneTitle::init(void)
     _aniTitleEff->init(_titleEff->getWidth(), _titleEff->getHeight(), 249, 225);
 
     _aniTitleEff->setDefPlayFrame(false, true);
-    _aniTitleEff->setFPS(10);
+    _aniTitleEff->setFPS(3);
 
     _aniTitleEff->AniStart();
 	_isAniStart = false;
@@ -28,10 +28,9 @@ void AniSceneTitle::release(void)
 
 void AniSceneTitle::update(void)
 {
-    if (KEYMANAGER->isOnceKeyDown('E'))
+    if (!_aniTitleEff->isPlay())
     {
-       // _aniTitleEff->AniStart();
-
+       _aniTitleEff->AniStart();
         cout << "´­·¶´Ù" << endl;
     }
     _aniTitleEff->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
@@ -39,7 +38,6 @@ void AniSceneTitle::update(void)
 
 void AniSceneTitle::render(void)
 {
-    _titleEff->aniRender(getMemDC(), 0,0, _aniTitleEff);
 }
 
 void AniSceneTitle::render(int x, int y)

@@ -4,7 +4,7 @@
 HRESULT Saladin::init(void)
 {
 	_image = IMAGEMANAGER->findImage("sDownIdle");
-//	_image = IMAGEMANAGER->findImage("sRightMove");
+	_image = IMAGEMANAGER->findImage("sMovesheet");
 
 	_count = 0;
 	_indexA = _indexB = 0;
@@ -74,12 +74,12 @@ void Saladin::update(void)
 		else if (!_isWaiting &&_count % 10 == 0)
 		{
 			_indexB++;
-			IMAGEMANAGER->findImage("pRightMove")->setFrameY(1);
+			IMAGEMANAGER->findImage("sMovesheet")->setFrameY(3);
 			if (_indexB >= 6)
 			{
 				_indexB = 0;
 			}
-			IMAGEMANAGER->findImage("pRightMove")->setFrameX(_indexB);
+			IMAGEMANAGER->findImage("sMovesheet")->setFrameX(_indexB);
 		}
 		break;
 	case SALADINSTATE::LEFT:
@@ -97,12 +97,12 @@ void Saladin::update(void)
 		else if (!_isWaiting &&_count % 10 == 0)
 		{
 			_indexB++;
-			IMAGEMANAGER->findImage("pLeftMove")->setFrameY(1);
+			IMAGEMANAGER->findImage("sMovesheet")->setFrameY(2);
 			if (_indexB >= 6)
 			{
 				_indexB = 0;
 			}
-			IMAGEMANAGER->findImage("pLeftMove")->setFrameX(_indexB);
+			IMAGEMANAGER->findImage("sMovesheet")->setFrameX(_indexB);
 		}
 		break;
 	case SALADINSTATE::TOP:
@@ -120,12 +120,12 @@ void Saladin::update(void)
 		{
 
 			_indexB++;
-			IMAGEMANAGER->findImage("pUpMove")->setFrameY(1);
+			IMAGEMANAGER->findImage("sMovesheet")->setFrameY(0);
 			if (_indexB >= 6)
 			{
 				_indexB = 0;
 			}
-			IMAGEMANAGER->findImage("pUpMove")->setFrameX(_indexB);
+			IMAGEMANAGER->findImage("sMovesheet")->setFrameX(_indexB);
 		}
 		break;
 	case SALADINSTATE::BOTTOM:
@@ -142,12 +142,12 @@ void Saladin::update(void)
 		else if (!_isWaiting &&_count % 10 == 0)
 		{
 			_indexB++;
-			IMAGEMANAGER->findImage("pDownMove")->setFrameY(1);
+			IMAGEMANAGER->findImage("sMovesheet")->setFrameY(1);
 			if (_indexB >= 6)
 			{
 				_indexB = 0;
 			}
-			IMAGEMANAGER->findImage("pDownMove")->setFrameX(_indexB);
+			IMAGEMANAGER->findImage("sMovesheet")->setFrameX(_indexB);
 		}
 		break;
 	}
@@ -169,7 +169,7 @@ void Saladin::render(void)
 		}
 		else
 		{
-			IMAGEMANAGER->frameRender("sRightMove", getMemDC(), left, top);
+			IMAGEMANAGER->frameRender("sMovesheet", getMemDC(), left, top);
 		}
 		break;
 	case SALADINSTATE::LEFT:
@@ -179,27 +179,27 @@ void Saladin::render(void)
 		}
 		else
 		{
-			IMAGEMANAGER->frameRender("sLeftMove", getMemDC(), left - 40, top);
+			IMAGEMANAGER->frameRender("sMovesheet", getMemDC(), left, top);
 		}
 		break;
 	case SALADINSTATE::TOP:
 		if (_isWaiting)
 		{
-			IMAGEMANAGER->frameRender("sUpIdle", getMemDC(), left + 7, top);
+			IMAGEMANAGER->frameRender("sUpIdle", getMemDC(), left, top);
 		}
 		else
 		{
-			IMAGEMANAGER->frameRender("sUpMove", getMemDC(), left, top);
+			IMAGEMANAGER->frameRender("sMovesheet", getMemDC(), left, top);
 		}
 		break;
 	case SALADINSTATE::BOTTOM:
 		if (_isWaiting)
 		{
-			IMAGEMANAGER->frameRender("sDownIdle", getMemDC(), left - 12, top);
+			IMAGEMANAGER->frameRender("sDownIdle", getMemDC(), left, top);
 		}
 		else
 		{
-			IMAGEMANAGER->frameRender("sDownMove", getMemDC(), left - 12, top);
+			IMAGEMANAGER->frameRender("sMovesheet", getMemDC(), left, top);
 		}
 		break;
 	}
