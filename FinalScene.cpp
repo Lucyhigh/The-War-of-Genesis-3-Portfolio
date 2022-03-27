@@ -14,8 +14,8 @@ HRESULT FinalScene::init(void)
 
 	_player = new Player;
 	_player->init();
-	_player->setPlayerPosX(6 * TILESIZEX);
-	_player->setPlayerPosY(8 * TILESIZEY);
+	_player->setPlayerPosX(16 * TILESIZEX);
+	_player->setPlayerPosY(29 * TILESIZEY);
 
 	_saladin = new Saladin;
 	_saladin->init();
@@ -282,6 +282,7 @@ void FinalScene::render(void)
 		                    };
 
 		Cell* cell = (*cellsIter);
+		SetTextColor(getMemDC(), RGB(255, 255, 255));
 		if (PtInRect(&cell->getRect(), cameraMouse))
 		{
 			sprintf(cellIndex, "%d", cell->getCellX());
