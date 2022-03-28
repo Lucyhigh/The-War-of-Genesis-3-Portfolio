@@ -13,7 +13,7 @@ HRESULT AniSceneTitle::init(void)
     _aniTitleEff->setDefPlayFrame(false, true);
     _aniTitleEff->setFPS(3);
 
-    _aniTitleEff->AniStart();
+    //_aniTitleEff->AniStart();
 	_isAniStart = false;
 	return S_OK;
 }
@@ -28,10 +28,10 @@ void AniSceneTitle::release(void)
 
 void AniSceneTitle::update(void)
 {
-    if (!_aniTitleEff->isPlay())
+    if (KEYMANAGER->isOnceKeyDown('T'))
     {
        _aniTitleEff->AniStart();
-        cout << "눌렀다" << endl;
+        cout << "열심히 눌렀지만 움직이지 않는다..." << endl;
     }
     _aniTitleEff->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
 }

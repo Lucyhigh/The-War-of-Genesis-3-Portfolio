@@ -35,7 +35,7 @@ HRESULT MainGame::init(void)
 	SCENEMANAGER->addScene("ending", new EndingScene);
 	SCENEMANAGER->addScene("Map", new MapScene);
 
-	SCENEMANAGER->changeScene("Map");
+	SCENEMANAGER->changeScene("title");
 	return S_OK;
 }
 

@@ -2,28 +2,85 @@
 #include "GameUI.h"
 HRESULT GameUI::init(void)
 {
-    _image = new Image;
+	_image = new Image;
 	_image = IMAGEMANAGER->findImage("button");
-    _buttonIndex = 0;
-    _uiPos = { 0,0 };
+
+	_tileImage = new Image;
+	_tileImage = IMAGEMANAGER->findImage("moveTile");
+
+	_uiPos = { 0,0 };
+	_tileCenter = { 0, 0 };
+	
+	_tileAlpha = 0.0f;
+	_buttonIndex = 0;
+	_moveRange = 5;
+
+	_isPlayerTurn = true;
+	_isMenu = false;
+	_isTileSetting = false;
+
+	int startX = -250;
+	int startY = -50;
+	int _indexY = 0;
 	for (int i = -1; i < 1; i++)
 	{
 		for (int j = -1; j < 1; j++)
 		{
-            battleImgInfo _battleImageInfo;
-			POINT _buttomPos = { -250 * (-1)*i, -50 * (-2)*j };
-            _battleImageInfo._imgPos = _buttomPos;
-            _battleImageInfo._buttonRect = RectMake(_buttomPos.x, _buttomPos.y, _image->getWidth(), _image->getHeight());//
-            _battleImageInfo._defaultPos = _buttomPos;
-            _battleImageInfo._index = _buttonIndex;
-                
+			
+			tagBattleMenu _battleImageInfo;
+			POINT _buttomPos = { startX * (-1)*i, startY * (-2)*j };
+			_battleImageInfo._imgPos = _buttomPos;
+			_battleImageInfo._buttonRect = RectMake(_buttomPos.x, _buttomPos.y, _image->getWidth(), _image->getHeight());//
+			_battleImageInfo._defaultPos = _buttomPos;
+			_battleImageInfo._index = _buttonIndex;
+
 			_vMenuButton.push_back(_battleImageInfo);
-            _vMenuButton[_buttonIndex]._textInfo = _uiText[_buttonIndex];
-            _buttonIndex++;
-        };
+			_vMenuButton[_buttonIndex]._textInfo = _uiText[_buttonIndex];
+			_buttonIndex++;
+		};
 	}
-	_isPlayerTurn = true;
-	_isMenu = false;
+	//MakeMoveTile();
+	//함수로 다하고 지정해줄거임
+	//아래방향
+	//for (int i = _moveRange - 2; i > -1; i--)
+	for (int i = -1; i < _moveRange ; i++)
+	{
+		for (int j = _moveRange - i; j > 0; j--) 
+		{
+			continue;
+		}
+		for (int j = i * 2+1; j > 0; j--)
+		{
+			tagMoveTile _tagMoveTile;
+			POINT _movePos = { i ,_indexY};
+			cout << i << "," << _indexY <<",";
+			_indexY++;
+			_vMoveTile.push_back(_tagMoveTile);
+		}
+		cout << endl;
+		_indexY = 0;
+	}
+	//위방향
+	for (int i = _moveRange; i >= 0; i--)
+	//for (int i = 0; i < _moveRange; i++)
+	{
+		for (int j = 1; j < _moveRange - i; j++) 
+		{
+			continue;
+		}
+		for (int j = 0; j < i * 2 + 1 ; j++)
+		{
+			tagMoveTile _tagMoveTile;
+			POINT _movePos = { i , _indexY };
+			cout << i <<","<< _indexY << ",";
+			_indexY++;
+			_vMoveTile.push_back(_tagMoveTile);
+		}
+		cout << endl;
+		_indexY=0;
+	}
+
+	
 	return S_OK;
 }
 
@@ -59,16 +116,8 @@ void GameUI::update(void)
 				}
 				_isMenu = false;
 			}
-		/*	else if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
-			{
-				_isMenuOn = false;
-				cout << "메뉴ㅜ" << endl;
-				_isPlayerTurn = true;
-			
-            }*/
         }
     }
-
 }
 
 void GameUI::render(void)
@@ -84,10 +133,10 @@ void GameUI::render(void)
 			FONTMANAGER->drawText(getMemDC(), (_viMenuButton->_buttonRect.left+_viMenuButton->_buttonRect.right)/2,
 											  _viMenuButton->_buttonRect.top+ _textPosY, "가을체",
 								  18, 13, _viMenuButton->_textInfo, wcslen(_viMenuButton->_textInfo), TA_CENTER, RGB(255,255,255));
-			/*Rectangle(getMemDC(), _viMenuButton->_buttonRect.left, _viMenuButton->_buttonRect.top,
-								_viMenuButton->_buttonRect.right, _viMenuButton->_buttonRect.bottom);*/
 		}
 	}
+	//if (_tileAlpha == 0 || _tileAlpha == 255) _isAlphaIncrese = !_isAlphaIncrese;
+	//if (_isAlphaIncrese)_tileAlpha += 1.0f; else _tileAlpha -= 1.5f;
             
 }
 
@@ -118,4 +167,22 @@ void GameUI::showBattleMenu(POINT menuPos)
 		_viMenuButton->_buttonRect.right = _uiPos.x+_image->getWidth();
 		_viMenuButton->_buttonRect.bottom = _uiPos.y+ _image->getHeight();
     }
+}
+
+void GameUI::showMoveTile(POINT center)
+{
+}
+
+void GameUI::MakeMoveTile()
+{
+}
+
+void GameUI::setMoveTileRange(int range)
+{
+	_moveRange = range;
+}
+
+void GameUI::setMoveCenter(POINT center)
+{
+	_tileCenter = center;
 }

@@ -53,6 +53,7 @@ using namespace std;
 #include "TimeManager.h"
 #include "TextDataManager.h"
 #include "SceneManager.h"
+#include "AnimationManager.h"
 //#include "SoundManager.h"
 #include "JsonSaveLoader.h"
 
@@ -68,6 +69,7 @@ using namespace MY_UTIL;
 #define TIMEMANAGER TimeManager::getSingleton()
 #define TEXTDATAMANAGER TextDataManager::getSingleton()
 #define SCENEMANAGER SceneManager::getSingleton()
+#define ANIMATIONMANAGER AnimationManager::getSingleton()
 //#define SOUNDMANAGER SoundManager::getSingleton()
 #define JSONDATAMANAGER JsonSaveLoader::getSingleton()
 //============================

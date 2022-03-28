@@ -36,6 +36,10 @@ HRESULT GameNode::init(bool managerInit)
         TEXTDATAMANAGER->init();
 		//씬 매니저 초기화
 		SCENEMANAGER->init();
+
+		//애니메이션 매니저 초기화
+		ANIMATIONMANAGER->init();
+
 		//사운드 매니저 초기화
 		//SOUNDMANAGER->init();
 
@@ -66,21 +70,25 @@ void GameNode::release(void)
 		//폰트매니저 싱글톤해제
 		FONTMANAGER->releaseSingleton();
 
-		//타임매니저 헤제, 싱글톤 해제
+		//타임매니저 해제, 싱글톤 해제
 		TIMEMANAGER->release();
 		TIMEMANAGER->releaseSingleton();
 
-        //타임매니저 헤제, 싱글톤 해제
+        //타임매니저 해제, 싱글톤 해제
         TEXTDATAMANAGER->release();
         TEXTDATAMANAGER->releaseSingleton();
-        //씬 매니저 헤제, 싱글톤 해제
+        //씬 매니저 해제, 싱글톤 해제
 		SCENEMANAGER->release();
 		SCENEMANAGER->releaseSingleton();
 		
-        //사운드 매니저 헤제, 싱글톤 해제
+		//애니메이션 매니저 해제, 싱글톤 해제
+		ANIMATIONMANAGER->release();
+		ANIMATIONMANAGER->releaseSingleton();
+		
+        //사운드 매니저 해제, 싱글톤 해제
 		//SOUNDMANAGER->release();
 		//SOUNDMANAGER->releaseSingleton();
-        //사운드 매니저 헤제, 싱글톤 해제
+        //사운드 매니저 해제, 싱글톤 해제
 		JSONDATAMANAGER->release();
 		JSONDATAMANAGER->releaseSingleton();
         //PLAYER->release();

@@ -31,6 +31,7 @@ private:
 	vector<POINT> _check;
 
 	float _lerpPercentage;
+	float _tileAlpha;
 	int _mouseIndex;
 	int _endPointIndex;
 	int _moveIndex;

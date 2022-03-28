@@ -166,6 +166,12 @@
     <ClCompile Include="Saladin.cpp">
       <Filter>Portfolio\Player</Filter>
     </ClCompile>
+    <ClCompile Include="BFS.cpp">
+      <Filter>Portfolio\A%2a</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationManager.cpp">
+      <Filter>API\Animation</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameNode.h">
@@ -336,6 +342,12 @@
     </ClInclude>
     <ClInclude Include="Saladin.h">
       <Filter>Portfolio\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="BFS.h">
+      <Filter>Portfolio\A%2a</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationManager.h">
+      <Filter>API\Animation</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

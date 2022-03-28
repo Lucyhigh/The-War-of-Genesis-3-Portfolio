@@ -42,6 +42,7 @@ HRESULT FinalScene::init(void)
 	_endPointIndex = 0;
 	_moveIndex = 0;
 	_lerpPercentage = 0.0f;
+	
 	_isMove = false;
 
 	_turnSystem = new TurnSystem();
@@ -56,13 +57,16 @@ void FinalScene::release(void)
 	SAFE_DELETE(_mapTileInfo);
 	SAFE_DELETE(_turnSystem);
 	SAFE_DELETE(_gameUI);
+	SAFE_DELETE(_generator);
+
 	_player->release();
 	SAFE_DELETE(_player);
+
 	_saladin->release();
 	SAFE_DELETE(_saladin);
+
 	_camera->release();
 	SAFE_DELETE(_camera);
-	SAFE_DELETE(_generator);
 }
 
 void FinalScene::update(void)
@@ -256,6 +260,7 @@ void FinalScene::render(void)
 				brush = CreateSolidBrush(RGB(205, 255, 100)); 
 				oldBrush = (HBRUSH)SelectObject(getMemDC(), brush);
 				FillRect(getMemDC(), &rect, brush);
+				IMAGEMANAGER->alphaRender("moveTile", getMemDC(), _tileAlpha);
 				break;
 			}
 			DeleteObject(brush);
@@ -301,11 +306,6 @@ void FinalScene::render(void)
 			_moveRc.right - _camera->getScreenRect().left,
 			_moveRc.bottom - _camera->getScreenRect().top);
 	}
-
-	Rectangle(getMemDC(), _saladin->getSaladinPosX() - _camera->getScreenRect().left,
-						  _saladin->getSaladinPosY() - _camera->getScreenRect().top,
-						  _saladin->getSaladinPosX()+40 - _camera->getScreenRect().left,
-						  _saladin->getSaladinPosY()+10 - _camera->getScreenRect().top);
 }
 
 void FinalScene::drawMapCellInfo()

@@ -68,8 +68,6 @@ void TitleScene::update(void)
                 {
                 case 0:
                     _isfadeOut = true;
-
-                    
                     break;
                 case 1:
                     _startBit.reset();
@@ -81,12 +79,7 @@ void TitleScene::update(void)
                 }
             }
         }
-		if (_fadeAlpha > 248)
-			if (!_isfadeOut)
-			{
-				cout << "다음씬" << endl;
-				SCENEMANAGER->changeScene("final");
-			}
+	
     }
     // 0001 스타트게임
     else if (_startBit.test(0) == 1)
@@ -108,10 +101,13 @@ void TitleScene::update(void)
 		
 
     }
-    // 0010 로드게임
+    // 0010 로드게임 - 일단은 맵씬으로 이동하게 만듬
     else if (_startBit.test(1) == 1)
     {
-
+		if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+		{
+			_isfadeOut = true;
+		}
     }
 	
     if (_isfadeOut)
@@ -122,6 +118,8 @@ void TitleScene::update(void)
 
 void TitleScene::render(void)
 {
+	cout << _startBit.to_string() << endl;
+
     int _textPosY = 5;
     if (_startBit.none() == 1)
     {
@@ -197,8 +195,11 @@ void TitleScene::fadeout()
 			}
 			else if (_startBit.test(0) == 1)
 			{
-				cout << "다음씬" << endl;
 				SCENEMANAGER->changeScene("final");
+			}
+			else if (_startBit.test(1) == 1)
+			{
+				SCENEMANAGER->changeScene("Map");
 			}
 		}
 	}
