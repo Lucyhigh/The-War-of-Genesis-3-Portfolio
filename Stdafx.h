@@ -41,7 +41,7 @@
 #include <queue>
 using namespace std;
 #include <bitset>
-
+#include <list>
 //===================================
 #include "commonMacroFunction.h"
 #include "randomFunction.h"
@@ -56,7 +56,6 @@ using namespace std;
 #include "AnimationManager.h"
 //#include "SoundManager.h"
 #include "JsonSaveLoader.h"
-
 
 using namespace MY_UTIL;
 

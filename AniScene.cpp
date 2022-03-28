@@ -31,7 +31,6 @@ void AniSceneTitle::update(void)
     if (KEYMANAGER->isOnceKeyDown('T'))
     {
        _aniTitleEff->AniStart();
-        cout << "열심히 눌렀지만 움직이지 않는다..." << endl;
     }
     _aniTitleEff->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
 }

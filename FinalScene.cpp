@@ -367,8 +367,8 @@ void FinalScene::rectMoveToPath()
 
         changeImage();
         _moveRc = RectMake(lerp(start, end, _lerpPercentage).x,
-            lerp(start, end, _lerpPercentage).y,
-            TILESIZEX, TILESIZEY);
+                           lerp(start, end, _lerpPercentage).y,
+                           TILESIZEX, TILESIZEY);
 
         if (_turnSystem->getStatus() == CHANGINGSTATUS::PLAYERTURN)
         {

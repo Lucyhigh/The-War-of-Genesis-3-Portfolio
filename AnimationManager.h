@@ -1,30 +1,39 @@
 #pragma once
 #include "SingletonBase.h"
 #include "Animation.h"
-/*
-	이미지 구간반복 - 다른 함수가 범위 내 적파악할 동안 시간을 끌기위한 구간 반복
-	이미지 구간마다의 조건 - 이미지 일정 범위 이후로는 다른 캐릭터들이 공격 // 피격 되는 조건으로
-	이미지 구간 속도 조절
-	애니메이션 자동 재생
 
-	*/
-class AnimationManager : public SingletonBase <AnimationManager>
+class AnimationManager : public SingletonBase<AnimationManager>
 {
-private: 
-	Animation animation;
-public:
+private:
+    typedef map<string, Animation*> mAnimationList;
+    typedef map<string, Animation*>::iterator mapAnimationIter;
 
-	// 애니메이션 렌더 / 띄울 위치, 특수 구간, 재생 시작시간?, 재생 속도
-	void playAnimation(HDC hdc, int destX, int destY, char* fontName, int fontSize, int fontWidth,
-		string animationKey, int length, COLORREF color);
+    mAnimationList _mAnimationList;
 
-	// 애니메이션 리스트
-	void playAniarr(HDC hdc, int destX, int destY, char* fontName, int fontSize, int fontWidth,
-		string* animationKeyArr, int length, COLORREF color);
-	void playAnimation();
-	
 public:
-	AnimationManager() {}
-	~AnimationManager() {}
+    HRESULT init(void);
+    void release(void);
+    void update(void);
+
+    Animation* findAnimation(string animationKeyName);
+    bool deleteAniamation(string strKey);
+    bool deleteAll();
+
+    // 애니메이션이 있는거 가져와서 함수 형태 잡고
+
+    void addAnimation(string animationKeyName, char* imageKeyName, int start, int end,
+        int fps, bool reverse = false, bool loop = false);
+
+    void addAnimationArray(string animationKeyName, char* imageKeyName, int* playArr,
+        int arrLen, int fps, bool loop = false);
+
+    void addAnimationList(string animationKeyName, char* imageKeyName,
+        multimap<vector<int>, string, list<int>, string>,
+        int listLen, int fps, bool loop = false);
+
+    void PlayAnimation();
+
+public:
+    AnimationManager() {}
+    ~AnimationManager() {}
 };
-

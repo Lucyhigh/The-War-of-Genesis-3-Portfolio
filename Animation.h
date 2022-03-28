@@ -36,7 +36,8 @@ public:
     void setPlayFrame(int* playArr = nullptr, int arrLen = 0, bool loop = false);
     void setPlayFrame(int start, int end, bool reverse = false, bool loop = false);
     void setPlayReverseFrame(int start, int end, int framX, bool loop);
-
+    inline void SetFrameUpdateTime(float updateTime) 
+    { _frameUpdateSec = updateTime; }
 
     // 초당 프레임 갱신 횟수
     void setFPS(int framePerSec);
@@ -50,7 +51,7 @@ public:
     void AniResume(void);
 
     // 플레이 중?
-    inline bool isPlay(void) { return _isPlay; }
+    inline bool getIsPlay(void) { return _isPlay; }
 
     inline POINT getFramePos(void)
     {

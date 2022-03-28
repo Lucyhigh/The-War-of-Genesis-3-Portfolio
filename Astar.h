@@ -1,6 +1,7 @@
 #pragma once
 #include <functional>
 #include <set>
+//비용 계산 다시해보깅...
 namespace AStar
 {
     struct Vec2i

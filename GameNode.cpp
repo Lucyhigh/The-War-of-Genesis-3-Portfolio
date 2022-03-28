@@ -38,7 +38,7 @@ HRESULT GameNode::init(bool managerInit)
 		SCENEMANAGER->init();
 
 		//애니메이션 매니저 초기화
-		ANIMATIONMANAGER->init();
+		//ANIMATIONMANAGER->init();
 
 		//사운드 매니저 초기화
 		//SOUNDMANAGER->init();
@@ -82,8 +82,8 @@ void GameNode::release(void)
 		SCENEMANAGER->releaseSingleton();
 		
 		//애니메이션 매니저 해제, 싱글톤 해제
-		ANIMATIONMANAGER->release();
-		ANIMATIONMANAGER->releaseSingleton();
+		//ANIMATIONMANAGER->release();
+		//ANIMATIONMANAGER->releaseSingleton();
 		
         //사운드 매니저 해제, 싱글톤 해제
 		//SOUNDMANAGER->release();

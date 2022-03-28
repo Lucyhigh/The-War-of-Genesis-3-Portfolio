@@ -1,7 +1,6 @@
 #include "Stdafx.h"
 #include "ImageManager.h"
 
-
 HRESULT ImageManager::init(void)
 {
 	return S_OK;
@@ -14,7 +13,6 @@ void ImageManager::release(void)
 
 Image* ImageManager::addImage(string strKey, int width, int height)
 {
-	//추가하려는 이미지가 존재하는지 키값으로 확인
 	Image* img = findImage(strKey);
 	if (img) return img;
 
@@ -25,13 +23,12 @@ Image* ImageManager::addImage(string strKey, int width, int height)
 		return NULL;
 	}
 
-	//_mImageList.insert(pair<string, Image*>(strKey, img));
 	_mImageList.insert(make_pair(strKey, img));
 
 	return img;
 }
 
-Image* ImageManager::addImage(string strKey, const char * fileName, int width, int height, BOOL isTrans, COLORREF transColor)
+Image* ImageManager::addImage(string strKey, const char* fileName, int width, int height, BOOL isTrans, COLORREF transColor)
 {
 	Image* img = findImage(strKey);
 	if (img) return img;
@@ -43,7 +40,6 @@ Image* ImageManager::addImage(string strKey, const char * fileName, int width, i
 		return NULL;
 	}
 
-	//_mImageList.insert(pair<string, Image*>(strKey, img));
 	_mImageList.insert(make_pair(strKey, img));
 
 	return img;
@@ -61,7 +57,6 @@ Image* ImageManager::addImage(string strKey, const char * fileName, float x, flo
 		return NULL;
 	}
 
-	//_mImageList.insert(pair<string, Image*>(strKey, img));
 	_mImageList.insert(make_pair(strKey, img));
 
 	return img;
@@ -79,7 +74,6 @@ Image* ImageManager::addFrameImage(string strKey, const char * fileName, int wid
 		return NULL;
 	}
 
-	//_mImageList.insert(pair<string, Image*>(strKey, img));
 	_mImageList.insert(make_pair(strKey, img));
 
 	return img;
@@ -136,7 +130,6 @@ bool ImageManager::deleteImage(string strKey)
 bool ImageManager::deleteAll()
 {
 	auto iter = _mImageList.begin();
-	// auto 대신 mapImageIter < 써도댐
 	for (; iter != _mImageList.end();)
 	{
 		if (iter->second != NULL)
@@ -150,7 +143,6 @@ bool ImageManager::deleteAll()
 			++iter;
 		}
 	}
-	//for (;) = while(true) 초기식을 잡아주지 않겠다는 뜻
 	_mImageList.clear();
 
 	return true;

@@ -1,68 +1,117 @@
 #include "Stdafx.h"
 #include "AnimationManager.h"
 
-void AnimationManager::playAnimation(HDC hdc, int destX, int destY, char * fontName, int fontSize, int fontWidth, string animationKey, int length, COLORREF color)
+HRESULT AnimationManager::init(void)
 {
-
-	
-	void frameUpdate(float elpasedTime);
+    return S_OK;
 }
 
-void AnimationManager::playAniarr(HDC hdc, int destX, int destY, char * fontName, int fontSize, int fontWidth, string * animationKeyArr, int length, COLORREF color)
+void AnimationManager::release(void)
 {
-
+    this->deleteAll();
 }
 
-void AnimationManager::playAnimation()
+Animation* AnimationManager::findAnimation(string strKey)
 {
-	if (animation.isPlay())
-	{
-		animation.AniStart();
-	};
+    auto key = _mAnimationList.find(strKey);
+    if (key != _mAnimationList.end())
+    {
+        return key->second;
+    }
+    return nullptr;
 }
 
-void setPlayFrame(int start, int end, bool reverse = false, bool loop = false);
-void setPlayReverseFrame(int start, int end, int framX, bool loop);
-
-
-// 초당 프레임 갱신 횟수
-void setFPS(int framePerSec);
-void setFPS(int framePerSec, int maxSec);
-
-// 프레임 업데이트 
-void frameUpdate(float elpasedTime);
-void AniStart(void);
-void AniStop(void);
-void AniPause(void);
-void AniResume(void);
-
-// 플레이 중?
-inline bool isPlay(void) { return _isPlay; }
-
-inline POINT getFramePos(void)
+bool AnimationManager::deleteAniamation(string strKey)
 {
-	if (0 > _nowPlayIdx || _nowPlayIdx >= size(_playList))
-		return POINT{ 0,0 };
-	int frameListIndex = _playList[_nowPlayIdx];
-	if (0 > frameListIndex || frameListIndex >= size(_frameList))
-		return POINT{ 0,0 };
+    auto key = _mAnimationList.find(strKey);
 
-	return _frameList[_playList[_nowPlayIdx]];
+    if (key != _mAnimationList.end())
+    {
+        key->second->release();
+        SAFE_DELETE(key->second);
+        _mAnimationList.erase(key);
+        return true;
+    }
+
+    return false;
 }
 
-inline int getFrame(void) { return _nowPlayIdx; }
-
-// 현재 에니메이션의 프레임 위치 순서 얻기
-inline int getFrameIdx(void)
+bool AnimationManager::deleteAll()
 {
-	POINT ptPOS = getFramePos();
-	int frameX = ptPOS.x / _frameWidth;
-	int frameY = ptPOS.y / _frameHeight;
+    auto iter = _mAnimationList.begin();
 
-	return frameX + frameY * _frameNumWidth;
+    for (; iter != _mAnimationList.end();)
+    {
+        if (iter->second != NULL)
+        {
+            iter->second->release();
+            SAFE_DELETE(iter->second);
+            iter = _mAnimationList.erase(iter);
+        }
+        else
+        {
+            ++iter;
+        }
+    }
+
+    _mAnimationList.clear();
+
+    return true;
 }
 
-//프레임 가로 세로 크기를 얻어온다
-inline int getFrameWidth(void) { return _frameWidth; }
-inline int getFrameHeight(void) { return _frameHeight; }
-inline DWORD getNowPlayIdx(void) { return _nowPlayIdx; }
+void AnimationManager::addAnimation(string animationKeyName, char* imageKeyName, int start, int end, int fps, bool reverse, bool loop)
+{
+    // 초기화 하고
+    Image* img = IMAGEMANAGER->findImage(imageKeyName);
+    Animation* ani = new Animation;
+
+    ani->init(img->getWidth(), img->getHeight(), img->getFrameWidth(), img->getFrameHeight());
+    ani->setDefPlayFrame(reverse, loop);
+    ani->setFPS(fps);
+
+    _mAnimationList.insert(make_pair(animationKeyName, ani));
+}
+
+void AnimationManager::addAnimationArray(string animationKeyName, char* imageKeyName, int* playArr, int arrLen, int fps, bool loop)
+{
+    //arrLen?
+    Image* img = IMAGEMANAGER->findImage(imageKeyName);
+    Animation* ani = new Animation;
+
+    ani->init(img->getWidth(), img->getHeight(), img->getFrameWidth(), img->getFrameHeight());
+    ani->setPlayFrame(playArr, arrLen, loop);
+    ani->setFPS(fps);
+
+    _mAnimationList.insert(make_pair(animationKeyName, ani));
+}
+
+void AnimationManager::addAnimationList(string animationKeyName, char* imageKeyName, 
+    multimap<vector<int>, string, list<int>, string>, int listLen, int fps, bool loop)
+{
+    Image* img = IMAGEMANAGER->findImage(imageKeyName);
+    Animation* ani = new Animation;
+
+    ani->init(img->getWidth(), img->getHeight(), img->getFrameWidth(), img->getFrameHeight());
+    //ani->setPlayFrame(reverse, loop);
+    ani->setFPS(fps);
+
+    _mAnimationList.insert(make_pair(animationKeyName, ani));
+}
+
+void AnimationManager::PlayAnimation()
+{
+    // 찾아서 갱신하고
+    mapAnimationIter iter = _mAnimationList.begin();
+    for (iter; iter != _mAnimationList.end(); ++iter)
+    {
+        if (!iter->second->getIsPlay()) continue;
+        iter->second->frameUpdate(TIMEMANAGER->getElapsedTime() * 1.0f);
+    }
+    // 이미지 넣고
+    // 넣은 이미지 찾은 다음 구간별로 짜른다.
+}
+
+void AnimationManager::update(void)
+{
+    this->PlayAnimation();
+}

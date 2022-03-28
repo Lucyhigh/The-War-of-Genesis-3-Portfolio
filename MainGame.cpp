@@ -49,6 +49,7 @@ void MainGame::update(void)
 {
 	GameNode::update();
 	SCENEMANAGER->update();
+    ANIMATIONMANAGER->update();
 }
 
 void MainGame::render(void)
