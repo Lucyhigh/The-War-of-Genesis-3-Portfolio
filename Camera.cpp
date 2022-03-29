@@ -23,21 +23,21 @@ void Camera::release(void)
 
 void Camera::update(void)
 {
-	if (KEYMANAGER->isStayKeyDown(VK_RIGHT))
+	if (KEYMANAGER->isStayKeyDown(VK_RIGHT) || _ptMouse.x >WINSIZE_X -10)
 	{
 		_trace.x += 10;
 	}
 	else if (KEYMANAGER->isStayKeyDown(VK_LEFT))
 	{
-
+        _trace.x -= 10;
 	}
 	else if (KEYMANAGER->isStayKeyDown(VK_UP))
 	{
-
+        _trace.y -= 10;
 	}
-	else if (KEYMANAGER->isStayKeyDown(VK_DOWN))
+	else if (KEYMANAGER->isStayKeyDown(VK_DOWN) || _ptMouse.y > WINSIZE_Y - 10)
 	{
-
+        _trace.y += 10;
 	}
 	_screen = RectMakeCenter(_trace.x, _trace.y, WINSIZE_X, WINSIZE_Y);
 }

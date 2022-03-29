@@ -22,14 +22,13 @@ private:
 	Saladin* _saladin;
 	Camera* _camera;
 	AStar::Generator* _generator;
-
+    LPCWSTR _uiText[3];
 	POINT _pMoveStart;
 	POINT _endPoint;
 	RECT _mouseRc;
 	RECT _endRc;
 	RECT _moveRc;
 	vector<POINT> _check;
-
 	float _lerpPercentage;
 	float _tileAlpha;
 	int _mouseIndex;
@@ -54,6 +53,6 @@ public:
 	void findPlayerTile();
 	POINT lerp(POINT start, POINT end, float percentage);
 public:
-	FinalScene() {}
+    FinalScene() : _uiText { L"형제여!", L" 평 지 ", L"10000" } {}
 	~FinalScene() {}
 };

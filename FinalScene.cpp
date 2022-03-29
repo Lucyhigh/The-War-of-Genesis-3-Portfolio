@@ -15,7 +15,7 @@ HRESULT FinalScene::init(void)
 	_player = new Player;
 	_player->init();
 	_player->setPlayerPosX(16 * TILESIZEX);
-	_player->setPlayerPosY(29 * TILESIZEY);
+	_player->setPlayerPosY(20 * TILESIZEY);
 
 	_saladin = new Saladin;
 	_saladin->init();
@@ -71,13 +71,7 @@ void FinalScene::release(void)
 
 void FinalScene::update(void)
 {
-	for (int i = 0; i < 2; i++)
-	{
-		for (int j = 0; j < 2; j++)
-		{
-			cout << (i + j) * 2 + i * -4 << ", " << -2 + (j + i) * 2 << endl;
-		}
-	}
+	
     //검사용 버튼
 	if (KEYMANAGER->isOnceKeyDown('H'))
 	{
@@ -87,16 +81,10 @@ void FinalScene::update(void)
 	if (KEYMANAGER->isOnceKeyDown('N'))
 	{
 		_turnSystem->changeToPlayer();
-
 	}
 
 	if (_turnSystem->getStatus() == CHANGINGSTATUS::PLAYERTURN)
 	{
-		if (KEYMANAGER->isOnceKeyDown('D')) {
-			float angle = getDistance(_ptMouse.x, _ptMouse.y, _player->getPlayerPosX()- _camera->getScreenRect().left, _player->getPlayerPosY()- _camera->getScreenRect().top);
-			cout << angle << endl;
-		}
-
 		// : 대기- 대기이미지 타일클릭시 이동가능상태 /메뉴창 열수있고 공격타일 만들수잇음
 		if (_turnSystem->isPlayerIdle() == 1)
 		{
@@ -311,6 +299,17 @@ void FinalScene::render(void)
 			break;
 		}
 	}
+    
+    FONTMANAGER->drawText(getMemDC(),
+        WINSIZE_X - 115, 17, "가을체", 19, 13, _uiText[0],
+        wcslen(_uiText[0]), TA_CENTER, RGB(255, 255, 255));
+    FONTMANAGER->drawText(getMemDC(),
+        WINSIZE_X - 55, 40, "가을체", 23, 13, _uiText[1],
+        wcslen(_uiText[1]), TA_CENTER, RGB(255, 255, 255));
+    FONTMANAGER->drawText(getMemDC(),
+        WINSIZE_X - 50, 80, "가을체", 18, 13, _uiText[2],
+        wcslen(_uiText[2]), TA_CENTER, RGB(255,255,255));
+
 	if (_turnSystem->getStatus() == CHANGINGSTATUS::PLAYERTURN && _isMove)
 	{
 		Rectangle(getMemDC(), _moveRc.left - _camera->getScreenRect().left,
@@ -446,49 +445,54 @@ void FinalScene::changeImage()
 
 void FinalScene::findPlayerTile()
 {
-	POINT enemyPoint = { _saladin->getSaladinPosX()-TILESIZEX,_saladin->getSaladinPosY() };
+    float min = 100;
+    float num;
+    int index = 0;
+	POINT enemyPoint = { _saladin->getSaladinPosX()-TILESIZEX, _saladin->getSaladinPosY() };
+	POINT _tempGoal = { 0,0 };
 	POINT _enemyPathGoal = { 0,0 };
-	for (auto cellsIter = _cells->begin(); cellsIter != _cells->end(); ++cellsIter)
-	{
-		Cell* cell = (*cellsIter);
-		if (PtInRect(&cell->getRect(), enemyPoint))
-		{
-			_pMoveStart = { cell->getCellX(), cell->getCellY() };
-		}
-		
-		
-		if (cell->getType() == CELL_TYPE::START)
-		{
-			_endPoint = { cell->getRect().left, cell->getRect().top };
-			_enemyPathGoal = { cell->getCellX(), cell->getCellY() };
-		}
-	}
-	float min;
-	float num;
-	int index = 0;
-		for (int i = -2; i <= 2; i += 2)
-		{
-			for (int j = -2; j <= 2; j += 2, index++)
-			{
-				float num = getDistance(_pMoveStart.x, _pMoveStart.y, _enemyPathGoal.x + i, _enemyPathGoal.y + j);
-				if (index == 0) min = num;
-				if (i == - 2 || i ==-2 ) j = 0;
-				if (num < min)
-				{
-					_enemyPathGoal = {_enemyPathGoal.x + i, _enemyPathGoal.y + j };
-					cout << "거리 차: "<< num <<", 인덱스 :"<<index<< endl;
-					cout << "x : + "<<i <<" y : + "<< j <<"  , 선별중 :" << _enemyPathGoal.x  << " , " << _enemyPathGoal.y << endl;
-				}
-				else
-				{
-					cout << "거리 차: " << num << ", 인덱스 :" << index << endl;
-					continue;
-				}
-				
-			}
-		}
+    for (auto cellsIter = _cells->begin(); cellsIter != _cells->end(); ++cellsIter)
+    {
+        Cell* cell = (*cellsIter);
+        if (PtInRect(&cell->getRect(), enemyPoint))
+        {
+            _pMoveStart = { cell->getCellX(), cell->getCellY() };
+        }
 
+        if (cell->getType() == CELL_TYPE::START)
+        {
+            _endPoint = { cell->getRect().left, cell->getRect().top };
+            _tempGoal = { cell->getCellX(), cell->getCellY() };
+        }
+
+        for (int i = -2; i <= 2; i += 2)
+        {
+            for (int j = -2; j <= 2; j += 2, index++)
+            {
+                if (i + j == -2 || i + j == 2)
+                {
+                    float num = getDistance(_pMoveStart.x, _pMoveStart.y, _tempGoal.x + i, _tempGoal.y + j);
+                    if (index == 0) min = num;
+                    //state == wall 일때는 제외 어케하지
+
+                    if (num < min)
+                    {
+                        _enemyPathGoal.x = _tempGoal.x + i;
+                        _enemyPathGoal.y = _tempGoal.y + j;
+                        min = num;
+                        cout << "거리 차: " << min << ", 인덱스 :" << index << endl;
+                        cout << "x : " << i << " y : " << j << "  , 고른 타입 :" << _enemyPathGoal.x << " , " << _enemyPathGoal.y << endl;
+                    }
+                    else continue;
+
+                }
+
+            }
+        }
+    }
 	cout <<"최종 :"<< _enemyPathGoal.x << ", " << _enemyPathGoal.y << endl;
+    
+
 
 	auto path = _generator->findPath(
 		{ _pMoveStart.x,_pMoveStart.y },

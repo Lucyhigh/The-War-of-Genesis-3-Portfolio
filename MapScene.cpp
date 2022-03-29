@@ -3,30 +3,44 @@
 
 HRESULT MapScene::init(void)
 {
-	_image = new Image;
-	_seaX = 0.0f;
-	_seaY = -800.0f;
+    _image = new Image;
+    _image = IMAGEMANAGER->findImage("Map");
+    _seaX = 0.0f;
+    _seaY = -800.0f;
+
+    _camera = new Camera;
+    _camera->init();
+    _camera->setLimitsX(CENTER_X, _image->getWidth());
+    _camera->setLimitsY(CENTER_Y, _image->getHeight());
+    _camera->setCameraPos({100, _image->getHeight()-CENTER_Y });
 	return S_OK;
 }
 
 void MapScene::release(void)
 {
-	_image->release();
-	SAFE_DELETE(_image);
+    _camera->release();
+    SAFE_DELETE(_camera);
 }
 
 void MapScene::update(void)
 {
 	_seaX += 0.05f;
+ 
+    _camera->update();
+    _camera->setCameraPos(_camera->getCameraPos());
+    _camera->setScreenRect(_camera->getScreenRect());
 }
 
 void MapScene::render(void)
 {
 	RECT seaRc = { 0,0,WINSIZE_X,WINSIZE_Y };
 	IMAGEMANAGER->loopRender("Sea",getMemDC(),&seaRc, _seaX, _seaY);
-	IMAGEMANAGER->render("Map",getMemDC());
-}
-
-void MapScene::fadeout()
-{
+    
+    _camera->render();
+    int cameraLeft = _camera->getScreenRect().left;
+    int cameraTop = _camera->getScreenRect().top;
+    IMAGEMANAGER->render("Map", getMemDC(), 0, 0,
+        cameraLeft,
+        cameraTop,
+        WINSIZE_X, WINSIZE_Y);
 }

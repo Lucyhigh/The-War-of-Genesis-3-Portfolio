@@ -19,7 +19,7 @@ public:
 	void release(void);
 	void update(void);
 	void render(void);
-
+     
 	POINT getCameraPos();
 	void setCameraPos(POINT cameraPos);
 

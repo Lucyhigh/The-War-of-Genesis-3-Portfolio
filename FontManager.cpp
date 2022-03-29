@@ -26,6 +26,9 @@ void FontManager::drawText(HDC hdc, int destX, int destY, char* fontName, int fo
 
 	SetTextColor(hdc, color);
 	TextOutW(hdc, destX, destY, printString, length);
+
+    SelectObject(hdc, oldFont);
+    DeleteObject(hFont);
 }
 void FontManager::drawText(HDC hdc, int destX, int destY, char* fontName, int fontSize, int fontWidth, LPCWSTR printString, int length,UINT textAlign,  COLORREF color)
 {
@@ -54,6 +57,8 @@ void FontManager::drawText(HDC hdc, int destX, int destY, char* fontName, int fo
 		TextOutW(hdc, destX, destY, printString, length);
 		SetTextAlign(hdc, textAlign);
 
+        SelectObject(hdc, oldFont);
+        DeleteObject(hFont);
 }
 
 void FontManager::drawText(HDC hdc, int destX, int destY, char* fontName, int fontSize, int fontWidth,

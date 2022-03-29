@@ -42,7 +42,7 @@ HRESULT ImageClass::init(void)
 	IMAGEMANAGER->addImage("TitleName", "Resources/Images/UI/TitleGameName.bmp", WINSIZE_X, WINSIZE_Y, MGT);
 
 	//Map
-	IMAGEMANAGER->addImage("Map", "Resources/Images/UI/map2.bmp", 1243, 1499, true, RGB(255,255,0));
+	IMAGEMANAGER->addImage("Map", "Resources/Images/UI/map.bmp", 1243, 1499, true, RGB(255,255,0));
 	IMAGEMANAGER->addImage("Sea", "Resources/Images/UI/sea.bmp", WINSIZE_X, WINSIZE_Y);
 
 	//Scene List

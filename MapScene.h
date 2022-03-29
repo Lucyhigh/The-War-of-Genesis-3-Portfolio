@@ -11,6 +11,8 @@ class MapScene:public GameNode
 {
 private:
 	Image* _image;
+    Image* _moveMark;
+    Camera* _camera;
 	vector<MapbuttomInfo> _vMapButton;
 	vector<MapbuttomInfo>::iterator _viMapButton;
 
@@ -18,12 +20,12 @@ private:
 	float _seaY;
 	float _alpha;
 	float _fadeAlpha;
+
 public:
 	HRESULT init(void);
 	void release(void);
 	void update(void);
 	void render(void);
-	void fadeout();
 public:
 	MapScene() {}
 	~MapScene() {}
