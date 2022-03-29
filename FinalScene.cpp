@@ -71,6 +71,13 @@ void FinalScene::release(void)
 
 void FinalScene::update(void)
 {
+	for (int i = 0; i < 2; i++)
+	{
+		for (int j = 0; j < 2; j++)
+		{
+			cout << (i + j) * 2 + i * -4 << ", " << -2 + (j + i) * 2 << endl;
+		}
+	}
     //검사용 버튼
 	if (KEYMANAGER->isOnceKeyDown('H'))
 	{
@@ -85,6 +92,11 @@ void FinalScene::update(void)
 
 	if (_turnSystem->getStatus() == CHANGINGSTATUS::PLAYERTURN)
 	{
+		if (KEYMANAGER->isOnceKeyDown('D')) {
+			float angle = getDistance(_ptMouse.x, _ptMouse.y, _player->getPlayerPosX()- _camera->getScreenRect().left, _player->getPlayerPosY()- _camera->getScreenRect().top);
+			cout << angle << endl;
+		}
+
 		// : 대기- 대기이미지 타일클릭시 이동가능상태 /메뉴창 열수있고 공격타일 만들수잇음
 		if (_turnSystem->isPlayerIdle() == 1)
 		{
@@ -435,37 +447,62 @@ void FinalScene::changeImage()
 void FinalScene::findPlayerTile()
 {
 	POINT enemyPoint = { _saladin->getSaladinPosX()-TILESIZEX,_saladin->getSaladinPosY() };
-	POINT enemyPathGoal;
+	POINT _enemyPathGoal = { 0,0 };
 	for (auto cellsIter = _cells->begin(); cellsIter != _cells->end(); ++cellsIter)
 	{
 		Cell* cell = (*cellsIter);
 		if (PtInRect(&cell->getRect(), enemyPoint))
 		{
 			_pMoveStart = { cell->getCellX(), cell->getCellY() };
-			cout << _pMoveStart.x << ", " << _pMoveStart.y << endl;
 		}
-
+		
+		
 		if (cell->getType() == CELL_TYPE::START)
 		{
 			_endPoint = { cell->getRect().left, cell->getRect().top };
-			enemyPathGoal = { cell->getCellX(), cell->getCellY() };
-
+			_enemyPathGoal = { cell->getCellX(), cell->getCellY() };
+		}
+	}
+	float min;
+	float num;
+	int index = 0;
+		for (int i = -2; i <= 2; i += 2)
+		{
+			for (int j = -2; j <= 2; j += 2, index++)
+			{
+				float num = getDistance(_pMoveStart.x, _pMoveStart.y, _enemyPathGoal.x + i, _enemyPathGoal.y + j);
+				if (index == 0) min = num;
+				if (i == - 2 || i ==-2 ) j = 0;
+				if (num < min)
+				{
+					_enemyPathGoal = {_enemyPathGoal.x + i, _enemyPathGoal.y + j };
+					cout << "거리 차: "<< num <<", 인덱스 :"<<index<< endl;
+					cout << "x : + "<<i <<" y : + "<< j <<"  , 선별중 :" << _enemyPathGoal.x  << " , " << _enemyPathGoal.y << endl;
+				}
+				else
+				{
+					cout << "거리 차: " << num << ", 인덱스 :" << index << endl;
+					continue;
+				}
+				
+			}
 		}
 
-	}
+	cout <<"최종 :"<< _enemyPathGoal.x << ", " << _enemyPathGoal.y << endl;
+
 	auto path = _generator->findPath(
 		{ _pMoveStart.x,_pMoveStart.y },
-		{ enemyPathGoal.x,enemyPathGoal.y } );
+		{ _enemyPathGoal.x,_enemyPathGoal.y } );
 
 	_check.clear();
-	int pathSize = path.size() < 3 ? path.size() : 3;
+	int pathNum =10;
+	int pathSize = path.size() < pathNum ? path.size() : pathNum;
 	for (int i = path.size() - pathSize; i < path.size(); ++i)
 	{
 		auto coordinate = path[i];
 		_check.push_back({ coordinate.x, coordinate.y });
 	}
 	_moveIndex = _check.size() - 1;
-	cout << "문도! 탐색한다!" << _moveIndex << endl;
 	_turnSystem->setEnemyBit(3);
 }
 

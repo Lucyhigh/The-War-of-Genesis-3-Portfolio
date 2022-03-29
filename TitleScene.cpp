@@ -88,7 +88,6 @@ void TitleScene::update(void)
         {
             if (PtInRect(&_viSceneButton->_buttonRect, _ptMouse) && KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
             {
-                cout << _viSceneButton->_index << endl;
                 switch (_viSceneButton->_index)
                 {
                 case 13:
@@ -118,8 +117,6 @@ void TitleScene::update(void)
 
 void TitleScene::render(void)
 {
-	cout << _startBit.to_string() << endl;
-
     int _textPosY = 5;
     if (_startBit.none() == 1)
     {

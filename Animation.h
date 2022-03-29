@@ -31,7 +31,6 @@ public:
     HRESULT init(int totalW, int totalH, int frameW, int frameH);
     void release(void);
 
-
     void setDefPlayFrame(bool reverse = false, bool loop = false);
     void setPlayFrame(int* playArr = nullptr, int arrLen = 0, bool loop = false);
     void setPlayFrame(int start, int end, bool reverse = false, bool loop = false);

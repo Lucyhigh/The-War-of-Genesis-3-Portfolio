@@ -100,7 +100,6 @@ void AnimationManager::aniRender(string strKey, HDC hdc, int destX, int destY)
 	auto image = findImage(strKey);
 	if (ani == nullptr || image == nullptr)
 		return;
-
 	image->aniRender(hdc, destX, destY, ani);
 }
 

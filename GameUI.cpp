@@ -53,11 +53,11 @@ HRESULT GameUI::init(void)
 		{
 			tagMoveTile _tagMoveTile;
 			POINT _movePos = { i ,_indexY};
-			cout << i << "," << _indexY <<",";
+			//cout << i << "," << _indexY <<",";
 			_indexY++;
 			_vMoveTile.push_back(_tagMoveTile);
 		}
-		cout << endl;
+		//cout << endl;
 		_indexY = 0;
 	}
 	//À§¹æÇâ
@@ -72,11 +72,11 @@ HRESULT GameUI::init(void)
 		{
 			tagMoveTile _tagMoveTile;
 			POINT _movePos = { i , _indexY };
-			cout << i <<","<< _indexY << ",";
+			//cout << i <<","<< _indexY << ",";
 			_indexY++;
 			_vMoveTile.push_back(_tagMoveTile);
 		}
-		cout << endl;
+		//cout << endl;
 		_indexY=0;
 	}
 
@@ -101,17 +101,13 @@ void GameUI::update(void)
 				switch (_viMenuButton->_index)
 				{
 				case 0:
-					cout << "00000000" << endl;
 					break;
 				case 1:
-					cout << "11111111" << endl;
 					break;
 				case 2:
-					cout << "2222222" << endl;
 					_isPlayerTurn = false;
 					break;
 				case 3:
-					cout << "3333333" << endl;
 					break;
 				}
 				_isMenu = false;

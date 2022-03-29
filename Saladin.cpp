@@ -159,7 +159,7 @@ void Saladin::render(void)
 {
 	float left = _rcSaladin.left - _cameraRect.left;
 	float top = _rcSaladin.top - _cameraRect.top;
-
+	POINT addPos = { -22,-10 };
 	switch (_imageState)
 	{
 	case SALADINSTATE::RIGHT:
@@ -169,7 +169,7 @@ void Saladin::render(void)
 		}
 		else
 		{
-			IMAGEMANAGER->frameRender("sMovesheet", getMemDC(), left, top);
+			IMAGEMANAGER->frameRender("sMovesheet", getMemDC(), left+ addPos.x, top+ addPos.y);
 		}
 		break;
 	case SALADINSTATE::LEFT:
@@ -179,7 +179,7 @@ void Saladin::render(void)
 		}
 		else
 		{
-			IMAGEMANAGER->frameRender("sMovesheet", getMemDC(), left, top);
+			IMAGEMANAGER->frameRender("sMovesheet", getMemDC(), left + addPos.x, top + addPos.y);
 		}
 		break;
 	case SALADINSTATE::TOP:
@@ -189,7 +189,7 @@ void Saladin::render(void)
 		}
 		else
 		{
-			IMAGEMANAGER->frameRender("sMovesheet", getMemDC(), left, top);
+			IMAGEMANAGER->frameRender("sMovesheet", getMemDC(), left + addPos.x, top + addPos.y);
 		}
 		break;
 	case SALADINSTATE::BOTTOM:
@@ -199,7 +199,7 @@ void Saladin::render(void)
 		}
 		else
 		{
-			IMAGEMANAGER->frameRender("sMovesheet", getMemDC(), left, top);
+			IMAGEMANAGER->frameRender("sMovesheet", getMemDC(), left + addPos.x, top + addPos.y);
 		}
 		break;
 	}
