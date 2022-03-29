@@ -1,7 +1,7 @@
 #include "Stdafx.h"
 #include "AnimationManager.h"
 
-HRESULT AnimationManager::init(void)
+HRESULT init(string animationKey, Animation* ani, int start, int end, bool loop)
 {
     return S_OK;
 }
@@ -9,16 +9,6 @@ HRESULT AnimationManager::init(void)
 void AnimationManager::release(void)
 {
     this->deleteAll();
-}
-
-Animation* AnimationManager::findAnimation(string strKey)
-{
-    auto key = _mAnimationList.find(strKey);
-    if (key != _mAnimationList.end())
-    {
-        return key->second;
-    }
-    return nullptr;
 }
 
 bool AnimationManager::deleteAniamation(string strKey)
@@ -112,6 +102,16 @@ void AnimationManager::addAnimationArray(string animationKeyName, char* imageKey
 //    _mAnimationList.insert(make_pair(animationKeyName, ani));
 //}
 
+Animation* AnimationManager::findAnimation(string strKey)
+{
+	auto key = _mAnimationList.find(strKey);
+	if (key != _mAnimationList.end())
+	{
+		return key->second;
+	}
+	return nullptr;
+}
+
 void AnimationManager::PlayAnimation()
 {
     // 찾아서 갱신하고
@@ -125,7 +125,7 @@ void AnimationManager::PlayAnimation()
     // 넣은 이미지 찾은 다음 구간별로 짜른다.
 }
 
-void AnimationManager::update(void)
+void AnimationManager::frameUpdate(void)
 {
     this->PlayAnimation();
 }
