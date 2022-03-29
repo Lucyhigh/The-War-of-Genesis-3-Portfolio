@@ -16,9 +16,19 @@ Animation* AnimationManager::findAnimation(string strKey)
     auto key = _mAnimationList.find(strKey);
     if (key != _mAnimationList.end())
     {
-        return key->second;
+		return key->second.first;
     }
     return nullptr;
+}
+
+Image* AnimationManager::findImage(string strKey)
+{
+	auto key = _mAnimationList.find(strKey);
+	if (key != _mAnimationList.end())
+	{
+		return key->second.second;
+	}
+	return nullptr;
 }
 
 bool AnimationManager::deleteAniamation(string strKey)
@@ -27,8 +37,8 @@ bool AnimationManager::deleteAniamation(string strKey)
 
     if (key != _mAnimationList.end())
     {
-        key->second->release();
-        SAFE_DELETE(key->second);
+        key->second.first->release();
+        SAFE_DELETE(key->second.first);
         _mAnimationList.erase(key);
         return true;
     }
@@ -42,10 +52,10 @@ bool AnimationManager::deleteAll()
 
     for (; iter != _mAnimationList.end();)
     {
-        if (iter->second != NULL)
+        if (iter->second.first != NULL)
         {
-            iter->second->release();
-            SAFE_DELETE(iter->second);
+            iter->second.first->release();
+            SAFE_DELETE(iter->second.first);
             iter = _mAnimationList.erase(iter);
         }
         else
@@ -59,59 +69,81 @@ bool AnimationManager::deleteAll()
     return true;
 }
 
-void AnimationManager::addAnimation(string animationKeyName, char* imageKeyName, int start, int end, int fps, bool reverse, bool loop)
+void AnimationManager::addAnimation(string animationKeyName, char* imageKeyName, int frameWidth, int frameHeight, int start, int end, int fps, bool reverse, bool loop)
 {
     // 초기화 하고
     Image* img = IMAGEMANAGER->findImage(imageKeyName);
     Animation* ani = new Animation;
 
-    ani->init(img->getWidth(), img->getHeight(), img->getFrameWidth(), img->getFrameHeight());
+    ani->init(img->getWidth(), img->getHeight(), frameWidth, frameHeight);
     ani->setDefPlayFrame(reverse, loop);
     ani->setFPS(fps);
 
-    _mAnimationList.insert(make_pair(animationKeyName, ani));
+    _mAnimationList.insert(make_pair(animationKeyName, make_pair(ani, img)));
 }
 
-void AnimationManager::addAnimationArray(string animationKeyName, char* imageKeyName, int* playArr, int arrLen, int fps, bool loop)
+void AnimationManager::frameUpdate(string strKey)
 {
-    //arrLen?
-    Image* img = IMAGEMANAGER->findImage(imageKeyName);
-    Animation* ani = new Animation;
+	auto ani = findAnimation(strKey);
+	if (ani == nullptr)
+		return;
+	
+	/*if (KEYMANAGER->isOnceKeyDown('T'))
+		ani->AniStart();*/
 
-    ani->init(img->getWidth(), img->getHeight(), img->getFrameWidth(), img->getFrameHeight());
-    ani->setPlayFrame(playArr, arrLen, loop);
-    ani->setFPS(fps);
-
-    _mAnimationList.insert(make_pair(animationKeyName, ani));
+	ani->frameUpdate(TIMEMANAGER->getElapsedTime() * 1.0f);
 }
 
-void AnimationManager::addAnimationList(string animationKeyName, char* imageKeyName, 
-    multimap<vector<int>, string, list<int>, string>, int listLen, int fps, bool loop)
+void AnimationManager::aniRender(string strKey, HDC hdc, int destX, int destY)
 {
-    Image* img = IMAGEMANAGER->findImage(imageKeyName);
-    Animation* ani = new Animation;
+	auto ani = findAnimation(strKey);
+	auto image = findImage(strKey);
+	if (ani == nullptr || image == nullptr)
+		return;
 
-    ani->init(img->getWidth(), img->getHeight(), img->getFrameWidth(), img->getFrameHeight());
-    //ani->setPlayFrame(reverse, loop);
-    ani->setFPS(fps);
-
-    _mAnimationList.insert(make_pair(animationKeyName, ani));
+	image->aniRender(hdc, destX, destY, ani);
 }
 
-void AnimationManager::PlayAnimation()
-{
-    // 찾아서 갱신하고
-    mapAnimationIter iter = _mAnimationList.begin();
-    for (iter; iter != _mAnimationList.end(); ++iter)
-    {
-        if (!iter->second->getIsPlay()) continue;
-        iter->second->frameUpdate(TIMEMANAGER->getElapsedTime() * 1.0f);
-    }
-    // 이미지 넣고
-    // 넣은 이미지 찾은 다음 구간별로 짜른다.
-}
+//void AnimationManager::addAnimationArray(string animationKeyName, char* imageKeyName, int* playArr, int arrLen, int fps, bool loop)
+//{
+//    //arrLen?
+//    Image* img = IMAGEMANAGER->findImage(imageKeyName);
+//    Animation* ani = new Animation;
+//
+//    ani->init(img->getWidth(), img->getHeight(), img->getFrameWidth(), img->getFrameHeight());
+//    ani->setPlayFrame(playArr, arrLen, loop);
+//    ani->setFPS(fps);
+//
+//    _mAnimationList.insert(make_pair(animationKeyName, ani));
+//}
+//
+//void AnimationManager::addAnimationList(string animationKeyName, char* imageKeyName, 
+//    multimap<vector<int>, string, list<int>, string>, int listLen, int fps, bool loop)
+//{
+//    Image* img = IMAGEMANAGER->findImage(imageKeyName);
+//    Animation* ani = new Animation;
+//
+//    ani->init(img->getWidth(), img->getHeight(), img->getFrameWidth(), img->getFrameHeight());
+//    //ani->setPlayFrame(reverse, loop);
+//    ani->setFPS(fps);
+//
+//    _mAnimationList.insert(make_pair(animationKeyName, ani));
+//}
 
-void AnimationManager::update(void)
-{
-    this->PlayAnimation();
-}
+//void AnimationManager::PlayAnimation()
+//{
+//    // 찾아서 갱신하고
+//    mapAnimationIter iter = _mAnimationList.begin();
+//    for (iter; iter != _mAnimationList.end(); ++iter)
+//    {
+//        if (!iter->second->getIsPlay()) continue;
+//        iter->second->frameUpdate(TIMEMANAGER->getElapsedTime() * 1.0f);
+//    }
+//    // 이미지 넣고
+//    // 넣은 이미지 찾은 다음 구간별로 짜른다.
+//}
+//
+//void AnimationManager::update(void)
+//{
+//    this->PlayAnimation();
+//}
