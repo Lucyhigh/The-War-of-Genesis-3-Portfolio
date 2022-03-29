@@ -20,9 +20,9 @@ public:
     bool deleteAll();
 
     // 애니메이션이 있는거 가져와서 함수 형태 잡고
+	void addAnimation(string animationKeyName, char * imageKeyName, int fps, bool reverse, bool loop);
 
-    void addAnimation(string animationKeyName, char* imageKeyName, int start, int end,
-        int fps, bool reverse = false, bool loop = false);
+	void addAnimation(string animationKeyName, char* imageKeyName, int start, int end, int fps, bool reverse, bool loop);
 
     void addAnimationArray(string animationKeyName, char* imageKeyName, int* playArr,
         int arrLen, int fps, bool loop = false);

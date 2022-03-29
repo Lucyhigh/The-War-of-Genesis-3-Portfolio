@@ -41,8 +41,7 @@ HRESULT GameUI::init(void)
 	}
 	//MakeMoveTile();
 	//함수로 다하고 지정해줄거임
-	//아래방향
-	//for (int i = _moveRange - 2; i > -1; i--)
+	//위방향
 	for (int i = -1; i < _moveRange ; i++)
 	{
 		for (int j = _moveRange - i; j > 0; j--) 
@@ -60,9 +59,8 @@ HRESULT GameUI::init(void)
 		cout << endl;
 		_indexY = 0;
 	}
-	//위방향
+	//아래방향
 	for (int i = _moveRange; i >= 0; i--)
-	//for (int i = 0; i < _moveRange; i++)
 	{
 		for (int j = 1; j < _moveRange - i; j++) 
 		{

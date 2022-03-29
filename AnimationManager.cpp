@@ -59,6 +59,19 @@ bool AnimationManager::deleteAll()
     return true;
 }
 
+void AnimationManager::addAnimation(string animationKeyName, char* imageKeyName, int fps, bool reverse, bool loop)
+{
+	// 초기화 하고
+	Image* img = IMAGEMANAGER->findImage(imageKeyName);
+	Animation* ani = new Animation;
+
+	ani->init(img->getWidth(), img->getHeight(), img->getFrameWidth(), img->getFrameHeight());
+	ani->setDefPlayFrame(reverse, loop);
+	ani->setFPS(fps);
+
+	_mAnimationList.insert(make_pair(animationKeyName, ani));
+}
+
 void AnimationManager::addAnimation(string animationKeyName, char* imageKeyName, int start, int end, int fps, bool reverse, bool loop)
 {
     // 초기화 하고
@@ -66,7 +79,8 @@ void AnimationManager::addAnimation(string animationKeyName, char* imageKeyName,
     Animation* ani = new Animation;
 
     ani->init(img->getWidth(), img->getHeight(), img->getFrameWidth(), img->getFrameHeight());
-    ani->setDefPlayFrame(reverse, loop);
+	ani->setPlayFrame(start, end, reverse, loop);
+
     ani->setFPS(fps);
 
     _mAnimationList.insert(make_pair(animationKeyName, ani));
@@ -85,18 +99,18 @@ void AnimationManager::addAnimationArray(string animationKeyName, char* imageKey
     _mAnimationList.insert(make_pair(animationKeyName, ani));
 }
 
-void AnimationManager::addAnimationList(string animationKeyName, char* imageKeyName, 
-    multimap<vector<int>, string, list<int>, string>, int listLen, int fps, bool loop)
-{
-    Image* img = IMAGEMANAGER->findImage(imageKeyName);
-    Animation* ani = new Animation;
-
-    ani->init(img->getWidth(), img->getHeight(), img->getFrameWidth(), img->getFrameHeight());
-    //ani->setPlayFrame(reverse, loop);
-    ani->setFPS(fps);
-
-    _mAnimationList.insert(make_pair(animationKeyName, ani));
-}
+//void AnimationManager::addAnimationList(string animationKeyName, char* imageKeyName, 
+//    multimap<vector<int>, string, list<int>, string>, int listLen, int fps, bool loop)
+//{
+//    Image* img = IMAGEMANAGER->findImage(imageKeyName);
+//    Animation* ani = new Animation;
+//
+//    ani->init(img->getWidth(), img->getHeight(), img->getFrameWidth(), img->getFrameHeight());
+//    //ani->setPlayFrame(reverse, loop);
+//    ani->setFPS(fps);
+//
+//    _mAnimationList.insert(make_pair(animationKeyName, ani));
+//}
 
 void AnimationManager::PlayAnimation()
 {
