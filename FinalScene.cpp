@@ -501,20 +501,6 @@ void FinalScene::findPlayerTile()
             if (i + j == -2 || i + j == 2)
             {
 				vStateCheck.push_back({ _tempGoal.x+i, _tempGoal.y + j });
-                
-                //if (index == 0) min = num;
-                ////state == wall 일때는 제외 어케하지
-
-                //if (num < min)
-                //{
-                //    _enemyPathGoal.x = _tempGoal.x + i;
-                //    _enemyPathGoal.y = _tempGoal.y + j;
-                //    min = num;
-                //    //cout << "거리 차: " << min << ", 인덱스 :" << index << endl;
-                //    //cout << "x : " << i << " y : " << j << "  , 고른 타입 :" << _enemyPathGoal.x << " , " << _enemyPathGoal.y << endl;
-                //}
-                //else continue;
-
             }
         }
     }
@@ -539,13 +525,9 @@ void FinalScene::findPlayerTile()
 					}
 				}
 			}
-		
 		}
 	}
-		
-    
-	//cout <<"최종 :"<< _enemyPathGoal.x << ", " << _enemyPathGoal.y << endl;
-    
+
 	auto path = _generator->findPath(
 		{ _pMoveStart.x,_pMoveStart.y },
 		{ _enemyPathGoal.x,_enemyPathGoal.y } );
@@ -586,7 +568,6 @@ void FinalScene::Attack()
             _turnSystem->changeToPlayer();
         }
     }
-
 }
 
 POINT FinalScene::lerp(POINT start, POINT end, float percentage)

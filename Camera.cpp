@@ -16,9 +16,7 @@ HRESULT Camera::init(void)
 	return S_OK;
 }
 
-void Camera::release(void)
-{
-
+void Camera::release(void){
 }
 
 void Camera::update(void)
@@ -26,24 +24,31 @@ void Camera::update(void)
 	if (KEYMANAGER->isStayKeyDown(VK_RIGHT) || _ptMouse.x >WINSIZE_X -10)
 	{
 		_trace.x += 10;
+		if (_trace.x > _rightLimit)
+			_trace.x = _rightLimit;
 	}
 	else if (KEYMANAGER->isStayKeyDown(VK_LEFT))
 	{
-        _trace.x -= 10;
+		_trace.x -= 10;
+		if (_trace.x < _leftLimit)
+			_trace.x = _leftLimit;
 	}
 	else if (KEYMANAGER->isStayKeyDown(VK_UP))
 	{
-        _trace.y -= 10;
+		_trace.y -= 10;
+		if (_trace.y < _topLimit)
+			_trace.y = _topLimit;
 	}
 	else if (KEYMANAGER->isStayKeyDown(VK_DOWN) || _ptMouse.y > WINSIZE_Y - 10)
 	{
-        _trace.y += 10;
+		_trace.y += 10;
+		if (_trace.y > _bottomLimit)
+			_trace.y = _bottomLimit;
 	}
 	_screen = RectMakeCenter(_trace.x, _trace.y, WINSIZE_X, WINSIZE_Y);
 }
 
-void Camera::render(void)
-{
+void Camera::render(void){
 }
 
 RECT Camera::getScreenRect()
