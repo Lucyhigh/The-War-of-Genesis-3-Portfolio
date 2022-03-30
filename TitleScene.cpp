@@ -179,7 +179,7 @@ void TitleScene::fadeout()
 {
 	if (_isfadeOut)
 	{
-		_fadeAlpha += 2.0f;
+		_fadeAlpha += 5.0f;
 		if (_fadeAlpha > 253) 
 		{
 			_isfadeOut = false;

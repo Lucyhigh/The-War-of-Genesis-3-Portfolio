@@ -12,8 +12,8 @@
 class FinalScene : public GameNode
 {
 private:
-	
 	MapTileInfo* _mapTileInfo;
+	Animation* _animation;
 	Player* _player;
 	TurnSystem* _turnSystem;
 	GameUI* _gameUI;
@@ -25,6 +25,8 @@ private:
     LPCWSTR _uiText[3];
 	POINT _pMoveStart;
 	POINT _endPoint;
+	POINT _enemyPathGoal;
+
 	RECT _mouseRc;
 	RECT _endRc;
 	RECT _moveRc;
@@ -51,6 +53,7 @@ public:
 	void curAstar();
     void changeImage();
 	void findPlayerTile();
+	void enemyDamage();
 	POINT lerp(POINT start, POINT end, float percentage);
 public:
     FinalScene() : _uiText { L"형제여!", L" 평 지 ", L"10000" } {}

@@ -1,6 +1,5 @@
 #pragma once
 #include "GameNode.h"
-#include "AniScene.h"
 struct TitlebuttomInfo
 {
     RECT _buttonRect;
@@ -16,7 +15,6 @@ private:
     // 0010 세이브화면
 	Animation* _animation;
 	Image* _image;
-	AniSceneTitle* _ani;
     vector<TitlebuttomInfo> _vTitleButton;
     vector<TitlebuttomInfo>::iterator _viTitleButton;
     LPCWSTR _uiText[3];

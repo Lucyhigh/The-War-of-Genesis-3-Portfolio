@@ -33,6 +33,8 @@ HRESULT ImageClass::init(void)
 
     //move
     IMAGEMANAGER->addFrameImage("sMovesheet", "Resources/Images/Saladin/movesheet.bmp", 720, 480, 6, 4,true, RGB(168, 208, 168));
+	//attack
+    IMAGEMANAGER->addFrameImage("sAttacksheet", "Resources/Images/Saladin/attacksheet.bmp", 650, 520, 5, 4,true, RGB(168, 208, 168));
 
 #pragma endregion
 #pragma region Stage Scene
@@ -51,7 +53,7 @@ HRESULT ImageClass::init(void)
 	IMAGEMANAGER->addImage("Field", "Resources/Images/BackGround/Field.bmp", 2120, 1536);
 	// Stage 2
 	// Stage 3
-	IMAGEMANAGER->addImage("Final", "Resources/Images/BackGround/Final.bmp", 1557, 1080);
+	IMAGEMANAGER->addImage("Final", "Resources/Images/BackGround/Final2.bmp", 1557, 1080);
 #pragma endregion
 #pragma region recall Scene
 	// Stage 1
@@ -77,6 +79,7 @@ HRESULT ImageClass::init(void)
 #pragma endregion
 #pragma region Animation
 	ANIMATIONMANAGER->addAnimation("TitleEfx", "TitleEfx", 0, 3, 3, false, true);
+	ANIMATIONMANAGER->addAnimation("sMovesheet", "sMovesheet", 0, 23, 5, false, true);
 #pragma endregion
 	return S_OK;
 }

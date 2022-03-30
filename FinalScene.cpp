@@ -6,7 +6,8 @@ HRESULT FinalScene::init(void)
 {
 	_mapTileInfo = new MapTileInfo;
 	_mapTileInfo->init();
-
+	_animation = ANIMATIONMANAGER->findAnimation("TitleEfx");
+	_animation->AniStart();
 	_gameUI = new GameUI;
 	_gameUI->init();
 	_image = IMAGEMANAGER->findImage("Final");
@@ -42,7 +43,7 @@ HRESULT FinalScene::init(void)
 	_endPointIndex = 0;
 	_moveIndex = 0;
 	_lerpPercentage = 0.0f;
-	
+	_enemyPathGoal = { 0,0 };
 	_isMove = false;
 
 	_turnSystem = new TurnSystem();
@@ -131,7 +132,7 @@ void FinalScene::update(void)
 								_check.push_back({ coordinate.x, coordinate.y });
 							}
 							_moveIndex = _check.size() - 1;
-							_turnSystem->setPlayerBit(3);
+							_turnSystem->setPlayerBit(1);
 						}
 						break;
 					}
@@ -166,23 +167,31 @@ void FinalScene::update(void)
 				}
 			}
 		}
-		// 0000 1000 : 이동중 - 메뉴창 뜨면 안됨 다른곳으로 이동못함
-		else if (_turnSystem->getPlayerBit(3) == 1)
+		// 0000 0010 : 이동중 - 메뉴창 뜨면 안됨 다른곳으로 이동못함
+		else if (_turnSystem->getPlayerBit(1) == 1)
 		{
 			rectMoveToPath();
 		}
+		
 	}
 	else if (_turnSystem->getStatus() == CHANGINGSTATUS::ENEMYTURN)
 	{
-        //캐릭터 위치 파악 후 이동 / 이동 후 공격 / 스킬 사용 고름
+        //캐릭터 위치 파악 후 이동0 / 이동 후 공격1 / 스킬 사용 고름2
 		if (_turnSystem->isEnemyIdle() == 1)
 		{
 			// : 대기- 대기이미지 - 캐릭터 시작타일 파악후 캐릭터 좌우상하 4개 타일 중 가까운 타일 선택해 그곳을 목표로 3칸씩 이동?
 			findPlayerTile();
 		}
-		else if (_turnSystem->getEnemyBit(3) == 1)
+		// 0000 0010 : 이동중 - 메뉴창 뜨면 안됨 다른곳으로 이동못함
+		else if (_turnSystem->getEnemyBit(1) == 1)
 		{
 			rectMoveToPath();
+		}
+		// 0000 0010 : 공격
+		else if (_turnSystem->getEnemyBit(2) == 1)
+		{
+			enemyDamage();
+
 		}
 	}
 
@@ -355,22 +364,29 @@ void FinalScene::rectMoveToPath()
 		else if (_turnSystem->getStatus() == CHANGINGSTATUS::ENEMYTURN) 
 		{
             //일단 이동후 턴 종료 - 3칸씩 이동하며 3칸안에 플레이어 있을 경우에 +공격
-			//if(_saladin->getPos가 GOAL에 있을때 )
-            //_saladin->attackPlayer();
             //_player->damage(); //쉐이킹 모션과 피 감소 숫자 
             //else 
-			_turnSystem->changeToPlayer();
-			_saladin->setWaiting(true);
-			
+			if (_pMoveStart.x == _enemyPathGoal.x && _pMoveStart.y == _enemyPathGoal.y)
+			{
+				_turnSystem->setEnemyBit(2);
+			}
+			else
+			{
+				_turnSystem->changeToPlayer();
+				_saladin->setWaiting(true);
+				//cout << "최-종 :" << _enemyPathGoal.x << ", " << _enemyPathGoal.y << endl;
+				//cout << "최-종 :" << _pMoveStart.x << ", " << _pMoveStart.y << endl;
+			}
+
 		}
 		_moveIndex = 0;
 		_lerpPercentage = 0.0f;
 		return;
 	}
-    else
-    {
-        float time = 0.5f;
-        float speed = TIMEMANAGER->getElapsedTime() / time;
+	else
+	{
+        float time = 3.5f;
+        float speed = TIMEMANAGER->getElapsedTime() * time;
         _lerpPercentage += speed;
 
         POINT start = { _check[_moveIndex].x * TILESIZEX, _check[_moveIndex].y * TILESIZEY };
@@ -410,8 +426,8 @@ void FinalScene::curAstar()
 		int top = (checkIter->y * TILESIZEY) - cameraTop;
 		RECT rect = RectMake(left, top, TILESIZEX, TILESIZEY);
 		FillRect(getMemDC(), &rect, rectBrush);
+		SelectObject(getMemDC(), rectBrush);
 		DeleteObject(rectBrush);
-
 	}
 }
 
@@ -432,7 +448,7 @@ void FinalScene::changeImage()
 	else if (_turnSystem->getStatus() == CHANGINGSTATUS::ENEMYTURN)
 	{
 		_saladin->setWaiting(false);
-
+		//if(_)
 		int compareBtoAX = _check[_moveIndex - 1].x - _check[_moveIndex].x;
 		int compareBtoAY = _check[_moveIndex - 1].y - _check[_moveIndex].y;
 
@@ -450,7 +466,7 @@ void FinalScene::findPlayerTile()
     int index = 0;
 	POINT enemyPoint = { _saladin->getSaladinPosX()-TILESIZEX, _saladin->getSaladinPosY() };
 	POINT _tempGoal = { 0,0 };
-	POINT _enemyPathGoal = { 0,0 };
+	_enemyPathGoal = { 0,0 };
     for (auto cellsIter = _cells->begin(); cellsIter != _cells->end(); ++cellsIter)
     {
         Cell* cell = (*cellsIter);
@@ -480,8 +496,8 @@ void FinalScene::findPlayerTile()
                         _enemyPathGoal.x = _tempGoal.x + i;
                         _enemyPathGoal.y = _tempGoal.y + j;
                         min = num;
-                        cout << "거리 차: " << min << ", 인덱스 :" << index << endl;
-                        cout << "x : " << i << " y : " << j << "  , 고른 타입 :" << _enemyPathGoal.x << " , " << _enemyPathGoal.y << endl;
+                       //cout << "거리 차: " << min << ", 인덱스 :" << index << endl;
+                       //cout << "x : " << i << " y : " << j << "  , 고른 타입 :" << _enemyPathGoal.x << " , " << _enemyPathGoal.y << endl;
                     }
                     else continue;
 
@@ -490,7 +506,7 @@ void FinalScene::findPlayerTile()
             }
         }
     }
-	cout <<"최종 :"<< _enemyPathGoal.x << ", " << _enemyPathGoal.y << endl;
+	//cout <<"최종 :"<< _enemyPathGoal.x << ", " << _enemyPathGoal.y << endl;
     
 
 
@@ -507,7 +523,13 @@ void FinalScene::findPlayerTile()
 		_check.push_back({ coordinate.x, coordinate.y });
 	}
 	_moveIndex = _check.size() - 1;
-	_turnSystem->setEnemyBit(3);
+	_turnSystem->setEnemyBit(1);
+}
+
+void FinalScene::enemyDamage()
+{
+	cout << "다 왔으니 때린다" << endl;
+
 }
 
 POINT FinalScene::lerp(POINT start, POINT end, float percentage)
