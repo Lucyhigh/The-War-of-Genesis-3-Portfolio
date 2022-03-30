@@ -13,13 +13,13 @@ HRESULT TitleScene::init(void)
     int buttonNum = 3;
     for (int i = 0; i < buttonNum; i++)
     {
-            TitlebuttomInfo _titleButtomInfo;
-            POINT _buttomPos = { CENTER_X, (WINSIZE_Y - 200) + i*50 };
-           _titleButtomInfo._buttonRect = RectMakeCenter(_buttomPos.x, _buttomPos.y, _buttonSize.x, _buttonSize.y);
-           _titleButtomInfo._index = i;
+        TitlebuttomInfo _titleButtomInfo;
+        POINT _buttomPos = { CENTER_X, (WINSIZE_Y - 200) + i*50 };
+        _titleButtomInfo._buttonRect = RectMakeCenter(_buttomPos.x, _buttomPos.y, _buttonSize.x, _buttonSize.y);
+        _titleButtomInfo._index = i;
 
-           _vTitleButton.push_back(_titleButtomInfo);
-           _vTitleButton[i]._textInfo = _uiText[i];
+        _vTitleButton.push_back(_titleButtomInfo);
+        _vTitleButton[i]._textInfo = _uiText[i];
     }
 
     int SceneIndex = 0;
@@ -114,8 +114,6 @@ void TitleScene::update(void)
 
 void TitleScene::render(void)
 {
-
-
     int _textPosY = 5;
     if (_startBit.none() == 1)
     {

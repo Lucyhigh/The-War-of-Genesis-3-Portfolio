@@ -5,7 +5,8 @@ HRESULT Saladin::init(void)
 {
 	_image = IMAGEMANAGER->findImage("sDownIdle");
 	_image = IMAGEMANAGER->findImage("sMovesheet");
-
+	_image = IMAGEMANAGER->findImage("sDamageSheet");
+    _stateBit = 0;//Idle
 	_count = 0;
 	_indexA = _indexB = 0;
 	_alphaA = 0;
@@ -13,7 +14,7 @@ HRESULT Saladin::init(void)
 	_saladinPos.x = 0;
 	_saladinPos.y = WINSIZE_Y - 140;
 	_rcSaladin = RectMakeCenter(_saladinPos.x, _saladinPos.y, _image->getFrameWidth(), _image->getFrameHeight());
-
+   
 	_currentHp = 10;
 	_maxHp = 10;
 	//_hpBar = new ProgressBar;
@@ -28,181 +29,317 @@ void Saladin::release(void)
 
 void Saladin::update(void)
 {
-	_count++;
+    _count += 4;
+    //cout << _stateBit.to_string() <<"indexA"<<_indexB<<endl;
+    
+    //00000 대기 
+    if (_stateBit.none() == 1)
+    {
+        switch (_imageState)
+        {
+        case SALADINSTATE::RIGHT:
+            if (_count % 30 == 0)
+            {
+                _indexA--;
+                IMAGEMANAGER->findImage("sRightIdle")->setFrameY(0);
+                if (_indexA < 0)
+                {
+                    _indexA = 4;
+                }
+                IMAGEMANAGER->findImage("sRightIdle")->setFrameX(_indexA);
+            }
+            break;
+        case SALADINSTATE::LEFT:
+            if (_count % 30 == 0)
+            {
+                if (_isWaiting &&_count % 30 == 0)
+                {
+                    _indexA++;
+                    IMAGEMANAGER->findImage("sLeftIdle")->setFrameY(1);
+                    if (_indexA >= 4)
+                    {
+                        _indexA = 0;
+                    }
+                    IMAGEMANAGER->findImage("sLeftIdle")->setFrameX(_indexA);
+                }
+            }
+            break;
+        case SALADINSTATE::TOP:
+            if (_count % 30 == 0)
+            {
+                _indexA--;
+                IMAGEMANAGER->findImage("sUpIdle")->setFrameY(0);
+                if (_indexA < 0)
+                {
+                    _indexA = 4;
+                }
+                IMAGEMANAGER->findImage("sUpIdle")->setFrameX(_indexA);
+            }
+            break;
+        case SALADINSTATE::BOTTOM:
+            if (_count % 30 == 0)
+            {
+                _indexA--;
+                IMAGEMANAGER->findImage("sDownIdle")->setFrameY(0);
+                if (_indexA < 0)
+                {
+                    _indexA = 4;
+                }
+                IMAGEMANAGER->findImage("sDownIdle")->setFrameX(_indexA);
+            }
+            break;
+        }
+    }
+    //00001 이동중 
+    else if (_stateBit.test(0) == 1)
+    {
+        switch (_imageState)
+        {
+        case SALADINSTATE::RIGHT:
+            if (_count % 30 == 0)
+            {
+                _indexB--;
+                IMAGEMANAGER->findImage("sMovesheet")->setFrameY(3);
+                if (_indexB < 0)
+                {
+                    _indexB = 6;
+                }
+                IMAGEMANAGER->findImage("sMovesheet")->setFrameX(_indexB);
+            }
+            break;
+        case SALADINSTATE::LEFT:
+            if (_count % 30 == 0)
+            {
+                _indexB++;
+                IMAGEMANAGER->findImage("sMovesheet")->setFrameY(2);
+                if (_indexB >= 6)
+                {
+                    _indexB = 0;
+                }
+                IMAGEMANAGER->findImage("sMovesheet")->setFrameX(_indexB);
+            }
+            break;
+        case SALADINSTATE::TOP:
+            if (_count % 30 == 0)
+            {
+                _indexB++;
+                IMAGEMANAGER->findImage("sMovesheet")->setFrameY(0);
+                if (_indexB >= 6)
+                {
+                    _indexB = 0;
+                }
+                IMAGEMANAGER->findImage("sMovesheet")->setFrameX(_indexB);
+            }
+            break;
+        case SALADINSTATE::BOTTOM:
+            if (_count % 30 == 0)
+            {
+                _indexB++;
+                IMAGEMANAGER->findImage("sMovesheet")->setFrameY(1);
+                if (_indexB >= 6)
+                {
+                    _indexB = 0;
+                }
+                IMAGEMANAGER->findImage("sMovesheet")->setFrameX(_indexB);
+            }
+            break;
+        }
+    }
+    //00010 공격 
+    else if (_stateBit.test(1) == 1)
+    {
+        switch (_imageState)
+        {
+        case SALADINSTATE::RIGHT:
+            if (_count % 30 == 0)
+            {
+                _indexB--;
+                IMAGEMANAGER->findImage("sAttacksheet")->setFrameY(3);
+                if (_indexB < 0)
+                {
+                    _indexB = 5;
+                }
+                IMAGEMANAGER->findImage("sAttacksheet")->setFrameX(_indexB);
+            }
+            break;
+        case SALADINSTATE::LEFT:
+            if (_count % 30 == 0)
+            {
+                _indexB++;
+                IMAGEMANAGER->findImage("sAttacksheet")->setFrameY(2);
+                if (_indexB >= 5)
+                {
+                    _indexB = 0;
+                }
+                IMAGEMANAGER->findImage("sAttacksheet")->setFrameX(_indexB);
+            }
+            break;
+        case SALADINSTATE::TOP:
+            if (_count % 30 == 0)
+            {
+                _indexB++;
+                IMAGEMANAGER->findImage("sAttacksheet")->setFrameY(0);
+                if (_indexB >= 5)
+                {
+                    _indexB = 0;
+                }
+                IMAGEMANAGER->findImage("sAttacksheet")->setFrameX(_indexB);
+            }
+            break;
+        case SALADINSTATE::BOTTOM:
+            if (_count % 30 == 0)
+            {
+                _indexB++;
+                IMAGEMANAGER->findImage("sAttacksheet")->setFrameY(1);
+                if (_indexB >= 5)
+                {
+                    _indexB = 0;
+                }
+                IMAGEMANAGER->findImage("sAttacksheet")->setFrameX(_indexB);
+            }
+            break;
+        }
+    }
+    //00100 피격 
+    else if (_stateBit.test(2) == 1)
+    {
+        switch (_imageState)
+        {
+            case SALADINSTATE::RIGHT:
+            {
+                IMAGEMANAGER->findImage("sDamageSheet")->setFrameY(0);
+                IMAGEMANAGER->findImage("sDamageSheet")->setFrameX(3);
+            }
+            break;
+            case SALADINSTATE::LEFT:
+            {
+                IMAGEMANAGER->findImage("sDamageSheet")->setFrameY(2);
+                IMAGEMANAGER->findImage("sDamageSheet")->setFrameX(2);
+            }
+            break;
+            case SALADINSTATE::TOP:
+            {
+                IMAGEMANAGER->findImage("sDamageSheet")->setFrameY(0);
+                IMAGEMANAGER->findImage("sDamageSheet")->setFrameX(0);
+            }
+            break;
+            case SALADINSTATE::BOTTOM:
+            {
+                IMAGEMANAGER->findImage("sDamageSheet")->setFrameY(1);
+                IMAGEMANAGER->findImage("sDamageSheet")->setFrameX(1);
+            }
+            break;
+        }
 
-	if (KEYMANAGER->isOnceKeyDown('1'))
-	{
-		_imageState = SALADINSTATE::RIGHT;
-	}
-	else if (KEYMANAGER->isOnceKeyDown('2'))
-	{
-		_imageState = SALADINSTATE::LEFT;
-	}
-	else if (KEYMANAGER->isOnceKeyDown('3'))
-	{
-		_imageState = SALADINSTATE::TOP;
-	}
-	else if (KEYMANAGER->isOnceKeyDown('4'))
-	{
-		_imageState = SALADINSTATE::BOTTOM;
-	}
-	else if (KEYMANAGER->isOnceKeyDown('5'))
-	{
-		_isWaiting = false;
-
-	}
-	else if (KEYMANAGER->isOnceKeyDown('6'))
-	{
-		_isWaiting = true;
-
-	}
-
-	switch (_imageState)
-	{
-	case SALADINSTATE::RIGHT:
-		if (_isWaiting &&_count % 10 == 0)
-		{
-
-			_indexA--;
-			IMAGEMANAGER->findImage("sRightIdle")->setFrameY(0);
-			if (_indexA < 0)
-			{
-				_indexA = 4;
-			}
-			IMAGEMANAGER->findImage("sRightIdle")->setFrameX(_indexA);
-		}
-		else if (!_isWaiting &&_count % 10 == 0)
-		{
-			_indexB++;
-			IMAGEMANAGER->findImage("sMovesheet")->setFrameY(3);
-			if (_indexB >= 6)
-			{
-				_indexB = 0;
-			}
-			IMAGEMANAGER->findImage("sMovesheet")->setFrameX(_indexB);
-		}
-		break;
-	case SALADINSTATE::LEFT:
-		if (_isWaiting &&_count % 10 == 0)
-		{
-
-			_indexA++;
-			IMAGEMANAGER->findImage("sLeftIdle")->setFrameY(1);
-			if (_indexA >= 4)
-			{
-				_indexA = 0;
-			}
-			IMAGEMANAGER->findImage("sLeftIdle")->setFrameX(_indexA);
-		}
-		else if (!_isWaiting &&_count % 10 == 0)
-		{
-			_indexB++;
-			IMAGEMANAGER->findImage("sMovesheet")->setFrameY(2);
-			if (_indexB >= 6)
-			{
-				_indexB = 0;
-			}
-			IMAGEMANAGER->findImage("sMovesheet")->setFrameX(_indexB);
-		}
-		break;
-	case SALADINSTATE::TOP:
-		if (_isWaiting &&_count % 10 == 0)
-		{
-			_indexA--;
-			IMAGEMANAGER->findImage("sUpIdle")->setFrameY(0);
-			if (_indexA < 0)
-			{
-				_indexA = 4;
-			}
-			IMAGEMANAGER->findImage("sUpIdle")->setFrameX(_indexA);
-		}
-		else if (!_isWaiting &&_count % 10 == 0)
-		{
-
-			_indexB++;
-			IMAGEMANAGER->findImage("sMovesheet")->setFrameY(0);
-			if (_indexB >= 6)
-			{
-				_indexB = 0;
-			}
-			IMAGEMANAGER->findImage("sMovesheet")->setFrameX(_indexB);
-		}
-		break;
-	case SALADINSTATE::BOTTOM:
-		if (_isWaiting &&_count % 10 == 0)
-		{
-			_indexA--;
-			IMAGEMANAGER->findImage("sDownIdle")->setFrameY(0);
-			if (_indexA < 0)
-			{
-				_indexA = 4;
-			}
-			IMAGEMANAGER->findImage("sDownIdle")->setFrameX(_indexA);
-		}
-		else if (!_isWaiting &&_count % 10 == 0)
-		{
-			_indexB++;
-			IMAGEMANAGER->findImage("sMovesheet")->setFrameY(1);
-			if (_indexB >= 6)
-			{
-				_indexB = 0;
-			}
-			IMAGEMANAGER->findImage("sMovesheet")->setFrameX(_indexB);
-		}
-		break;
-	}
-	_rcSaladin = RectMakeCenter(_saladinPos.x, _saladinPos.y, _image->getFrameWidth(), _image->getFrameHeight());
-
+        //01000 죽음
+    }
+     _rcSaladin = RectMakeCenter(_saladinPos.x, _saladinPos.y, _image->getFrameWidth(), _image->getFrameHeight());
 }
 
 void Saladin::render(void)
 {
 	float left = _rcSaladin.left - _cameraRect.left;
 	float top = _rcSaladin.top - _cameraRect.top;
-	POINT addPos = { -22,-10 };
-	switch (_imageState)
-	{
-	case SALADINSTATE::RIGHT:
-		if (_isWaiting)
-		{
-			IMAGEMANAGER->frameRender("sRightIdle", getMemDC(), left, top);
-		}
-		else
-		{
-			IMAGEMANAGER->frameRender("sMovesheet", getMemDC(), left+ addPos.x, top+ addPos.y);
-		}
-		break;
-	case SALADINSTATE::LEFT:
-		if (_isWaiting)
-		{
-			IMAGEMANAGER->frameRender("sLeftIdle", getMemDC(), left, top);
-		}
-		else
-		{
-			IMAGEMANAGER->frameRender("sMovesheet", getMemDC(), left + addPos.x, top + addPos.y);
-		}
-		break;
-	case SALADINSTATE::TOP:
-		if (_isWaiting)
-		{
-			IMAGEMANAGER->frameRender("sUpIdle", getMemDC(), left, top);
-		}
-		else
-		{
-			IMAGEMANAGER->frameRender("sMovesheet", getMemDC(), left + addPos.x, top + addPos.y);
-		}
-		break;
-	case SALADINSTATE::BOTTOM:
-		if (_isWaiting)
-		{
-			IMAGEMANAGER->frameRender("sDownIdle", getMemDC(), left, top);
-		}
-		else
-		{
-			IMAGEMANAGER->frameRender("sMovesheet", getMemDC(), left + addPos.x, top + addPos.y);
-		}
-		break;
-	}
+	POINT addMovePos = { -23,-10 };
+
+    if (_stateBit.none() == 1)
+    {
+        switch (_imageState)
+        {
+        case SALADINSTATE::RIGHT:
+            IMAGEMANAGER->frameRender("sRightIdle", getMemDC(), left, top);
+            break;
+        case SALADINSTATE::LEFT:
+            IMAGEMANAGER->frameRender("sLeftIdle", getMemDC(), left, top);
+            break;
+        case SALADINSTATE::TOP:
+            IMAGEMANAGER->frameRender("sUpIdle", getMemDC(), left, top);
+            break;
+        case SALADINSTATE::BOTTOM:
+            IMAGEMANAGER->frameRender("sDownIdle", getMemDC(), left, top);
+            break;
+        }
+    }
+    else if(_stateBit.test(0)==1)
+    {
+        switch (_imageState)
+        {
+        case SALADINSTATE::RIGHT:
+            {
+                IMAGEMANAGER->frameRender("sMovesheet", getMemDC(), left + addMovePos.x, top + addMovePos.y);
+            }
+            break;
+        case SALADINSTATE::LEFT:
+            {
+                IMAGEMANAGER->frameRender("sMovesheet", getMemDC(), left + addMovePos.x, top + addMovePos.y);
+            }
+            break;
+        case SALADINSTATE::TOP:
+            {
+                IMAGEMANAGER->frameRender("sMovesheet", getMemDC(), left + addMovePos.x, top + addMovePos.y);
+            }
+            break;
+        case SALADINSTATE::BOTTOM:
+            {
+                IMAGEMANAGER->frameRender("sMovesheet", getMemDC(), left + addMovePos.x, top + addMovePos.y);
+            }
+            break;
+        }
+    }
+    else if (_stateBit.test(1) == 1)
+    {
+        POINT addAttPos = { 0,0 };
+        switch (_imageState)
+        {
+        case SALADINSTATE::RIGHT:
+            {
+                IMAGEMANAGER->frameRender("sAttacksheet", getMemDC(), left + addAttPos.x, top + addAttPos.y);
+            }
+            break;
+        case SALADINSTATE::LEFT:
+            {
+                IMAGEMANAGER->frameRender("sAttacksheet", getMemDC(), left + addAttPos.x, top + addAttPos.y);
+            }
+            break;
+        case SALADINSTATE::TOP:
+            {
+                IMAGEMANAGER->frameRender("sAttacksheet", getMemDC(), left + addAttPos.x, top + addAttPos.y);
+            }
+            break;
+        case SALADINSTATE::BOTTOM:
+            {
+                IMAGEMANAGER->frameRender("sAttacksheet", getMemDC(), left + addAttPos.x, top + addAttPos.y);
+            }
+            break;
+        }
+    }
+    else if (_stateBit.test(2) == 1)
+    {
+        POINT addDamagePos = { 0,0 };
+        switch (_imageState)
+        {
+        case SALADINSTATE::RIGHT:
+            {
+                IMAGEMANAGER->frameRender("sAttacksheet", getMemDC(), left + addDamagePos.x, top + addDamagePos.y);
+            }
+            break;
+        case SALADINSTATE::LEFT:
+            {
+                IMAGEMANAGER->frameRender("sAttacksheet", getMemDC(), left + addDamagePos.x, top + addDamagePos.y);
+            }
+            break;
+        case SALADINSTATE::TOP:
+            {
+                IMAGEMANAGER->frameRender("sAttacksheet", getMemDC(), left + addDamagePos.x, top + addDamagePos.y);
+            }
+            break;
+        case SALADINSTATE::BOTTOM:
+            {
+                IMAGEMANAGER->frameRender("sAttacksheet", getMemDC(), left + addDamagePos.x, top + addDamagePos.y);
+            }
+            break;
+        }
+    }
 }
 
 float Saladin::getSaladinPosX()
@@ -240,19 +377,19 @@ bool Saladin::getWaiting()
 	return _isWaiting;
 }
 
-void Saladin::setWaiting(bool isWaiting)
+bool Saladin::getAttack()
 {
-	_isWaiting = isWaiting;
+    return _isAttack;
+}
+
+bool Saladin::getDamage()
+{
+    return _isDamage;
 }
 
 bool Saladin::getLive()
 {
 	return _isLive;
-}
-
-bool Saladin::setLive(bool status)
-{
-	return _isLive = status;
 }
 
 void Saladin::hitDamage(float damage)
@@ -279,4 +416,20 @@ SALADINSTATE Saladin::getImageState()
 void Saladin::setImageStage(SALADINSTATE state)
 {
 	_imageState = state;
+}
+
+void Saladin::setEnemyIdle()
+{
+    _stateBit.reset();
+}
+
+unsigned int Saladin::getEnemyStateBit(int index)
+{
+    return _stateBit[index];
+}
+
+void Saladin::setEnemyStateBit(int index)
+{
+    _stateBit.reset();
+    _stateBit.set(index);
 }

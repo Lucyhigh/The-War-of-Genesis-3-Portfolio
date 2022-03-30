@@ -13,6 +13,7 @@ enum class PLAYERSTATE
 class Player : public GameNode
 {
 private:
+    bitset<5>  _stateBit;
 	Image* _image;
 	ProgressBar* _hpBar;
 	RECT _rcPlayer;
@@ -52,7 +53,9 @@ public:
 	PLAYERSTATE getImageState();
 	void setImageStage(PLAYERSTATE state);
 
-	
+    void setPlayerIdle();
+    unsigned int getPlayerStateBit(int index);
+    void setPlayerStateBit(int index);
 	bool getWaiting();
 	void setWaiting(bool isWaiting);
 	bool getLive();

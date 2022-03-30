@@ -9,9 +9,7 @@ HRESULT TurnSystem::init(void)
 	return S_OK;
 }
 
-void TurnSystem::release(void)
-{
-   
+void TurnSystem::release(void){
 }
 
 void TurnSystem::update(void)
@@ -27,17 +25,13 @@ void TurnSystem::update(void)
     case CHANGINGSTATUS::ENEMYTURN :
 
             break;
-
     }
 }
 
-void TurnSystem::render(void)
-{
-
+void TurnSystem::render(void){
 }
 
-void TurnSystem::changeState()
-{
+void TurnSystem::changeState(){
 }
 
 void TurnSystem::changeToPlayer()

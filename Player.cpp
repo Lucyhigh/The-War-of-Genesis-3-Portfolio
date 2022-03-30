@@ -5,7 +5,8 @@ HRESULT Player::init(void)
 {
 	_image = IMAGEMANAGER->findImage("pRightIdle");
 	_image = IMAGEMANAGER->findImage("pRightMove");
-	
+	_image = IMAGEMANAGER->findImage("pDamageSheet");
+    _stateBit = 0;//Idle
 	_count = 0;
 	_indexA = _indexB = 0;
 	_alphaA = 0;
@@ -30,154 +31,289 @@ void Player::release(void)
 
 void Player::update(void)
 {
-	_count++;
+	_count+= 5;
+    //cout << _stateBit.to_string() <<"indexA"<<_indexB<<endl;
+    if (KEYMANAGER->isOnceKeyDown('1'))
+    {
+        _imageState = PLAYERSTATE::RIGHT;
+    }
+    else if (KEYMANAGER->isOnceKeyDown('2'))
+    {
+        _imageState = PLAYERSTATE::LEFT;
+    }
+    else if (KEYMANAGER->isOnceKeyDown('3'))
+    {
+        _imageState = PLAYERSTATE::TOP;
+    }
+    else if (KEYMANAGER->isOnceKeyDown('4'))
+    {
+        _imageState = PLAYERSTATE::BOTTOM;
+    }
+    else if (KEYMANAGER->isOnceKeyDown('5'))
+    {
+        this->setPlayerIdle();
+    }
+    else if (KEYMANAGER->isOnceKeyDown('6'))
+    {
+        this->setPlayerStateBit(0);
+    }
+    //00000 대기 
+    if (_stateBit.none() == 1)
+    {
+        if (_count % 30 == 0)
+        {
+            switch (_imageState)
+            {
+            case PLAYERSTATE::RIGHT:
+                _indexA--;
+                IMAGEMANAGER->findImage("pRightIdle")->setFrameY(0);
+                if (_indexA < 0)
+                {
+                    _indexA = 5;
+                }
+                IMAGEMANAGER->findImage("pRightIdle")->setFrameX(_indexA);
+                
+                break;
+            case PLAYERSTATE::LEFT:
+                _indexA++;
+                IMAGEMANAGER->findImage("pLeftIdle")->setFrameY(1);
+                if (_indexA >= 5)
+                {
+                    _indexA = 0;
+                }
+                IMAGEMANAGER->findImage("pLeftIdle")->setFrameX(_indexA);
+                
+                break;
+            case PLAYERSTATE::TOP:
+                _indexA--;
+                IMAGEMANAGER->findImage("pUpIdle")->setFrameY(0);
+                if (_indexA < 0)
+                {
+                    _indexA = 5;
+                }
+                IMAGEMANAGER->findImage("pUpIdle")->setFrameX(_indexA);
+                
+                break;
+            case PLAYERSTATE::BOTTOM:
+                _indexA--;
+                IMAGEMANAGER->findImage("pDownIdle")->setFrameY(0);
+                if (_indexA < 0)
+                {
+                    _indexA = 5;
+                }
+                IMAGEMANAGER->findImage("pDownIdle")->setFrameX(_indexA);
+                
+                break;
+            }
+        }
+    }
+    //00001 이동중 
+    else if (_stateBit.test(0) == 1)
+    {
+        if (_count % 30 == 0)
+        {
+            switch (_imageState)
+            {
+            case PLAYERSTATE::RIGHT:
+                _indexB++;
+                IMAGEMANAGER->findImage("pRightMove")->setFrameY(1);
+                if (_indexB >= 6)
+                {
+                    _indexB = 0;
+                }
+                IMAGEMANAGER->findImage("pRightMove")->setFrameX(_indexB);
+                
+                break;
+            case PLAYERSTATE::LEFT:
+                _indexB++;
+                IMAGEMANAGER->findImage("pLeftMove")->setFrameY(1);
+                if (_indexB >= 6)
+                {
+                    _indexB = 0;
+                }
+                IMAGEMANAGER->findImage("pLeftMove")->setFrameX(_indexB);
+                break;
+            case PLAYERSTATE::TOP:
+                _indexB++;
+                IMAGEMANAGER->findImage("pUpMove")->setFrameY(1);
+                if (_indexB >= 6)
+                {
+                    _indexB = 0;
+                }
+                IMAGEMANAGER->findImage("pUpMove")->setFrameX(_indexB);
+                
+                break;
+            case PLAYERSTATE::BOTTOM:
+                _indexB++;
+                IMAGEMANAGER->findImage("pDownMove")->setFrameY(1);
+                if (_indexB >= 6)
+                {
+                    _indexB = 0;
+                }
+                IMAGEMANAGER->findImage("pDownMove")->setFrameX(_indexB);
+                
+                break;
+            }
+        }
+    }
+    //00010 공격 
+    else if (_stateBit.test(1) == 1)
+    {
+        if (_count % 30 == 0)
+        {
+            switch (_imageState)
+            {
+            case PLAYERSTATE::RIGHT:
+                _indexB++;
+                IMAGEMANAGER->findImage("pRightAtt")->setFrameY(1);
+                if (_indexB >= 4)
+                {
+                    _indexB = 0;
+                }
+                IMAGEMANAGER->findImage("pRightAtt")->setFrameX(_indexB);
+                break;
+            case PLAYERSTATE::LEFT:
+                _indexB++;
+                IMAGEMANAGER->findImage("pLeftAtt")->setFrameY(1);
+                if (_indexB >= 4)
+                {
+                    _indexB = 0;
+                }
+                IMAGEMANAGER->findImage("pLeftAtt")->setFrameX(_indexB);
+                break;
+            case PLAYERSTATE::TOP:
+                _indexB++;
+                IMAGEMANAGER->findImage("pUpAtt")->setFrameY(1);
+                if (_indexB >= 4)
+                {
+                    _indexB = 0;
+                }
+                IMAGEMANAGER->findImage("pUpAtt")->setFrameX(_indexB);
+                break;
+            case PLAYERSTATE::BOTTOM:
+                _indexB++;
+                IMAGEMANAGER->findImage("pDownAtt")->setFrameY(1);
+                if (_indexB >= 4)
+                {
+                    _indexB = 0;
+                }
+                IMAGEMANAGER->findImage("pDownAtt")->setFrameX(_indexB);
+                break;
+            }
+        }
+    }
+    //00100 피격 
+    else if (_stateBit.test(2) == 1)
+    {
+    switch (_imageState)
+    {
+    case PLAYERSTATE::RIGHT:
+    {
+        IMAGEMANAGER->findImage("pDamageSheet")->setFrameY(0);
+        IMAGEMANAGER->findImage("pDamageSheet")->setFrameX(3);
+    }
+    break;
+    case PLAYERSTATE::LEFT:
+    {
+        IMAGEMANAGER->findImage("pDamageSheet")->setFrameY(0);
+        IMAGEMANAGER->findImage("pDamageSheet")->setFrameX(2);
+    }
+    break;
+    case PLAYERSTATE::TOP:
+    {
+        IMAGEMANAGER->findImage("pDamageSheet")->setFrameY(0);
+        IMAGEMANAGER->findImage("pDamageSheet")->setFrameX(0);
+    }
+    break;
+    case PLAYERSTATE::BOTTOM:
+    {
+        IMAGEMANAGER->findImage("pDamageSheet")->setFrameY(0);
+        IMAGEMANAGER->findImage("pDamageSheet")->setFrameX(1);
+    }
+    break;
+    }
 
-	switch(_imageState)
-	{
-	case PLAYERSTATE::RIGHT:
-		if (_isWaiting &&_count % 20 == 0)
-		{
-
-			_indexA--;
-			IMAGEMANAGER->findImage("pRightIdle")->setFrameY(0);
-			if (_indexA < 0)
-			{
-				_indexA = 5;
-			}
-			IMAGEMANAGER->findImage("pRightIdle")->setFrameX(_indexA);
-		}
-		else if (!_isWaiting &&_count % 10 == 0)
-		{
-			_indexB++;
-			IMAGEMANAGER->findImage("pRightMove")->setFrameY(1);
-			if (_indexB >= 6)
-			{
-				_indexB = 0;
-			}
-			IMAGEMANAGER->findImage("pRightMove")->setFrameX(_indexB);
-		}
-		break;
-	case PLAYERSTATE::LEFT:
-		if (_isWaiting &&_count % 20 == 0)
-		{
-
-			_indexA++;
-			IMAGEMANAGER->findImage("pLeftIdle")->setFrameY(1);
-			if (_indexA >= 5)
-			{
-				_indexA = 0;
-			}
-			IMAGEMANAGER->findImage("pLeftIdle")->setFrameX(_indexA);
-		}
-		else if (!_isWaiting &&_count % 10 == 0)
-		{
-			_indexB++;
-			IMAGEMANAGER->findImage("pLeftMove")->setFrameY(1);
-			if (_indexB >= 6)
-			{
-				_indexB = 0;
-			}
-			IMAGEMANAGER->findImage("pLeftMove")->setFrameX(_indexB);
-		}
-		break;
-	case PLAYERSTATE::TOP:
-		if (_isWaiting &&_count % 20 == 0)
-		{
-			_indexA--;
-			IMAGEMANAGER->findImage("pUpIdle")->setFrameY(0);
-			if (_indexA < 0)
-			{
-				_indexA = 5;
-			}
-			IMAGEMANAGER->findImage("pUpIdle")->setFrameX(_indexA);
-		}
-		else if (!_isWaiting &&_count % 10 == 0)
-		{
-
-			_indexB++;
-			IMAGEMANAGER->findImage("pUpMove")->setFrameY(1);
-			if (_indexB >= 6)
-			{
-				_indexB = 0;
-			}
-			IMAGEMANAGER->findImage("pUpMove")->setFrameX(_indexB);
-		}
-		break;
-	case PLAYERSTATE::BOTTOM:
-		if (_isWaiting &&_count % 20 == 0)
-		{
-			_indexA--;
-			IMAGEMANAGER->findImage("pDownIdle")->setFrameY(0);
-			if (_indexA < 0)
-			{
-				_indexA = 5;
-			}
-			IMAGEMANAGER->findImage("pDownIdle")->setFrameX(_indexA);
-		}
-		else if (!_isWaiting &&_count % 10 == 0)
-		{
-			_indexB++;
-			IMAGEMANAGER->findImage("pDownMove")->setFrameY(1);
-			if (_indexB >= 6)
-			{
-				_indexB = 0;
-			}
-			IMAGEMANAGER->findImage("pDownMove")->setFrameX(_indexB);
-		}
-		break;
-	}
-		_rcPlayer = RectMakeCenter(_playerPos.x, _playerPos.y, _image->getFrameWidth(), _image->getFrameHeight());
-	
+    //01000 죽음
+    }
+	_rcPlayer = RectMakeCenter(_playerPos.x, _playerPos.y, _image->getFrameWidth(), _image->getFrameHeight());
 }
 
 void Player::render(void)
 {
     float left = _rcPlayer.left - _cameraRect.left;
     float top = _rcPlayer.top - _cameraRect.top;
-
-	switch (_imageState)
-	{
-	case PLAYERSTATE::RIGHT:
-		if (_isWaiting )
-		{
-			IMAGEMANAGER->frameRender("pRightIdle", getMemDC(), left, top);
-		}
-		else
-		{
-			IMAGEMANAGER->frameRender("pRightMove", getMemDC(), left, top);
-		}
-		break;
-	case PLAYERSTATE::LEFT:
-		if (_isWaiting)
-		{
-			IMAGEMANAGER->frameRender("pLeftIdle", getMemDC(), left, top);
-		}
-		else
-		{
-			IMAGEMANAGER->frameRender("pLeftMove", getMemDC(), left - 40, top);
-		}
-		break;
-	case PLAYERSTATE::TOP:
-		if (_isWaiting)
-		{	
-			IMAGEMANAGER->frameRender("pUpIdle", getMemDC(), left+7, top);
-		}
-		else
-		{
-			IMAGEMANAGER->frameRender("pUpMove", getMemDC(), left, top);
-		}
-		break;
-	case PLAYERSTATE::BOTTOM:
-		if (_isWaiting)
-		{
-			IMAGEMANAGER->frameRender("pDownIdle", getMemDC(), left-12, top);
-		}
-		else
-		{
-			IMAGEMANAGER->frameRender("pDownMove", getMemDC(), left-12, top);
-		}
-		break;
-	}
+    if (_stateBit.none() == 1)
+    {
+        switch (_imageState)
+        {
+        case PLAYERSTATE::RIGHT:
+            IMAGEMANAGER->frameRender("pRightIdle", getMemDC(), left, top);
+            break;
+        case PLAYERSTATE::LEFT:
+            IMAGEMANAGER->frameRender("pLeftIdle", getMemDC(), left, top);
+            break;
+        case PLAYERSTATE::TOP:
+            IMAGEMANAGER->frameRender("pUpIdle", getMemDC(), left, top);
+            break;
+        case PLAYERSTATE::BOTTOM:
+            IMAGEMANAGER->frameRender("pDownIdle", getMemDC(), left-20, top);
+            break;
+        }
+    }
+    else if (_stateBit.test(0) == 1)
+    {
+        switch (_imageState)
+        {
+        case PLAYERSTATE::RIGHT:
+            IMAGEMANAGER->frameRender("pRightMove", getMemDC(), left, top);
+            break;
+        case PLAYERSTATE::LEFT:
+            IMAGEMANAGER->frameRender("pLeftMove", getMemDC(), left, top);
+            break;
+        case PLAYERSTATE::TOP:
+            IMAGEMANAGER->frameRender("pUpMove", getMemDC(), left, top);
+            break;
+        case PLAYERSTATE::BOTTOM:
+            IMAGEMANAGER->frameRender("pDownMove", getMemDC(), left-20, top);
+            break;
+        }
+    }
+    else if (_stateBit.test(1) == 1)
+    {
+        switch (_imageState)
+        {
+        case PLAYERSTATE::RIGHT:
+            IMAGEMANAGER->frameRender("pRightAtt", getMemDC(), left, top);
+            break;
+        case PLAYERSTATE::LEFT:
+            IMAGEMANAGER->frameRender("pLeftAtt", getMemDC(), left, top);
+            break;
+        case PLAYERSTATE::TOP:
+            IMAGEMANAGER->frameRender("pUpAtt", getMemDC(), left, top);
+            break;
+        case PLAYERSTATE::BOTTOM:
+            IMAGEMANAGER->frameRender("pDownAtt", getMemDC(), left, top);
+            break;
+        }
+    }
+    else if (_stateBit.test(2) == 1)
+    {
+        switch (_imageState)
+        {
+        case PLAYERSTATE::RIGHT:
+            IMAGEMANAGER->frameRender("pDamageSheet", getMemDC(), left, top);
+            break;
+        case PLAYERSTATE::LEFT:
+            IMAGEMANAGER->frameRender("pDamageSheet", getMemDC(), left, top);
+            break;
+        case PLAYERSTATE::TOP:
+            IMAGEMANAGER->frameRender("pDamageSheet", getMemDC(), left, top);
+            break;
+        case PLAYERSTATE::BOTTOM:
+            IMAGEMANAGER->frameRender("pDamageSheet", getMemDC(), left, top);
+            break;
+        }
+    }
 }
 
 float Player::getPlayerPosX()
@@ -254,4 +390,20 @@ PLAYERSTATE Player::getImageState()
 void Player::setImageStage(PLAYERSTATE state)
 {
 	_imageState = state;
+}
+
+void Player::setPlayerIdle()
+{
+    _stateBit.reset();
+}
+
+unsigned int Player::getPlayerStateBit(int index)
+{
+    return _stateBit[index];
+}
+
+void Player::setPlayerStateBit(int index)
+{
+    _stateBit.reset();
+    _stateBit.set(index);
 }

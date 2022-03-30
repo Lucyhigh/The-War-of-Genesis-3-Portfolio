@@ -10,6 +10,7 @@ enum class SALADINSTATE
 class Saladin:public GameNode
 {
 private:
+    bitset<5> _stateBit; //00000 대기 00001 이동중 00010 공격 00100 피격 01000 죽음
 	Image* _image;
 	//ProgressBar* _hpBar;
 	RECT _rcSaladin;
@@ -27,6 +28,8 @@ private:
 	float _maxHp;
 
 	bool _isWaiting;
+	bool _isAttack;
+	bool _isDamage;
 	bool _isLive;
 public:
 	HRESULT init(void);
@@ -46,16 +49,22 @@ public:
 	SALADINSTATE getImageState();
 	void setImageStage(SALADINSTATE state);
 
+    void setEnemyIdle();
+    unsigned int getEnemyStateBit(int index);
+    void setEnemyStateBit(int index);
 
 	bool getWaiting();
-	void setWaiting(bool isWaiting);
+
+    bool getAttack();
+
+    bool getDamage();
+
 	bool getLive();
-	bool setLive(bool status);
 
 	void hitDamage(float damage);
 
 public:
-	Saladin() :_isWaiting(true), _isLive(true) {}
+	Saladin() :_isWaiting(true), _isLive(true), _isAttack(false), _isDamage(false){}
 	~Saladin() {}
 };
 

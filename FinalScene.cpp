@@ -16,12 +16,13 @@ HRESULT FinalScene::init(void)
 	_player = new Player;
 	_player->init();
 	_player->setPlayerPosX(16 * TILESIZEX);
-	_player->setPlayerPosY(20 * TILESIZEY);
+	_player->setPlayerPosY(10 * TILESIZEY);
 
 	_saladin = new Saladin;
 	_saladin->init();
 	_saladin->setSaladinPosX(25 * TILESIZEX);
-	_saladin->setSaladinPosY(8 * TILESIZEY);
+	_saladin->setSaladinPosY(9 * TILESIZEY);
+    _saladin->setEnemyIdle();
 
 	_camera = new Camera;
 	_camera->init();
@@ -191,7 +192,6 @@ void FinalScene::update(void)
 		else if (_turnSystem->getEnemyBit(2) == 1)
 		{
 			enemyDamage();
-
 		}
 	}
 
@@ -272,6 +272,7 @@ void FinalScene::render(void)
 				IMAGEMANAGER->alphaRender("moveTile", getMemDC(), _tileAlpha);
 				break;
 			}
+            SelectObject(getMemDC(), brush);
 			DeleteObject(brush);
 		}
 	}
@@ -359,7 +360,7 @@ void FinalScene::rectMoveToPath()
 		if (_turnSystem->getStatus() == CHANGINGSTATUS::PLAYERTURN)
 		{
 			_turnSystem->changeToPlayer();
-			 _player->setWaiting(true);
+            _player->setPlayerIdle();
 		}
 		else if (_turnSystem->getStatus() == CHANGINGSTATUS::ENEMYTURN) 
 		{
@@ -373,7 +374,7 @@ void FinalScene::rectMoveToPath()
 			else
 			{
 				_turnSystem->changeToPlayer();
-				_saladin->setWaiting(true);
+                _saladin->setEnemyIdle();
 				//cout << "최-종 :" << _enemyPathGoal.x << ", " << _enemyPathGoal.y << endl;
 				//cout << "최-종 :" << _pMoveStart.x << ", " << _pMoveStart.y << endl;
 			}
@@ -435,7 +436,7 @@ void FinalScene::changeImage()
 {
 	if (_turnSystem->getStatus() == CHANGINGSTATUS::PLAYERTURN)
 	{
-		_player->setWaiting(false);
+        _player->setPlayerStateBit(0);
 
 		int compareBtoAX = _check[_moveIndex - 1].x - _check[_moveIndex].x;
 		int compareBtoAY = _check[_moveIndex - 1].y - _check[_moveIndex].y;
@@ -447,8 +448,7 @@ void FinalScene::changeImage()
 	}
 	else if (_turnSystem->getStatus() == CHANGINGSTATUS::ENEMYTURN)
 	{
-		_saladin->setWaiting(false);
-		//if(_)
+		_saladin->setEnemyStateBit(0);
 		int compareBtoAX = _check[_moveIndex - 1].x - _check[_moveIndex].x;
 		int compareBtoAY = _check[_moveIndex - 1].y - _check[_moveIndex].y;
 
