@@ -434,6 +434,11 @@ unsigned int Player::getPlayerStateBit(int index)
     return _stateBit[index];
 }
 
+bitset<5> Player::getPlayerStateBit()
+{
+	return _stateBit;
+}
+
 void Player::setPlayerStateBit(int index)
 {
     _stateBit.reset();

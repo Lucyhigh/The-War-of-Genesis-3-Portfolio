@@ -21,19 +21,19 @@ void Camera::release(void){
 
 void Camera::update(void)
 {
-	if (KEYMANAGER->isStayKeyDown(VK_RIGHT) || _ptMouse.x >WINSIZE_X -10)
+	if (KEYMANAGER->isStayKeyDown(VK_RIGHT) || _ptMouse.x > WINSIZE_X -10)
 	{
 		_trace.x += 10;
 		if (_trace.x > _rightLimit)
 			_trace.x = _rightLimit;
 	}
-	else if (KEYMANAGER->isStayKeyDown(VK_LEFT))
+	else if (KEYMANAGER->isStayKeyDown(VK_LEFT) || _ptMouse.x < 10)
 	{
 		_trace.x -= 10;
 		if (_trace.x < _leftLimit)
 			_trace.x = _leftLimit;
 	}
-	else if (KEYMANAGER->isStayKeyDown(VK_UP))
+	else if (KEYMANAGER->isStayKeyDown(VK_UP) || _ptMouse.y < 10)
 	{
 		_trace.y -= 10;
 		if (_trace.y < _topLimit)

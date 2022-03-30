@@ -209,7 +209,17 @@ void FinalScene::update(void)
 		cameraPos.x = _player->getPlayerPosX();
 		cameraPos.y = _player->getPlayerPosY();
 	}
-	_camera->setCameraPos(cameraPos);
+
+	if (_player->getPlayerStateBit().none() == 0) 
+	{
+		_camera->setCameraPos(cameraPos);
+		/*if (KEYMANAGER->isOnceKeyDown(VK_RBUTTON))
+		{
+			cameraPos.x = _player->getPlayerPosX();
+			cameraPos.y = _player->getPlayerPosY();
+			_camera->setCameraPos(cameraPos);
+		}*/
+	}
 	_camera->update();
 
 	_turnSystem->update();
