@@ -4,7 +4,8 @@
 HRESULT TitleScene::init(void)
 {
     _startBit = 0;
-
+	_animation = ANIMATIONMANAGER->findAnimation("TitleEfx");
+	_animation->AniStart();
 	_image= IMAGEMANAGER->findImage("TitleBg");
     _buttonSize = {140, 30};
     _SceneBoxSize = {150, 50};
@@ -36,8 +37,7 @@ HRESULT TitleScene::init(void)
             SceneIndex++;
         }
     }
-	_ani = new AniSceneTitle;
-	_ani->init();
+
     _isfadeOut = false;
 	_alpha = 0.0f;
 
@@ -46,8 +46,7 @@ HRESULT TitleScene::init(void)
 
 void TitleScene::release(void)
 {
-   _ani->release();
-	SAFE_DELETE(_ani);
+
 }
 
 void TitleScene::update(void)
@@ -55,7 +54,6 @@ void TitleScene::update(void)
     // 0000 타이틀화면
     if (_startBit.none() == 1)
     {
-        _ani->update();
 		_alpha += 1.0f;
 		if ( _alpha >= 255)_alpha = 255;
 
@@ -79,7 +77,6 @@ void TitleScene::update(void)
                 }
             }
         }
-	
     }
     // 0001 스타트게임
     else if (_startBit.test(0) == 1)
@@ -117,11 +114,14 @@ void TitleScene::update(void)
 
 void TitleScene::render(void)
 {
+
+
     int _textPosY = 5;
     if (_startBit.none() == 1)
     {
         IMAGEMANAGER->render("TitleBg", getMemDC());
-        _ani->render(CENTER_X - 110, CENTER_Y-90);
+		IMAGEMANAGER->findImage("TitleEfx")->aniRender(getMemDC(), CENTER_X - 110, CENTER_Y - 90,_animation);
+
         IMAGEMANAGER->alphaRender("TitleName",getMemDC(),_alpha);
         for (_viTitleButton = _vTitleButton.begin(); _viTitleButton != _vTitleButton.end(); ++_viTitleButton)
         {

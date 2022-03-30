@@ -14,7 +14,7 @@ private:
     // 0000 타이틀화면
     // 0001 스타트버튼 - 씬 리스트씬으로 넘어감
     // 0010 세이브화면
-    
+	Animation* _animation;
 	Image* _image;
 	AniSceneTitle* _ani;
     vector<TitlebuttomInfo> _vTitleButton;

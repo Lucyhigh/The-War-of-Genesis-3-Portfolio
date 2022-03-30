@@ -38,7 +38,7 @@ HRESULT ImageClass::init(void)
 #pragma region Stage Scene
 	//Title
 	IMAGEMANAGER->addImage("TitleBg", "Resources/Images/BackGround/Title.bmp", WINSIZE_X, WINSIZE_Y);
-	IMAGEMANAGER->addImage("TitleEfx", "Resources/Images/UI/titleEfx.bmp", 996, 225,true,RGB(4, 0, 4));// 4, 1,
+	IMAGEMANAGER->addFrameImage("TitleEfx", "Resources/Images/UI/titleEfx.bmp", 996, 225,4,1,true,RGB(4, 0, 4));// 4, 1,
 	IMAGEMANAGER->addImage("TitleName", "Resources/Images/UI/TitleGameName.bmp", WINSIZE_X, WINSIZE_Y, MGT);
 
 	//Map
@@ -50,7 +50,6 @@ HRESULT ImageClass::init(void)
 	// Stage 1
 	IMAGEMANAGER->addImage("Field", "Resources/Images/BackGround/Field.bmp", 2120, 1536);
 	// Stage 2
-	//IMAGEMANAGER->addImage("Field", "Resources/Images/BackGround/Field.bmp", 2120, 1536);
 	// Stage 3
 	IMAGEMANAGER->addImage("Final", "Resources/Images/BackGround/Final.bmp", 1557, 1080);
 #pragma endregion
@@ -76,13 +75,8 @@ HRESULT ImageClass::init(void)
 	IMAGEMANAGER->addImage("attackTile", "Resources/Images/UI/attackable.bmp", 40, 32);
 	IMAGEMANAGER->addFrameImage("curTile", "Resources/Images/UI/Tile.bmp", 240, 32, 6, 1);
 #pragma endregion
+#pragma region Animation
+	ANIMATIONMANAGER->addAnimation("TitleEfx", "TitleEfx", 0, 3, 3, false, true);
+#pragma endregion
 	return S_OK;
-}
-
-ImageClass::ImageClass()
-{
-}
-
-ImageClass::~ImageClass()
-{
 }

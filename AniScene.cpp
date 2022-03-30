@@ -12,10 +12,8 @@ HRESULT AniSceneTitle::init(void)
 
     //_aniTitleEff->setDefPlayFrame(false, true);
     //_aniTitleEff->setFPS(3);
-	ANIMATIONMANAGER->addAnimation("TitleEfx", "TitleEfx", 249, 255, 0, 3, 3, false, true);
 
     //_aniTitleEff->AniStart();
-	_isAniStart = false;
 	return S_OK;
 }
 
@@ -32,10 +30,8 @@ void AniSceneTitle::update(void)
     if (KEYMANAGER->isOnceKeyDown('T'))
     {
        //_aniTitleEff->AniStart();
-	   ANIMATIONMANAGER->findAnimation("TitleEfx")->AniStart();
     }
     //_aniTitleEff->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
-	ANIMATIONMANAGER->frameUpdate("TitleEfx");
 }
 
 void AniSceneTitle::render(void)
@@ -45,6 +41,5 @@ void AniSceneTitle::render(void)
 void AniSceneTitle::render(int x, int y)
 {
     //_titleEff->aniRender(getMemDC(), x, y, _aniTitleEff);
-	ANIMATIONMANAGER->aniRender("TitleEfx", getMemDC(), x, y);
 }
 #pragma endregion

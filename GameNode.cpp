@@ -1,4 +1,4 @@
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "GameNode.h"
 
 HRESULT GameNode::init(void)
@@ -38,13 +38,11 @@ HRESULT GameNode::init(bool managerInit)
 		SCENEMANAGER->init();
 
 		//애니메이션 매니저 초기화
-		//ANIMATIONMANAGER->init();
+		ANIMATIONMANAGER->init();
 
 		//사운드 매니저 초기화
 		//SOUNDMANAGER->init();
 
-		//JSONDATAMANAGER->init();
-       // PLAYER->init();
 	}
 
 	return S_OK;
@@ -82,25 +80,22 @@ void GameNode::release(void)
 		SCENEMANAGER->releaseSingleton();
 		
 		//애니메이션 매니저 해제, 싱글톤 해제
-		//ANIMATIONMANAGER->release();
-		//ANIMATIONMANAGER->releaseSingleton();
+		ANIMATIONMANAGER->release();
+		ANIMATIONMANAGER->releaseSingleton();
 		
         //사운드 매니저 해제, 싱글톤 해제
 		//SOUNDMANAGER->release();
 		//SOUNDMANAGER->releaseSingleton();
+
         //사운드 매니저 해제, 싱글톤 해제
 		JSONDATAMANAGER->release();
 		JSONDATAMANAGER->releaseSingleton();
-        //PLAYER->release();
-		//PLAYER->releaseSingleton();
 	}
-	// DC 해제
 	ReleaseDC(_hWnd, _hdc);
 }
 
 void GameNode::update(void)
 {
-	//InvalidateRect(_hWnd, NULL, FALSE);
 }
 
 void GameNode::render(void)
@@ -115,12 +110,10 @@ LRESULT GameNode::MainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lPara
 	switch (iMessage)
 	{
 	case WM_TIMER:
-		this->update();
 		break;
 
 	case WM_PAINT:
 		hdc = BeginPaint(hWnd, &ps);
-		this->render();
 		EndPaint(hWnd, &ps);
 		break;
 
