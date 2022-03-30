@@ -34,6 +34,8 @@ private:
 	float _maxHp;
 
 	bool _isWaiting;
+	bool _isAttack;
+	bool _isDamage;
 	bool _isLive;
 public:
 	HRESULT init(void);
@@ -58,6 +60,12 @@ public:
     void setPlayerStateBit(int index);
 	bool getWaiting();
 	void setWaiting(bool isWaiting);
+
+    bool getAttack();
+    void setAttack(bool isAttack);
+    bool getDamage();
+    void setDamage(bool isDamage);
+
 	bool getLive();
 	bool setLive(bool status);
 

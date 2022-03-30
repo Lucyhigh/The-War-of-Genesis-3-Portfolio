@@ -53,7 +53,7 @@ public:
 	void curAstar();
     void changeImage();
 	void findPlayerTile();
-	void enemyDamage();
+	void Attack();
 	POINT lerp(POINT start, POINT end, float percentage);
 public:
     FinalScene() : _uiText { L"형제여!", L" 평 지 ", L"10000" } {}

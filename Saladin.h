@@ -56,8 +56,9 @@ public:
 	bool getWaiting();
 
     bool getAttack();
-
+    void setAttack(bool isAttack);
     bool getDamage();
+    void setDamage(bool isDamage);
 
 	bool getLive();
 

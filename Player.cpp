@@ -31,7 +31,7 @@ void Player::release(void)
 
 void Player::update(void)
 {
-	_count+= 5;
+	_count+= 4;
     //cout << _stateBit.to_string() <<"indexA"<<_indexB<<endl;
     if (KEYMANAGER->isOnceKeyDown('1'))
     {
@@ -169,6 +169,8 @@ void Player::update(void)
                 if (_indexB >= 4)
                 {
                     _indexB = 0;
+                    _isAttack = true;
+                    setPlayerIdle();
                 }
                 IMAGEMANAGER->findImage("pRightAtt")->setFrameX(_indexB);
                 break;
@@ -178,6 +180,8 @@ void Player::update(void)
                 if (_indexB >= 4)
                 {
                     _indexB = 0;
+                    _isAttack = true;
+                    setPlayerIdle();
                 }
                 IMAGEMANAGER->findImage("pLeftAtt")->setFrameX(_indexB);
                 break;
@@ -187,6 +191,8 @@ void Player::update(void)
                 if (_indexB >= 4)
                 {
                     _indexB = 0;
+                    _isAttack = true;
+                    setPlayerIdle();
                 }
                 IMAGEMANAGER->findImage("pUpAtt")->setFrameX(_indexB);
                 break;
@@ -196,6 +202,8 @@ void Player::update(void)
                 if (_indexB >= 4)
                 {
                     _indexB = 0;
+                    _isAttack = true;
+                    setPlayerIdle();
                 }
                 IMAGEMANAGER->findImage("pDownAtt")->setFrameX(_indexB);
                 break;
@@ -205,34 +213,37 @@ void Player::update(void)
     //00100 ÇÇ°Ý 
     else if (_stateBit.test(2) == 1)
     {
-    switch (_imageState)
-    {
-    case PLAYERSTATE::RIGHT:
-    {
-        IMAGEMANAGER->findImage("pDamageSheet")->setFrameY(0);
-        IMAGEMANAGER->findImage("pDamageSheet")->setFrameX(3);
-    }
-    break;
-    case PLAYERSTATE::LEFT:
-    {
-        IMAGEMANAGER->findImage("pDamageSheet")->setFrameY(0);
-        IMAGEMANAGER->findImage("pDamageSheet")->setFrameX(2);
-    }
-    break;
-    case PLAYERSTATE::TOP:
-    {
-        IMAGEMANAGER->findImage("pDamageSheet")->setFrameY(0);
-        IMAGEMANAGER->findImage("pDamageSheet")->setFrameX(0);
-    }
-    break;
-    case PLAYERSTATE::BOTTOM:
-    {
-        IMAGEMANAGER->findImage("pDamageSheet")->setFrameY(0);
-        IMAGEMANAGER->findImage("pDamageSheet")->setFrameX(1);
-    }
-    break;
-    }
-
+        switch (_imageState)
+        {
+            case PLAYERSTATE::RIGHT:
+            {
+                IMAGEMANAGER->findImage("pDamageSheet")->setFrameY(0);
+                IMAGEMANAGER->findImage("pDamageSheet")->setFrameX(3);
+            }
+            break;
+            case PLAYERSTATE::LEFT:
+            {
+                IMAGEMANAGER->findImage("pDamageSheet")->setFrameY(0);
+                IMAGEMANAGER->findImage("pDamageSheet")->setFrameX(2);
+            }
+            break;
+            case PLAYERSTATE::TOP:
+            {
+                IMAGEMANAGER->findImage("pDamageSheet")->setFrameY(0);
+                IMAGEMANAGER->findImage("pDamageSheet")->setFrameX(0);
+            }
+            break;
+            case PLAYERSTATE::BOTTOM:
+            {
+                IMAGEMANAGER->findImage("pDamageSheet")->setFrameY(0);
+                IMAGEMANAGER->findImage("pDamageSheet")->setFrameX(1);
+            }
+            break;
+        }
+        if (_count % 50 == 0)
+        {
+            setPlayerIdle();
+        }
     //01000 Á×À½
     }
 	_rcPlayer = RectMakeCenter(_playerPos.x, _playerPos.y, _image->getFrameWidth(), _image->getFrameHeight());
@@ -354,6 +365,27 @@ bool Player::getWaiting()
 void Player::setWaiting(bool isWaiting)
 {
 	_isWaiting = isWaiting;
+}
+
+bool Player::getAttack()
+{
+    return _isAttack;
+}
+
+void Player::setAttack(bool isAttack)
+{
+    _isAttack = isAttack;
+}
+
+bool Player::getDamage()
+{
+    return _isDamage;
+}
+
+void Player::setDamage(bool isDamage)
+{
+    _isDamage = isDamage;
+
 }
 
 bool Player::getLive()

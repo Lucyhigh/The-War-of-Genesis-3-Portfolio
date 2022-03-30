@@ -1,7 +1,6 @@
 #include "Stdafx.h"
 #include "FinalScene.h"
 
-
 HRESULT FinalScene::init(void)
 {
 	_mapTileInfo = new MapTileInfo;
@@ -73,7 +72,6 @@ void FinalScene::release(void)
 
 void FinalScene::update(void)
 {
-	
     //검사용 버튼
 	if (KEYMANAGER->isOnceKeyDown('H'))
 	{
@@ -173,7 +171,6 @@ void FinalScene::update(void)
 		{
 			rectMoveToPath();
 		}
-		
 	}
 	else if (_turnSystem->getStatus() == CHANGINGSTATUS::ENEMYTURN)
 	{
@@ -191,7 +188,8 @@ void FinalScene::update(void)
 		// 0000 0010 : 공격
 		else if (_turnSystem->getEnemyBit(2) == 1)
 		{
-			enemyDamage();
+            //changeImage();
+            Attack();
 		}
 	}
 
@@ -386,13 +384,12 @@ void FinalScene::rectMoveToPath()
 	}
 	else
 	{
-        float time = 3.5f;
+        float time = 4.0f;
         float speed = TIMEMANAGER->getElapsedTime() * time;
         _lerpPercentage += speed;
 
         POINT start = { _check[_moveIndex].x * TILESIZEX, _check[_moveIndex].y * TILESIZEY };
         POINT end = { _check[_moveIndex - 1].x * TILESIZEX, _check[_moveIndex - 1].y * TILESIZEY };
-
         changeImage();
         _moveRc = RectMake(lerp(start, end, _lerpPercentage).x,
                            lerp(start, end, _lerpPercentage).y,
@@ -404,6 +401,7 @@ void FinalScene::rectMoveToPath()
         }
         else if (_turnSystem->getStatus() == CHANGINGSTATUS::ENEMYTURN)
         {
+            _saladin->setEnemyStateBit(0);
             _saladin->setSaladinPos({ _moveRc.right,_moveRc.top });
         }
 
@@ -448,14 +446,27 @@ void FinalScene::changeImage()
 	}
 	else if (_turnSystem->getStatus() == CHANGINGSTATUS::ENEMYTURN)
 	{
-		_saladin->setEnemyStateBit(0);
-		int compareBtoAX = _check[_moveIndex - 1].x - _check[_moveIndex].x;
-		int compareBtoAY = _check[_moveIndex - 1].y - _check[_moveIndex].y;
+        if (_saladin->getEnemyStateBit(0) == 1)
+        {
+            int compareBtoAX = _check[_moveIndex - 1].x - _check[_moveIndex].x;
+            int compareBtoAY = _check[_moveIndex - 1].y - _check[_moveIndex].y;
 
-		if (compareBtoAX > 0 && compareBtoAY == 0)      _saladin->setImageStage(SALADINSTATE::RIGHT);
-		else if (compareBtoAX < 0 && compareBtoAY == 0) _saladin->setImageStage(SALADINSTATE::LEFT);
-		else if (compareBtoAY > 0 && compareBtoAX == 0) _saladin->setImageStage(SALADINSTATE::BOTTOM);
-		else if (compareBtoAY < 0 && compareBtoAX == 0) _saladin->setImageStage(SALADINSTATE::TOP);
+            if (compareBtoAX > 0 && compareBtoAY == 0)      _saladin->setImageStage(SALADINSTATE::RIGHT);
+            else if (compareBtoAX < 0 && compareBtoAY == 0) _saladin->setImageStage(SALADINSTATE::LEFT);
+            else if (compareBtoAY > 0 && compareBtoAX == 0) _saladin->setImageStage(SALADINSTATE::BOTTOM);
+            else if (compareBtoAY < 0 && compareBtoAX == 0) _saladin->setImageStage(SALADINSTATE::TOP);
+        }
+        else if (_saladin->getEnemyStateBit(1) == 1)
+        {
+            int compareBtoAX = _player->getPlayerPosX() - _saladin->getSaladinPosX();
+            int compareBtoAY = _player->getPlayerPosY() - _saladin->getSaladinPosY();
+
+            if (compareBtoAX > 0 && compareBtoAY == 0)      _saladin->setImageStage(SALADINSTATE::RIGHT);
+            else if (compareBtoAX < 0 && compareBtoAY == 0) _saladin->setImageStage(SALADINSTATE::LEFT);
+            else if (compareBtoAY > 0 && compareBtoAX == 0) _saladin->setImageStage(SALADINSTATE::BOTTOM);
+            else if (compareBtoAY < 0 && compareBtoAX == 0) _saladin->setImageStage(SALADINSTATE::TOP);
+        }
+
 	}
 }
 
@@ -526,9 +537,30 @@ void FinalScene::findPlayerTile()
 	_turnSystem->setEnemyBit(1);
 }
 
-void FinalScene::enemyDamage()
+void FinalScene::Attack()
 {
-	cout << "다 왔으니 때린다" << endl;
+    changeImage();
+    if (_turnSystem->getStatus() == CHANGINGSTATUS::PLAYERTURN)
+    {
+        _player->setPlayerStateBit(1);
+        if (_player->getAttack())
+        {
+            _saladin->setEnemyStateBit(2);
+            _player->setAttack(false);
+            _player->setPlayerIdle();
+        }
+    }
+    else if (_turnSystem->getStatus() == CHANGINGSTATUS::ENEMYTURN)
+    {
+        _saladin->setEnemyStateBit(1);
+        if (_saladin->getAttack())
+        {
+            _player->setPlayerStateBit(2);
+            _saladin->setEnemyIdle();
+            _saladin->setAttack(false);
+            _turnSystem->changeToPlayer();
+        }
+    }
 
 }
 
