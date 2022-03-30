@@ -35,7 +35,6 @@ bool AnimationManager::deleteAniamation(string strKey)
 		_mAnimationList.erase(key);
 		return true;
 	}
-
 	return false;
 }
 
@@ -56,7 +55,6 @@ bool AnimationManager::deleteAll()
 			++iter;
 		}
 	}
-
 	_mAnimationList.clear();
 
 	return true;
@@ -64,7 +62,6 @@ bool AnimationManager::deleteAll()
 
 void AnimationManager::addAnimation(string animationKeyName, char * imageKeyName, int fps, bool reverse, bool loop)
 {
-	// 초기화 하고
 	Image* img = IMAGEMANAGER->findImage(imageKeyName);
 	Animation* ani = new Animation;
 
@@ -77,7 +74,6 @@ void AnimationManager::addAnimation(string animationKeyName, char * imageKeyName
 
 void AnimationManager::addAnimation(string animationKeyName, char * imageKeyName, int start, int end, int fps, bool reverse, bool loop)
 {
-	// 초기화 하고
 	Image* img = IMAGEMANAGER->findImage(imageKeyName);
 	Animation* ani = new Animation;
 
@@ -102,13 +98,10 @@ void AnimationManager::addAnimationArray(string animationKeyName, char * imageKe
 
 void AnimationManager::PlayAnimation()
 {
-	// 찾아서 갱신하고
 	mapAnimationIter iter = _mAnimationList.begin();
 	for (iter; iter != _mAnimationList.end(); ++iter)
 	{
 		if (!iter->second->getIsPlay()) continue;
 		iter->second->frameUpdate(TIMEMANAGER->getElapsedTime() * 1.0f);
 	}
-	// 이미지 넣고
-	// 넣은 이미지 찾은 다음 구간별로 짜른다.
 }

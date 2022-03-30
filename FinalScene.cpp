@@ -478,49 +478,74 @@ void FinalScene::findPlayerTile()
 	POINT enemyPoint = { _saladin->getSaladinPosX()-TILESIZEX, _saladin->getSaladinPosY() };
 	POINT _tempGoal = { 0,0 };
 	_enemyPathGoal = { 0,0 };
-    for (auto cellsIter = _cells->begin(); cellsIter != _cells->end(); ++cellsIter)
+	for (auto cellsIter = _cells->begin(); cellsIter != _cells->end(); ++cellsIter)
+	{
+		Cell* cell = (*cellsIter);
+		if (PtInRect(&cell->getRect(), enemyPoint))
+		{
+			_pMoveStart = { cell->getCellX(), cell->getCellY() };
+		}
+
+		if (cell->getType() == CELL_TYPE::START)
+		{
+			_endPoint = { cell->getRect().left, cell->getRect().top };
+			_tempGoal = { cell->getCellX(), cell->getCellY() };
+		}
+	}
+
+	vector<POINT> vStateCheck;
+    for (int i = -2; i <= 2; i += 2)
     {
-        Cell* cell = (*cellsIter);
-        if (PtInRect(&cell->getRect(), enemyPoint))
+        for (int j = -2; j <= 2; j += 2, index++)
         {
-            _pMoveStart = { cell->getCellX(), cell->getCellY() };
-        }
-
-        if (cell->getType() == CELL_TYPE::START)
-        {
-            _endPoint = { cell->getRect().left, cell->getRect().top };
-            _tempGoal = { cell->getCellX(), cell->getCellY() };
-        }
-
-        for (int i = -2; i <= 2; i += 2)
-        {
-            for (int j = -2; j <= 2; j += 2, index++)
+            if (i + j == -2 || i + j == 2)
             {
-                if (i + j == -2 || i + j == 2)
-                {
-                    float num = getDistance(_pMoveStart.x, _pMoveStart.y, _tempGoal.x + i, _tempGoal.y + j);
-                    if (index == 0) min = num;
-                    //state == wall 일때는 제외 어케하지
+				vStateCheck.push_back({ _tempGoal.x+i, _tempGoal.y + j });
+                
+                //if (index == 0) min = num;
+                ////state == wall 일때는 제외 어케하지
 
-                    if (num < min)
-                    {
-                        _enemyPathGoal.x = _tempGoal.x + i;
-                        _enemyPathGoal.y = _tempGoal.y + j;
-                        min = num;
-                       //cout << "거리 차: " << min << ", 인덱스 :" << index << endl;
-                       //cout << "x : " << i << " y : " << j << "  , 고른 타입 :" << _enemyPathGoal.x << " , " << _enemyPathGoal.y << endl;
-                    }
-                    else continue;
-
-                }
+                //if (num < min)
+                //{
+                //    _enemyPathGoal.x = _tempGoal.x + i;
+                //    _enemyPathGoal.y = _tempGoal.y + j;
+                //    min = num;
+                //    //cout << "거리 차: " << min << ", 인덱스 :" << index << endl;
+                //    //cout << "x : " << i << " y : " << j << "  , 고른 타입 :" << _enemyPathGoal.x << " , " << _enemyPathGoal.y << endl;
+                //}
+                //else continue;
 
             }
         }
     }
+
+	float minDistance = 1000.0f;
+	for (auto viStateCheck = vStateCheck.begin(); viStateCheck != vStateCheck.end(); ++viStateCheck)
+	{
+		POINT temp = *viStateCheck;
+		for (auto cellsIter = _cells->begin(); cellsIter != _cells->end(); ++cellsIter)
+		{
+			Cell* cell = (*cellsIter);
+			if (cell->getCellX() == temp.x && cell->getCellY() == temp.y)
+			{
+				if (cell->getType() == CELL_TYPE::NORMAL)
+				{
+					float distance = getDistance(_pMoveStart.x, _pMoveStart.y, temp.x, temp.y);
+					if (distance < minDistance)
+					{
+						_enemyPathGoal.x = temp.x;
+						_enemyPathGoal.y = temp.y;
+						minDistance = distance;
+					}
+				}
+			}
+		
+		}
+	}
+		
+    
 	//cout <<"최종 :"<< _enemyPathGoal.x << ", " << _enemyPathGoal.y << endl;
     
-
-
 	auto path = _generator->findPath(
 		{ _pMoveStart.x,_pMoveStart.y },
 		{ _enemyPathGoal.x,_enemyPathGoal.y } );

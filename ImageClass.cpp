@@ -75,6 +75,7 @@ HRESULT ImageClass::init(void)
 	IMAGEMANAGER->addImage("mapInfobg", "Resources/Images/UI/mapInfo.bmp", 230, 105);
 	IMAGEMANAGER->addImage("button", "Resources/Images/UI/UI_button.bmp", 102, 28, MGT);
 	IMAGEMANAGER->addImage("blockCell", "Resources/Images/UI/blockCell.bmp", 38, 24);//ป๙วร
+	IMAGEMANAGER->addFrameImage("npcBar", "Resources/Images/UI/npcbar.bmp", 800, 91,8,1,MGT);
 
 	IMAGEMANAGER->addImage("curTile2", "Resources/Images/UI/1.bmp", 40, 32);
 	IMAGEMANAGER->addImage("moveTile", "Resources/Images/UI/moveable.bmp", 40, 32);
@@ -84,6 +85,7 @@ HRESULT ImageClass::init(void)
 #pragma region Animation
 	ANIMATIONMANAGER->addAnimation("TitleEfx", "TitleEfx", 0, 3, 3, false, true);
 	ANIMATIONMANAGER->addAnimation("sMovesheet", "sMovesheet", 0, 23, 5, false, true);
+	ANIMATIONMANAGER->addAnimation("npcBar", "npcBar", 5, true, true);
 #pragma endregion
 	return S_OK;
 }

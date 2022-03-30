@@ -1,6 +1,7 @@
 #pragma once
 #include "GameNode.h"
 #include "Camera.h"
+#include "Animation.h"
 struct MapbuttomInfo
 {
 	RECT _buttonRect;
@@ -12,6 +13,7 @@ class MapScene:public GameNode
 private:
 	Image* _image;
     Image* _moveMark;
+	Animation* _animation;
     Camera* _camera;
 	vector<MapbuttomInfo> _vMapButton;
 	vector<MapbuttomInfo>::iterator _viMapButton;

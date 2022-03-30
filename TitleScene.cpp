@@ -44,9 +44,7 @@ HRESULT TitleScene::init(void)
 	return S_OK;
 }
 
-void TitleScene::release(void)
-{
-
+void TitleScene::release(void){
 }
 
 void TitleScene::update(void)
@@ -94,8 +92,6 @@ void TitleScene::update(void)
                 }
             }
         }
-		
-
     }
     // 0010 로드게임 - 일단은 맵씬으로 이동하게 만듬
     else if (_startBit.test(1) == 1)
@@ -119,8 +115,8 @@ void TitleScene::render(void)
     {
         IMAGEMANAGER->render("TitleBg", getMemDC());
 		IMAGEMANAGER->findImage("TitleEfx")->aniRender(getMemDC(), CENTER_X - 110, CENTER_Y - 90,_animation);
-
         IMAGEMANAGER->alphaRender("TitleName",getMemDC(),_alpha);
+
         for (_viTitleButton = _vTitleButton.begin(); _viTitleButton != _vTitleButton.end(); ++_viTitleButton)
         {
             if (PtInRect(&_viTitleButton->_buttonRect, _ptMouse))

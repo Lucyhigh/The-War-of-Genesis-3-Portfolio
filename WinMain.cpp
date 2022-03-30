@@ -1,6 +1,6 @@
 ﻿#include "stdafx.h"
 #include "MainGame.h"
-
+#include "crtdbg.h"
 HINSTANCE _hInstance;
 HWND _hWnd;
 POINT _ptMouse = { 0, 0 };
@@ -14,8 +14,9 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 	HINSTANCE hPrevInstance,
 	LPSTR    lpCmdLine,
 	int  nCmdShow)
-
 {
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+
 	_mg = new MainGame();
 
 	_hInstance = hInstance;
@@ -74,6 +75,7 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 	}
 
 	_mg->release();
+	delete(_mg);
 	////! 윈도우 클래스 등록 해제
 	UnregisterClass(WINNAME, hInstance);
 
