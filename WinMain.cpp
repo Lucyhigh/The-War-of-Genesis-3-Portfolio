@@ -33,7 +33,6 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 	wndClass.style = CS_HREDRAW | CS_VREDRAW;
 
 	RegisterClass(&wndClass);
-
 	_hWnd = CreateWindow
 	(
 		WINNAME,

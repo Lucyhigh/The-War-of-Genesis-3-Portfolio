@@ -9,6 +9,7 @@
 #include "Camera.h"
 #include "AStar.h"
 
+
 class FinalScene : public GameNode
 {
 private:
@@ -40,6 +41,8 @@ private:
 	bool _isMove;
 
 	int _enemyBit;
+    CELL_TYPE _mouseType;
+    CELL_TYPE _beforeMouseType;
 
 public:
 	HRESULT init(void);
@@ -52,7 +55,7 @@ public:
 	void rectMoveToPath();
 	void curAstar();
     void changeImage();
-	void findPlayerTile();
+	void find4WaysTile();
 	void Attack();
 	POINT lerp(POINT start, POINT end, float percentage);
 public:

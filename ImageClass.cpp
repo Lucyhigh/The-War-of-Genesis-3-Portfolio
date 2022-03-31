@@ -75,17 +75,32 @@ HRESULT ImageClass::init(void)
 	IMAGEMANAGER->addImage("mapInfobg", "Resources/Images/UI/mapInfo.bmp", 230, 105);
 	IMAGEMANAGER->addImage("button", "Resources/Images/UI/UI_button.bmp", 102, 28, MGT);
 	IMAGEMANAGER->addImage("blockCell", "Resources/Images/UI/blockCell.bmp", 38, 24);//샘플
+	IMAGEMANAGER->addImage("storyText", "Resources/Images/UI/storyText.bmp", 511, 111);
 	IMAGEMANAGER->addFrameImage("npcBar", "Resources/Images/UI/npcbar.bmp", 800, 91,8,1,MGT);
+	IMAGEMANAGER->addFrameImage("hpBar", "Resources/Images/UI/hpBar.bmp", 915, 49,15,1,true,RGB(0,44,0));//원작과 좀 달라서 수정필요
 
 	IMAGEMANAGER->addImage("curTile2", "Resources/Images/UI/1.bmp", 40, 32);
 	IMAGEMANAGER->addImage("moveTile", "Resources/Images/UI/moveable.bmp", 40, 32);
 	IMAGEMANAGER->addImage("attackTile", "Resources/Images/UI/attackable.bmp", 40, 32);
+	IMAGEMANAGER->addFrameImage("notMoveable", "Resources/Images/UI/notMoveable.bmp", 76, 24,2,1,true, RGB(80, 120, 116));
 	IMAGEMANAGER->addFrameImage("curTile", "Resources/Images/UI/Tile.bmp", 240, 32, 6, 1);
+	IMAGEMANAGER->addFrameImage("turnMark", "Resources/Images/UI/turnMark.bmp", 40, 7, 8, 1, true, RGB(80, 120, 116));
+	IMAGEMANAGER->addFrameImage("playerMark", "Resources/Images/UI/playerMark.bmp", 72, 11, 8, 1, true, RGB(80, 120, 116));
+	IMAGEMANAGER->addFrameImage("enemyMark", "Resources/Images/UI/enemyMark.bmp", 72, 11, 8, 1, true, RGB(80, 120, 116));
+	IMAGEMANAGER->addFrameImage("attackMark", "Resources/Images/UI/attackMark.bmp", 217, 32, 7, 1, true, RGB(80, 120, 116));
 #pragma endregion
 #pragma region Animation
-	ANIMATIONMANAGER->addAnimation("TitleEfx", "TitleEfx", 0, 3, 3, false, true);
 	ANIMATIONMANAGER->addAnimation("sMovesheet", "sMovesheet", 0, 23, 5, false, true);
-	ANIMATIONMANAGER->addAnimation("npcBar", "npcBar", 5, true, true);
+    //UI
+	ANIMATIONMANAGER->addAnimation("TitleEfx", "TitleEfx", 3, false, true);
+	ANIMATIONMANAGER->addAnimation("notMoveable", "notMoveable",5, false, true);
+	ANIMATIONMANAGER->addAnimation("curTile", "curTile", 5, true, true);
+	ANIMATIONMANAGER->addAnimation("turnMark", "turnMark", 5, true, true);
+	ANIMATIONMANAGER->addAnimation("playerMark", "playerMark", 5, true, true);
+	ANIMATIONMANAGER->addAnimation("enemyMark", "enemyMark", 5, true, true);
+	ANIMATIONMANAGER->addAnimation("attackMark", "attackMark", 7, true, true);
+    ANIMATIONMANAGER->addAnimation("npcBar", "npcBar", 5, true, true);
+    ANIMATIONMANAGER->addAnimation("hpBar", "hpBar", 5, false, true);
 #pragma endregion
 	return S_OK;
 }

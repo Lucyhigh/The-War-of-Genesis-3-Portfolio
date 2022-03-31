@@ -172,7 +172,6 @@
     <ClCompile Include="AnimationManager.cpp">
       <Filter>API\Animation</Filter>
     </ClCompile>
-    <ClCompile Include="CButtonState.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameNode.h">
@@ -350,7 +349,6 @@
     <ClInclude Include="AnimationManager.h">
       <Filter>API\Animation</Filter>
     </ClInclude>
-    <ClInclude Include="CButtonState.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="API">
