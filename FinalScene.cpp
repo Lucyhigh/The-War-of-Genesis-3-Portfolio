@@ -169,7 +169,21 @@ void FinalScene::update(void)
 		// 0000 0010 : 이동중 - 메뉴창 뜨면 안됨 다른곳으로 이동못함
 		else if (_turnSystem->getPlayerBit(1) == 1)
 		{
+			_player->setPlayerStateBit(0);
 			rectMoveToPath();
+		}
+		// 0000 0100 : 공격
+		else if (_turnSystem->getPlayerBit(2) == 1)
+		{
+			//_player->setPlayerStateBit(1);
+			Attack();
+		}
+		// 0000 1000 : 피격
+		else if (_turnSystem->getPlayerBit(3) == 1)
+		{
+			changeImage();
+			//_player->getPlayerStateBit(2);
+
 		}
 	}
 	else if (_turnSystem->getStatus() == CHANGINGSTATUS::ENEMYTURN)
@@ -185,19 +199,32 @@ void FinalScene::update(void)
 		{
 			rectMoveToPath();
 		}
-		// 0000 0010 : 공격
+		// 0000 0100 : 공격
 		else if (_turnSystem->getEnemyBit(2) == 1)
 		{
-            //changeImage();
             Attack();
+		}
+		// 0000 1000 : 피격
+		else if (_turnSystem->getEnemyBit(3) == 1)
+		{
+			changeImage();
+			cout << " 동생 : 으악" << endl;
+
 		}
 	}
 
 	POINT cameraPos;
 	if (_turnSystem->getStatus() == CHANGINGSTATUS::PLAYERTURN)
 	{
-		cameraPos.x = _player->getPlayerPosX();
-		cameraPos.y = _player->getPlayerPosY();
+		if (_player->getPlayerStateBit().none() == 0) 
+		{
+			_camera->setCameraPos(cameraPos);
+		}
+		else
+		{
+			cameraPos.x = _player->getPlayerPosX();
+			cameraPos.y = _player->getPlayerPosY();
+		}
 	}
 	else if (_turnSystem->getStatus() == CHANGINGSTATUS::ENEMYTURN)
 	{
@@ -210,16 +237,6 @@ void FinalScene::update(void)
 		cameraPos.y = _player->getPlayerPosY();
 	}
 
-	if (_player->getPlayerStateBit().none() == 0) 
-	{
-		_camera->setCameraPos(cameraPos);
-		/*if (KEYMANAGER->isOnceKeyDown(VK_RBUTTON))
-		{
-			cameraPos.x = _player->getPlayerPosX();
-			cameraPos.y = _player->getPlayerPosY();
-			_camera->setCameraPos(cameraPos);
-		}*/
-	}
 	_camera->update();
 
 	_turnSystem->update();
@@ -278,6 +295,11 @@ void FinalScene::render(void)
 				oldBrush = (HBRUSH)SelectObject(getMemDC(), brush);
 				FillRect(getMemDC(), &rect, brush);
 				IMAGEMANAGER->alphaRender("moveTile", getMemDC(), _tileAlpha);
+				break;
+			case(CELL_TYPE::ATTACKABLE):
+				brush = CreateSolidBrush(RGB(255, 0, 0));
+				oldBrush = (HBRUSH)SelectObject(getMemDC(), brush);
+				FillRect(getMemDC(), &rect, brush);
 				break;
 			}
             SelectObject(getMemDC(), brush);
@@ -372,9 +394,6 @@ void FinalScene::rectMoveToPath()
 		}
 		else if (_turnSystem->getStatus() == CHANGINGSTATUS::ENEMYTURN) 
 		{
-            //일단 이동후 턴 종료 - 3칸씩 이동하며 3칸안에 플레이어 있을 경우에 +공격
-            //_player->damage(); //쉐이킹 모션과 피 감소 숫자 
-            //else 
 			if (_pMoveStart.x == _enemyPathGoal.x && _pMoveStart.y == _enemyPathGoal.y)
 			{
 				_turnSystem->setEnemyBit(2);
@@ -383,8 +402,6 @@ void FinalScene::rectMoveToPath()
 			{
 				_turnSystem->changeToPlayer();
                 _saladin->setEnemyIdle();
-				//cout << "최-종 :" << _enemyPathGoal.x << ", " << _enemyPathGoal.y << endl;
-				//cout << "최-종 :" << _pMoveStart.x << ", " << _pMoveStart.y << endl;
 			}
 
 		}
@@ -394,13 +411,13 @@ void FinalScene::rectMoveToPath()
 	}
 	else
 	{
+        changeImage();
         float time = 4.0f;
         float speed = TIMEMANAGER->getElapsedTime() * time;
         _lerpPercentage += speed;
 
         POINT start = { _check[_moveIndex].x * TILESIZEX, _check[_moveIndex].y * TILESIZEY };
         POINT end = { _check[_moveIndex - 1].x * TILESIZEX, _check[_moveIndex - 1].y * TILESIZEY };
-        changeImage();
         _moveRc = RectMake(lerp(start, end, _lerpPercentage).x,
                            lerp(start, end, _lerpPercentage).y,
                            TILESIZEX, TILESIZEY);
@@ -444,15 +461,25 @@ void FinalScene::changeImage()
 {
 	if (_turnSystem->getStatus() == CHANGINGSTATUS::PLAYERTURN)
 	{
-        _player->setPlayerStateBit(0);
+		if( _player->getPlayerStateBit(0) == 1)
+		{
+			int compareBtoAX = _check[_moveIndex - 1].x - _check[_moveIndex].x;
+			int compareBtoAY = _check[_moveIndex - 1].y - _check[_moveIndex].y;
+			if (compareBtoAX > 0 && compareBtoAY == 0)      _player->setImageStage(PLAYERSTATE::RIGHT);
+			else if (compareBtoAX < 0 && compareBtoAY == 0) _player->setImageStage(PLAYERSTATE::LEFT);
+			else if (compareBtoAY > 0 && compareBtoAX == 0) _player->setImageStage(PLAYERSTATE::BOTTOM);
+			else if (compareBtoAY < 0 && compareBtoAX == 0) _player->setImageStage(PLAYERSTATE::TOP);
+		}
+		else if (_player->getPlayerStateBit(2) == 1)
+		{
+			int compareBtoAX = _saladin->getSaladinPosX() - _player->getPlayerPosX();
+			int compareBtoAY = _saladin->getSaladinPosY() - _player->getPlayerPosY();
 
-		int compareBtoAX = _check[_moveIndex - 1].x - _check[_moveIndex].x;
-		int compareBtoAY = _check[_moveIndex - 1].y - _check[_moveIndex].y;
-
-		if (compareBtoAX > 0 && compareBtoAY == 0)      _player->setImageStage(PLAYERSTATE::RIGHT);
-		else if (compareBtoAX < 0 && compareBtoAY == 0) _player->setImageStage(PLAYERSTATE::LEFT);
-		else if (compareBtoAY > 0 && compareBtoAX == 0) _player->setImageStage(PLAYERSTATE::BOTTOM);
-		else if (compareBtoAY < 0 && compareBtoAX == 0) _player->setImageStage(PLAYERSTATE::TOP);
+			if (compareBtoAX > 0 && compareBtoAY == 0)      _player->setImageStage(PLAYERSTATE::RIGHT);
+			else if (compareBtoAX < 0 && compareBtoAY == 0) _player->setImageStage(PLAYERSTATE::LEFT);
+			else if (compareBtoAY > 0 && compareBtoAX == 0) _player->setImageStage(PLAYERSTATE::BOTTOM);
+			else if (compareBtoAY < 0 && compareBtoAX == 0) _player->setImageStage(PLAYERSTATE::TOP);
+		}
 	}
 	else if (_turnSystem->getStatus() == CHANGINGSTATUS::ENEMYTURN)
 	{
@@ -556,15 +583,15 @@ void FinalScene::findPlayerTile()
 
 void FinalScene::Attack()
 {
-    changeImage();
     if (_turnSystem->getStatus() == CHANGINGSTATUS::PLAYERTURN)
     {
         _player->setPlayerStateBit(1);
         if (_player->getAttack())
         {
-            _saladin->setEnemyStateBit(2);
-            _player->setAttack(false);
+			_turnSystem->setEnemyBit(3);
             _player->setPlayerIdle();
+            _player->setAttack(false);
+			_turnSystem->changeToEnemy();
         }
     }
     else if (_turnSystem->getStatus() == CHANGINGSTATUS::ENEMYTURN)
@@ -572,12 +599,14 @@ void FinalScene::Attack()
         _saladin->setEnemyStateBit(1);
         if (_saladin->getAttack())
         {
-            _player->setPlayerStateBit(2);
-            _saladin->setEnemyIdle();
-            _saladin->setAttack(false);
-            _turnSystem->changeToPlayer();
-        }
+			_player->setPlayerStateBit(2);
+			_saladin->setEnemyIdle();
+			_saladin->setAttack(false);
+			_turnSystem->changeToPlayer();
+		}
     }
+	changeImage();
+
 }
 
 POINT FinalScene::lerp(POINT start, POINT end, float percentage)

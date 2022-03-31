@@ -10,11 +10,12 @@ HRESULT Player::init(void)
 	_count = 0;
 	_indexA = _indexB = 0;
 	_alphaA = 0;
-    _speed = 5;
+    _speed = 10;
     _playerPos.x = 0;
     _playerPos.y = WINSIZE_Y-140;
 	_rcPlayer = RectMakeCenter(_playerPos.x, _playerPos.y, _image->getFrameWidth(), _image->getFrameHeight());
-
+	_tmp = 1;
+	_cdt = 0;
 	_currentHp = 10;
 	_maxHp = 10;
 	//_hpBar = new ProgressBar;
@@ -32,7 +33,6 @@ void Player::release(void)
 void Player::update(void)
 {
 	_count+= 4;
-    //cout << _stateBit.to_string() <<"indexA"<<_indexB<<endl;
     if (KEYMANAGER->isOnceKeyDown('1'))
     {
         _imageState = PLAYERSTATE::RIGHT;
@@ -240,14 +240,22 @@ void Player::update(void)
             }
             break;
         }
-        if (_count % 50 == 0)
+		if (_count % 20 == 0)
+		{
+			_tmp *= -1;
+			_cdt++;
+		}
+        if (_cdt >5)
         {
             setPlayerIdle();
+			_cdt = 0;
         }
     //01000 Á×À½
     }
 	_rcPlayer = RectMakeCenter(_playerPos.x, _playerPos.y, _image->getFrameWidth(), _image->getFrameHeight());
+	
 }
+
 
 void Player::render(void)
 {
@@ -309,19 +317,20 @@ void Player::render(void)
     }
     else if (_stateBit.test(2) == 1)
     {
+		int damagePos = -20 +(7 * _tmp);
         switch (_imageState)
         {
         case PLAYERSTATE::RIGHT:
-            IMAGEMANAGER->frameRender("pDamageSheet", getMemDC(), left, top);
+            IMAGEMANAGER->frameRender("pDamageSheet", getMemDC(), left + damagePos, top);
             break;
         case PLAYERSTATE::LEFT:
-            IMAGEMANAGER->frameRender("pDamageSheet", getMemDC(), left, top);
+            IMAGEMANAGER->frameRender("pDamageSheet", getMemDC(), left + damagePos, top);
             break;
         case PLAYERSTATE::TOP:
-            IMAGEMANAGER->frameRender("pDamageSheet", getMemDC(), left, top);
+            IMAGEMANAGER->frameRender("pDamageSheet", getMemDC(), left + damagePos, top);
             break;
         case PLAYERSTATE::BOTTOM:
-            IMAGEMANAGER->frameRender("pDamageSheet", getMemDC(), left, top);
+            IMAGEMANAGER->frameRender("pDamageSheet", getMemDC(), left + damagePos, top);
             break;
         }
     }

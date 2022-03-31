@@ -7,6 +7,9 @@ HRESULT Saladin::init(void)
 	_image = IMAGEMANAGER->findImage("sMovesheet");
 	_image = IMAGEMANAGER->findImage("sDamageSheet");
     _stateBit = 0;//Idle
+
+	_tmp=1;
+	_cdt=0;
 	_count = 0;
 	_indexA = _indexB = _indexC= 0;
 	_alphaA = 0;
@@ -239,7 +242,16 @@ void Saladin::update(void)
             }
             break;
         }
-        if (_count % 50 == 0) setEnemyIdle();//===============================================
+		if (_count % 20 == 0)
+		{
+			_tmp *= -1;
+			_cdt++;
+		}
+		if (_cdt > 5)
+		{
+			setEnemyIdle();
+			_cdt = 0;
+		}
         //01000 Á×À½
     }
      _rcSaladin = RectMakeCenter(_saladinPos.x, _saladinPos.y, _image->getFrameWidth(), _image->getFrameHeight());
@@ -325,27 +337,27 @@ void Saladin::render(void)
     }
     else if (_stateBit.test(2) == 1)
     {
-        POINT addDamagePos = { -20,-10 };
+        POINT addDamagePos = { -20 + (7 * _tmp),-10 }; 
         switch (_imageState)
         {
         case SALADINSTATE::RIGHT:
             {
-                IMAGEMANAGER->frameRender("sAttacksheet", getMemDC(), left + addDamagePos.x, top + addDamagePos.y);
+                IMAGEMANAGER->frameRender("sDamageSheet", getMemDC(), left + addDamagePos.x, top + addDamagePos.y);
             }
             break;
         case SALADINSTATE::LEFT:
             {
-                IMAGEMANAGER->frameRender("sAttacksheet", getMemDC(), left + addDamagePos.x, top + addDamagePos.y);
+                IMAGEMANAGER->frameRender("sDamageSheet", getMemDC(), left + addDamagePos.x, top + addDamagePos.y);
             }
             break;
         case SALADINSTATE::TOP:
             {
-                IMAGEMANAGER->frameRender("sAttacksheet", getMemDC(), left + addDamagePos.x, top + addDamagePos.y);
+                IMAGEMANAGER->frameRender("sDamageSheet", getMemDC(), left + addDamagePos.x, top + addDamagePos.y);
             }
             break;
         case SALADINSTATE::BOTTOM:
             {
-                IMAGEMANAGER->frameRender("sAttacksheet", getMemDC(), left + addDamagePos.x, top + addDamagePos.y);
+                IMAGEMANAGER->frameRender("sDamageSheet", getMemDC(), left + addDamagePos.x, top + addDamagePos.y);
             }
             break;
         }

@@ -19,7 +19,8 @@ enum class CELL_TYPE
 	WALL,
 	START,
 	GOAL,
-    MOVEABLE
+    MOVEABLE,
+	ATTACKABLE
 };
 
 enum class moveUnMove

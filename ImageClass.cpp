@@ -52,7 +52,7 @@ HRESULT ImageClass::init(void)
 	IMAGEMANAGER->addImage("Sea", "Resources/Images/UI/sea.bmp", WINSIZE_X, WINSIZE_Y);
 
 	//Scene List
-	IMAGEMANAGER->addImage("SceneList", "Resources/Images/BackGround/SceneList.bmp", WINSIZE_X, WINSIZE_Y);
+	IMAGEMANAGER->addFrameImage("SceneList", "Resources/Images/BackGround/SceneList.bmp", 1900, WINSIZE_Y,2,1);
 	// Stage 1
 	IMAGEMANAGER->addImage("Field", "Resources/Images/BackGround/Field.bmp", 2120, 1536);
 	// Stage 2

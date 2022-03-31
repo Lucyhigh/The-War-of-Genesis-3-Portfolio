@@ -152,6 +152,7 @@
     <ClCompile Include="BFS.cpp" />
     <ClCompile Include="Bullets.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="CButtonState.cpp" />
     <ClCompile Include="collision.cpp" />
     <ClCompile Include="EndingScene.cpp" />
     <ClCompile Include="Enemy.cpp" />
@@ -224,6 +225,7 @@
     <ClInclude Include="BFS.h" />
     <ClInclude Include="Bullets.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="CButtonState.h" />
     <ClInclude Include="CommonMacroFunction.h" />
     <ClInclude Include="EndingScene.h" />
     <ClInclude Include="Enemy.h" />

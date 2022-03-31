@@ -18,6 +18,8 @@ private:
 	POINT _saladinPos;
 	RECT _cameraRect;
 
+	int _tmp;
+	int _cdt;
 	int _speed;
 	int _count;
 	int _indexA;
