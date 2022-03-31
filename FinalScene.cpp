@@ -3,13 +3,14 @@
 
 HRESULT FinalScene::init(void)
 {
-    ShowCursor(true);
+    ShowCursor(false);
 
 	_mapTileInfo = new MapTileInfo;
 	_mapTileInfo->init();
 
 	_animation = ANIMATIONMANAGER->findAnimation("attackMark");
-
+	_tileClick = ANIMATIONMANAGER->findAnimation("clickTile");
+	_tileClick->AniStart();
 	_gameUI = new GameUI;
 	_gameUI->init();
 	_image = IMAGEMANAGER->findImage("Final");
@@ -144,7 +145,7 @@ void FinalScene::update(void)
 							_endPoint = { cell->getRect().left, cell->getRect().top };
 
 							auto path = _generator->findPath({ _pMoveStart.x,_pMoveStart.y },
-															 { cell->getCellX(),cell->getCellY() });
+								{ cell->getCellX(),cell->getCellY() });
 							_check.clear();
 							for (auto &coordinate : path)
 							{
@@ -156,13 +157,14 @@ void FinalScene::update(void)
 							}
 							_moveIndex = _check.size() - 1;
 							_turnSystem->setPlayerBit(1);
+							break;
 						}
-						break;
+						else if (cell->getType() == CELL_TYPE::ATTACKABLE)
+						{
+							find4WaysTile();
+						}
 					}
-                    else if (cell->getType() == CELL_TYPE::ATTACKABLE)
-                    {
-                        find4WaysTile();
-                    }
+                   
 				}
 			}
 
@@ -278,8 +280,8 @@ void FinalScene::update(void)
 
     if (_player->getPlayerStateBit().none() == 0)
     {
-        _camera->setCameraPos(cameraPos);
     }
+        _camera->setCameraPos(cameraPos);
 	_camera->update();
 
 	_turnSystem->update();
@@ -349,7 +351,7 @@ void FinalScene::render(void)
 			DeleteObject(brush);
 		}
 	}
-	curAstar();
+	//curAstar(); 이동경로로 이동하는 네모
 	AstarTileInfo();
 
 	_saladin->render();
@@ -438,35 +440,24 @@ void FinalScene::AstarTileInfo()
 							 _endPoint.x - _camera->getScreenRect().left,
 							 _endPoint.y - _camera->getScreenRect().top
 	};
-	IMAGEMANAGER->render("curTile2", getMemDC(), cameraEndPoint.x, cameraEndPoint.y);
+	//IMAGEMANAGER->render("clickTile", getMemDC(), cameraEndPoint.x, cameraEndPoint.y);
+	IMAGEMANAGER->findImage("clickTile")->aniRender(getMemDC(), _endPoint.x, _endPoint.y, _tileClick);
 }
 
 void FinalScene::rectMoveToPath()
 {
 	if (_turnSystem->getStatus() == CHANGINGSTATUS::PLAYERTURN)
 	{
-
-	}
-	if (_turnSystem->getStatus() == CHANGINGSTATUS::ENEMYTURN)
-	{
 		if (_moveIndex - 1 < 0)
 		{
-			if (_turnSystem->getStatus() == CHANGINGSTATUS::PLAYERTURN)
+			if (_pMoveStart.x == _enemyPathGoal.x && _pMoveStart.y == _enemyPathGoal.y)
+			{
+				_turnSystem->setEnemyBit(2);
+			}
+			else
 			{
 				_turnSystem->changeToPlayer();
 				_player->setPlayerIdle();
-			}
-			else if (_turnSystem->getStatus() == CHANGINGSTATUS::ENEMYTURN)
-			{
-				if (_pMoveStart.x == _enemyPathGoal.x && _pMoveStart.y == _enemyPathGoal.y)
-				{
-					_turnSystem->setEnemyBit(2);
-				}
-				else
-				{
-					_turnSystem->changeToPlayer();
-					_saladin->setEnemyIdle();
-				}
 			}
 			_moveIndex = 0;
 			_lerpPercentage = 0.0f;
@@ -487,9 +478,47 @@ void FinalScene::rectMoveToPath()
 
 			if (_turnSystem->getStatus() == CHANGINGSTATUS::PLAYERTURN)
 			{
+				_player->setPlayerStateBit(0);
 				_player->setPlayerPos({ _moveRc.right,_moveRc.top });
 			}
-			else if (_turnSystem->getStatus() == CHANGINGSTATUS::ENEMYTURN)
+			if (_lerpPercentage >= 1)
+			{
+				_moveIndex--;
+				_lerpPercentage = 0;
+			}
+		}
+	}
+	if (_turnSystem->getStatus() == CHANGINGSTATUS::ENEMYTURN)
+	{
+		if (_moveIndex - 1 < 0)
+		{
+			if (_pMoveStart.x == _enemyPathGoal.x && _pMoveStart.y == _enemyPathGoal.y)
+			{
+				_turnSystem->setEnemyBit(2);
+			}
+			else
+			{
+				_turnSystem->changeToPlayer();
+				_saladin->setEnemyIdle();
+			}
+
+			_moveIndex = 0;
+			_lerpPercentage = 0.0f;
+			return;
+		}
+		else
+		{
+			changeImage();
+			float time = 4.0f;
+			float speed = TIMEMANAGER->getElapsedTime() * time;
+			_lerpPercentage += speed;
+
+			POINT start = { _check[_moveIndex].x * TILESIZEX, _check[_moveIndex].y * TILESIZEY };
+			POINT end = { _check[_moveIndex - 1].x * TILESIZEX, _check[_moveIndex - 1].y * TILESIZEY };
+			_moveRc = RectMake(lerp(start, end, _lerpPercentage).x,
+				lerp(start, end, _lerpPercentage).y,
+				TILESIZEX, TILESIZEY);
+			if (_turnSystem->getStatus() == CHANGINGSTATUS::ENEMYTURN)
 			{
 				_saladin->setEnemyStateBit(0);
 				_saladin->setSaladinPos({ _moveRc.right,_moveRc.top });
@@ -572,86 +601,166 @@ void FinalScene::changeImage()
 
 void FinalScene::find4WaysTile()
 {
-    float min = 100;
-    float num;
-    int index = 0;
-    POINT enemyPoint = { _saladin->getSaladinPosX() - TILESIZEX, _saladin->getSaladinPosY() };
-    POINT _tempGoal = { 0,0 };
-    _enemyPathGoal = { 0,0 };
-    for (auto cellsIter = _cells->begin(); cellsIter != _cells->end(); ++cellsIter)
-    {
-        Cell* cell = (*cellsIter);
-        if (PtInRect(&cell->getRect(), enemyPoint))
-        {
-           _pMoveStart = { cell->getCellX(), cell->getCellY() };
-        }
-
-        if (cell->getType() == CELL_TYPE::START)
-        {
-            _endPoint = { cell->getRect().left, cell->getRect().top };
-            _tempGoal = { cell->getCellX(), cell->getCellY() };
-        }
-    }
-
-	// Stop find path if the enemy is already near the player.
-	auto currentPath = _generator->findPath(
-		{ _pMoveStart.x,_pMoveStart.y },
-		{ _tempGoal.x, _tempGoal.y });
-	if (currentPath.size() == 3)
+	if (_turnSystem->getStatus() == CHANGINGSTATUS::PLAYERTURN)
 	{
-		_turnSystem->setEnemyBit(2);
-		return;
+		POINT playerPoint = { _player->getPlayerPosX() - TILESIZEX, _player->getPlayerPosY() };
+		POINT _tempGoal = { 0,0 };
+		_playerPathGoal = { 0,0 };
+		for (auto cellsIter = _cells->begin(); cellsIter != _cells->end(); ++cellsIter)
+		{
+			Cell* cell = (*cellsIter);
+			//if (PtInRect(&cell->getRect(), playerPoint))
+			//{
+			//	_pMoveStart = { cell->getCellX(), cell->getCellY() };
+			//}
+
+			if (cell->getType() == CELL_TYPE::ATTACKABLE)
+			{
+				_endPoint = { cell->getRect().left, cell->getRect().top };
+				_tempGoal = { cell->getCellX(), cell->getCellY() };
+			}
+		}
+
+		// Stop find path if the enemy is already near the player.
+		auto currentPath = _generator->findPath(
+			{ _pMoveStart.x,_pMoveStart.y },
+			{ _tempGoal.x, _tempGoal.y });
+		if (currentPath.size() == 3)
+		{
+			_turnSystem->setEnemyBit(2);
+			return;
+		}
+
+		vector<POINT> vStateCheck;
+		for (int i = -2; i <= 2; i += 2)
+		{
+			for (int j = -2; j <= 2; j += 2)
+			{
+				if (i + j == -2 || i + j == 2)
+				{
+					vStateCheck.push_back({ _tempGoal.x + i, _tempGoal.y + j });
+				}
+			}
+		}
+
+		float minDistance = 1000.0f;
+		for (auto viStateCheck = vStateCheck.begin(); viStateCheck != vStateCheck.end(); ++viStateCheck)
+		{
+			POINT temp = *viStateCheck;
+			for (auto cellsIter = _cells->begin(); cellsIter != _cells->end(); ++cellsIter)
+			{
+				Cell* cell = (*cellsIter);
+				if (cell->getCellX() == temp.x && cell->getCellY() == temp.y)
+				{
+					if (cell->getType() == CELL_TYPE::NORMAL || cell->getType() == CELL_TYPE::MOVEABLE)
+					{
+						float distance = getDistance(_pMoveStart.x, _pMoveStart.y, temp.x, temp.y);
+						if (distance < minDistance)
+						{
+							_playerPathGoal.x = temp.x;
+							_playerPathGoal.y = temp.y;
+							minDistance = distance;
+						}
+					}
+				}
+			}
+		}
+
+		auto path = _generator->findPath(
+			{ _pMoveStart.x,_pMoveStart.y },
+			{ _playerPathGoal.x,_playerPathGoal.y });
+
+		_check.clear();
+		int pathNum = 10;
+		int pathSize = path.size() < pathNum ? path.size() : pathNum;
+		for (int i = path.size() - pathSize; i < path.size(); ++i)
+		{
+			auto coordinate = path[i];
+			_check.push_back({ coordinate.x, coordinate.y });
+		}
+		_moveIndex = _check.size() - 1;
+		_turnSystem->setPlayerBit(1);
 	}
+	else if (_turnSystem->getStatus() == CHANGINGSTATUS::ENEMYTURN)
+	{
+		POINT enemyPoint = { _saladin->getSaladinPosX() - TILESIZEX, _saladin->getSaladinPosY() };
+		POINT _tempGoal = { 0,0 };
+		_enemyPathGoal = { 0,0 };
+		for (auto cellsIter = _cells->begin(); cellsIter != _cells->end(); ++cellsIter)
+		{
+			Cell* cell = (*cellsIter);
+			if (PtInRect(&cell->getRect(), enemyPoint))
+			{
+				_pMoveStart = { cell->getCellX(), cell->getCellY() };
+			}
 
-    vector<POINT> vStateCheck;
-    for (int i = -2; i <= 2; i += 2)
-    {
-        for (int j = -2; j <= 2; j += 2, index++)
-        {
-            if (i + j == -2 || i + j == 2)
-            {
-                vStateCheck.push_back({ _tempGoal.x + i, _tempGoal.y + j });
-            }
-        }
-    }
+			if (cell->getType() == CELL_TYPE::START)
+			{
+				_endPoint = { cell->getRect().left, cell->getRect().top };
+				_tempGoal = { cell->getCellX(), cell->getCellY() };
+			}
+		}
 
-    float minDistance = 1000.0f;
-    for (auto viStateCheck = vStateCheck.begin(); viStateCheck != vStateCheck.end(); ++viStateCheck)
-    {
-        POINT temp = *viStateCheck;
-        for (auto cellsIter = _cells->begin(); cellsIter != _cells->end(); ++cellsIter)
-        {
-            Cell* cell = (*cellsIter);
-            if (cell->getCellX() == temp.x && cell->getCellY() == temp.y)
-            {
-                if (cell->getType() == CELL_TYPE::NORMAL || cell->getType() == CELL_TYPE::MOVEABLE )
-                {
-                    float distance = getDistance(_pMoveStart.x, _pMoveStart.y, temp.x, temp.y);
-                    if (distance < minDistance)
-                    {
-                        _enemyPathGoal.x = temp.x;
-                        _enemyPathGoal.y = temp.y;
-                        minDistance = distance;
-                    }
-                }
-            }
-        }
-    }
+		// Stop find path if the enemy is already near the player.
+		auto currentPath = _generator->findPath(
+			{ _pMoveStart.x,_pMoveStart.y },
+			{ _tempGoal.x, _tempGoal.y });
+		if (currentPath.size() == 3)
+		{
+			_turnSystem->setPlayerBit(2);
+			return;
+		}
 
-    auto path = _generator->findPath(
-        { _pMoveStart.x,_pMoveStart.y },
-        { _enemyPathGoal.x,_enemyPathGoal.y });
+		vector<POINT> vStateCheck;
+		for (int i = -2; i <= 2; i += 2)
+		{
+			for (int j = -2; j <= 2; j += 2)
+			{
+				if (i + j == -2 || i + j == 2)
+				{
+					vStateCheck.push_back({ _tempGoal.x + i, _tempGoal.y + j });
+				}
+			}
+		}
 
-    _check.clear();
-    int pathNum = 10;
-    int pathSize = path.size() < pathNum ? path.size() : pathNum;
-    for (int i = path.size() - pathSize; i < path.size(); ++i)
-    {
-        auto coordinate = path[i];
-        _check.push_back({ coordinate.x, coordinate.y });
-    }
-    _moveIndex = _check.size() - 1;
-    _turnSystem->setEnemyBit(1);
+		float minDistance = 1000.0f;
+		for (auto viStateCheck = vStateCheck.begin(); viStateCheck != vStateCheck.end(); ++viStateCheck)
+		{
+			POINT temp = *viStateCheck;
+			for (auto cellsIter = _cells->begin(); cellsIter != _cells->end(); ++cellsIter)
+			{
+				Cell* cell = (*cellsIter);
+				if (cell->getCellX() == temp.x && cell->getCellY() == temp.y)
+				{
+					if (cell->getType() == CELL_TYPE::NORMAL || cell->getType() == CELL_TYPE::MOVEABLE)
+					{
+						float distance = getDistance(_pMoveStart.x, _pMoveStart.y, temp.x, temp.y);
+						if (distance < minDistance)
+						{
+							_enemyPathGoal.x = temp.x;
+							_enemyPathGoal.y = temp.y;
+							minDistance = distance;
+						}
+					}
+				}
+			}
+		}
+
+		auto path = _generator->findPath(
+			{ _pMoveStart.x,_pMoveStart.y },
+			{ _enemyPathGoal.x,_enemyPathGoal.y });
+
+		_check.clear();
+		int pathNum = 10;
+		int pathSize = path.size() < pathNum ? path.size() : pathNum;
+		for (int i = path.size() - pathSize; i < path.size(); ++i)
+		{
+			auto coordinate = path[i];
+			_check.push_back({ coordinate.x, coordinate.y });
+		}
+		_moveIndex = _check.size() - 1;
+		_turnSystem->setEnemyBit(1);
+	}
 }
 
 void FinalScene::Attack()
@@ -679,7 +788,6 @@ void FinalScene::Attack()
         }
     }
 	changeImage();
-
 }
 
 POINT FinalScene::lerp(POINT start, POINT end, float percentage)

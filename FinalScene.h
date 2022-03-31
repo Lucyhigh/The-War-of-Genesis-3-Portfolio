@@ -15,6 +15,7 @@ class FinalScene : public GameNode
 private:
 	MapTileInfo* _mapTileInfo;
 	Animation* _animation;
+	Animation* _tileClick;
 	Player* _player;
 	TurnSystem* _turnSystem;
 	GameUI* _gameUI;
@@ -27,6 +28,7 @@ private:
 	POINT _pMoveStart;
 	POINT _endPoint;
 	POINT _enemyPathGoal;
+	POINT _playerPathGoal;
 
 	RECT _mouseRc;
 	RECT _endRc;
@@ -38,7 +40,6 @@ private:
 	int _endPointIndex;
 	int _moveIndex;
 	int _count;
-	bool _isMove;
 
 	int _enemyBit;
     CELL_TYPE _mouseType;
