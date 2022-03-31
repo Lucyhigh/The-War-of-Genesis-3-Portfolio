@@ -1,15 +1,9 @@
 #pragma once
 
-struct tagTextWithSound
-{
-    LPCWSTR name;
-    string soundVec;
-    LPCWSTR script;
-};
-
-struct tagTextWithImage
+struct tagText
 {
 	LPCWSTR name;
 	vector<string> ImageVec;
+    vector<string> soundVec;
 	LPCWSTR script;
 };
