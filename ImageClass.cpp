@@ -88,6 +88,7 @@ HRESULT ImageClass::init(void)
 	IMAGEMANAGER->addFrameImage("playerMark", "Resources/Images/UI/playerMark.bmp", 72, 11, 8, 1, true, RGB(80, 120, 116));
 	IMAGEMANAGER->addFrameImage("enemyMark", "Resources/Images/UI/enemyMark.bmp", 72, 11, 8, 1, true, RGB(80, 120, 116));
 	IMAGEMANAGER->addFrameImage("attackMark", "Resources/Images/UI/attackMark.bmp", 217, 32, 7, 1, true, RGB(80, 120, 116));
+	IMAGEMANAGER->addFrameImage("normalCursor", "Resources/Images/UI/normalCursor.bmp", 112, 24, 7, 1, true, RGB(80, 120, 116));
 #pragma endregion
 #pragma region Animation
 	ANIMATIONMANAGER->addAnimation("sMovesheet", "sMovesheet", 0, 23, 5, false, true);
@@ -101,6 +102,7 @@ HRESULT ImageClass::init(void)
 	ANIMATIONMANAGER->addAnimation("attackMark", "attackMark", 7, true, true);
     ANIMATIONMANAGER->addAnimation("npcBar", "npcBar", 5, true, true);
     ANIMATIONMANAGER->addAnimation("hpBar", "hpBar", 5, false, true);
+    ANIMATIONMANAGER->addAnimation("normalCursor", "normalCursor", 5, false, true);
 #pragma endregion
 	return S_OK;
 }

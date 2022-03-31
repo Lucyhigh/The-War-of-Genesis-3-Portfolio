@@ -2,7 +2,7 @@
 #include "GameNode.h"
 #include "MapTileInfo.h"
 #include "Text.h"
-#include "BgImage.h"
+//#include "BgImage.h"
 #include "Player.h"
 #include "Camera.h"
 #include "AStar.h"
@@ -13,8 +13,8 @@ class SecondScene : public GameNode
 {
 private:
 	MapTileInfo* _mapTileInfo;
-    Text _text[TEXTNumTWO];
-    BgImage _bgImage[BgImageNUMTWO];
+	tagText _text[TEXTNumTWO];
+    //BgImage _bgImage[BgImageNUMTWO];
 	vector<Cell*>* _cells;
 	Image* _image;
 	Player* _player;
@@ -58,22 +58,6 @@ public:
 	POINT lerp(POINT start, POINT end, float percentage);
 
 public:
-	SecondScene():_bgImage
-    {
-        {9,"길거리배경"},
-        {85,"교실배경"},
-        {199,"동아리배경"},
-        {210,"길거리배경"},
-        {298,"동아리배경"},
-        {318,"복도배경"},
-        {339,"동아리배경"},
-        {550,"동아리배경"},
-        {755,"동아리배경"},
-
-    },
-    _text
-    {
-        L"",{},{},L"저 멀리서 성가신 여자아이가 주변 사람들 시선은 아랑곳하지 않은 채 팔을 허공에 흔들며 달려온다.",
-        L"",{},{},L"저 여자애는 옆집에 사는 아주 어릴 때부터 알고 지낸 소꿉친구 ?痢r?ㅼt寃?臾댁r_q다." }{}
+	SecondScene(){}
 	~SecondScene(){}
 };

@@ -1,3 +1,4 @@
+#include "Stdafx.h"
 #include "SecondScene.h"
 
 HRESULT SecondScene::init(void)
@@ -92,32 +93,21 @@ void SecondScene::update(void)
 
 void SecondScene::render(void)
 {
-    for (size_t i = 0; i < BgImageNUMTWO; i++)
+   /* for (size_t i = 0; i < BgImageNUMTWO; i++)
     {
         if (_textIndex <= _bgImage[i]._textIndex)
         {
             IMAGEMANAGER->alphaRender(_bgImage[i]._fileName, getMemDC(), _bgAlpha);
             break;
         }
-    }
+    }*/
 
     if (_textIndex == 350 || _textIndex == 650)
     {
         IMAGEMANAGER->alphaRender("동아리skill배경", getMemDC(), _bgAlpha);
     }
-    if (_textIndex == 5 && _isTurn_S_error)
-    {
-        if (_count % 1 == 0 && 0 <= _loofIndex && _loofIndex <= 20)
-        {
-            IMAGEMANAGER->frameRender("사요리에러", getMemDC(), _rcS.left, _rcS.top);
-        }
-        else if (_count % 1 == 0 && 20 < _loofIndex && _loofIndex <= 35)
-        {
-            IMAGEMANAGER->frameRender("사요리에러2", getMemDC(), _rcS2.left, _rcS2.top);
-        }
-    }
-
-    int size = _text[_textIndex].imageMoodVec.size();
+   
+   // int size = _text[_textIndex].imageMoodVec.size();
 
     if (259 <= _textIndex && _textIndex <= 297)
     {
@@ -140,20 +130,6 @@ void SecondScene::render(void)
                 IMAGEMANAGER->render("유리킬", getMemDC(), WINSIZE_X / 2 - WINSIZE_X / 4, WINSIZE_Y / 10);
             }
         }
-        else if (30 < _loofIndex && _loofIndex <= 40)
-        {
-            if (_count % 2 == 0)
-            {
-                if (_drop >= 255)
-                {
-                    _drop = 255;
-                }
-                else _drop += 20;
-            }
-            IMAGEMANAGER->render("유리킬2", getMemDC(), WINSIZE_X / 2 - WINSIZE_X / 4, WINSIZE_Y / 10 + _drop);
-            IMAGEMANAGER->alphaRender("컷전환", getMemDC(), 0, 0, _drop * 5);
-
-        }
         else if (40 < _loofIndex && _loofIndex <= 70)
         {
             if (40 < _loofIndex && _loofIndex <= 48)IMAGEMANAGER->alphaRender("유리킬배경", getMemDC(), 0, 0, _bgAlpha);
@@ -163,47 +139,11 @@ void SecondScene::render(void)
         }
     }
 
-    for (int i = 0; i < size; i++)
-    {
-        IMAGEMANAGER->alphaRender(_text[_textIndex].imageMoodVec[i], getMemDC(), (WINSIZE_X * (i + 1) / (size + 1)) - WINSIZE_X / 4, WINSIZE_Y / 10, _alpha);
-    }
+    //for (int i = 0; i < size; i++)
+    //{
+    //    IMAGEMANAGER->alphaRender(_text[_textIndex].imageMoodVec[i], getMemDC(), (WINSIZE_X * (i + 1) / (size + 1)) - WINSIZE_X / 4, WINSIZE_Y / 10, _alpha);
+    //}
 
-    LPCWSTR info1 = { L" 유 리 " };
-    LPCWSTR info2 = { L"나 츠 키" };
-    LPCWSTR info3 = { L"모 니 카" };
-    if (_textIndex == 647 && !_isWrongButton)
-    {
-        for (int i = 3; i < 6; i++)
-        {
-            IMAGEMANAGER->render("캐릭터선택버튼", getMemDC(), _selectBox[i].left - WINSIZE_X * 0.04, _selectBox[i].top - WINSIZE_X * 0.02);
-            if (PtInRect(&_selectBox[i], _ptMouse))
-            {
-                IMAGEMANAGER->alphaRender("캐릭터선택한버튼", getMemDC(), _selectBox[i].left - WINSIZE_X * 0.04, _selectBox[i].top - WINSIZE_X * 0.02, 170);
-
-            }
-        }
-        FONTMANAGER->drawText(getMemDC(), _selectBox[3].left + WINSIZE_X * 0.06, _selectBox[3].top, "a어린이날M", 26, FW_BOLD, info1, wcslen(info1), RGB(0, 0, 0));
-        FONTMANAGER->drawText(getMemDC(), _selectBox[4].left + WINSIZE_X * 0.06, _selectBox[4].top, "a어린이날M", 26, FW_BOLD, info2, wcslen(info2), RGB(0, 0, 0));
-        FONTMANAGER->drawText(getMemDC(), _selectBox[5].left + WINSIZE_X * 0.06, _selectBox[5].top, "a어린이날M", 26, FW_BOLD, info3, wcslen(info3), RGB(0, 0, 0));
-    }
-    else if (_textIndex == 647 && _isWrongButton)
-    {
-        IMAGEMANAGER->render("흰배경", getMemDC());
-        IMAGEMANAGER->alphaRender("유리확대", getMemDC(), WINSIZE_X* 0.05 - _rndEyeMove / 3, -WINSIZE_Y / 20 - _rndEyeMove / 3, _eventAlpha);
-        IMAGEMANAGER->render("유리눈", getMemDC(), WINSIZE_X * 0.25 + _rndEyeMove, WINSIZE_Y / 4 + _rndEyeMove);
-        for (int i = 0; i < SELECTNUM; i++)
-        {
-            IMAGEMANAGER->render("캐릭터선택버튼", getMemDC(), _selectBox[i].left - WINSIZE_X * 0.04, _selectBox[i].top - WINSIZE_X * 0.02);
-            FONTMANAGER->drawText(getMemDC(), _selectBox[2].left + WINSIZE_X * 0.06, _selectBox[i].top, "a어린이날M", 26, FW_BOLD, info3, wcslen(info3), RGB(255, 255, 255));
-        }
-        for (int i = 0; i < SELECTNUM; i++)
-        {
-            if (PtInRect(&_selectBox[i], _ptMouse))
-            {
-                IMAGEMANAGER->alphaRender("캐릭터선택한버튼", getMemDC(), _selectBox[i].left - WINSIZE_X * 0.04, _selectBox[i].top - WINSIZE_X * 0.02, 170);
-            }
-        }
-    }
 
     IMAGEMANAGER->alphaRender("텍스트창", getMemDC(), _textAlpha);
     FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.26, WINSIZE_Y*0.75, "a어린이날M", 27, 15, _text[_textIndex].name, wcslen(_text[_textIndex].name), RGB(0, 0, 0));
