@@ -88,10 +88,11 @@ HRESULT ImageClass::init(void)
 	IMAGEMANAGER->addFrameImage("normalCursor", "Resources/Images/UI/normalCursor.bmp", 112, 24, 7, 1, true, RGB(80, 120, 116));
 	IMAGEMANAGER->addFrameImage("clickTile", "Resources/Images/UI/clickTile.bmp", 240, 32, 6, 1);
 #pragma endregion
+
 #pragma region Animation
 	ANIMATIONMANAGER->addAnimation("sMovesheet", "sMovesheet", 0, 23, 5, false, true);
     //UI
-	ANIMATIONMANAGER->addAnimation("TitleEfx", "TitleEfx", 3, false, true);
+	ANIMATIONMANAGER->addAnimation("TitleEfx", "TitleEfx", 3, true, true);
 	ANIMATIONMANAGER->addAnimation("notMoveable", "notMoveable",5, false, true);
 	ANIMATIONMANAGER->addAnimation("turnMark", "turnMark", 5, true, true);
 	ANIMATIONMANAGER->addAnimation("playerMark", "playerMark", 5, true, true);

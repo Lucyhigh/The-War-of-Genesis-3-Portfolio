@@ -23,6 +23,8 @@ HRESULT MapScene::init(void)
 		_vMapButton.push_back(_mapButtomInfo);
 		_vMapButton[i]._textInfo = _uiText[i];
 	}
+    _moveButton[0] = RectMake(120,600,80,80);
+    _moveButton[1] = RectMake(120,600,80,80);
     _camera = new Camera;
     _camera->init();
     _camera->setLimitsX(CENTER_X, _image->getWidth());
@@ -44,6 +46,11 @@ void MapScene::update(void)
     _camera->update();
     _camera->setCameraPos(_camera->getCameraPos());
     _camera->setScreenRect(_camera->getScreenRect());
+    if (PtInRect(&_moveButton[0], _ptMouse) && KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+    {
+        _moveNext = true;
+    }
+    else if (PtInRect(&_moveButton[1], _ptMouse) && KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 }
 
 void MapScene::render(void)
@@ -57,8 +64,24 @@ void MapScene::render(void)
         cameraLeft,
         cameraTop,
         WINSIZE_X, WINSIZE_Y);
-	IMAGEMANAGER->findImage("npcBar")->aniRender(getMemDC(), 180 - _camera->getScreenRect().left,
-															 880 - _camera->getScreenRect().top, _animation);
+    POINT playerPos = { 180 - cameraLeft,  880 - cameraTop };
+    if (_moveNext)
+    {
+        IMAGEMANAGER->findImage("npcBar")->aniRender(getMemDC(), _moveButton.left - cameraLeft,
+            _moveButton.top - cameraTop, _animation);
+        cout << "버몬트이동" << endl;
+        playerPos = { _moveButton.left - cameraLeft,
+            _moveButton.top - cameraTop };
+    }
+    else
+    {
+	    IMAGEMANAGER->findImage("npcBar")->aniRender(getMemDC(), playerPos.x, playerPos.y, _animation);
+    }
+
+    Rectangle(getMemDC(), _moveButton.left - cameraLeft,
+        _moveButton.top- cameraTop,
+        _moveButton.right - cameraLeft,
+        _moveButton.bottom- cameraTop);
 	IMAGEMANAGER->render("curMap",getMemDC());
 	int alphaChange = 20;
 	for (_viMapButton = _vMapButton.begin(); _viMapButton != _vMapButton.end(); ++_viMapButton)

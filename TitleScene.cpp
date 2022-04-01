@@ -8,7 +8,7 @@ HRESULT TitleScene::init(void)
 	_animation->AniStart();
 	_image= IMAGEMANAGER->findImage("TitleBg");
     _buttonSize = {140, 30};
-    _SceneBoxSize = {150, 50};
+    _SceneBoxSize = {140, 45};
     _fadeAlpha = 0;
     int buttonNum = 3;
     for (int i = 0; i < buttonNum; i++)
@@ -23,17 +23,21 @@ HRESULT TitleScene::init(void)
     }
 
     int SceneIndex = 0;
-    for (int x = 0; x < 3; x++)
+    for (int i  = 0; i < 3; i++)
     {
         TitlebuttomInfo _sceneButtomInfo;
-        POINT _buttomPos = { 200 + x* 280,  WINSIZE_Y - 50 };
-        _sceneButtomInfo._buttonRect = RectMakeCenter(_buttomPos.x, _buttomPos.y, _buttonSize.x, _buttonSize.y);
+        POINT _buttomPos = { 200 + i * (_SceneBoxSize.x + 130),  WINSIZE_Y - 150 };
+        _sceneButtomInfo._buttonRect = RectMakeCenter(_buttomPos.x, _buttomPos.y, _SceneBoxSize.x, _SceneBoxSize.y);
+        _sceneButtomInfo._textInfo = L"0";
         _sceneButtomInfo._index = SceneIndex;
-
         _vSceneButton.push_back(_sceneButtomInfo);
         SceneIndex++;
-        
     }
+        
+        //_vSceneButton[i]._buttonRect = { _buttomPos , WINSIZE_Y - 80, 225 + _SceneBoxSize.x, _SceneBoxSize.y };
+       // _vSceneButton[1]._buttonRect = { 400 , WINSIZE_Y - 90, 400+_SceneBoxSize.x, WINSIZE_Y - 25 };
+        //_vSceneButton[i]._buttonRect = { 600 , WINSIZE_Y - 100, 600 +_SceneBoxSize.x, _SceneBoxSize.y };
+
 
     _isfadeOut = false;
 	_alpha = 0.0f;
@@ -82,7 +86,7 @@ void TitleScene::update(void)
             {
                 switch (_viSceneButton->_index)
                 {
-                case 13:
+                case 0:
                     _isfadeOut = true;
 					
                     break;
@@ -135,19 +139,17 @@ void TitleScene::render(void)
     else if (_startBit.test(0) == 1)
     {
 		int clickScene = 0;
-		for (_viTitleButton = _vTitleButton.begin(); _viTitleButton != _vTitleButton.end(); ++_viTitleButton)
+		for ( _viSceneButton = _vSceneButton.begin(); _viSceneButton != _vSceneButton.end(); ++_viSceneButton)
 		{
-			if (PtInRect(&_viTitleButton->_buttonRect, _ptMouse))
+			if (PtInRect(&_viSceneButton->_buttonRect, _ptMouse))
 			{
 				clickScene = 1;
+                
 			}
-			else clickScene = 0;
-				cout << clickScene << endl;
-			Rectangle(getMemDC(), _viTitleButton->_buttonRect.left, _viTitleButton->_buttonRect.top, 
-				_viTitleButton->_buttonRect.right, _viTitleButton->_buttonRect.bottom);
-        }
-		IMAGEMANAGER->frameRender("SceneList", getMemDC(), 0, 0, clickScene, 0);
 
+            
+        }
+        IMAGEMANAGER->frameRender("SceneList", getMemDC(), 0, 0, clickScene, 0);
     }
     else if (_startBit.test(1) == 1)
     {
