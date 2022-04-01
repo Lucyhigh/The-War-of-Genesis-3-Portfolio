@@ -266,16 +266,16 @@ void Player::render(void)
         switch (_imageState)
         {
         case PLAYERSTATE::RIGHT:
-            IMAGEMANAGER->frameRender("pRightIdle", getMemDC(), left, top);
+            IMAGEMANAGER->frameRender("pRightIdle", getMemDC(), left-10, top);
             break;
         case PLAYERSTATE::LEFT:
-            IMAGEMANAGER->frameRender("pLeftIdle", getMemDC(), left, top);
+            IMAGEMANAGER->frameRender("pLeftIdle", getMemDC(), left-10, top);
             break;
         case PLAYERSTATE::TOP:
             IMAGEMANAGER->frameRender("pUpIdle", getMemDC(), left, top);
             break;
         case PLAYERSTATE::BOTTOM:
-            IMAGEMANAGER->frameRender("pDownIdle", getMemDC(), left-20, top);
+            IMAGEMANAGER->frameRender("pDownIdle", getMemDC(), left-20, top-5);
             break;
         }
     }
@@ -299,19 +299,20 @@ void Player::render(void)
     }
     else if (_stateBit.test(1) == 1)
     {
+		POINT addAttPos = { -40,-40 };
         switch (_imageState)
         {
         case PLAYERSTATE::RIGHT:
-            IMAGEMANAGER->frameRender("pRightAtt", getMemDC(), left, top);
+            IMAGEMANAGER->frameRender("pRightAtt", getMemDC(), left + addAttPos.x-3, top + addAttPos.y);
             break;
         case PLAYERSTATE::LEFT:
-            IMAGEMANAGER->frameRender("pLeftAtt", getMemDC(), left, top);
+            IMAGEMANAGER->frameRender("pLeftAtt", getMemDC(), left + addAttPos.x+3, top + addAttPos.y);
             break;
         case PLAYERSTATE::TOP:
-            IMAGEMANAGER->frameRender("pUpAtt", getMemDC(), left, top);
+            IMAGEMANAGER->frameRender("pUpAtt", getMemDC(), left + addAttPos.x, top);
             break;
         case PLAYERSTATE::BOTTOM:
-            IMAGEMANAGER->frameRender("pDownAtt", getMemDC(), left, top);
+            IMAGEMANAGER->frameRender("pDownAtt", getMemDC(), left + addAttPos.x, top + addAttPos.y);
             break;
         }
     }

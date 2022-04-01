@@ -234,6 +234,7 @@ void FinalScene::update(void)
 		else if (_turnSystem->getPlayerBit(3) == 1)
 		{
 			changeImage();
+			cout << " 형 : 으악" << endl;
 			//_player->getPlayerStateBit(2);
 
 		}
@@ -310,52 +311,7 @@ void FinalScene::render(void)
 	if (KEYMANAGER->isToggleKey(VK_F2))
 	{
 		drawMapCellInfo();
-
-		for (auto cellsIter = _cells->begin(); cellsIter != _cells->end(); ++cellsIter)
-		{
-			Cell* cell = (*cellsIter);
-			HBRUSH brush = CreateSolidBrush(RGB(255, 0, 0)); 
-			HBRUSH oldBrush = (HBRUSH)SelectObject(getMemDC(), brush);
-
-			int left = cell->getRect().left - cameraLeft;
-			int top = cell->getRect().top - cameraTop;
-			RECT rect = RectMake(left, top, TILESIZEX, TILESIZEY);
-			switch (cell->getType())
-			{
-			case(CELL_TYPE::NORMAL):
-				break;
-			case(CELL_TYPE::WALL):
-				oldBrush = (HBRUSH)SelectObject(getMemDC(), brush);
-				FillRect(getMemDC(), &rect, brush); 
-				break;
-			case(CELL_TYPE::START):
-				brush = CreateSolidBrush(RGB(0, 0, 255));
-				oldBrush = (HBRUSH)SelectObject(getMemDC(), brush);
-				FillRect(getMemDC(), &rect, brush); 
-				SelectObject(getMemDC(), oldBrush);
-				break;
-			case(CELL_TYPE::GOAL):
-				brush = CreateSolidBrush(RGB(0, 255, 0)); 
-				oldBrush = (HBRUSH)SelectObject(getMemDC(), brush);
-				FillRect(getMemDC(), &rect, brush);
-				break;
-			case(CELL_TYPE::MOVEABLE):
-				brush = CreateSolidBrush(RGB(205, 255, 100)); 
-				oldBrush = (HBRUSH)SelectObject(getMemDC(), brush);
-				FillRect(getMemDC(), &rect, brush);
-				IMAGEMANAGER->alphaRender("moveTile", getMemDC(), _tileAlpha);
-				break;
-			case(CELL_TYPE::ATTACKABLE):
-				brush = CreateSolidBrush(RGB(255, 255, 0));
-				oldBrush = (HBRUSH)SelectObject(getMemDC(), brush);
-				FillRect(getMemDC(), &rect, brush);
-				break;
-			}
-            SelectObject(getMemDC(), brush);
-			DeleteObject(brush);
-		}
 	}
-	//curAstar();// 이동경로로 이동하는 네모
 	AstarTileInfo();
 
 	_saladin->render();
@@ -405,7 +361,6 @@ void FinalScene::render(void)
 			case CELL_TYPE::WALL:
 				_mouseType = cell->getType();
 				IMAGEMANAGER->findImage("notMoveable")->aniRender(getMemDC(), _ptMouse.x - 16, _ptMouse.y - 6, _animation);
-
 				break;
 			default:
 				_mouseType = cell->getType();
@@ -435,10 +390,54 @@ void FinalScene::drawMapCellInfo()
 {
 	char cellIndex[1024];
 	SetTextColor(getMemDC(), RGB(0, 0, 0));
-
+	int cameraLeft = _camera->getScreenRect().left;
+	int cameraTop = _camera->getScreenRect().top;
 	for (auto cellsIter = _cells->begin(); cellsIter != _cells->end(); ++cellsIter)
 	{
 		Cell* cell = (*cellsIter);
+		
+		curAstar();// 이동경로 표시
+
+		HBRUSH brush = CreateSolidBrush(RGB(255, 0, 0));
+		HBRUSH oldBrush = (HBRUSH)SelectObject(getMemDC(), brush);
+
+		int left = cell->getRect().left - cameraLeft;
+		int top = cell->getRect().top - cameraTop;
+		RECT rect = RectMake(left, top, TILESIZEX, TILESIZEY);
+		switch (cell->getType())
+		{
+		case(CELL_TYPE::NORMAL):
+			break;
+		case(CELL_TYPE::WALL):
+			oldBrush = (HBRUSH)SelectObject(getMemDC(), brush);
+			FillRect(getMemDC(), &rect, brush);
+			break;
+		case(CELL_TYPE::START):
+			brush = CreateSolidBrush(RGB(0, 0, 255));
+			oldBrush = (HBRUSH)SelectObject(getMemDC(), brush);
+			FillRect(getMemDC(), &rect, brush);
+			SelectObject(getMemDC(), oldBrush);
+			break;
+		case(CELL_TYPE::GOAL):
+			brush = CreateSolidBrush(RGB(0, 255, 0));
+			oldBrush = (HBRUSH)SelectObject(getMemDC(), brush);
+			FillRect(getMemDC(), &rect, brush);
+			break;
+		case(CELL_TYPE::MOVEABLE):
+			brush = CreateSolidBrush(RGB(205, 255, 100));
+			oldBrush = (HBRUSH)SelectObject(getMemDC(), brush);
+			FillRect(getMemDC(), &rect, brush);
+			IMAGEMANAGER->alphaRender("moveTile", getMemDC(), _tileAlpha);
+			break;
+		case(CELL_TYPE::ATTACKABLE):
+			brush = CreateSolidBrush(RGB(255, 255, 0));
+			oldBrush = (HBRUSH)SelectObject(getMemDC(), brush);
+			FillRect(getMemDC(), &rect, brush);
+			break;
+		}
+		SelectObject(getMemDC(), brush);
+		DeleteObject(brush);
+
 		sprintf(cellIndex, "%d,%d", cell->getCellX(), cell->getCellY());
 		TextOut(getMemDC(), cell->getRect().left - _camera->getScreenRect().left,
 			cell->getRect().top - _camera->getScreenRect().top,
@@ -638,7 +637,7 @@ void FinalScene::find4WaysTile()
 			{ _tempGoal.x, _tempGoal.y });
 		if (currentPath.size() == 3)
 		{
-			_turnSystem->setEnemyBit(2);
+			_turnSystem->setPlayerBit(2);
 			return;
 		}
 
@@ -718,7 +717,7 @@ void FinalScene::find4WaysTile()
 			{ _tempGoal.x, _tempGoal.y });
 		if (currentPath.size() == 3)
 		{
-			_turnSystem->setPlayerBit(2);
+			_turnSystem->setEnemyBit(2);
 			return;
 		}
 
@@ -781,11 +780,14 @@ void FinalScene::Attack()
         _player->setPlayerStateBit(1);
         if (_player->getAttack())
         {
-			_turnSystem->setEnemyBit(3);
+			_saladin->setEnemyStateBit(2);
             _player->setPlayerIdle();
             _player->setAttack(false);
-			_turnSystem->changeToEnemy();
         }
+		if (!_saladin->getDamage())
+		{
+			//_turnSystem->changeToEnemy();
+		}
     }
     else if (_turnSystem->getStatus() == CHANGINGSTATUS::ENEMYTURN)
     {

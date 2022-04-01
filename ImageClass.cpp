@@ -72,8 +72,8 @@ HRESULT ImageClass::init(void)
 	IMAGEMANAGER->addImage("curMap", "Resources/Images/UI/curMap.bmp", 241, 111, MGT);
 	IMAGEMANAGER->addImage("introtext", "Resources/Images/UI/introtext.bmp", 230, 105);
 	IMAGEMANAGER->addImage("mapInfoAll", "Resources/Images/UI/mapInfoAll.bmp", 230, 105);
-	IMAGEMANAGER->addImage("mapInfobg", "Resources/Images/UI/mapInfo.bmp", 230, 105);
 	IMAGEMANAGER->addImage("button", "Resources/Images/UI/UI_button.bmp", 102, 28, MGT);
+	IMAGEMANAGER->addImage("MapButton", "Resources/Images/UI/UI_buttonMap.bmp", 164,48, MGT);
 	IMAGEMANAGER->addImage("storyText", "Resources/Images/UI/storyText.bmp", 511, 111);
 	IMAGEMANAGER->addFrameImage("npcBar", "Resources/Images/UI/npcbar.bmp", 800, 91,8,1,MGT);
 	IMAGEMANAGER->addFrameImage("hpBar", "Resources/Images/UI/hpBar.bmp", 915, 49,15,1,true,RGB(0,44,0));//원작과 좀 달라서 수정필요
@@ -97,7 +97,7 @@ HRESULT ImageClass::init(void)
 	ANIMATIONMANAGER->addAnimation("playerMark", "playerMark", 5, true, true);
 	ANIMATIONMANAGER->addAnimation("enemyMark", "enemyMark", 5, true, true);
 	ANIMATIONMANAGER->addAnimation("attackMark", "attackMark", 7, false, true);
-    ANIMATIONMANAGER->addAnimation("npcBar", "npcBar", 5, true, true);
+    ANIMATIONMANAGER->addAnimation("npcBar", "npcBar", 10, true, true);
     ANIMATIONMANAGER->addAnimation("hpBar", "hpBar", 5, false, false);
     ANIMATIONMANAGER->addAnimation("normalCursor", "normalCursor", 5, false, true);
     ANIMATIONMANAGER->addAnimation("clickTile", "clickTile", 5, true, true);

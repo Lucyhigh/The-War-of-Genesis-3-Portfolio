@@ -150,67 +150,57 @@ void Saladin::update(void)
     //00010 공격 
     else if (_stateBit.test(1) == 1)
     {
-        switch (_imageState)
-        {
-        case SALADINSTATE::RIGHT:
-            if (_count % 30 == 0)
-            {
-                _indexC--;
-                IMAGEMANAGER->findImage("sAttacksheet")->setFrameY(3);
-                if (_indexC < 0)
-                {
-                    _indexC = 5;
-                    _isAttack = true;
-                    setEnemyIdle();
-                    
-                }
-                IMAGEMANAGER->findImage("sAttacksheet")->setFrameX(_indexC);
-            }
-            break;
-        case SALADINSTATE::LEFT:
-            if (_count % 30 == 0)
-            {
-                _indexC++;
-                IMAGEMANAGER->findImage("sAttacksheet")->setFrameY(2);
-                if (_indexC >= 5)
-                {
-                    _indexC = 0;
-                    _isAttack = true;
-                    setEnemyIdle();
-                }
-                IMAGEMANAGER->findImage("sAttacksheet")->setFrameX(_indexC);
-            }
-            break;
-        case SALADINSTATE::TOP:
-            if (_count % 30 == 0)
-            {
-                _indexC++;
-                IMAGEMANAGER->findImage("sAttacksheet")->setFrameY(0);
-                if (_indexC >= 5)
-                {
-                    _indexC = 0;
-                    _isAttack = true;
-                    setEnemyIdle();
-                }
-                IMAGEMANAGER->findImage("sAttacksheet")->setFrameX(_indexC);
-            }
-            break;
-        case SALADINSTATE::BOTTOM:
-            if (_count % 30 == 0)
-            {
-                _indexC++;
-                IMAGEMANAGER->findImage("sAttacksheet")->setFrameY(1);
-                if (_indexC >= 5)
-                {
-                    _indexC = 0;
-                    _isAttack = true;
-                    setEnemyIdle();
-                }
-                IMAGEMANAGER->findImage("sAttacksheet")->setFrameX(_indexC);
-            }
-            break;
-        }
-        
+		if (_count % 30 == 0)
+		{
+			switch (_imageState)
+			{
+			case SALADINSTATE::RIGHT:
+				_indexC--;
+				IMAGEMANAGER->findImage("sAttacksheet")->setFrameY(3);
+				if (_indexC < 0)
+				{
+					_indexC = 5;
+					_isAttack = true;
+					setEnemyIdle();
+
+				}
+				IMAGEMANAGER->findImage("sAttacksheet")->setFrameX(_indexC);
+				break;
+			case SALADINSTATE::LEFT:
+				_indexC++;
+				IMAGEMANAGER->findImage("sAttacksheet")->setFrameY(2);
+				if (_indexC >= 5)
+				{
+					_indexC = 0;
+					_isAttack = true;
+					setEnemyIdle();
+				}
+				IMAGEMANAGER->findImage("sAttacksheet")->setFrameX(_indexC);
+				break;
+			case SALADINSTATE::TOP:
+				_indexC++;
+				IMAGEMANAGER->findImage("sAttacksheet")->setFrameY(0);
+				if (_indexC >= 5)
+				{
+					_indexC = 0;
+					_isAttack = true;
+					setEnemyIdle();
+				}
+				IMAGEMANAGER->findImage("sAttacksheet")->setFrameX(_indexC);
+				break;
+			case SALADINSTATE::BOTTOM:
+				_indexC++;
+				IMAGEMANAGER->findImage("sAttacksheet")->setFrameY(1);
+				if (_indexC >= 5)
+				{
+					_indexC = 0;
+					_isAttack = true;
+					setEnemyIdle();
+				}
+				IMAGEMANAGER->findImage("sAttacksheet")->setFrameX(_indexC);
+				break;
+			}
+		}
     }
     //00100 피격 
     else if (_stateBit.test(2) == 1)
@@ -246,13 +236,17 @@ void Saladin::update(void)
 		{
 			_tmp *= -1;
 			_cdt++;
+			_isDamage = true;
 		}
 		if (_cdt > 5)
 		{
+			cout << "피격당함" << endl;
 			setEnemyIdle();
 			_cdt = 0;
+			_isDamage = false;
 		}
         //01000 죽음
+		cout << _cdt << ","<< _tmp <<endl;
     }
      _rcSaladin = RectMakeCenter(_saladinPos.x, _saladinPos.y, _image->getFrameWidth(), _image->getFrameHeight());
 }
@@ -310,7 +304,7 @@ void Saladin::render(void)
     }
     else if (_stateBit.test(1) == 1)
     {
-        POINT addAttPos = { -35,-40 };
+        POINT addAttPos = { -35,-30 };
         switch (_imageState)
         {
         case SALADINSTATE::RIGHT:

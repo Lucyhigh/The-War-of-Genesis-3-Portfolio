@@ -25,17 +25,14 @@ HRESULT TitleScene::init(void)
     int SceneIndex = 0;
     for (int x = 0; x < 3; x++)
     {
-        for (int y = 0; y < 7; y++)
-        {
-            TitlebuttomInfo _sceneButtomInfo;
-            POINT _buttomPos = { 200 + x* 280,  200 + y * 80 };
-            _sceneButtomInfo._buttonRect = RectMakeCenter(_buttomPos.x, _buttomPos.y, _buttonSize.x, _buttonSize.y);
-            _sceneButtomInfo._index = SceneIndex;
+        TitlebuttomInfo _sceneButtomInfo;
+        POINT _buttomPos = { 200 + x* 280,  WINSIZE_Y - 50 };
+        _sceneButtomInfo._buttonRect = RectMakeCenter(_buttomPos.x, _buttomPos.y, _buttonSize.x, _buttonSize.y);
+        _sceneButtomInfo._index = SceneIndex;
 
-            _vSceneButton.push_back(_sceneButtomInfo);
-            _vSceneButton[SceneIndex]._textInfo = _sceneText[SceneIndex];
-            SceneIndex++;
-        }
+        _vSceneButton.push_back(_sceneButtomInfo);
+        SceneIndex++;
+        
     }
 
     _isfadeOut = false;
@@ -137,26 +134,20 @@ void TitleScene::render(void)
     }
     else if (_startBit.test(0) == 1)
     {
-        IMAGEMANAGER->render("SceneList", getMemDC());
-
-        for (_viSceneButton = _vSceneButton.begin(); _viSceneButton != _vSceneButton.end(); ++_viSceneButton)
-        {
-            if (PtInRect(&_viSceneButton->_buttonRect, _ptMouse))
-            {
-                FONTMANAGER->drawText(getMemDC(),
-                    (_viSceneButton->_buttonRect.left + _viSceneButton->_buttonRect.right) / 2,
-                    _viSceneButton->_buttonRect.top, "가을체", 25, 13, _viSceneButton->_textInfo,
-                    wcslen(_viSceneButton->_textInfo), TA_CENTER, RGB(255, 255, 255));
-            }
-            else
-            {
-                FONTMANAGER->drawText(getMemDC(),
-                    (_viSceneButton->_buttonRect.left + _viSceneButton->_buttonRect.right) / 2,
-                    _viSceneButton->_buttonRect.top, "가을체", 25, 13, _viSceneButton->_textInfo,
-                    wcslen(_viSceneButton->_textInfo), TA_CENTER, RGB(170, 170, 170));
-
-            }
+		int clickScene = 0;
+		for (_viTitleButton = _vTitleButton.begin(); _viTitleButton != _vTitleButton.end(); ++_viTitleButton)
+		{
+			if (PtInRect(&_viTitleButton->_buttonRect, _ptMouse))
+			{
+				clickScene = 1;
+			}
+			else clickScene = 0;
+				cout << clickScene << endl;
+			Rectangle(getMemDC(), _viTitleButton->_buttonRect.left, _viTitleButton->_buttonRect.top, 
+				_viTitleButton->_buttonRect.right, _viTitleButton->_buttonRect.bottom);
         }
+		IMAGEMANAGER->frameRender("SceneList", getMemDC(), 0, 0, clickScene, 0);
+
     }
     else if (_startBit.test(1) == 1)
     {
@@ -190,7 +181,7 @@ void TitleScene::fadeout()
 			}
 			else if (_startBit.test(1) == 1)
 			{
-				SCENEMANAGER->changeScene("Map");
+				SCENEMANAGER->changeScene("map");
 			}
 		}
 	}
