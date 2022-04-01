@@ -7,12 +7,14 @@ HRESULT FinalScene::init(void)
 
 	_mapTileInfo = new MapTileInfo;
 	_mapTileInfo->init();
-
-	_animation = ANIMATIONMANAGER->findAnimation("attackMark");
-	_tileClick = ANIMATIONMANAGER->findAnimation("clickTile");
-	_tileClick->AniStart();
 	_gameUI = new GameUI;
 	_gameUI->init();
+
+	_animation = ANIMATIONMANAGER->findAnimation("normalCursor");
+	_tileClick = ANIMATIONMANAGER->findAnimation("clickTile");
+	_tileClick->AniStart();
+	_turnMark = ANIMATIONMANAGER->findAnimation("playerMark");
+	_turnMark->AniStart();
 	_image = IMAGEMANAGER->findImage("Final");
 	_cells = _mapTileInfo->getCell();
 
@@ -161,7 +163,9 @@ void FinalScene::update(void)
 						}
 						else if (cell->getType() == CELL_TYPE::ATTACKABLE)
 						{
+							_check.clear();
 							find4WaysTile();
+							break;
 						}
 					}
                    
@@ -351,7 +355,7 @@ void FinalScene::render(void)
 			DeleteObject(brush);
 		}
 	}
-	//curAstar(); 이동경로로 이동하는 네모
+	//curAstar();// 이동경로로 이동하는 네모
 	AstarTileInfo();
 
 	_saladin->render();
@@ -391,31 +395,39 @@ void FinalScene::render(void)
 			else if (zPos >= 5)      zPos = 3;
 			sprintf(cellIndex, "%d", zPos);//z축위치
 			TextOut(getMemDC(), WINSIZE_X - 150, 45, cellIndex, strlen(cellIndex));
-			if (cell->getType() == CELL_TYPE::ATTACKABLE)
+
+			switch(cell->getType())
 			{
-                IMAGEMANAGER->findImage("attackMark")->aniRender(getMemDC(), _ptMouse.x, _ptMouse.y, _animation);
+			case CELL_TYPE::ATTACKABLE:
+				_mouseType = cell->getType();
+				IMAGEMANAGER->findImage("attackMark")->aniRender(getMemDC(), _ptMouse.x, _ptMouse.y, _animation);
+				break;
+			case CELL_TYPE::WALL:
+				_mouseType = cell->getType();
+				IMAGEMANAGER->findImage("notMoveable")->aniRender(getMemDC(), _ptMouse.x - 16, _ptMouse.y - 6, _animation);
+
+				break;
+			default:
+				_mouseType = cell->getType();
+				IMAGEMANAGER->findImage("normalCursor")->aniRender(getMemDC(), _ptMouse.x, _ptMouse.y, _animation);
+				break;
 			}
-            else if (cell->getType() == CELL_TYPE::WALL)
-            {
-                _mouseType = cell->getType();
-                IMAGEMANAGER->findImage("notMoveable")->aniRender(getMemDC(), _ptMouse.x-16, _ptMouse.y-6, _animation);
-            }
-            else
-            {
-                _mouseType = cell->getType();
-                IMAGEMANAGER->findImage("normalCursor")->aniRender(getMemDC(), _ptMouse.x, _ptMouse.y, _animation);
-            }
-            break;
         }
 	}
 
-    
-	if (_turnSystem->getStatus() == CHANGINGSTATUS::PLAYERTURN)
+	POINT MarkPos = { -23,-58 };
+	switch (_turnSystem->getStatus())
 	{
-		Rectangle(getMemDC(), _moveRc.left - _camera->getScreenRect().left,
-			_moveRc.top - _camera->getScreenRect().top,
-			_moveRc.right - _camera->getScreenRect().left,
-			_moveRc.bottom - _camera->getScreenRect().top);
+	case CHANGINGSTATUS::PLAYERTURN:
+		IMAGEMANAGER->findImage("playerMark")->aniRender(getMemDC(),
+			_player->getPlayerPosX() + MarkPos.x - _camera->getScreenRect().left,
+			_player->getPlayerPosY() + MarkPos.y - _camera->getScreenRect().top, _turnMark);
+		break;
+	case CHANGINGSTATUS::ENEMYTURN:
+		IMAGEMANAGER->findImage("enemyMark")->aniRender(getMemDC(),
+			_saladin->getSaladinPosX() + MarkPos.x - _camera->getScreenRect().left,
+			_saladin->getSaladinPosY() + MarkPos.y - _camera->getScreenRect().top, _turnMark);
+		break;
 	}
 }
 
@@ -440,8 +452,7 @@ void FinalScene::AstarTileInfo()
 							 _endPoint.x - _camera->getScreenRect().left,
 							 _endPoint.y - _camera->getScreenRect().top
 	};
-	//IMAGEMANAGER->render("clickTile", getMemDC(), cameraEndPoint.x, cameraEndPoint.y);
-	IMAGEMANAGER->findImage("clickTile")->aniRender(getMemDC(), _endPoint.x, _endPoint.y, _tileClick);
+	IMAGEMANAGER->findImage("clickTile")->aniRender(getMemDC(), cameraEndPoint.x, cameraEndPoint.y, _tileClick);
 }
 
 void FinalScene::rectMoveToPath()

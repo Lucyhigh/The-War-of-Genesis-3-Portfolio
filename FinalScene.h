@@ -16,6 +16,7 @@ private:
 	MapTileInfo* _mapTileInfo;
 	Animation* _animation;
 	Animation* _tileClick;
+	Animation* _turnMark;
 	Player* _player;
 	TurnSystem* _turnSystem;
 	GameUI* _gameUI;

@@ -57,7 +57,7 @@ HRESULT ImageClass::init(void)
 	IMAGEMANAGER->addImage("Field", "Resources/Images/BackGround/Field.bmp", 2120, 1536);
 	// Stage 2
 	// Stage 3
-	IMAGEMANAGER->addImage("Final", "Resources/Images/BackGround/Final2.bmp", 1557, 1080);
+	IMAGEMANAGER->addImage("Final", "Resources/Images/BackGround/Final.bmp", 1557, 1080);
 #pragma endregion
 #pragma region recall Scene
 	// Stage 1
@@ -74,12 +74,10 @@ HRESULT ImageClass::init(void)
 	IMAGEMANAGER->addImage("mapInfoAll", "Resources/Images/UI/mapInfoAll.bmp", 230, 105);
 	IMAGEMANAGER->addImage("mapInfobg", "Resources/Images/UI/mapInfo.bmp", 230, 105);
 	IMAGEMANAGER->addImage("button", "Resources/Images/UI/UI_button.bmp", 102, 28, MGT);
-	IMAGEMANAGER->addImage("blockCell", "Resources/Images/UI/blockCell.bmp", 38, 24);//샘플
 	IMAGEMANAGER->addImage("storyText", "Resources/Images/UI/storyText.bmp", 511, 111);
 	IMAGEMANAGER->addFrameImage("npcBar", "Resources/Images/UI/npcbar.bmp", 800, 91,8,1,MGT);
 	IMAGEMANAGER->addFrameImage("hpBar", "Resources/Images/UI/hpBar.bmp", 915, 49,15,1,true,RGB(0,44,0));//원작과 좀 달라서 수정필요
 
-	IMAGEMANAGER->addImage("curTile2", "Resources/Images/UI/1.bmp", 40, 32);//==================
 	IMAGEMANAGER->addImage("moveTile", "Resources/Images/UI/moveable.bmp", 40, 32);
 	IMAGEMANAGER->addImage("attackTile", "Resources/Images/UI/attackable.bmp", 40, 32);
 	IMAGEMANAGER->addFrameImage("notMoveable", "Resources/Images/UI/notMoveable.bmp", 76, 24,2,1,true, RGB(80, 120, 116));
@@ -95,11 +93,10 @@ HRESULT ImageClass::init(void)
     //UI
 	ANIMATIONMANAGER->addAnimation("TitleEfx", "TitleEfx", 3, false, true);
 	ANIMATIONMANAGER->addAnimation("notMoveable", "notMoveable",5, false, true);
-	ANIMATIONMANAGER->addAnimation("curTile", "curTile", 5, true, true);
 	ANIMATIONMANAGER->addAnimation("turnMark", "turnMark", 5, true, true);
 	ANIMATIONMANAGER->addAnimation("playerMark", "playerMark", 5, true, true);
 	ANIMATIONMANAGER->addAnimation("enemyMark", "enemyMark", 5, true, true);
-	ANIMATIONMANAGER->addAnimation("attackMark", "attackMark", 7, true, true);
+	ANIMATIONMANAGER->addAnimation("attackMark", "attackMark", 7, false, true);
     ANIMATIONMANAGER->addAnimation("npcBar", "npcBar", 5, true, true);
     ANIMATIONMANAGER->addAnimation("hpBar", "hpBar", 5, false, false);
     ANIMATIONMANAGER->addAnimation("normalCursor", "normalCursor", 5, false, true);
