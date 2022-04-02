@@ -99,7 +99,7 @@ HRESULT ImageClass::init(void)
 	ANIMATIONMANAGER->addAnimation("enemyMark", "enemyMark", 5, true, true);
 	ANIMATIONMANAGER->addAnimation("attackMark", "attackMark", 7, false, true);
     ANIMATIONMANAGER->addAnimation("npcBar", "npcBar", 10, true, true);
-    ANIMATIONMANAGER->addAnimation("hpBar", "hpBar", 5, false, false);
+    ANIMATIONMANAGER->addAnimation("hpBar", "hpBar", 7, false, false);
     ANIMATIONMANAGER->addAnimation("normalCursor", "normalCursor", 5, false, true);
     ANIMATIONMANAGER->addAnimation("clickTile", "clickTile", 5, true, true);
 #pragma endregion

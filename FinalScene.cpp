@@ -15,7 +15,9 @@ HRESULT FinalScene::init(void)
 	_tileClick->AniStart();
 	_turnMark = ANIMATIONMANAGER->findAnimation("playerMark");
 	_turnMark->AniStart();
+    _hpbar = ANIMATIONMANAGER->findAnimation("hpBar");
 	_image = IMAGEMANAGER->findImage("Final");
+
 	_cells = _mapTileInfo->getCell();
 
 	_player = new Player;
@@ -94,6 +96,7 @@ void FinalScene::update(void)
     if (_mouseType != _beforeMouseType) 
     {
         _animation->AniStop();
+        _hpbar->AniStop();
         _beforeMouseType = _mouseType;
         switch (_mouseType)
         {
@@ -105,9 +108,14 @@ void FinalScene::update(void)
             break;
         case CELL_TYPE::ATTACKABLE:
             _animation = ANIMATIONMANAGER->findAnimation("attackMark");
+            _hpbar = ANIMATIONMANAGER->findAnimation("hpbar");
+            break;
+        case CELL_TYPE::START:
+            _hpbar = ANIMATIONMANAGER->findAnimation("hpbar");
             break;
         }
         _animation->AniStart();
+        _hpbar->AniStart();
     }
     
 	if (_turnSystem->getStatus() == CHANGINGSTATUS::PLAYERTURN)
@@ -153,7 +161,7 @@ void FinalScene::update(void)
 							{
 								if (cell->getType() == CELL_TYPE::NORMAL)
 								{
-									cell->setType(CELL_TYPE::MOVEABLE);
+									cell->setType(CELL_TYPE::MOVEPATH);
 								}
 								_check.push_back({ coordinate.x, coordinate.y });
 							}
@@ -357,10 +365,16 @@ void FinalScene::render(void)
 			case CELL_TYPE::ATTACKABLE:
 				_mouseType = cell->getType();
 				IMAGEMANAGER->findImage("attackMark")->aniRender(getMemDC(), _ptMouse.x, _ptMouse.y, _animation);
+				IMAGEMANAGER->findImage("hpBar")->aniRender(getMemDC(), cell->getCellX()*TILESIZEX - cameraLeft,
+                    cell->getCellY()*TILESIZEY - cameraTop, _hpbar);
 				break;
 			case CELL_TYPE::WALL:
 				_mouseType = cell->getType();
 				IMAGEMANAGER->findImage("notMoveable")->aniRender(getMemDC(), _ptMouse.x - 16, _ptMouse.y - 6, _animation);
+				break;
+            case CELL_TYPE::START:
+				IMAGEMANAGER->findImage("hpBar")->aniRender(getMemDC(), cell->getCellX()*TILESIZEX - cameraLeft,
+                    cell->getCellY()*TILESIZEY - cameraTop, _hpbar);
 				break;
 			default:
 				_mouseType = cell->getType();
@@ -423,7 +437,7 @@ void FinalScene::drawMapCellInfo()
 			oldBrush = (HBRUSH)SelectObject(getMemDC(), brush);
 			FillRect(getMemDC(), &rect, brush);
 			break;
-		case(CELL_TYPE::MOVEABLE):
+		case(CELL_TYPE::MOVEPATH):
 			brush = CreateSolidBrush(RGB(205, 255, 100));
 			oldBrush = (HBRUSH)SelectObject(getMemDC(), brush);
 			FillRect(getMemDC(), &rect, brush);
@@ -619,10 +633,6 @@ void FinalScene::find4WaysTile()
 		for (auto cellsIter = _cells->begin(); cellsIter != _cells->end(); ++cellsIter)
 		{
 			Cell* cell = (*cellsIter);
-			//if (PtInRect(&cell->getRect(), playerPoint))
-			//{
-			//	_pMoveStart = { cell->getCellX(), cell->getCellY() };
-			//}
 
 			if (cell->getType() == CELL_TYPE::ATTACKABLE)
 			{
@@ -662,7 +672,7 @@ void FinalScene::find4WaysTile()
 				Cell* cell = (*cellsIter);
 				if (cell->getCellX() == temp.x && cell->getCellY() == temp.y)
 				{
-					if (cell->getType() == CELL_TYPE::NORMAL || cell->getType() == CELL_TYPE::MOVEABLE)
+					if (cell->getType() == CELL_TYPE::NORMAL || cell->getType() == CELL_TYPE::MOVEPATH)
 					{
 						float distance = getDistance(_pMoveStart.x, _pMoveStart.y, temp.x, temp.y);
 						if (distance < minDistance)
@@ -742,7 +752,7 @@ void FinalScene::find4WaysTile()
 				Cell* cell = (*cellsIter);
 				if (cell->getCellX() == temp.x && cell->getCellY() == temp.y)
 				{
-					if (cell->getType() == CELL_TYPE::NORMAL || cell->getType() == CELL_TYPE::MOVEABLE)
+					if (cell->getType() == CELL_TYPE::NORMAL || cell->getType() == CELL_TYPE::MOVEPATH)
 					{
 						float distance = getDistance(_pMoveStart.x, _pMoveStart.y, temp.x, temp.y);
 						if (distance < minDistance)

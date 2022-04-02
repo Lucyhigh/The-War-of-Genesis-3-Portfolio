@@ -19,6 +19,7 @@ enum class CELL_TYPE
 	WALL,
 	START,
 	GOAL,
+    MOVEPATH,
     MOVEABLE,
 	ATTACKABLE
 };

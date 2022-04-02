@@ -96,7 +96,7 @@ void FirstScene::update(void)
                 {
                     if (cell->getType() == CELL_TYPE::NORMAL)
                     {
-                        cell->setType(CELL_TYPE::MOVEABLE);
+                        cell->setType(CELL_TYPE::MOVEPATH);
                     }
 					_check.push_back({ coordinate.x, coordinate.y });
                 }
@@ -158,7 +158,7 @@ void FirstScene::render(void)
                 oldBrush = (HBRUSH)SelectObject(getMemDC(), brush);
                 FillRect(getMemDC(), &rect, brush); // 사각형에 브러쉬색으로 채우기
                 break;
-            case(CELL_TYPE::MOVEABLE):
+            case(CELL_TYPE::MOVEPATH):
                 brush = CreateSolidBrush(RGB(255, 255, 0)); // 색 설정
                 oldBrush = (HBRUSH)SelectObject(getMemDC(), brush);
                 FillRect(getMemDC(), &rect, brush); // 사각형에 브러쉬색으로 채우기
