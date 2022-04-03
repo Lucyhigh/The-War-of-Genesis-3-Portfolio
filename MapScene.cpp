@@ -7,9 +7,10 @@ HRESULT MapScene::init(void)
     _image = new Image;
     _image = IMAGEMANAGER->findImage("Map");
 	_buttonImage = *IMAGEMANAGER->findImage("MapButton");
-	_animation = new Animation;
 	_animation = ANIMATIONMANAGER->findAnimation("npcBar");
 	_animation->AniStart();
+	_aniCursor = ANIMATIONMANAGER->findAnimation("normalCursor");
+	_aniCursor->AniStart();
     _seaX = 0.0f;
     _seaY = -800.0f;
 	int buttonNum = 4;
@@ -114,10 +115,14 @@ void MapScene::render(void)
 				wcslen(_viMapButton->_textInfo), TA_CENTER, RGB(207, 207, 207));
 		}
 	}
+	Rectangle(getMemDC(), _moveButton[0].left,
+		_moveButton[0].top,
+		_moveButton[0].right,
+		_moveButton[0].bottom);
     Rectangle(getMemDC(), _moveButton[1].left,
         _moveButton[1].top,
         _moveButton[1].right,
         _moveButton[1].bottom);
-
+	IMAGEMANAGER->findImage("normalCursor")->aniRender(getMemDC(), _ptMouse.x, _ptMouse.y, _aniCursor);
     _camera->render();
 }

@@ -47,7 +47,7 @@ void FontManager::drawText(HDC hdc, int destX, int destY, char* fontName, int fo
 			fontSize,0,0,5,fontWidth,
 			0,0,0,
 			HANGEUL_CHARSET, 0,0,0,
-			VARIABLE_PITCH|FF_ROMAN| FW_BOLD, TEXT(fontName)
+			VARIABLE_PITCH|FF_ROMAN| FW_EXTRABOLD, TEXT(fontName)
 		);
 
 		auto oldFont = (HFONT)SelectObject(hdc, hFont);

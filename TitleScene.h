@@ -14,6 +14,7 @@ private:
     // 0001 스타트버튼 - 씬 리스트씬으로 넘어감
     // 0010 세이브화면
 	Animation* _animation;
+	Animation* _aniCursor;
 	Image* _image;
     vector<TitlebuttomInfo> _vTitleButton;
     vector<TitlebuttomInfo>::iterator _viTitleButton;

@@ -3,9 +3,12 @@
 
 HRESULT TitleScene::init(void)
 {
+	ShowCursor(false);
     _startBit = 0;
 	_animation = ANIMATIONMANAGER->findAnimation("TitleEfx");
 	_animation->AniStart();
+	_aniCursor = ANIMATIONMANAGER->findAnimation("normalCursor");
+	_aniCursor->AniStart();
 	_image= IMAGEMANAGER->findImage("TitleBg");
     _buttonSize = {140, 30};
     _SceneBoxSize = {140, 45};
@@ -152,11 +155,13 @@ void TitleScene::render(void)
     {
         IMAGEMANAGER->render("Devil", getMemDC());
     }
+	IMAGEMANAGER->findImage("normalCursor")->aniRender(getMemDC(), _ptMouse.x, _ptMouse.y, _aniCursor);
 
 	if (_isfadeOut)
 	{
 		IMAGEMANAGER->alphaRender("cutChange", getMemDC(), _fadeAlpha);
 	}
+
 }
 
 void TitleScene::fadeout()

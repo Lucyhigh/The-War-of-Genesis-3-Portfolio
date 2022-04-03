@@ -11,7 +11,7 @@ HRESULT FinalScene::init(void)
 	_gameUI = new GameUI;
 	_gameUI->init();
 
-	_animation = ANIMATIONMANAGER->findAnimation("normalCursor");
+	_aniCursor = ANIMATIONMANAGER->findAnimation("normalCursor");
 	_tileClick = ANIMATIONMANAGER->findAnimation("clickTile");
 	_tileClick->AniStart();
 	_turnMark = ANIMATIONMANAGER->findAnimation("playerMark");
@@ -106,29 +106,29 @@ void FinalScene::update(void)
 	_hpBar->setGauge(_currentHp, _maxHp);*/
     if (_mouseType != _beforeMouseType) 
     {
-        _animation->AniStop();
+        _aniCursor->AniStop();
         _beforeMouseType = _mouseType;
         switch (_mouseType)
         {
         case CELL_TYPE::NORMAL:
-            _animation = ANIMATIONMANAGER->findAnimation("normalCursor");
+            _aniCursor = ANIMATIONMANAGER->findAnimation("normalCursor");
             break;
         case CELL_TYPE::WALL:
-            _animation = ANIMATIONMANAGER->findAnimation("notMoveable");
+            _aniCursor = ANIMATIONMANAGER->findAnimation("notMoveable");
             break;
         case CELL_TYPE::ATTACKABLE:
-            _animation = ANIMATIONMANAGER->findAnimation("attackMark");
+            _aniCursor = ANIMATIONMANAGER->findAnimation("attackMark");
             _hpBar->setType(1);
 			_hpBar->update();
 
             break;
         case CELL_TYPE::START:
-            _animation = ANIMATIONMANAGER->findAnimation("normalCursor");
+            _aniCursor = ANIMATIONMANAGER->findAnimation("normalCursor");
 			_hpBar->setType(0);
 			_hpBar->update();
             break;
         }
-        _animation->AniStart();
+        _aniCursor->AniStart();
     }
     
 	if (_turnSystem->getStatus() == CHANGINGSTATUS::PLAYERTURN)
@@ -381,18 +381,18 @@ void FinalScene::render(void)
 			switch(cell->getType())
 			{
 			case CELL_TYPE::ATTACKABLE:
-				IMAGEMANAGER->findImage("attackMark")->aniRender(getMemDC(), _ptMouse.x, _ptMouse.y, _animation);
+				IMAGEMANAGER->findImage("attackMark")->aniRender(getMemDC(), _ptMouse.x, _ptMouse.y, _aniCursor);
 				_hpBar->render(1, left,top);
 				break;
 			case CELL_TYPE::WALL:
-				IMAGEMANAGER->findImage("notMoveable")->aniRender(getMemDC(), _ptMouse.x - 16, _ptMouse.y - 6, _animation);
+				IMAGEMANAGER->findImage("notMoveable")->aniRender(getMemDC(), _ptMouse.x - 16, _ptMouse.y - 6, _aniCursor);
 				break;
             case CELL_TYPE::START:
-				IMAGEMANAGER->findImage("normalCursor")->aniRender(getMemDC(), _ptMouse.x, _ptMouse.y, _animation);
+				IMAGEMANAGER->findImage("normalCursor")->aniRender(getMemDC(), _ptMouse.x, _ptMouse.y, _aniCursor);
 				_hpBar->render(0, left, top);
 				break;
 			default:
-				IMAGEMANAGER->findImage("normalCursor")->aniRender(getMemDC(), _ptMouse.x, _ptMouse.y, _animation);
+				IMAGEMANAGER->findImage("normalCursor")->aniRender(getMemDC(), _ptMouse.x, _ptMouse.y, _aniCursor);
 				break;
 			}
         }

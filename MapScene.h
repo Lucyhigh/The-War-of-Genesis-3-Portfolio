@@ -17,6 +17,7 @@ private:
 	Image _buttonImage;
     Image* _moveMark;
 	Animation* _animation;
+	Animation* _aniCursor;
     Camera* _camera;
     RECT _moveButton[2];
 	LPCWSTR _uiText[4];

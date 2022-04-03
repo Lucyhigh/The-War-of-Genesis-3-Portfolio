@@ -14,7 +14,7 @@ class FinalScene : public GameNode
 {
 private:
 	MapTileInfo* _mapTileInfo;
-	Animation* _animation;
+	Animation* _aniCursor;
 	Animation* _tileClick;
 	Animation* _turnMark;
 	ProgressBar* _hpBar;
