@@ -58,7 +58,7 @@ void Enemy::update(void)
     move();
     _minionHpBar->setX(_x - (_rc.right - _rc.left) / 2);
     _minionHpBar->setY(_y - 10 - (_rc.bottom - _rc.top) / 2);
-    _minionHpBar->update();
+//    _minionHpBar->update();
     _minionHpBar->setGauge(_currentHp, _maxHp);
 }
 
@@ -91,7 +91,7 @@ void Enemy::move(void)
 void Enemy::draw(void)
 {
     _image->frameRender(getMemDC(), _rc.left, _rc.top, _currentFrameX, _currentFrameY);
-    _minionHpBar->render();
+    //_minionHpBar->render();
 }
 
 void Enemy::animation(void)

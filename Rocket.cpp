@@ -65,7 +65,7 @@ void Rocket::update(void)
 	_rc = RectMakeCenter(_x, _y, _image->getWidth(), _image->getHeight());
 	_hpBar->setX(_x - (_rc.right - _rc.left) / 2);
 	_hpBar->setY(_y - 10 - (_rc.bottom - _rc.top) / 2);
-	_hpBar->update();
+	//_hpBar->update();
 	_hpBar->setGauge(_currentHp, _maxHp);
 
     if (KEYMANAGER->isOnceKeyDown(VK_F8))
@@ -172,7 +172,7 @@ void Rocket::render(void)
 	_shotgun->render();
 	_miniRocket->render();
 	_beam->render();
-	_hpBar->render();
+//	_hpBar->render();
 
 }
 

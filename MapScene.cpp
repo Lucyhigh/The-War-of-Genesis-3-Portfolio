@@ -3,6 +3,7 @@
 
 HRESULT MapScene::init(void)
 {
+	ShowCursor(false);//나중에 메인게임으로 이전예정
     _image = new Image;
     _image = IMAGEMANAGER->findImage("Map");
 	_buttonImage = *IMAGEMANAGER->findImage("MapButton");

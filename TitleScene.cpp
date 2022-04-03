@@ -28,16 +28,11 @@ HRESULT TitleScene::init(void)
         TitlebuttomInfo _sceneButtomInfo;
         POINT _buttomPos = { 200 + i * (_SceneBoxSize.x + 130),  WINSIZE_Y - 150 };
         _sceneButtomInfo._buttonRect = RectMakeCenter(_buttomPos.x, _buttomPos.y, _SceneBoxSize.x, _SceneBoxSize.y);
-        _sceneButtomInfo._textInfo = L"0";
+        _sceneButtomInfo._textInfo = L"";
         _sceneButtomInfo._index = SceneIndex;
         _vSceneButton.push_back(_sceneButtomInfo);
         SceneIndex++;
     }
-        
-        //_vSceneButton[i]._buttonRect = { _buttomPos , WINSIZE_Y - 80, 225 + _SceneBoxSize.x, _SceneBoxSize.y };
-       // _vSceneButton[1]._buttonRect = { 400 , WINSIZE_Y - 90, 400+_SceneBoxSize.x, WINSIZE_Y - 25 };
-        //_vSceneButton[i]._buttonRect = { 600 , WINSIZE_Y - 100, 600 +_SceneBoxSize.x, _SceneBoxSize.y };
-
 
     _isfadeOut = false;
 	_alpha = 0.0f;
@@ -115,7 +110,9 @@ void TitleScene::render(void)
     if (_startBit.none() == 1)
     {
         IMAGEMANAGER->render("TitleBg", getMemDC());
-		IMAGEMANAGER->findImage("TitleEfx")->aniRender(getMemDC(), CENTER_X - 110, CENTER_Y - 90,_animation);
+		IMAGEMANAGER->findImage("TitleEfx")->aniRender(getMemDC(), CENTER_X - 190, CENTER_Y - 140,_animation);
+		IMAGEMANAGER->alphaRender("cutChange", getMemDC(), 40);
+
         IMAGEMANAGER->alphaRender("TitleName",getMemDC(),_alpha);
 
         for (_viTitleButton = _vTitleButton.begin(); _viTitleButton != _vTitleButton.end(); ++_viTitleButton)

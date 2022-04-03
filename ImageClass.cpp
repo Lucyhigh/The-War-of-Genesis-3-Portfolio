@@ -44,11 +44,11 @@ HRESULT ImageClass::init(void)
 #pragma region Stage Scene
 	//Title
 	IMAGEMANAGER->addImage("TitleBg", "Resources/Images/BackGround/Title.bmp", WINSIZE_X, WINSIZE_Y);
-	IMAGEMANAGER->addFrameImage("TitleEfx", "Resources/Images/UI/titleEfx.bmp", 996, 225,4,1,true,RGB(4, 0, 4));// 4, 1,
+	IMAGEMANAGER->addFrameImage("TitleEfx", "Resources/Images/UI/titleEfx.bmp", 2241,2025,6,6,true,RGB(4, 0, 4));
 	IMAGEMANAGER->addImage("TitleName", "Resources/Images/UI/TitleGameName.bmp", WINSIZE_X, WINSIZE_Y, MGT);
 
 	//Map
-	IMAGEMANAGER->addImage("Map", "Resources/Images/UI/map.bmp", 1243, 1499, true, RGB(255,255,0));
+	IMAGEMANAGER->addImage("Map", "Resources/Images/UI/0002.bmp", 1657, 1737, true, RGB(255,255,0));
 	IMAGEMANAGER->addImage("Sea", "Resources/Images/UI/sea.bmp", WINSIZE_X, WINSIZE_Y);
 
 	//Scene List
@@ -76,7 +76,8 @@ HRESULT ImageClass::init(void)
 	IMAGEMANAGER->addImage("MapButton", "Resources/Images/UI/UI_buttonMap.bmp", 164,48, MGT);
 	IMAGEMANAGER->addImage("storyText", "Resources/Images/UI/storyText.bmp", 511, 111);
 	IMAGEMANAGER->addFrameImage("npcBar", "Resources/Images/UI/npcbar.bmp", 800, 91,8,1,MGT);
-	IMAGEMANAGER->addFrameImage("hpBar", "Resources/Images/UI/hpBar.bmp", 915, 49,15,1,true,RGB(0,44,0));//원작과 좀 달라서 수정필요
+	IMAGEMANAGER->addFrameImage("pHpBar", "Resources/Images/UI/pHpBar.bmp", 1440 * 0.2, 1200 * 0.2, 4, 4, true, RGB(0, 44, 0));
+	IMAGEMANAGER->addFrameImage("eHpBar", "Resources/Images/UI/eHpBar.bmp", 1440 * 0.2, 1200 * 0.2, 4, 4, true, RGB(0, 44, 0));
 
 	IMAGEMANAGER->addImage("moveTile", "Resources/Images/UI/moveable.bmp", 40, 32);
 	IMAGEMANAGER->addImage("attackTile", "Resources/Images/UI/attackable.bmp", 40, 32);
@@ -92,16 +93,17 @@ HRESULT ImageClass::init(void)
 #pragma region Animation
 	ANIMATIONMANAGER->addAnimation("sMovesheet", "sMovesheet", 0, 23, 5, false, true);
     //UI
-	ANIMATIONMANAGER->addAnimation("TitleEfx", "TitleEfx", 3, true, true);
+	ANIMATIONMANAGER->addAnimation("TitleEfx", "TitleEfx", 5, false, true);
 	ANIMATIONMANAGER->addAnimation("notMoveable", "notMoveable",5, false, true);
-	ANIMATIONMANAGER->addAnimation("turnMark", "turnMark", 5, true, true);
-	ANIMATIONMANAGER->addAnimation("playerMark", "playerMark", 5, true, true);
-	ANIMATIONMANAGER->addAnimation("enemyMark", "enemyMark", 5, true, true);
+	ANIMATIONMANAGER->addAnimation("turnMark", "turnMark", 5, false, true);
+	ANIMATIONMANAGER->addAnimation("playerMark", "playerMark", 5, false, true);
+	ANIMATIONMANAGER->addAnimation("enemyMark", "enemyMark", 5, false, true);
 	ANIMATIONMANAGER->addAnimation("attackMark", "attackMark", 7, false, true);
-    ANIMATIONMANAGER->addAnimation("npcBar", "npcBar", 10, true, true);
-    ANIMATIONMANAGER->addAnimation("hpBar", "hpBar", 7, false, false);
+    ANIMATIONMANAGER->addAnimation("npcBar", "npcBar", 10, false, true);
+    ANIMATIONMANAGER->addAnimation("pHpBar", "pHpBar", 10, false, false);
+    ANIMATIONMANAGER->addAnimation("eHpBar", "eHpBar", 10, false, false);
     ANIMATIONMANAGER->addAnimation("normalCursor", "normalCursor", 5, false, true);
-    ANIMATIONMANAGER->addAnimation("clickTile", "clickTile", 5, true, true);
+    ANIMATIONMANAGER->addAnimation("clickTile", "clickTile", 5, false, true);
 #pragma endregion
 	return S_OK;
 }

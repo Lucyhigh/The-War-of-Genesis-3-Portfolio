@@ -175,14 +175,15 @@ void Player::update(void)
                 IMAGEMANAGER->findImage("pRightAtt")->setFrameX(_indexB);
                 break;
             case PLAYERSTATE::LEFT:
-                _indexB++;
+                _indexB--;
                 IMAGEMANAGER->findImage("pLeftAtt")->setFrameY(1);
-                if (_indexB >= 4)
+                if (_indexB < 0)
                 {
-                    _indexB = 0;
+                    _indexB = 4;
                     _isAttack = true;
                     setPlayerIdle();
                 }
+				cout<<_indexB << endl;
                 IMAGEMANAGER->findImage("pLeftAtt")->setFrameX(_indexB);
                 break;
             case PLAYERSTATE::TOP:
@@ -303,16 +304,16 @@ void Player::render(void)
         switch (_imageState)
         {
         case PLAYERSTATE::RIGHT:
-            IMAGEMANAGER->frameRender("pRightAtt", getMemDC(), left + addAttPos.x-3, top + addAttPos.y);
+            IMAGEMANAGER->frameRender("pRightAtt", getMemDC(), left -43, top -30);
             break;
         case PLAYERSTATE::LEFT:
-            IMAGEMANAGER->frameRender("pLeftAtt", getMemDC(), left + addAttPos.x+3, top + addAttPos.y);
+            IMAGEMANAGER->frameRender("pLeftAtt", getMemDC(), left -37, top -30);
             break;
         case PLAYERSTATE::TOP:
-            IMAGEMANAGER->frameRender("pUpAtt", getMemDC(), left + addAttPos.x, top);
+            IMAGEMANAGER->frameRender("pUpAtt", getMemDC(), left -30, top-40);
             break;
         case PLAYERSTATE::BOTTOM:
-            IMAGEMANAGER->frameRender("pDownAtt", getMemDC(), left + addAttPos.x, top + addAttPos.y);
+            IMAGEMANAGER->frameRender("pDownAtt", getMemDC(), left-30, top + -40);
             break;
         }
     }

@@ -240,13 +240,11 @@ void Saladin::update(void)
 		}
 		if (_cdt > 5)
 		{
-			cout << "피격당함" << endl;
 			setEnemyIdle();
 			_cdt = 0;
 			_isDamage = false;
 		}
         //01000 죽음
-		cout << _cdt << ","<< _tmp <<endl;
     }
      _rcSaladin = RectMakeCenter(_saladinPos.x, _saladinPos.y, _image->getFrameWidth(), _image->getFrameHeight());
 }

@@ -2,7 +2,7 @@
 #include "GameNode.h"
 #include "TurnSystem.h"
 #include "Player.h"
-
+#include "ProgressBar.h"
 #include "MapTileInfo.h"
 #include "GameUI.h"
 #include "Saladin.h"
@@ -17,7 +17,7 @@ private:
 	Animation* _animation;
 	Animation* _tileClick;
 	Animation* _turnMark;
-	Animation* _hpbar;
+	ProgressBar* _hpBar;
 	Player* _player;
 	TurnSystem* _turnSystem;
 	GameUI* _gameUI;
@@ -26,7 +26,7 @@ private:
 	Saladin* _saladin;
 	Camera* _camera;
 	AStar::Generator* _generator;
-    LPCWSTR _uiText[3];
+    LPCWSTR _uiText[4];
 	POINT _pMoveStart;
 	POINT _endPoint;
 	POINT _enemyPathGoal;
@@ -36,6 +36,9 @@ private:
 	RECT _endRc;
 	RECT _moveRc;
 	vector<POINT> _check;
+	//float _x, _y; //체력바 위치
+	float _currentHp;
+	float _maxHp;
 	float _lerpPercentage;
 	float _tileAlpha;
 	int _mouseIndex;
@@ -62,6 +65,6 @@ public:
 	void Attack();
 	POINT lerp(POINT start, POINT end, float percentage);
 public:
-    FinalScene() : _uiText { L"형제여!", L" 평 지 ", L"10000" } {}
+    FinalScene() : _uiText { L"형제여!", L" 평 지 ", L"99999",L"eld" } {}
 	~FinalScene() {}
 };

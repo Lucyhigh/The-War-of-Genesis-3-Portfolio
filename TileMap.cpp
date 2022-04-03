@@ -31,18 +31,8 @@ void TileMap::release(void)
 
 void TileMap::update(void)
 {
-	if (KEYMANAGER->isOnceKeyDown('3'))
-	{
-		tileNum = 3;
-		//cout << "tileNum " << tileNum << endl;
-
-	}
-
-
-
 	for (_viTileMap=_vTileMap.begin() ; _viTileMap != _vTileMap.end(); ++_viTileMap)
 	{
-
 		for (int i = 0; i < tileNum; i++)
 		{
 			for (int j = 0; j < tileNum; j++)
@@ -52,11 +42,7 @@ void TileMap::update(void)
 		}
 			_viTileMap->img->setX(_viTileMap->rc.left);
 			_viTileMap->img->setY(_viTileMap->rc.top);
-		//	cout << "이터 rc.top "<< _viTileMap->rc.top << endl;
-
-
 	}
-
 }
 
 void TileMap::render(void)
@@ -66,10 +52,7 @@ void TileMap::render(void)
 		if (_viTileMap->onTile) 
 		{
 			_viTileMap->img->render(getMemDC(), _viTileMap->img->getX(), _viTileMap->img->getY() );
-			//cout << "그림  rc.top / getY() " << _viTileMap->rc.top  << "," << _viTileMap->img->getY() << endl;
 		}
-
 		rcMake(getMemDC(), _viTileMap->rc);
 	}
-
 }

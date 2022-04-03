@@ -3,10 +3,11 @@
 
 HRESULT FinalScene::init(void)
 {
-    ShowCursor(false);
+    ShowCursor(false);//나중에 메인게임으로 이전예정
 
 	_mapTileInfo = new MapTileInfo;
 	_mapTileInfo->init();
+
 	_gameUI = new GameUI;
 	_gameUI->init();
 
@@ -15,7 +16,6 @@ HRESULT FinalScene::init(void)
 	_tileClick->AniStart();
 	_turnMark = ANIMATIONMANAGER->findAnimation("playerMark");
 	_turnMark->AniStart();
-    _hpbar = ANIMATIONMANAGER->findAnimation("hpBar");
 	_image = IMAGEMANAGER->findImage("Final");
 
 	_cells = _mapTileInfo->getCell();
@@ -53,6 +53,11 @@ HRESULT FinalScene::init(void)
 	_lerpPercentage = 0.0f;
 	_enemyPathGoal = { 0,0 };
 
+	_hpBar = new ProgressBar;
+	_hpBar->init(0,0, IMAGEMANAGER->findImage("pHpBar")->getFrameWidth(), IMAGEMANAGER->findImage("pHpBar")->getFrameHeight());
+	_currentHp = 10;
+	_maxHp = 10;
+
 	_turnSystem = new TurnSystem();
 	_turnSystem->init();
 	_enemyBit = 0;
@@ -76,6 +81,9 @@ void FinalScene::release(void)
 	_saladin->release();
 	SAFE_DELETE(_saladin);
 
+	_hpBar->release();
+	SAFE_DELETE(_hpBar);
+
 	_camera->release();
 	SAFE_DELETE(_camera);
 }
@@ -88,15 +96,17 @@ void FinalScene::update(void)
 		_turnSystem->changeToEnemy();
 
 	}
-	if (KEYMANAGER->isOnceKeyDown('N'))
+	else if (KEYMANAGER->isOnceKeyDown('N'))
 	{
 		_turnSystem->changeToPlayer();
 	}
-
+	/*_hpBar->setX(_x - (_rc.right - _rc.left) / 2);
+	_hpBar->setY(_y - 10 - (_rc.bottom - _rc.top) / 2);
+	_hpBar->update();
+	_hpBar->setGauge(_currentHp, _maxHp);*/
     if (_mouseType != _beforeMouseType) 
     {
         _animation->AniStop();
-        _hpbar->AniStop();
         _beforeMouseType = _mouseType;
         switch (_mouseType)
         {
@@ -108,19 +118,22 @@ void FinalScene::update(void)
             break;
         case CELL_TYPE::ATTACKABLE:
             _animation = ANIMATIONMANAGER->findAnimation("attackMark");
-            _hpbar = ANIMATIONMANAGER->findAnimation("hpbar");
+            _hpBar->setType(1);
+			_hpBar->update();
+
             break;
         case CELL_TYPE::START:
-            _hpbar = ANIMATIONMANAGER->findAnimation("hpbar");
+            _animation = ANIMATIONMANAGER->findAnimation("normalCursor");
+			_hpBar->setType(0);
+			_hpBar->update();
             break;
         }
         _animation->AniStart();
-        _hpbar->AniStart();
     }
     
 	if (_turnSystem->getStatus() == CHANGINGSTATUS::PLAYERTURN)
 	{
-		// : 대기- 대기이미지 타일클릭시 이동가능상태 /메뉴창 열수있고 공격타일 만들수잇음
+		// 대기 - 대기이미지 타일클릭시 이동가능상태 /메뉴창 열수있고 공격타일 만들수잇음
 		if (_turnSystem->isPlayerIdle() == 1)
 		{
 			POINT playerPos = { _player->getPlayerPosX()-TILESIZEX,_player->getPlayerPosY() };
@@ -136,15 +149,15 @@ void FinalScene::update(void)
 					}
 					_pMoveStart = { cell->getCellX(), cell->getCellY() };
 				}
-				else if (cell->getType() == CELL_TYPE::START)
+				else if(cell->getType() == CELL_TYPE::START)
 				{
 					cell->setType(CELL_TYPE::NORMAL);
 				}
                 
 				POINT cameraMouse = {
-								  _ptMouse.x + _camera->getScreenRect().left,
-								  _ptMouse.y + _camera->getScreenRect().top
-				};
+										_ptMouse.x + _camera->getScreenRect().left,
+										_ptMouse.y + _camera->getScreenRect().top
+									};
 				if (PtInRect(&cell->getRect(), cameraMouse))
 				{
 					if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
@@ -176,7 +189,6 @@ void FinalScene::update(void)
 							break;
 						}
 					}
-                   
 				}
 			}
 
@@ -331,11 +343,14 @@ void FinalScene::render(void)
         WINSIZE_X - 115, 17, "가을체", 19, 13, _uiText[0],
         wcslen(_uiText[0]), TA_CENTER, RGB(255, 255, 255));
     FONTMANAGER->drawText(getMemDC(),
-        WINSIZE_X - 55, 40, "가을체", 23, 13, _uiText[1],
+        WINSIZE_X - 50, 40, "가을체", 21, 13, _uiText[1],
         wcslen(_uiText[1]), TA_CENTER, RGB(255, 255, 255));
     FONTMANAGER->drawText(getMemDC(),
-        WINSIZE_X - 50, 80, "가을체", 18, 13, _uiText[2],
+        WINSIZE_X - 50, 80, "가을체", 17, 13, _uiText[2],
         wcslen(_uiText[2]), TA_CENTER, RGB(255, 255, 255));
+	FONTMANAGER->drawText(getMemDC(),
+		WINSIZE_X - 10, 82, "가을체", 15, 13, _uiText[3],
+		wcslen(_uiText[2]), TA_CENTER, RGB(255, 255, 255));
     char cellIndex[512];
 
 	for (auto cellsIter = _cells->begin(); cellsIter != _cells->end(); ++cellsIter)
@@ -350,7 +365,7 @@ void FinalScene::render(void)
 		if (PtInRect(&cell->getRect(), cameraMouse))
 		{
 			sprintf(cellIndex, "%d", cell->getCellX());
-			TextOut(getMemDC(), WINSIZE_X - 210, 80, cellIndex, strlen(cellIndex));
+			TextOut(getMemDC(), WINSIZE_X - 195, 80, cellIndex, strlen(cellIndex));
 			sprintf(cellIndex, "%d", cell->getCellY());
 			TextOut(getMemDC(), WINSIZE_X - 130, 65, cellIndex, strlen(cellIndex));
 			int zPos = cell->getCellX() - cell->getCellY();
@@ -360,31 +375,30 @@ void FinalScene::render(void)
 			sprintf(cellIndex, "%d", zPos);//z축위치
 			TextOut(getMemDC(), WINSIZE_X - 150, 45, cellIndex, strlen(cellIndex));
 
+			int left = cell->getRect().left - 20 - cameraLeft;
+			int top = cell->getRect().top - TILESIZEY - cameraTop;
+			_mouseType = cell->getType();
 			switch(cell->getType())
 			{
 			case CELL_TYPE::ATTACKABLE:
-				_mouseType = cell->getType();
 				IMAGEMANAGER->findImage("attackMark")->aniRender(getMemDC(), _ptMouse.x, _ptMouse.y, _animation);
-				IMAGEMANAGER->findImage("hpBar")->aniRender(getMemDC(), cell->getCellX()*TILESIZEX - cameraLeft,
-                    cell->getCellY()*TILESIZEY - cameraTop, _hpbar);
+				_hpBar->render(1, left,top);
 				break;
 			case CELL_TYPE::WALL:
-				_mouseType = cell->getType();
 				IMAGEMANAGER->findImage("notMoveable")->aniRender(getMemDC(), _ptMouse.x - 16, _ptMouse.y - 6, _animation);
 				break;
             case CELL_TYPE::START:
-				IMAGEMANAGER->findImage("hpBar")->aniRender(getMemDC(), cell->getCellX()*TILESIZEX - cameraLeft,
-                    cell->getCellY()*TILESIZEY - cameraTop, _hpbar);
+				IMAGEMANAGER->findImage("normalCursor")->aniRender(getMemDC(), _ptMouse.x, _ptMouse.y, _animation);
+				_hpBar->render(0, left, top);
 				break;
 			default:
-				_mouseType = cell->getType();
 				IMAGEMANAGER->findImage("normalCursor")->aniRender(getMemDC(), _ptMouse.x, _ptMouse.y, _animation);
 				break;
 			}
         }
 	}
 
-	POINT MarkPos = { -23,-58 };
+	POINT MarkPos = { -23,-63 };
 	switch (_turnSystem->getStatus())
 	{
 	case CHANGINGSTATUS::PLAYERTURN:
@@ -587,7 +601,7 @@ void FinalScene::changeImage()
 			else if (compareBtoAY > 0 && compareBtoAX == 0) _player->setImageStage(PLAYERSTATE::BOTTOM);
 			else if (compareBtoAY < 0 && compareBtoAX == 0) _player->setImageStage(PLAYERSTATE::TOP);
 		}
-		else if (_player->getPlayerStateBit(2) == 1)
+		else if (_player->getPlayerStateBit(1) == 1 || _player->getPlayerStateBit(2) == 1)
 		{
 			int compareBtoAX = _saladin->getSaladinPosX() - _player->getPlayerPosX();
 			int compareBtoAY = _saladin->getSaladinPosY() - _player->getPlayerPosY();
@@ -610,7 +624,7 @@ void FinalScene::changeImage()
             else if (compareBtoAY > 0 && compareBtoAX == 0) _saladin->setImageStage(SALADINSTATE::BOTTOM);
             else if (compareBtoAY < 0 && compareBtoAX == 0) _saladin->setImageStage(SALADINSTATE::TOP);
         }
-        else if (_saladin->getEnemyStateBit(1) == 1)
+        else if (_saladin->getEnemyStateBit(1) == 1 || _saladin->getEnemyStateBit(2) == 1)
         {
             int compareBtoAX = _player->getPlayerPosX() - _saladin->getSaladinPosX();
             int compareBtoAY = _player->getPlayerPosY() - _saladin->getSaladinPosY();
@@ -691,7 +705,7 @@ void FinalScene::find4WaysTile()
 			{ _playerPathGoal.x,_playerPathGoal.y });
 
 		_check.clear();
-		int pathNum = 10;
+		int pathNum = 10;//나중에 타일로 정해줄거임
 		int pathSize = path.size() < pathNum ? path.size() : pathNum;
 		for (int i = path.size() - pathSize; i < path.size(); ++i)
 		{
@@ -699,6 +713,7 @@ void FinalScene::find4WaysTile()
 			_check.push_back({ coordinate.x, coordinate.y });
 		}
 		_moveIndex = _check.size() - 1;
+		//show4Tile();
 		_turnSystem->setPlayerBit(1);
 	}
 	else if (_turnSystem->getStatus() == CHANGINGSTATUS::ENEMYTURN)
