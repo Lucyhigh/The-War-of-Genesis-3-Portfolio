@@ -3,6 +3,14 @@
 
 HRESULT ImageClass::init(void)
 {
+#pragma region Script Image
+	IMAGEMANAGER->addImage("store", "Resources/Images/UI/store.bmp", 300,333, MGT);
+	IMAGEMANAGER->addImage("weaponShop", "Resources/Images/UI/weaponShop.bmp", 300, 360, MGT);
+	IMAGEMANAGER->addImage("vermont", "Resources/Images/UI/vermont.bmp", 259,427,MGT);
+	IMAGEMANAGER->addImage("saladin", "Resources/Images/UI/saladin.bmp", 400,480,MGT);
+	IMAGEMANAGER->addImage("sheherazade", "Resources/Images/UI/sheherazade.bmp", 424,422, MGT);
+
+#pragma endregion
 #pragma region Player Image
 	//Idle
 	IMAGEMANAGER->addFrameImage("pRightIdle", "Resources/Images/Player/rightIdle.bmp", 185,75, 5, 1, MGT);
@@ -48,7 +56,7 @@ HRESULT ImageClass::init(void)
 	IMAGEMANAGER->addImage("TitleName", "Resources/Images/UI/TitleGameName.bmp", WINSIZE_X, WINSIZE_Y, MGT);
 
 	//Map
-	IMAGEMANAGER->addImage("Map", "Resources/Images/UI/0002.bmp", 1657, 1737, true, RGB(255,255,1));
+	IMAGEMANAGER->addImage("Map", "Resources/Images/UI/map.bmp", 1657, 1737, true, RGB(255,252,0));
 	IMAGEMANAGER->addImage("Sea", "Resources/Images/UI/sea.bmp", WINSIZE_X, WINSIZE_Y);
 
 	//Scene List
@@ -56,6 +64,13 @@ HRESULT ImageClass::init(void)
 	// Stage 1
 	IMAGEMANAGER->addImage("Field", "Resources/Images/BackGround/Field.bmp", 2120, 1536);
 	// Stage 2
+	IMAGEMANAGER->addImage("storyStart", "Resources/Images/BackGround/storyStart.bmp", WINSIZE_X, WINSIZE_Y);
+	IMAGEMANAGER->addImage("battleBefore", "Resources/Images/BackGround/battleBefore.bmp", WINSIZE_X, WINSIZE_Y);
+	IMAGEMANAGER->addImage("battleAfter1", "Resources/Images/BackGround/battleAfter1.bmp", WINSIZE_X, WINSIZE_Y);
+	IMAGEMANAGER->addImage("battleAfter2", "Resources/Images/BackGround/battleAfter2.bmp", WINSIZE_X, WINSIZE_Y);
+	IMAGEMANAGER->addImage("battleAfter3", "Resources/Images/BackGround/battleAfter3.bmp", WINSIZE_X, WINSIZE_Y);
+	IMAGEMANAGER->addFrameImage("deadHer", "Resources/Images/UI/story/deadHer.bmp", 258,75,3,1, true, RGB(72, 221, 157));
+	IMAGEMANAGER->addFrameImage("truth", "Resources/Images/UI/story/truth.bmp", 432, 80,6,1, true, RGB(72, 221, 157));
 	// Stage 3
 	IMAGEMANAGER->addImage("Final", "Resources/Images/BackGround/Final.bmp", 1557, 1080);
 #pragma endregion
@@ -71,6 +86,7 @@ HRESULT ImageClass::init(void)
 	IMAGEMANAGER->addImage("cutChange", "Resources/Images/BackGround/cutChange.bmp", WINSIZE_X, WINSIZE_Y);
 	IMAGEMANAGER->addImage("curMap", "Resources/Images/UI/curMap.bmp", 241, 111, MGT);
 	IMAGEMANAGER->addImage("introtext", "Resources/Images/UI/introtext.bmp", 230, 105);
+	IMAGEMANAGER->addImage("storyText", "Resources/Images/UI/storyText.bmp", 511*1.33,111 * 1.33);
 	IMAGEMANAGER->addImage("mapInfoAll", "Resources/Images/UI/mapInfoAll.bmp", 230, 105);
 	IMAGEMANAGER->addImage("button", "Resources/Images/UI/UI_button.bmp", 102, 28, MGT);
 	IMAGEMANAGER->addImage("MapButton", "Resources/Images/UI/UI_buttonMap.bmp", 164,48, MGT);

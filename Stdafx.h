@@ -9,10 +9,10 @@
 
 #pragma comment(linker,"/entry:WinMainCRTStartup /subsystem:console")
 #pragma comment(lib,"Winmm.lib")
-//#pragma comment(lib,"lib/FMOD/fmodex_vc.lib")
+#pragma comment(lib,"lib/FMOD/fmodex_vc.lib")
 #pragma comment (lib, "Jsoncpp/lib/json_vc71_libmtd.lib")
 
-//#include "inc/FMOD/fmod.hpp"
+#include "inc/FMOD/fmod.hpp"
 #include "Jsoncpp/inc/json.h"
 
 #pragma comment (lib,"msimg32.lib")
@@ -54,7 +54,7 @@ using namespace std;
 #include "TextDataManager.h"
 #include "SceneManager.h"
 #include "AnimationManager.h"
-//#include "SoundManager.h"
+#include "SoundManager.h"
 #include "JsonSaveLoader.h"
 
 using namespace MY_UTIL;
@@ -69,30 +69,18 @@ using namespace MY_UTIL;
 #define TEXTDATAMANAGER TextDataManager::getSingleton()
 #define SCENEMANAGER SceneManager::getSingleton()
 #define ANIMATIONMANAGER AnimationManager::getSingleton()
-//#define SOUNDMANAGER SoundManager::getSingleton()
+#define SOUNDMANAGER SoundManager::getSingleton()
 #define JSONDATAMANAGER JsonSaveLoader::getSingleton()
 //============================
 
 #define WINNAME		 (LPTSTR)(TEXT("WindowsAPI"))
 
-//#define FULLSCREEN
-
-#ifdef FULLSCREEN
-#define WINSTART_X	 1920 // ����Ϳ� ���� �ٸ� 
-#define WINSTART_Y	 1080
-// GetSystemMetrics ���ڷ� ���޵Ǵ� �ý��� ���� ���� ��Ȳ
-// ��SM_CXSCREEN / SM_CYSCREEN :  ���� ȭ�� �ػ� X, Y�� ��ȯ 
-#define WINSIZE_X	 GetSystemMetrics(SM_CXSCREEN)
-#define WINSIZE_Y	 GetSystemMetrics(SM_CYSCREEN)
-#define WINSTYLE	 WS_POPUPWINDOW | WS_MAXWIZE
-//1200*800
-#else
 #define WINSTART_X	 200
 #define WINSTART_Y	 0
 #define WINSIZE_X	 960
 #define WINSIZE_Y	 720
 #define WINSTYLE	 WS_CAPTION  | WS_SYSMENU   // WS_CAPTION  | WS_SYSMENU |WS_POPUP | WS_BORDER | WS_SYSMENU 
-#endif 
+
 
 
 

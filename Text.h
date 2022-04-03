@@ -2,7 +2,12 @@
 struct tagText
 {
 	LPCWSTR name;
-	vector<string> ImageVec;
-    vector<string> soundVec;
+	vector<string> imageVec;
 	LPCWSTR script;
+};
+
+struct tagBgImage
+{
+	int _textIndex;
+	string _fileName;
 };

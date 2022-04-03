@@ -5,6 +5,8 @@ HRESULT TitleScene::init(void)
 {
 	ShowCursor(false);
     _startBit = 0;
+	TEMPSOUNDMANAGER->addMp3FileWithKey("changeScene", "Resources/Sounds/changeScene.mp3");
+	TEMPSOUNDMANAGER->addMp3FileWithKey("History of Absolution", "Resources/Sounds/History of Absolution.mp3");
 	_animation = ANIMATIONMANAGER->findAnimation("TitleEfx");
 	_animation->AniStart();
 	_aniCursor = ANIMATIONMANAGER->findAnimation("normalCursor");
@@ -48,6 +50,7 @@ void TitleScene::release(void){
 
 void TitleScene::update(void)
 {
+	TEMPSOUNDMANAGER->playSoundWithKey("History of Absolution");
     // 0000 타이틀화면
     if (_startBit.none() == 1)
     {
@@ -63,10 +66,12 @@ void TitleScene::update(void)
                 {
                 case 0:
                     _isfadeOut = true;
+					TEMPSOUNDMANAGER->playSoundWithKey("changeScene");
                     break;
                 case 1:
                     _startBit.reset();
                     _startBit.set(1);
+					TEMPSOUNDMANAGER->playSoundWithKey("changeScene");
                     break;
                 case 2:
                     PostQuitMessage(0);
@@ -86,7 +91,7 @@ void TitleScene::update(void)
                 {
                 case 0:
                     _isfadeOut = true;
-					
+					TEMPSOUNDMANAGER->playSoundWithKey("changeScene");
                     break;
                 }
             }
@@ -98,6 +103,7 @@ void TitleScene::update(void)
 		if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 		{
 			_isfadeOut = true;
+			TEMPSOUNDMANAGER->playSoundWithKey("changeScene");
 		}
     }
 	
@@ -125,7 +131,7 @@ void TitleScene::render(void)
                 FONTMANAGER->drawText(getMemDC(), 
                     (_viTitleButton->_buttonRect.left + _viTitleButton->_buttonRect.right) / 2,
                     _viTitleButton->_buttonRect.top , "가을체", 28, 13, _viTitleButton->_textInfo,
-                    wcslen(_viTitleButton->_textInfo), TA_CENTER, RGB(170, 170, 170));
+                    wcslen(_viTitleButton->_textInfo), TA_CENTER, RGB(170, 170, 170));//가을체
             }
             else
             {
@@ -181,11 +187,11 @@ void TitleScene::fadeout()
 			}
 			else if (_startBit.test(0) == 1)
 			{
-				SCENEMANAGER->changeScene("final");
+				SCENEMANAGER->changeScene("map");
 			}
 			else if (_startBit.test(1) == 1)
 			{
-				SCENEMANAGER->changeScene("map");
+				SCENEMANAGER->changeScene("second");
 			}
 		}
 	}

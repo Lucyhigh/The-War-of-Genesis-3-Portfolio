@@ -31,6 +31,8 @@ private:
 	POINT _endPoint;
 	POINT _enemyPathGoal;
 	POINT _playerPathGoal;
+    CELL_TYPE _mouseType;
+    CELL_TYPE _beforeMouseType;
 
 	RECT _mouseRc;
 	RECT _endRc;
@@ -45,10 +47,7 @@ private:
 	int _endPointIndex;
 	int _moveIndex;
 	int _count;
-
 	int _enemyBit;
-    CELL_TYPE _mouseType;
-    CELL_TYPE _beforeMouseType;
 
 public:
 	HRESULT init(void);
@@ -64,7 +63,8 @@ public:
 	void find4WaysTile();
 	void Attack();
 	POINT lerp(POINT start, POINT end, float percentage);
+	bool getMoveSecond();
 public:
-    FinalScene() : _uiText { L"형제여!", L" 평 지 ", L"99999",L"eld" } {}
+    FinalScene() : _uiText { L"형제여!", L" 평 지 ", L"99999",L"eld" }{}
 	~FinalScene() {}
 };

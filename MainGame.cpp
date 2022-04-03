@@ -30,12 +30,12 @@ HRESULT MainGame::init(void)
 	//Scene
 	SCENEMANAGER->addScene("title", new TitleScene);
 	SCENEMANAGER->addScene("first", new FirstScene);
-	SCENEMANAGER->addScene("secind", new SecondScene);
+	SCENEMANAGER->addScene("second", new SecondScene);
 	SCENEMANAGER->addScene("final", new FinalScene);
 	SCENEMANAGER->addScene("ending", new EndingScene);
 	SCENEMANAGER->addScene("map", new MapScene);
 
-    SCENEMANAGER->changeScene("title");
+    SCENEMANAGER->changeScene("second");
 	return S_OK;
 }
 
