@@ -43,7 +43,8 @@ private:
 	RECT _endRc;
 	RECT _moveRc;
 	vector<POINT> _check;
-	//queue<tagQMoveTile> _qMoveTile;
+	queue<pair<int,Cell*>> _qMoveTile;
+    vector<Cell*> _vMoveableTile;
 	//float _x, _y; //체력바 위치
 	float _currentHp;
 	float _maxHp;
@@ -71,6 +72,11 @@ public:
 	void showClickTile();
 	void find4WaysTile();
 	void Attack();
+    //타일 4개를 여기에 넣을거임
+    void computeShowMoveableTile(int range,Cell* cell,bool isMoveable);
+    //여기안에 큐에 쌓여야함;;타일 정보를 큐에 쌓을거임
+    void startShowMoveableTile(int range,Cell* cell,bool isMoveable);
+
 	POINT lerp(POINT start, POINT end, float percentage);
 public:
     FinalScene() : _uiText { L"형제여!", L" 평 지 ", L"99999",L"eld" }{}

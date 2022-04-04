@@ -251,7 +251,6 @@ void Saladin::update(void)
         //01000 Á×À½
     }
      _rcSaladin = RectMakeCenter(_saladinPos.x, _saladinPos.y, _image->getFrameWidth(), _image->getFrameHeight());
-	cout << "cdt : "<<_cdt << " _tmp : "<< _tmp << endl;
 }
 
 void Saladin::render(void)

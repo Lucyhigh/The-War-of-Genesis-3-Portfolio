@@ -24,8 +24,8 @@ HRESULT MainGame::init(void)
 
 	SCENEMANAGER->addScene("inven", new Inventory);
 	SCENEMANAGER->addScene("store", new Store);
-	//SCENEMANAGER->addScene("ÇÈ¼¿", new PixelScene);
-	//SCENEMANAGER->addScene("»ç¿îµå", new SoundScene);
+	//SCENEMANAGER->addScene("pixel", new PixelScene);
+	//SCENEMANAGER->addScene("sound", new SoundScene);
 	SCENEMANAGER->addScene("json", new JsonDataScene);
 	//Scene
 	SCENEMANAGER->addScene("title", new TitleScene);
@@ -35,7 +35,7 @@ HRESULT MainGame::init(void)
 	SCENEMANAGER->addScene("ending", new EndingScene);
 	SCENEMANAGER->addScene("map", new MapScene);
 
-    SCENEMANAGER->changeScene("title");
+    SCENEMANAGER->changeScene("final");
 	return S_OK;
 }
 
