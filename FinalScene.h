@@ -32,7 +32,7 @@ private:
 	Camera* _camera;
 	AStar::Generator* _generator;
     LPCWSTR _uiText[4];
-	POINT _pMoveStart;
+	Cell* _cMoveStart;
 	POINT _endPoint;
 	POINT _enemyPathGoal;
 	POINT _playerPathGoal;
@@ -69,7 +69,7 @@ public:
 	void rectMoveToPath();
 	void curAstar();
     void changeImage();
-	void showClickTile();
+	//void showClickTile();
 	void find4WaysTile();
 	void Attack();
     //타일 4개를 여기에 넣을거임

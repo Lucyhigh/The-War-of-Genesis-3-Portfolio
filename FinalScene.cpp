@@ -136,12 +136,16 @@ void FinalScene::update(void)
 		// 대기 - 대기이미지 타일클릭시 이동가능상태 /메뉴창 열수있고 공격타일 만들수잇음
 		if (_turnSystem->isPlayerIdle() == 1)
 		{
-			if (KEYMANAGER->isToggleKey(VK_LBUTTON))
+			if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 			{
-                _isMoveTileOn = true;//원래는 이동 후 공격 타일이 가능해야함
-				showClickTile();//일단 공격 타일부터
+				_tileAlpha = 200;
+				if (_tileAlpha < 0) _tileAlpha = 0;
+                _isMoveTileOn = true;
+				
+				//원래는 이동 후 공격 타일이 가능해야함
+				//showClickTile();//일단 공격 타일부터
 			}
-            cout<< "_isMoveTileOn : "<< _isMoveTileOn <<endl;
+            //cout<< "_isMoveTileOn : "<< _isMoveTileOn <<endl;
 
 			POINT playerPos = { _player->getPlayerPosX()-TILESIZEX, _player->getPlayerPosY()};
 
@@ -154,8 +158,8 @@ void FinalScene::update(void)
 					if (cell->getType() != CELL_TYPE::WALL)
 					{
 						cell->setType(CELL_TYPE::START);
+						_cMoveStart = cell;
 					}
-					_pMoveStart = { cell->getCellX(), cell->getCellY() };
 				}
 				else if(cell->getType() == CELL_TYPE::START)
 				{
@@ -167,16 +171,16 @@ void FinalScene::update(void)
 										_ptMouse.y + _camera->getScreenRect().top
 									};
 
-				/*if (PtInRect(&cell->getRect(), cameraMouse))
+				if (PtInRect(&cell->getRect(), cameraMouse))
 				{
-					if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+					if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
 					{
-						if (cell->getType() == CELL_TYPE::NORMAL)
+						if (cell->getType() == CELL_TYPE::MOVEABLE)
 						{
 							cell->setType(CELL_TYPE::GOAL);
 							_endPoint = { cell->getRect().left, cell->getRect().top };
 
-							auto path = _generator->findPath({ _pMoveStart.x,_pMoveStart.y },
+							auto path = _generator->findPath({ _cMoveStart->getCellX(),_cMoveStart->getCellY() },
 								{ cell->getCellX(),cell->getCellY() });
 							_check.clear();
 							for (auto &coordinate : path)
@@ -198,7 +202,7 @@ void FinalScene::update(void)
 							break;
 						}
 					}
-				}*/
+				}
 			}
 
             POINT enemyPos = { _saladin->getSaladinPosX() - TILESIZEX, _saladin->getSaladinPosY() };//
@@ -326,7 +330,9 @@ void FinalScene::update(void)
 	_saladin->update();
 	if (_isMoveTileOn)
 	{
-		showClickTile();
+		//showClickTile();
+		startShowMoveableTile(2, _cMoveStart, false);
+		_isMoveTileOn = false;
 	}
 }
 
@@ -346,7 +352,8 @@ void FinalScene::render(void)
 		drawMapCellInfo();
 	}
 	AstarTileInfo();
-
+	//IMAGEMANAGER->alphaRender("moveTile", getMemDC(), (int)&rect.left, (int)&rect.top, _tileAlpha);//알파값도 나오는 순으로 돌려주고싶다
+	//IMAGEMANAGER->alphaRender("attackTile", getMemDC(), (int)&rect.left, (int)&rect.top, _tileAlpha);
 	_saladin->render();
     _player->render();
     _gameUI->render();
@@ -427,7 +434,7 @@ void FinalScene::render(void)
 	}
 }
 
-void FinalScene::drawMapCellInfo()
+void FinalScene::drawMapCellInfo()//디버그
 {
 	char cellIndex[1024];
 	SetTextColor(getMemDC(), RGB(0, 0, 0));
@@ -465,7 +472,9 @@ void FinalScene::drawMapCellInfo()
 			FillRect(getMemDC(), &rect, brush);
 			break;
 		case(CELL_TYPE::MOVEABLE):
-			IMAGEMANAGER->alphaRender("moveTile", getMemDC(), (int)&rect.left, (int)&rect.top, _tileAlpha);//알파값도 나오는 순으로 돌려주고싶다
+			brush = CreateSolidBrush(RGB(205, 205, 100));
+			oldBrush = (HBRUSH)SelectObject(getMemDC(), brush);
+			FillRect(getMemDC(), &rect, brush);
 			break;
         case(CELL_TYPE::MOVEPATH):
             brush = CreateSolidBrush(RGB(205, 255, 100));
@@ -473,8 +482,6 @@ void FinalScene::drawMapCellInfo()
             FillRect(getMemDC(), &rect, brush);
             break;
 		case(CELL_TYPE::ATTACKABLE):
-            IMAGEMANAGER->alphaRender("attackTile", getMemDC(), (int)&rect.left, (int)&rect.top, _tileAlpha);
-
 			break;
 		}
 		SelectObject(getMemDC(), brush);
@@ -502,7 +509,7 @@ void FinalScene::rectMoveToPath()
 	{
 		if (_moveIndex - 1 < 0)
 		{
-			if (_pMoveStart.x == _enemyPathGoal.x && _pMoveStart.y == _enemyPathGoal.y)
+			if (_cMoveStart->getCellX() == _enemyPathGoal.x && _cMoveStart->getCellY() == _enemyPathGoal.y)
 			{
 				_turnSystem->setEnemyBit(2);
 			}
@@ -544,7 +551,7 @@ void FinalScene::rectMoveToPath()
 	{
 		if (_moveIndex - 1 < 0)
 		{
-			if (_pMoveStart.x == _enemyPathGoal.x && _pMoveStart.y == _enemyPathGoal.y)
+			if (_cMoveStart->getCellX() == _enemyPathGoal.x && _cMoveStart->getCellY() == _enemyPathGoal.y)
 			{
 				_turnSystem->setEnemyBit(2);
 			}
@@ -723,7 +730,7 @@ void FinalScene::find4WaysTile()
 
 		// Stop find path if the enemy is already near the player.
 		auto currentPath = _generator->findPath(
-			{ _pMoveStart.x,_pMoveStart.y },
+			{ _cMoveStart->getCellX(), _cMoveStart->getCellY() },
 			{ _tempGoal.x, _tempGoal.y });
 		if (currentPath.size() == 3)
 		{
@@ -754,7 +761,7 @@ void FinalScene::find4WaysTile()
 				{
 					if (cell->getType() == CELL_TYPE::NORMAL || cell->getType() == CELL_TYPE::MOVEPATH)
 					{
-						float distance = getDistance(_pMoveStart.x, _pMoveStart.y, temp.x, temp.y);
+						float distance = getDistance(_cMoveStart->getCellX(), _cMoveStart->getCellY(), temp.x, temp.y);
 						if (distance < minDistance)
 						{
 							_playerPathGoal.x = temp.x;
@@ -767,7 +774,7 @@ void FinalScene::find4WaysTile()
 		}
 
 		auto path = _generator->findPath(
-			{ _pMoveStart.x,_pMoveStart.y },
+			{ _cMoveStart->getCellX(), _cMoveStart->getCellY() },
 			{ _playerPathGoal.x,_playerPathGoal.y });
 
 		_check.clear();
@@ -791,7 +798,7 @@ void FinalScene::find4WaysTile()
 			Cell* cell = (*cellsIter);
 			if (PtInRect(&cell->getRect(), enemyPoint))
 			{
-				_pMoveStart = { cell->getCellX(), cell->getCellY() };
+				_cMoveStart = cell;
 			}
 
 			if (cell->getType() == CELL_TYPE::START)
@@ -803,7 +810,7 @@ void FinalScene::find4WaysTile()
 
 		// Stop find path if the enemy is already near the player.
 		auto currentPath = _generator->findPath(
-			{ _pMoveStart.x,_pMoveStart.y },
+			{ _cMoveStart->getCellX(), _cMoveStart->getCellY() },
 			{ _tempGoal.x, _tempGoal.y });
 		if (currentPath.size() == 3)
 		{
@@ -834,7 +841,7 @@ void FinalScene::find4WaysTile()
 				{
 					if (cell->getType() == CELL_TYPE::NORMAL || cell->getType() == CELL_TYPE::MOVEPATH)
 					{
-						float distance = getDistance(_pMoveStart.x, _pMoveStart.y, temp.x, temp.y);
+						float distance = getDistance(_cMoveStart->getCellX(), _cMoveStart->getCellY(), temp.x, temp.y);
 						if (distance < minDistance)
 						{
 							_enemyPathGoal.x = temp.x;
@@ -847,7 +854,7 @@ void FinalScene::find4WaysTile()
 		}
 
 		auto path = _generator->findPath(
-			{ _pMoveStart.x,_pMoveStart.y },
+			{ _cMoveStart->getCellX(), _cMoveStart->getCellY() },
 			{ _enemyPathGoal.x,_enemyPathGoal.y });
 
 		_check.clear();
@@ -899,20 +906,25 @@ void FinalScene::Attack()
 void FinalScene::computeShowMoveableTile(int range, Cell* cell, bool isMoveable)
 {
     if (range < 0) return;
-    int tempX = cell->getCellX();
+    if(cell->getType() == CELL_TYPE::WALL) return;
+    
+	int tempX = cell->getCellX();
     int tempY = cell->getCellY();
     
-    if(cell->getType() == CELL_TYPE::MOVEPATH) return;
-    _qMoveTile.push(make_pair(range - 1, (*_cells)[tempX + 1 * tempY]));
-    _qMoveTile.push(make_pair(range - 1, (*_cells)[tempX - 1 * tempY]));
-    _qMoveTile.push(make_pair(range - 1, (*_cells)[tempX* tempY + 1]));
-    _qMoveTile.push(make_pair(range - 1, (*_cells)[tempX* tempY - 1]));
+	if (std::find(_vMoveableTile.begin(), _vMoveableTile.end(), cell) == _vMoveableTile.end())
+		_vMoveableTile.push_back(cell);
+	
+	_qMoveTile.push(make_pair(range - 1, (*_cells)[tempX + 1 + tempY * STAGE3TILEX]));
+	_qMoveTile.push(make_pair(range - 1, (*_cells)[tempX - 1 + tempY * STAGE3TILEX]));
+	_qMoveTile.push(make_pair(range - 1, (*_cells)[tempX + (tempY + 1) * STAGE3TILEX]));
+	_qMoveTile.push(make_pair(range - 1, (*_cells)[tempX + (tempY - 1)* STAGE3TILEX]));
     //moveable 타일 맞는지 아닌지
     //ㄴ 아니면 저장~
 }
 
 void FinalScene::startShowMoveableTile(int range, Cell* cell, bool isMoveable)
 {
+	_vMoveableTile.clear();
     _qMoveTile.push(make_pair(range,cell));
 
     while(!_qMoveTile.empty())
@@ -920,6 +932,12 @@ void FinalScene::startShowMoveableTile(int range, Cell* cell, bool isMoveable)
         computeShowMoveableTile(_qMoveTile.front().first, _qMoveTile.front().second, isMoveable);
         _qMoveTile.pop();
     }
+
+	for (auto iter = _vMoveableTile.begin(); iter != _vMoveableTile.end(); ++iter)
+	{
+		//cout << (*iter)->getCellX() << ", " << (*iter)->getCellY() << endl;
+		(*iter)->setType(CELL_TYPE::MOVEABLE);
+	}
 }
 
 POINT FinalScene::lerp(POINT start, POINT end, float percentage)
