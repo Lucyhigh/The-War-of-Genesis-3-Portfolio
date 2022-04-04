@@ -43,8 +43,8 @@ private:
 	RECT _endRc;
 	RECT _moveRc;
 	vector<POINT> _check;
-	queue<pair<int,Cell*>> _qMoveTile;
-    vector<Cell*> _vMoveableTile;
+	queue<pair<int,Cell*>> _qMoveTile;//
+    vector<Cell*> _vMoveableTile;//
 	//float _x, _y; //체력바 위치
 	float _currentHp;
 	float _maxHp;

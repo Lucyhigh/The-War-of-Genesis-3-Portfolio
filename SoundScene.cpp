@@ -1,6 +1,6 @@
 #include "Stdafx.h"
 //#include "SoundScene.h"
-//
+//iterator로 돌려라...
 //HRESULT SoundScene::init(void)
 //{
 //	IMAGEMANAGER->addImage("엘든링","Resources/Images/BackGround/Ring.bmp",WINSIZE_X, CENTER_Y);//YENA 대신

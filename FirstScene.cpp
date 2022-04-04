@@ -182,15 +182,15 @@ void FirstScene::render(void)
         Cell* cell = (*cellsIter);
         if (PtInRect(&cell->getRect(), cameraMouse))
         {
-            sprintf(cellIndex, "%d", cell->getCellX());
+            sprintf_s(cellIndex, "%d", cell->getCellX());
             TextOut(getMemDC(), WINSIZE_X - 210, 80, cellIndex, strlen(cellIndex));
-            sprintf(cellIndex, "%d", cell->getCellY());
+            sprintf_s(cellIndex, "%d", cell->getCellY());
             TextOut(getMemDC(), WINSIZE_X - 130, 65, cellIndex, strlen(cellIndex));
             int zPos = cell->getCellX() - cell->getCellY();
 
             if (zPos < 0)      zPos = 1;
             else if (zPos >= 5)      zPos = 3;
-            sprintf(cellIndex, "%d", zPos);//z축위치
+            sprintf_s(cellIndex, "%d", zPos);//z축위치
             TextOut(getMemDC(), WINSIZE_X - 150, 45, cellIndex, strlen(cellIndex));
             break;
         }
@@ -214,7 +214,7 @@ void FirstScene::drawMapCellInfo()
 	for (auto cellsIter = _cells->begin(); cellsIter != _cells->end(); ++cellsIter)
 	{
 		Cell* cell = (*cellsIter);
-		sprintf(cellIndex, "%d,%d", cell->getCellX(), cell->getCellY());
+		sprintf_s(cellIndex, "%d,%d", cell->getCellX(), cell->getCellY());
 		TextOut(getMemDC(), cell->getRect().left - _camera->getScreenRect().left,
 			cell->getRect().top - _camera->getScreenRect().top,
 			cellIndex, strlen(cellIndex));

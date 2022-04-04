@@ -90,6 +90,7 @@ HRESULT ImageClass::init(void)
 	IMAGEMANAGER->addImage("mapInfoAll", "Resources/Images/UI/mapInfoAll.bmp", 230, 105);
 	IMAGEMANAGER->addImage("button", "Resources/Images/UI/UI_button.bmp", 102, 28, MGT);
 	IMAGEMANAGER->addImage("MapButton", "Resources/Images/UI/UI_buttonMap.bmp", 164,48, MGT);
+	IMAGEMANAGER->addImage("mapMark", "Resources/Images/UI/mapMark.bmp", 127,136, MGT);
 	IMAGEMANAGER->addImage("storyText", "Resources/Images/UI/storyText.bmp", 511, 111);
 	IMAGEMANAGER->addFrameImage("npcBar", "Resources/Images/UI/npcbar.bmp", 800, 91,8,1,MGT);
 	IMAGEMANAGER->addFrameImage("pHpBar", "Resources/Images/UI/pHpBar.bmp", 1440 * 0.2, 1200 * 0.2, 4, 4, true, RGB(0, 44, 0));

@@ -76,6 +76,9 @@ void MapScene::render(void)
         cameraLeft,
         cameraTop,
         WINSIZE_X, WINSIZE_Y);
+
+    IMAGEMANAGER->alphaRender("mapMark", getMemDC(), 210);
+
     POINT playerPos = { 180 - cameraLeft,  860 - cameraTop };
     if (_moveNext)
     {
