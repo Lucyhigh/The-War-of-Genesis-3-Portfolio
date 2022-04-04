@@ -27,8 +27,8 @@ HRESULT FinalScene::init(void)
 
 	_saladin = new Saladin;
 	_saladin->init();
-	_saladin->setSaladinPosX(25 * TILESIZEX);
-	_saladin->setSaladinPosY(9 * TILESIZEY);
+	_saladin->setSaladinPosX(17 * TILESIZEX);
+	_saladin->setSaladinPosY(12 * TILESIZEY);
     _saladin->setEnemyIdle();
 
 	_camera = new Camera;
@@ -136,8 +136,10 @@ void FinalScene::update(void)
 		// 대기 - 대기이미지 타일클릭시 이동가능상태 /메뉴창 열수있고 공격타일 만들수잇음
 		if (_turnSystem->isPlayerIdle() == 1)
 		{
-			POINT playerPos = { _player->getPlayerPosX()-TILESIZEX,_player->getPlayerPosY() };
-			for (auto cellsIter = _cells->begin(); cellsIter != _cells->end(); ++cellsIter)
+			POINT playerPos = { _player->getPlayerPosX()-TILESIZEX, _player->getPlayerPosY()};
+			//show4Tile();
+
+			for (auto cellsIter = _cells->begin(); cellsIter != _cells->end(); ++cellsIter)//클릭 가능한 타일만 되게 지정
 			{
 				Cell* cell = (*cellsIter);
 
@@ -713,7 +715,6 @@ void FinalScene::find4WaysTile()
 			_check.push_back({ coordinate.x, coordinate.y });
 		}
 		_moveIndex = _check.size() - 1;
-		//show4Tile();
 		_turnSystem->setPlayerBit(1);
 	}
 	else if (_turnSystem->getStatus() == CHANGINGSTATUS::ENEMYTURN)
@@ -809,9 +810,12 @@ void FinalScene::Attack()
             _player->setPlayerIdle();
             _player->setAttack(false);
         }
-		if (!_saladin->getDamage())
+		else
 		{
-			//_turnSystem->changeToEnemy();
+			if (_saladin->getEnemyStateBit(2) == 0)
+			{
+				_turnSystem->changeToEnemy();
+			}
 		}
     }
     else if (_turnSystem->getStatus() == CHANGINGSTATUS::ENEMYTURN)

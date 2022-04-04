@@ -6,7 +6,7 @@ HRESULT Saladin::init(void)
 	_image = IMAGEMANAGER->findImage("sDownIdle");
 	_image = IMAGEMANAGER->findImage("sMovesheet");
 	_image = IMAGEMANAGER->findImage("sDamageSheet");
-    _stateBit = 0;//Idle
+    _stateBit = 0;
 
 	_tmp=1;
 	_cdt=0;
@@ -205,6 +205,7 @@ void Saladin::update(void)
     //00100 ÇÇ°Ý 
     else if (_stateBit.test(2) == 1)
     {
+
         switch (_imageState)
         {
             case SALADINSTATE::RIGHT:
@@ -238,15 +239,19 @@ void Saladin::update(void)
 			_cdt++;
 			_isDamage = true;
 		}
-		if (_cdt > 5)
+		else if(5 < _cdt && _cdt < 6 && _count % 20)
 		{
-			setEnemyIdle();
-			_cdt = 0;
 			_isDamage = false;
+		}
+		else if (_cdt >= 6)
+		{
+			_cdt = 0;
+			setEnemyIdle();
 		}
         //01000 Á×À½
     }
      _rcSaladin = RectMakeCenter(_saladinPos.x, _saladinPos.y, _image->getFrameWidth(), _image->getFrameHeight());
+	cout << "cdt : "<<_cdt << " _tmp : "<< _tmp << endl;
 }
 
 void Saladin::render(void)
@@ -322,7 +327,7 @@ void Saladin::render(void)
             break;
         case SALADINSTATE::BOTTOM:
             {
-                IMAGEMANAGER->frameRender("sAttacksheet", getMemDC(), left + addAttPos.x, top + addAttPos.y);
+                IMAGEMANAGER->frameRender("sAttacksheet", getMemDC(), left -20, top -20);//==========
             }
             break;
         }

@@ -183,7 +183,6 @@ void Player::update(void)
                     _isAttack = true;
                     setPlayerIdle();
                 }
-				cout<<_indexB << endl;
                 IMAGEMANAGER->findImage("pLeftAtt")->setFrameX(_indexB);
                 break;
             case PLAYERSTATE::TOP:
@@ -300,20 +299,20 @@ void Player::render(void)
     }
     else if (_stateBit.test(1) == 1)
     {
-		POINT addAttPos = { -40,-40 };
+		POINT addAttPos = { -40,-30 };
         switch (_imageState)
         {
         case PLAYERSTATE::RIGHT:
-            IMAGEMANAGER->frameRender("pRightAtt", getMemDC(), left -43, top -30);
+            IMAGEMANAGER->frameRender("pRightAtt", getMemDC(), left -43, top + addAttPos.y);
             break;
         case PLAYERSTATE::LEFT:
-            IMAGEMANAGER->frameRender("pLeftAtt", getMemDC(), left -37, top -30);
+            IMAGEMANAGER->frameRender("pLeftAtt", getMemDC(), left -37, top + addAttPos.y);
             break;
         case PLAYERSTATE::TOP:
-            IMAGEMANAGER->frameRender("pUpAtt", getMemDC(), left -30, top-40);
+            IMAGEMANAGER->frameRender("pUpAtt", getMemDC(), left -30, top);
             break;
         case PLAYERSTATE::BOTTOM:
-            IMAGEMANAGER->frameRender("pDownAtt", getMemDC(), left-30, top + -40);
+            IMAGEMANAGER->frameRender("pDownAtt", getMemDC(), left + addAttPos.x, top + addAttPos.y);
             break;
         }
     }
@@ -453,5 +452,5 @@ bitset<5> Player::getPlayerStateBit()
 void Player::setPlayerStateBit(int index)
 {
     _stateBit.reset();
-    _stateBit.set(index);
+    _stateBit.set(index,true);
 }

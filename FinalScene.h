@@ -63,7 +63,6 @@ public:
 	void find4WaysTile();
 	void Attack();
 	POINT lerp(POINT start, POINT end, float percentage);
-	bool getMoveSecond();
 public:
     FinalScene() : _uiText { L"형제여!", L" 평 지 ", L"99999",L"eld" }{}
 	~FinalScene() {}

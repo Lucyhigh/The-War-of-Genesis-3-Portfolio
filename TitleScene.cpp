@@ -50,7 +50,7 @@ void TitleScene::release(void){
 
 void TitleScene::update(void)
 {
-	TEMPSOUNDMANAGER->playSoundWithKey("History of Absolution");
+	//TEMPSOUNDMANAGER->playSoundWithKey("History of Absolution");
     // 0000 타이틀화면
     if (_startBit.none() == 1)
     {

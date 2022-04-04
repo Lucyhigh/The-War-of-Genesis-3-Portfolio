@@ -43,7 +43,7 @@ void SecondScene::update(void)
             _textBufferCnt = 0;
 			TEMPSOUNDMANAGER->playSoundWithKey("button");
             _textIndex++;
-			cout << _textIndex << endl;;
+			_alpha = 150;
         }
     }
 	if (KEYMANAGER->isOnceKeyDown('P'))
@@ -55,7 +55,7 @@ void SecondScene::update(void)
         _textBufferCnt++;
     }
 	
-        _alpha -= 30.0f;
+        _alpha -= 10.0f;
         _bgAlpha += 4.0f;
         _textAlpha += 4.0f;
 
@@ -91,17 +91,17 @@ void SecondScene::render(void)
     }
 
     IMAGEMANAGER->alphaRender("storyText", getMemDC(), WINSIZE_X*0.16, WINSIZE_Y*0.72, _textAlpha);
-    FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.17, WINSIZE_Y*0.75, "가을체", 20, 15, _text[_textIndex].name, wcslen(_text[_textIndex].name), RGB(72, 221, 157));
+    FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.17, WINSIZE_Y*0.75, "가을체", 20, 15, _text[_textIndex].name, wcslen(_text[_textIndex].name), TA_LEFT, RGB(72, 221, 157));
 
-    const int SCRIPT_MAX_LENGTH = 35;
+    const int SCRIPT_MAX_LENGTH = 40;
     FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.17, WINSIZE_Y*0.80, "가을체", 18, 100, _text[_textIndex].script, 
-		((_textBufferCnt) > SCRIPT_MAX_LENGTH ? SCRIPT_MAX_LENGTH : (_textBufferCnt)), RGB(255, 255, 255));
+		((_textBufferCnt) > SCRIPT_MAX_LENGTH ? SCRIPT_MAX_LENGTH : (_textBufferCnt)), TA_LEFT, RGB(255, 255, 255));
 
     if (wcslen(_text[_textIndex].script) > SCRIPT_MAX_LENGTH && _textBufferCnt > SCRIPT_MAX_LENGTH)
     {
         FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.17, WINSIZE_Y*0.84, "가을체", 18, 100,
             _text[_textIndex].script + SCRIPT_MAX_LENGTH, (_textBufferCnt > wcslen(_text[_textIndex].script)) ?
-            wcslen(_text[_textIndex].script) - SCRIPT_MAX_LENGTH : _textBufferCnt - SCRIPT_MAX_LENGTH, RGB(255, 255, 255));
+            wcslen(_text[_textIndex].script) - SCRIPT_MAX_LENGTH : _textBufferCnt - SCRIPT_MAX_LENGTH, TA_LEFT, RGB(255, 255, 255));
     }
 
 	IMAGEMANAGER->findImage("normalCursor")->aniRender(getMemDC(), _ptMouse.x, _ptMouse.y, _aniCursor);
