@@ -82,7 +82,7 @@ void SecondScene::render(void)
     {
 		if (size == 1)
 		{
-			IMAGEMANAGER->alphaRender(_text[_textIndex].imageVec[i], getMemDC(), CENTER_X - 100, WINSIZE_Y * 0.33, _alpha);
+			IMAGEMANAGER->alphaRender(_text[_textIndex].imageVec[i], getMemDC(), CENTER_X - 130, CENTER_Y-120, _alpha);
 		}
 		else
 		{

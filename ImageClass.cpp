@@ -6,9 +6,9 @@ HRESULT ImageClass::init(void)
 #pragma region Script Image
 	IMAGEMANAGER->addImage("store", "Resources/Images/UI/store.bmp", 300,333, MGT);
 	IMAGEMANAGER->addImage("weaponShop", "Resources/Images/UI/weaponShop.bmp", 300, 360, MGT);
-	IMAGEMANAGER->addImage("vermont", "Resources/Images/UI/vermont.bmp", 259,427,MGT);
+	IMAGEMANAGER->addImage("vermont", "Resources/Images/UI/vermont.bmp", 259, 480,MGT);
 	IMAGEMANAGER->addImage("saladin", "Resources/Images/UI/saladin.bmp", 400,480,MGT);
-	IMAGEMANAGER->addImage("sheherazade", "Resources/Images/UI/sheherazade.bmp", 424,422, MGT);
+	IMAGEMANAGER->addImage("sheherazade", "Resources/Images/UI/sheherazade.bmp", 424, 480, MGT);
 
 #pragma endregion
 #pragma region Player Image

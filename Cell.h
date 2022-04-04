@@ -20,20 +20,9 @@ enum class CELL_TYPE
 	START,
 	GOAL,
     MOVEPATH,
-    MOVEABLE,
-	ATTACKABLE
+    MOVEABLE,// 이동가능타일 
+	ATTACKABLE//이동 후 뜨는 4방향 타일
 };
-
-enum class moveUnMove
-{
-    MOVE, UNMOVE
-};
-
-enum class menuNum
-{
-    ONE = 1, TWO, THREE
-};
-
 
 class Cell
 {
@@ -45,9 +34,7 @@ protected:
     int _startY;
     int _endX;
     int _endY;//마우스로 클릭한 좌표값
-    bool _inRect;
 
-    moveUnMove _moveState;//턴넘김으로 쓸려고 했는데 다른걸로 할듯(카메라도 생각하기)
 	CELL_TYPE _cellType;
 	RECT _cellRc;
 public:
@@ -66,7 +53,6 @@ public:
 
 	CELL_TYPE getType() { return this->_cellType; }
 	void setType(CELL_TYPE cellType) { _cellType = cellType; }
-    moveUnMove getMoveState(){ return this->_moveState; }
 	RECT getRect() { return this->_cellRc; }
 public:
 	Cell() {}

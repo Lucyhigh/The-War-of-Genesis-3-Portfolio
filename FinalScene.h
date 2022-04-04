@@ -9,7 +9,12 @@
 #include "Camera.h"
 #include "AStar.h"
 
-
+struct tagQMoveTile
+{
+	RECT _clickTileRect;
+	int _cellX;
+	int _cellY;
+};
 class FinalScene : public GameNode
 {
 private:
@@ -38,6 +43,7 @@ private:
 	RECT _endRc;
 	RECT _moveRc;
 	vector<POINT> _check;
+	//queue<tagQMoveTile> _qMoveTile;
 	//float _x, _y; //체력바 위치
 	float _currentHp;
 	float _maxHp;
@@ -48,6 +54,8 @@ private:
 	int _moveIndex;
 	int _count;
 	int _enemyBit;
+
+	bool _isMoveTileOn;
 
 public:
 	HRESULT init(void);
@@ -60,6 +68,7 @@ public:
 	void rectMoveToPath();
 	void curAstar();
     void changeImage();
+	void showClickTile();
 	void find4WaysTile();
 	void Attack();
 	POINT lerp(POINT start, POINT end, float percentage);

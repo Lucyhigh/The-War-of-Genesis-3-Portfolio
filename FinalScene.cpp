@@ -64,7 +64,7 @@ HRESULT FinalScene::init(void)
 
     _mouseType = CELL_TYPE::NORMAL;
     _beforeMouseType = CELL_TYPE::GOAL;
-
+	_isMoveTileOn = false;
 	return S_OK;
 }
 
@@ -136,8 +136,13 @@ void FinalScene::update(void)
 		// 대기 - 대기이미지 타일클릭시 이동가능상태 /메뉴창 열수있고 공격타일 만들수잇음
 		if (_turnSystem->isPlayerIdle() == 1)
 		{
+			if (KEYMANAGER->isToggleKey(VK_LBUTTON))
+			{
+				//원래는 이동 후 공격타일이 가능해야함
+				showClickTile();//일단 공격타일부터
+			}
+
 			POINT playerPos = { _player->getPlayerPosX()-TILESIZEX, _player->getPlayerPosY()};
-			//show4Tile();
 
 			for (auto cellsIter = _cells->begin(); cellsIter != _cells->end(); ++cellsIter)//클릭 가능한 타일만 되게 지정
 			{
@@ -317,6 +322,10 @@ void FinalScene::update(void)
 	_player->update();
 	_saladin->setCameraRect(_camera->getScreenRect());
 	_saladin->update();
+	if (_isMoveTileOn)
+	{
+		showClickTile();
+	}
 }
 
 void FinalScene::render(void)
@@ -636,6 +645,27 @@ void FinalScene::changeImage()
             else if (compareBtoAY > 0 && compareBtoAX == 0) _saladin->setImageStage(SALADINSTATE::BOTTOM);
             else if (compareBtoAY < 0 && compareBtoAX == 0) _saladin->setImageStage(SALADINSTATE::TOP);
         }
+	}
+}
+
+void FinalScene::showClickTile()
+{
+	if (_turnSystem->getStatus() == CHANGINGSTATUS::PLAYERTURN)
+	{
+		POINT playerPoint = { _player->getPlayerPosX() - TILESIZEX, _player->getPlayerPosY() };
+		POINT _tempMove = { 0,0 };
+		queue<POINT> qMoveCheck;
+		//이동 후에 공격 타일이 뜨게 뜸 해줌
+		for (auto cellsIter = _cells->begin(); cellsIter != _cells->end(); ++cellsIter)
+		{
+			Cell* cell = (*cellsIter);
+
+			if (cell->getType() == CELL_TYPE::START)
+			{
+				_tempMove = { cell->getCellX(), cell->getCellY() };
+			}
+					_qMoveTile.push({ _tempMove.x, _tempMove.y });
+		}
 	}
 }
 
