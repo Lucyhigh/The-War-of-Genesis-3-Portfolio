@@ -53,16 +53,13 @@ HRESULT GameUI::init(void)
 		{
 			tagMoveTile _tagMoveTile;
 			POINT _movePos = { i ,_indexY};
-			//cout << i << "," << _indexY <<",";
 			_indexY++;
 			_vMoveTile.push_back(_tagMoveTile);
 		}
-		//cout << endl;
 		_indexY = 0;
 	}
 	//À§¹æÇâ
 	for (int i = _moveRange; i >= 0; i--)
-	//for (int i = 0; i < _moveRange; i++)
 	{
 		for (int j = 1; j < _moveRange - i; j++) 
 		{
@@ -72,15 +69,12 @@ HRESULT GameUI::init(void)
 		{
 			tagMoveTile _tagMoveTile;
 			POINT _movePos = { i , _indexY };
-			//cout << i <<","<< _indexY << ",";
 			_indexY++;
 			_vMoveTile.push_back(_tagMoveTile);
 		}
-		//cout << endl;
 		_indexY=0;
 	}
 
-	
 	return S_OK;
 }
 

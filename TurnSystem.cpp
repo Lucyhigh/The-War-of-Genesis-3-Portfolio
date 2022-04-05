@@ -26,7 +26,7 @@ void TurnSystem::update(void)
 
             break;
     }
-	cout << _playerbit.to_string() << endl;
+	//cout << _playerbit.to_string() << endl;
 }
 
 void TurnSystem::render(void){

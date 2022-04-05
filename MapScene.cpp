@@ -46,6 +46,8 @@ void MapScene::release(void)
 
 void MapScene::update(void)
 {
+    _seaX += 0.05f;
+
 	POINT mousePos = { _ptMouse.x + _camera->getScreenRect().left,_ptMouse.y + _camera->getScreenRect().top };
 	if (PtInRect(&_moveButton[0], mousePos) && KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
     {
@@ -63,8 +65,7 @@ void MapScene::update(void)
 
 	if (_alpha < 15 || _alpha >= 190) _isAlphaIncrese = !_isAlphaIncrese;
 	if (_isAlphaIncrese)_alpha += 2.5f; else _alpha -= 2.5f;
-	cout<< _ptMouse.x<<"  ,"<<_ptMouse.y <<endl;
-	_seaX += 0.05f;
+	
 	if (!_moveNext)
 	{
 		if (_camera->getCameraPos().x != _vMapButton[1]._buttonRect.left && _camera->getCameraPos().y != _vMapButton[1]._buttonRect.top)
