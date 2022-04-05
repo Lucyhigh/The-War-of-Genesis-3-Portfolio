@@ -170,7 +170,7 @@ void FinalScene::update(void)
                 {
                     for (auto iterator = _vMoveableTile.begin(); iterator != _vMoveableTile.end(); ++iterator)
                     {
-                        if (PtInRect(&(*iterator)->getRect(), cameraMouse) && KEYMANAGER->isStayKeyDown(VK_LBUTTON))
+                        if (PtInRect(&(*iterator)->getRect(), cameraMouse))
                         {
                             if ((*iterator)->getType() == CELL_TYPE::MOVEABLE)
                             {
@@ -192,13 +192,13 @@ void FinalScene::update(void)
                                 _turnSystem->setPlayerBit(1);
                                 break;
                             }
-                            else if ((*iterator)->getType() == CELL_TYPE::ATTACKABLE)//여기로 안들어감......
+                            else if ((*iterator)->getType() == CELL_TYPE::ENEMY)
                             {
-                                cout << "적클릭함" << endl;
                                 _check.clear();
                                 find4WaysTile();
                                 break;
                             }
+							//cout << (int)(*iterator)->getType() << endl;
                         }
                     }
                 }
@@ -212,9 +212,10 @@ void FinalScene::update(void)
                     {
                         if (PtInRect(&(*iterator)->getRect(), cameraMouse) && KEYMANAGER->isStayKeyDown(VK_LBUTTON))
                         {
-                            cout << "gkgk" << endl;
-                            find4WaysTile();
-                            //_turnSystem->setPlayerBit(2);
+							
+
+                            //find4WaysTile();
+                            _turnSystem->setPlayerBit(2);
                         }
                     }
 				}
@@ -284,6 +285,18 @@ void FinalScene::update(void)
 				else
 				{
 					_turnSystem->changeToEnemy();
+					for (auto cellsIter = _cells->begin(); cellsIter != _cells->end(); ++cellsIter)//클릭 가능한 타일만 되게 지정
+					{
+						Cell* cell = (*cellsIter);
+						if (PtInRect(&cell->getRect(), { (long)_player->getPlayerPosX() - TILESIZEX, (long)_player->getPlayerPosY() }))
+						{
+							if (cell->getType() != CELL_TYPE::WALL)
+							{
+								cell->setType(CELL_TYPE::START);
+								//_cMoveStart = cell;//======================================================================================
+							}
+						}
+					}
 				}
 			}
 		}
@@ -315,7 +328,7 @@ void FinalScene::update(void)
             find4WaysTile();
 
 		}
-		// 0000 0010 : 이동중 - 메뉴창 뜨면 안됨 다른곳으로 이동못함
+		// 0000 0010 : 이동중 - 
 		else if (_turnSystem->getEnemyBit(1) == 1)
 		{
 			rectMoveToPath();
@@ -361,7 +374,7 @@ void FinalScene::update(void)
 	_saladin->update();
     if (_turnSystem->getStatus() == CHANGINGSTATUS::PLAYERTURN)
     {
-	    if (_moveTileBit.test(0) == 1 && _moveTileBit.test(1) == 1)//111의 경우에서 쓰음
+	    if (_moveTileBit.test(0) == 1 && _moveTileBit.test(1) == 1 && _moveTileBit.test(2) == 1)//111의 경우에서 쓰음
 	    {
 	    	startShowMoveableTile(4, _cMoveStart, false);
 	    	_moveTileBit.reset(0);
@@ -371,7 +384,7 @@ void FinalScene::update(void)
 	    	startShowAttackableTile(1, _cMoveStart, false);
 	    }
     }
-	//cout<<_moveTileBit.to_string() << endl;
+	cout<<_moveTileBit.to_string() << endl;
 
 }
 
@@ -606,6 +619,7 @@ void FinalScene::rectMoveToPath()
 				(*iter)->setType(CELL_TYPE::NORMAL);
 			}
 			_vMoveableTile.clear();
+			
 			_moveTileBit.reset(1);
 			if (_cMoveStart->getCellX() == _enemyPathGoal.x && _cMoveStart->getCellY() == _enemyPathGoal.y)
 			{
@@ -761,6 +775,7 @@ void FinalScene::find4WaysTile()
 {
 	if (_turnSystem->getStatus() == CHANGINGSTATUS::PLAYERTURN)
 	{
+		
 		POINT playerPoint = { _player->getPlayerPosX() - TILESIZEX, _player->getPlayerPosY() };
 		POINT _tempGoal = { 0,0 };
 		_playerPathGoal = { 0,0 };
@@ -885,7 +900,7 @@ void FinalScene::find4WaysTile()
 				Cell* cell = (*cellsIter);
 				if (cell->getCellX() == temp.x && cell->getCellY() == temp.y)
 				{
-					if (cell->getType() == CELL_TYPE::NORMAL || cell->getType() == CELL_TYPE::MOVEPATH)
+					if (cell->getType() == CELL_TYPE::NORMAL || cell->getType() == CELL_TYPE::MOVEPATH || cell->getType() == CELL_TYPE::ATTACKABLE)
 					{
 						float distance = getDistance(_cMoveStart->getCellX(), _cMoveStart->getCellY(), temp.x, temp.y);
 						if (distance < minDistance)
@@ -932,6 +947,18 @@ void FinalScene::Attack()
 			if (_saladin->getEnemyStateBit(2) == 0)
 			{
 				_turnSystem->changeToEnemy();
+				for (auto cellsIter = _cells->begin(); cellsIter != _cells->end(); ++cellsIter)//클릭 가능한 타일만 되게 지정
+				{
+					Cell* cell = (*cellsIter);
+					if (PtInRect(&cell->getRect(), { (long)_player->getPlayerPosX() - TILESIZEX, (long)_player->getPlayerPosY() }))
+					{
+						if (cell->getType() != CELL_TYPE::WALL)
+						{
+							cell->setType(CELL_TYPE::START);
+							//_cMoveStart = cell;//======================================================================================
+						}
+					}
+				}
 			}
 		}
     }
@@ -952,7 +979,7 @@ void FinalScene::Attack()
 void FinalScene::computeShowMoveableTile(int range, Cell* cell, bool isMoveable)
 {
     if (range < 0) return;
-    if(cell->getType() == CELL_TYPE::WALL || cell->getType() == CELL_TYPE::ENEMY) return;
+	if (cell->getType() == CELL_TYPE::WALL) return;
 
 	int tempX = cell->getCellX();
     int tempY = cell->getCellY();
@@ -987,7 +1014,7 @@ void FinalScene::startShowMoveableTile(int range, Cell* cell, bool isMoveable)
 void FinalScene::computeShowAttackableTile(int range, Cell* cell, bool isMoveable)
 {
 	if (range < 0) return;
-	if (cell->getType() == CELL_TYPE::WALL ) return; //|| cell->getType() == CELL_TYPE::ENEMY
+	if (cell->getType() == CELL_TYPE::WALL ) return;
 
 	int tempX = cell->getCellX();
 	int tempY = cell->getCellY();
