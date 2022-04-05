@@ -287,7 +287,7 @@ void Player::render(void)
             IMAGEMANAGER->frameRender("pRightMove", getMemDC(), left, top);
             break;
         case PLAYERSTATE::LEFT:
-            IMAGEMANAGER->frameRender("pLeftMove", getMemDC(), left, top);
+            IMAGEMANAGER->frameRender("pLeftMove", getMemDC(), left-20, top);
             break;
         case PLAYERSTATE::TOP:
             IMAGEMANAGER->frameRender("pUpMove", getMemDC(), left, top);

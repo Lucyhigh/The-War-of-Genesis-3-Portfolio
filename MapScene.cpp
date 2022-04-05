@@ -34,7 +34,7 @@ HRESULT MapScene::init(void)
     _camera->init();
     _camera->setLimitsX(CENTER_X, _image->getWidth());
     _camera->setLimitsY(CENTER_Y, _image->getHeight());
-    _camera->setCameraPos({0,0});
+    _camera->setCameraPos({ _image->getWidth(),_image->getHeight() });//0,0
 	return S_OK;
 }
 
@@ -65,8 +65,17 @@ void MapScene::update(void)
 	if (_isAlphaIncrese)_alpha += 2.5f; else _alpha -= 2.5f;
 	cout<< _ptMouse.x<<"  ,"<<_ptMouse.y <<endl;
 	_seaX += 0.05f;
+	if (!_moveNext)
+	{
+		if (_camera->getCameraPos().x != _vMapButton[1]._buttonRect.left && _camera->getCameraPos().y != _vMapButton[1]._buttonRect.top)
+			_camera->setCameraPos({_camera->getCameraPos().x - 3, _camera->getCameraPos().y - 3});
+	}
+	else
+	{
+
+	}
 	_camera->update();
-	_camera->setCameraPos(_camera->getCameraPos());
+	_camera->setCameraPos(_camera->getCameraPos());//시작하면 캐릭터 좌표쪽으로 화면이 조절...
 	_camera->setScreenRect(_camera->getScreenRect());
 }
 

@@ -44,6 +44,7 @@ private:
 	RECT _moveRc;
 	vector<POINT> _check;
 	queue<pair<int,Cell*>> _qMoveTile;
+	queue<pair<int,Cell*>> _qAttackTile;
     vector<Cell*> _vMoveableTile;
     vector<Cell*> _vAttackableTile;
 	bitset<3> _moveTileBit;
@@ -78,6 +79,7 @@ public:
     void computeShowMoveableTile(int range,Cell* cell,bool isMoveable);
 	void computeShowAttackableTile(int range, Cell* cell, bool isMoveable);
     void startShowMoveableTile(int range,Cell* cell,bool isMoveable);
+    void startShowAttackableTile(int range,Cell* cell,bool isMoveable);
 
 	POINT lerp(POINT start, POINT end, float percentage);
 public:

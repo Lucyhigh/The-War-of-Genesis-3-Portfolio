@@ -142,20 +142,25 @@ void FinalScene::update(void)
 		{
 			if (_tileAlpha < 100 || _tileAlpha >= 200) _isAlphaIncrese = !_isAlphaIncrese;
 			if (_isAlphaIncrese)_tileAlpha += 1.0f; else _tileAlpha -= 1.0f;
+
 			if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 			{
-				_moveTileBit.set();
+				if (_moveTileBit.none() == 1)//000
+				{
+					_moveTileBit.set();//111
+				}
+				else if (_moveTileBit.test(2) == 1)//100
+				{
+					_moveTileBit.set(0);//101
+				}
 				
 				//비트셋은 셋다 111로 키고 하나씩 꺼주면서 턴 종료할가
 				// 111 로 다 키고 시작
-				// (0)이 1일때 함수 발동 -> 그후 다시 0으로 꺼줌
-				// (1)이 1일때까지 계속 타일 그러줌 이후 이동하면 0으로 꺼줌 // 메뉴창 띄우고 이럴때도 계속 타일은 유지
-				// (2)이 1이고 (1)이 0일때 공격 타일 그려줌
-				// 이후에 
+				// (0)이 1일때 함수 발동 -> 그후 다시 0으로 꺼줌 110
+				// (2)이 1이고 (1)이 0일때 공격 타일 그려줌 100
+				// 이후 공격 타일 꺼내면서 101?
 				// 원래는 이동 후 공격 타일이 가능해야함
 			}
-           // cout<< "_isAlphaIncrese : " << _isAlphaIncrese << "_tileAlpha : " << _tileAlpha << endl;
-
 			POINT playerPos = { _player->getPlayerPosX()-TILESIZEX, _player->getPlayerPosY()};
 			for (auto cellsIter = _cells->begin(); cellsIter != _cells->end(); ++cellsIter)//클릭 가능한 타일만 되게 지정
 			{
@@ -168,32 +173,37 @@ void FinalScene::update(void)
 						_cMoveStart = cell;
 					}
 				}
-				else if(cell->getType() == CELL_TYPE::START)
+				else if (cell->getType() == CELL_TYPE::START)
 				{
 					cell->setType(CELL_TYPE::NORMAL);
 				}
-				POINT cameraMouse = {
-										_ptMouse.x + _camera->getScreenRect().left,
-										_ptMouse.y + _camera->getScreenRect().top
-									};
-				if (PtInRect(&cell->getRect(), cameraMouse))
+			}
+
+			POINT cameraMouse = {
+									_ptMouse.x + _camera->getScreenRect().left,
+									_ptMouse.y + _camera->getScreenRect().top
+								};
+
+			for (auto cellsIter = _vMoveableTile.begin(); cellsIter != _vMoveableTile.end(); ++cellsIter)
+			{
+				
+				if (PtInRect(&(*cellsIter)->getRect(), cameraMouse))
 				{
 					if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
 					{
-						if (cell->getType() == CELL_TYPE::MOVEABLE)
+						if ((*cellsIter)->getType() == CELL_TYPE::MOVEABLE)
 						{
-							_moveTileBit.reset(1);
-							cell->setType(CELL_TYPE::GOAL);
-							_endPoint = { cell->getRect().left, cell->getRect().top };
+							(*cellsIter)->setType(CELL_TYPE::GOAL);
+							_endPoint = { (*cellsIter)->getRect().left, (*cellsIter)->getRect().top };
 
 							auto path = _generator->findPath({ _cMoveStart->getCellX(),_cMoveStart->getCellY() },
-								{ cell->getCellX(),cell->getCellY() });
+								{ (*cellsIter)->getCellX(),(*cellsIter)->getCellY() });
 							_check.clear();
 							for (auto &coordinate : path)
 							{
-								if (cell->getType() == CELL_TYPE::NORMAL)
+								if ((*cellsIter)->getType() == CELL_TYPE::NORMAL)
 								{
-									cell->setType(CELL_TYPE::MOVEPATH);
+									(*cellsIter)->setType(CELL_TYPE::MOVEPATH);
 								}
 								_check.push_back({ coordinate.x, coordinate.y });
 							}
@@ -201,7 +211,7 @@ void FinalScene::update(void)
 							_turnSystem->setPlayerBit(1);
 							break;
 						}
-						else if (cell->getType() == CELL_TYPE::ATTACKABLE)
+						else if ((*cellsIter)->getType() == CELL_TYPE::ATTACKABLE)
 						{
 							_check.clear();
 							find4WaysTile();
@@ -286,8 +296,6 @@ void FinalScene::update(void)
 		else if (_turnSystem->getPlayerBit(3) == 1)
 		{
 			changeImage();
-			cout << " 형 : 으악" << endl;
-			//_player->getPlayerStateBit(2);
 
 		}
 	}
@@ -313,7 +321,6 @@ void FinalScene::update(void)
 		else if (_turnSystem->getEnemyBit(3) == 1)
 		{
 			changeImage();
-			cout << " 동생 : 으악" << endl;
 
 		}
 	}
@@ -335,10 +342,7 @@ void FinalScene::update(void)
         cameraPos.y = _player->getPlayerPosY();
     }
 
-    if (_player->getPlayerStateBit().none() == 0)
-    {
-    }
-        _camera->setCameraPos(cameraPos);
+    _camera->setCameraPos(cameraPos);
 	_camera->update();
 
 	_turnSystem->update();
@@ -347,11 +351,16 @@ void FinalScene::update(void)
 	_player->update();
 	_saladin->setCameraRect(_camera->getScreenRect());
 	_saladin->update();
-	if (_moveTileBit.test(0) == 1)
+	if (_moveTileBit.test(0) == 1 && _moveTileBit.test(1) == 1)//111의 경우에서 쓰음
 	{
 		startShowMoveableTile(4, _cMoveStart, false);
 		_moveTileBit.reset(0);
 	}
+	else if (_moveTileBit.test(0) == 1 && _moveTileBit.test(1) == 0 && _moveTileBit.test(2) == 1)//101
+	{
+		startShowAttackableTile(1, _cMoveStart, false);
+	}
+	cout<<_moveTileBit.to_string() << endl;
 }
 
 void FinalScene::render(void)
@@ -369,7 +378,7 @@ void FinalScene::render(void)
 	{
 		drawMapCellInfo();
 	}
-	if (_moveTileBit.test(1) == 1)
+	if (_moveTileBit.test(0) == 0 && _moveTileBit.test(1) == 1)
 	{
 		int cameraLeft = _camera->getScreenRect().left;
 		int cameraTop = _camera->getScreenRect().top;
@@ -392,11 +401,32 @@ void FinalScene::render(void)
 			}
 		}
 	}
+	else if (_moveTileBit.test(0) == 1 && _moveTileBit.test(1) == 0 && _moveTileBit.test(2) == 1)
+	{
+		int cameraLeft = _camera->getScreenRect().left;
+		int cameraTop = _camera->getScreenRect().top;
+		for (auto cellsIter = _cells->begin(); cellsIter != _cells->end(); ++cellsIter)
+		{
+			Cell* cell = (*cellsIter);
+			int left = cell->getRect().left - cameraLeft;
+			int top = cell->getRect().top - cameraTop;
+			switch (cell->getType())
+			{
+			case(CELL_TYPE::START):
+				IMAGEMANAGER->alphaRender("attackTile", getMemDC(), (int)left, (int)top, _tileAlpha + 20);
+				break;
+			case(CELL_TYPE::ATTACKABLE):
+				IMAGEMANAGER->alphaRender("attackTile", getMemDC(), (int)left, (int)top, _tileAlpha);
+				break;
+			}
+		}
+	}
 	AstarTileInfo();
 
 	_saladin->render();
     _player->render();
     _gameUI->render();
+
 	IMAGEMANAGER->render("mapInfoAll", getMemDC(), WINSIZE_X - 230, 0);
 
     FONTMANAGER->drawText(getMemDC(),
@@ -411,8 +441,8 @@ void FinalScene::render(void)
 	FONTMANAGER->drawText(getMemDC(),
 		WINSIZE_X - 10, 82, "가을체", 15, 13, _uiText[3],
 		wcslen(_uiText[2]), TA_CENTER, RGB(255, 255, 255));
-    char cellIndex[512];
 
+    char cellIndex[512];
 	for (auto cellsIter = _cells->begin(); cellsIter != _cells->end(); ++cellsIter)
 	{
 		POINT cameraMouse = {
@@ -457,8 +487,6 @@ void FinalScene::render(void)
 			}
         }
 	}
-	
-	
 	
 	POINT MarkPos = { -23,-63 };
 	switch (_turnSystem->getStatus())
@@ -550,6 +578,12 @@ void FinalScene::rectMoveToPath()
 	{
 		if (_moveIndex - 1 < 0)
 		{
+			for (auto iter = _vMoveableTile.begin(); iter != _vMoveableTile.end(); ++iter)
+			{
+				(*iter)->setType(CELL_TYPE::NORMAL);
+			}
+			_vMoveableTile.clear();
+			_moveTileBit.reset(1);
 			if (_cMoveStart->getCellX() == _enemyPathGoal.x && _cMoveStart->getCellY() == _enemyPathGoal.y)
 			{
 				_turnSystem->setEnemyBit(2);
@@ -561,7 +595,6 @@ void FinalScene::rectMoveToPath()
 			}
 			_moveIndex = 0;
 			_lerpPercentage = 0.0f;
-			_moveTileBit.reset(1);
 			return;
 		}
 		else
@@ -876,6 +909,7 @@ void FinalScene::Attack()
 			if (_saladin->getEnemyStateBit(2) == 0)
 			{
 				_turnSystem->changeToEnemy();
+				_moveTileBit.reset();
 			}
 		}
     }
@@ -909,22 +943,7 @@ void FinalScene::computeShowMoveableTile(int range, Cell* cell, bool isMoveable)
 	_qMoveTile.push(make_pair(range - 1, (*_cells)[tempX + (tempY + 1) * STAGE3TILEX]));
 	_qMoveTile.push(make_pair(range - 1, (*_cells)[tempX + (tempY - 1)* STAGE3TILEX]));
 }
-void FinalScene::computeShowAttackableTile(int range, Cell* cell, bool isMoveable)
-{
-	if (range < 0) return;
-	if (cell->getType() == CELL_TYPE::WALL) return;
 
-	int tempX = cell->getCellX();
-	int tempY = cell->getCellY();
-
-	if (std::find(_vAttackableTile.begin(), _vAttackableTile.end(), cell) == _vAttackableTile.end())
-		_vAttackableTile.push_back(cell);
-
-	_qMoveTile.push(make_pair(range - 1, (*_cells)[tempX + 2 + tempY * STAGE3TILEX]));
-	_qMoveTile.push(make_pair(range - 1, (*_cells)[tempX - 2 + tempY * STAGE3TILEX]));
-	_qMoveTile.push(make_pair(range - 1, (*_cells)[tempX + (tempY + 2) * STAGE3TILEX]));
-	_qMoveTile.push(make_pair(range - 1, (*_cells)[tempX + (tempY - 2)* STAGE3TILEX]));
-}
 void FinalScene::startShowMoveableTile(int range, Cell* cell, bool isMoveable)
 {
 	_vMoveableTile.clear();
@@ -938,8 +957,40 @@ void FinalScene::startShowMoveableTile(int range, Cell* cell, bool isMoveable)
 
 	for (auto iter = _vMoveableTile.begin(); iter != _vMoveableTile.end(); ++iter)
 	{
-		//cout << (*iter)->getCellX() << ", " << (*iter)->getCellY() << endl;
 		(*iter)->setType(CELL_TYPE::MOVEABLE);
+	}
+}
+
+void FinalScene::computeShowAttackableTile(int range, Cell* cell, bool isMoveable)
+{
+	if (range < 0) return;
+	if (cell->getType() == CELL_TYPE::WALL) return;
+
+	int tempX = cell->getCellX();
+	int tempY = cell->getCellY();
+
+	if (std::find(_vAttackableTile.begin(), _vAttackableTile.end(), cell) == _vAttackableTile.end())
+		_vAttackableTile.push_back(cell);
+
+	_qAttackTile.push(make_pair(range - 1, (*_cells)[tempX + 2 + tempY * STAGE3TILEX]));
+	_qAttackTile.push(make_pair(range - 1, (*_cells)[tempX - 2 + tempY * STAGE3TILEX]));
+	_qAttackTile.push(make_pair(range - 1, (*_cells)[tempX + (tempY + 2) * STAGE3TILEX]));
+	_qAttackTile.push(make_pair(range - 1, (*_cells)[tempX + (tempY - 2)* STAGE3TILEX]));
+}
+void FinalScene::startShowAttackableTile(int range, Cell* cell, bool isMoveable)
+{
+	_vAttackableTile.clear();
+	_qAttackTile.push(make_pair(range, cell));
+
+	while (!_qAttackTile.empty())
+	{
+		computeShowAttackableTile(_qAttackTile.front().first, _qAttackTile.front().second, isMoveable);
+		_qAttackTile.pop();
+	}
+
+	for (auto iter = _vAttackableTile.begin(); iter != _vAttackableTile.end(); ++iter)
+	{
+		(*iter)->setType(CELL_TYPE::ATTACKABLE);
 	}
 }
 
