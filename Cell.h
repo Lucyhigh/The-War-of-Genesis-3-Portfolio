@@ -19,9 +19,10 @@ enum class CELL_TYPE
 	WALL,
 	START,
 	GOAL,
+	ENEMY,
     MOVEPATH,
-    MOVEABLE,// 이동가능타일 
-	ATTACKABLE//이동 후 뜨는 4방향 타일
+    MOVEABLE, 
+	ATTACKABLE
 };
 
 class Cell

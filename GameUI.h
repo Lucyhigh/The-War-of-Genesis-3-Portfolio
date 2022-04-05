@@ -54,7 +54,7 @@ public:
 	void setMoveTileRange(int range);
 	void setMoveCenter(POINT center);
 public:
-    GameUI() :_uiText{L"스 킬",L"아이템",L"휴 식",L"상 태"} {}
+    GameUI() :_uiText{L"어빌리티",L"아이템",L"휴 식",L"상 태"} {}
 	~GameUI() {}
 };
 

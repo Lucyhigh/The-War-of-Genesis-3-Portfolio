@@ -96,11 +96,20 @@ void FinalScene::update(void)
 	if (KEYMANAGER->isOnceKeyDown('H'))
 	{
 		_turnSystem->changeToEnemy();
-
+		for (auto iter = _vAttackableTile.begin(); iter != _vAttackableTile.end(); ++iter)
+		{
+			(*iter)->setType(CELL_TYPE::NORMAL);
+		}
+		_vAttackableTile.clear();
 	}
 	else if (KEYMANAGER->isOnceKeyDown('N'))
 	{
 		_turnSystem->changeToPlayer();
+		for (auto iter = _vAttackableTile.begin(); iter != _vAttackableTile.end(); ++iter)
+		{
+			(*iter)->setType(CELL_TYPE::NORMAL);
+		}
+		_vAttackableTile.clear();
 	}
 	/*_hpBar->setX(_x - (_rc.right - _rc.left) / 2);
 	_hpBar->setY(_y - 10 - (_rc.bottom - _rc.top) / 2);
@@ -119,12 +128,15 @@ void FinalScene::update(void)
             _aniCursor = ANIMATIONMANAGER->findAnimation("notMoveable");
             break;
         case CELL_TYPE::ATTACKABLE:
-            _aniCursor = ANIMATIONMANAGER->findAnimation("attackMark");
-            _hpBar->setType(1);
-			_hpBar->update();
+            _aniCursor = ANIMATIONMANAGER->findAnimation("normalCursor");
             break;
 		case CELL_TYPE::MOVEABLE:
             _aniCursor = ANIMATIONMANAGER->findAnimation("normalCursor");
+            break;
+		case CELL_TYPE::ENEMY:
+            _aniCursor = ANIMATIONMANAGER->findAnimation("attackMark");
+			_hpBar->setType(1);
+			_hpBar->update();
             break;
         case CELL_TYPE::START:
             _aniCursor = ANIMATIONMANAGER->findAnimation("normalCursor");
@@ -149,16 +161,19 @@ void FinalScene::update(void)
 				{
 					_moveTileBit.set();//111
 				}
-				else if (_moveTileBit.test(2) == 1)//100
+				else if (_moveTileBit.test(2) == 1 && _moveTileBit.test(1) == 0 && _moveTileBit.test(0) == 0)//100
 				{
 					_moveTileBit.set(0);//101
 				}
-				
+				else if (_moveTileBit.test(2) == 1 && _moveTileBit.test(1) == 0 && _moveTileBit.test(0) == 1)//101
+				{
+
+				}
 				//비트셋은 셋다 111로 키고 하나씩 꺼주면서 턴 종료할가
 				// 111 로 다 키고 시작
 				// (0)이 1일때 함수 발동 -> 그후 다시 0으로 꺼줌 110
 				// (2)이 1이고 (1)이 0일때 공격 타일 그려줌 100
-				// 이후 공격 타일 꺼내면서 101?
+				// 이후 공격 타일 꺼내면서 101
 				// 원래는 이동 후 공격 타일이 가능해야함
 			}
 			POINT playerPos = { _player->getPlayerPosX()-TILESIZEX, _player->getPlayerPosY()};
@@ -183,44 +198,45 @@ void FinalScene::update(void)
 									_ptMouse.x + _camera->getScreenRect().left,
 									_ptMouse.y + _camera->getScreenRect().top
 								};
-
-			for (auto cellsIter = _vMoveableTile.begin(); cellsIter != _vMoveableTile.end(); ++cellsIter)
+			if (_moveTileBit.test(2) == 1 && _moveTileBit.test(1) == 1 && _moveTileBit.test(0) == 0)
 			{
-				
-				if (PtInRect(&(*cellsIter)->getRect(), cameraMouse))
+				for (auto cellsIter = _vMoveableTile.begin(); cellsIter != _vMoveableTile.end(); ++cellsIter)
 				{
-					if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
-					{
-						if ((*cellsIter)->getType() == CELL_TYPE::MOVEABLE)
-						{
-							(*cellsIter)->setType(CELL_TYPE::GOAL);
-							_endPoint = { (*cellsIter)->getRect().left, (*cellsIter)->getRect().top };
 
-							auto path = _generator->findPath({ _cMoveStart->getCellX(),_cMoveStart->getCellY() },
-								{ (*cellsIter)->getCellX(),(*cellsIter)->getCellY() });
-							_check.clear();
-							for (auto &coordinate : path)
-							{
-								if ((*cellsIter)->getType() == CELL_TYPE::NORMAL)
-								{
-									(*cellsIter)->setType(CELL_TYPE::MOVEPATH);
-								}
-								_check.push_back({ coordinate.x, coordinate.y });
-							}
-							_moveIndex = _check.size() - 1;
-							_turnSystem->setPlayerBit(1);
-							break;
-						}
-						else if ((*cellsIter)->getType() == CELL_TYPE::ATTACKABLE)
+					if (PtInRect(&(*cellsIter)->getRect(), cameraMouse))
+					{
+						if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
 						{
-							_check.clear();
-							find4WaysTile();
-							break;
+							if ((*cellsIter)->getType() == CELL_TYPE::MOVEABLE)
+							{
+								(*cellsIter)->setType(CELL_TYPE::GOAL);
+								_endPoint = { (*cellsIter)->getRect().left, (*cellsIter)->getRect().top };
+
+								auto path = _generator->findPath({ _cMoveStart->getCellX(),_cMoveStart->getCellY() },
+									{ (*cellsIter)->getCellX(),(*cellsIter)->getCellY() });
+								_check.clear();
+								for (auto &coordinate : path)
+								{
+									if ((*cellsIter)->getType() == CELL_TYPE::NORMAL)
+									{
+										(*cellsIter)->setType(CELL_TYPE::MOVEPATH);
+									}
+									_check.push_back({ coordinate.x, coordinate.y });
+								}
+								_moveIndex = _check.size() - 1;
+								_turnSystem->setPlayerBit(1);
+								break;
+							}
+							else if ((*cellsIter)->getType() == CELL_TYPE::ENEMY)
+							{
+								_check.clear();
+								find4WaysTile();
+								break;
+							}
 						}
 					}
 				}
 			}
-
             POINT enemyPos = { _saladin->getSaladinPosX() - TILESIZEX, _saladin->getSaladinPosY() };//
             for (auto cellsIter = _cells->begin(); cellsIter != _cells->end(); ++cellsIter)
             {
@@ -230,10 +246,10 @@ void FinalScene::update(void)
                 {
                     if (cell->getType() != CELL_TYPE::WALL)
                     {
-                        cell->setType(CELL_TYPE::ATTACKABLE);
+                        cell->setType(CELL_TYPE::ENEMY);
                     }
                 }
-                else if (cell->getType() == CELL_TYPE::ATTACKABLE)
+                else if (cell->getType() == CELL_TYPE::ENEMY)
                 {
                     cell->setType(CELL_TYPE::NORMAL);
                 }
@@ -360,7 +376,8 @@ void FinalScene::update(void)
 	{
 		startShowAttackableTile(1, _cMoveStart, false);
 	}
-	cout<<_moveTileBit.to_string() << endl;
+	//cout<<_moveTileBit.to_string() << endl;
+
 }
 
 void FinalScene::render(void)
@@ -398,6 +415,9 @@ void FinalScene::render(void)
 			case(CELL_TYPE::ATTACKABLE):
 				IMAGEMANAGER->alphaRender("attackTile", getMemDC(), (int)left, (int)top, _tileAlpha);
 				break;
+			case(CELL_TYPE::ENEMY):
+				IMAGEMANAGER->alphaRender("attackTile", getMemDC(), (int)left, (int)top, _tileAlpha+40);
+				break;
 			}
 		}
 	}
@@ -417,6 +437,9 @@ void FinalScene::render(void)
 				break;
 			case(CELL_TYPE::ATTACKABLE):
 				IMAGEMANAGER->alphaRender("attackTile", getMemDC(), (int)left, (int)top, _tileAlpha);
+				break;
+			case(CELL_TYPE::ENEMY):
+				IMAGEMANAGER->alphaRender("attackTile", getMemDC(), (int)left, (int)top, _tileAlpha + 40);
 				break;
 			}
 		}
@@ -470,7 +493,7 @@ void FinalScene::render(void)
 			_mouseType = cell->getType();
 			switch(cell->getType())
 			{
-			case CELL_TYPE::ATTACKABLE:
+			case CELL_TYPE::ENEMY:
 				IMAGEMANAGER->findImage("attackMark")->aniRender(getMemDC(), _ptMouse.x, _ptMouse.y, _aniCursor);
 				_hpBar->render(1, left,top);
 				break;
@@ -744,7 +767,7 @@ void FinalScene::find4WaysTile()
 		{
 			Cell* cell = (*cellsIter);
 
-			if (cell->getType() == CELL_TYPE::ATTACKABLE)
+			if (cell->getType() == CELL_TYPE::ENEMY)
 			{
 				_endPoint = { cell->getRect().left, cell->getRect().top };
 				_tempGoal = { cell->getCellX(), cell->getCellY() };
@@ -752,9 +775,8 @@ void FinalScene::find4WaysTile()
 		}
 
 		// Stop find path if the enemy is already near the player.
-		auto currentPath = _generator->findPath(
-			{ _cMoveStart->getCellX(), _cMoveStart->getCellY() },
-			{ _tempGoal.x, _tempGoal.y });
+		auto currentPath = _generator->findPath({ _cMoveStart->getCellX(), _cMoveStart->getCellY() },
+												{ _tempGoal.x, _tempGoal.y });
 		if (currentPath.size() == 3)
 		{
 			_turnSystem->setPlayerBit(2);
@@ -931,7 +953,7 @@ void FinalScene::computeShowMoveableTile(int range, Cell* cell, bool isMoveable)
 {
     if (range < 0) return;
     if(cell->getType() == CELL_TYPE::WALL) return;
-    
+
 	int tempX = cell->getCellX();
     int tempY = cell->getCellY();
     
@@ -948,7 +970,6 @@ void FinalScene::startShowMoveableTile(int range, Cell* cell, bool isMoveable)
 {
 	_vMoveableTile.clear();
     _qMoveTile.push(make_pair(range,cell));
-
     while(!_qMoveTile.empty())
     {
         computeShowMoveableTile(_qMoveTile.front().first, _qMoveTile.front().second, isMoveable);
@@ -957,6 +978,7 @@ void FinalScene::startShowMoveableTile(int range, Cell* cell, bool isMoveable)
 
 	for (auto iter = _vMoveableTile.begin(); iter != _vMoveableTile.end(); ++iter)
 	{
+		//if((*iter)->)
 		(*iter)->setType(CELL_TYPE::MOVEABLE);
 	}
 }
