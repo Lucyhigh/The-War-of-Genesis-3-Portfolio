@@ -26,13 +26,15 @@ HRESULT MapScene::init(void)
 		_vMapButton.push_back(_mapButtomInfo);
 		_vMapButton[i]._textInfo = _uiText[i];
 	}
-    _moveButton[0] = RectMake(380,150,80,80);
-    _moveButton[1] = RectMake(130,480,80,80);
+    _moveButton[0] = RectMake(655,833,120,120);
+    _moveButton[1] = RectMake(340,228,120,120);
+
+	_alpha = 15;
     _camera = new Camera;
     _camera->init();
     _camera->setLimitsX(CENTER_X, _image->getWidth());
     _camera->setLimitsY(CENTER_Y, _image->getHeight());
-    _camera->setCameraPos({0, _image->getHeight()-700 });
+    _camera->setCameraPos({0,0});
 	return S_OK;
 }
 
@@ -44,17 +46,12 @@ void MapScene::release(void)
 
 void MapScene::update(void)
 {
-	_seaX += 0.05f;
-	cout<<_ptMouse.x<<","<<_ptMouse.y<<endl;
-    _camera->update();
-    _camera->setCameraPos(_camera->getCameraPos());
-    _camera->setScreenRect(_camera->getScreenRect());
-    if (PtInRect(&_moveButton[0], _ptMouse) && KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+	POINT mousePos = { _ptMouse.x + _camera->getScreenRect().left,_ptMouse.y + _camera->getScreenRect().top };
+	if (PtInRect(&_moveButton[0], mousePos) && KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
     {
         _moveNext = true;
-
     }
-    else if (PtInRect(&_moveButton[1], _ptMouse) && KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+    else if (PtInRect(&_moveButton[1], mousePos) && KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
     {
         _moveNext = false;
     }
@@ -63,6 +60,14 @@ void MapScene::update(void)
 		TEMPSOUNDMANAGER->playSoundWithKey("changeScene");
         SCENEMANAGER->changeScene("final");
     }
+
+	if (_alpha < 15 || _alpha >= 190) _isAlphaIncrese = !_isAlphaIncrese;
+	if (_isAlphaIncrese)_alpha += 2.5f; else _alpha -= 2.5f;
+	cout<< _ptMouse.x<<"  ,"<<_ptMouse.y <<endl;
+	_seaX += 0.05f;
+	_camera->update();
+	_camera->setCameraPos(_camera->getCameraPos());
+	_camera->setScreenRect(_camera->getScreenRect());
 }
 
 void MapScene::render(void)
@@ -77,17 +82,20 @@ void MapScene::render(void)
         cameraTop,
         WINSIZE_X, WINSIZE_Y);
 
-    IMAGEMANAGER->alphaRender("mapMark", getMemDC(), 210);
+    IMAGEMANAGER->alphaRender("mapMark", getMemDC(), _moveButton[0].left - cameraLeft, _moveButton[0].top - cameraTop, _alpha);
+    IMAGEMANAGER->alphaRender("mapMark", getMemDC(), _moveButton[1].left - cameraLeft, _moveButton[1].top - cameraTop, _alpha);
 
-    POINT playerPos = { 180 - cameraLeft,  860 - cameraTop };
     if (_moveNext)
     {
-        IMAGEMANAGER->findImage("npcBar")->aniRender(getMemDC(), _moveButton[0].left - cameraLeft,
-            _moveButton[0].top - cameraTop, _animation);
+        IMAGEMANAGER->findImage("npcBar")->aniRender(getMemDC(),
+			_moveButton[0].left + 60 - cameraLeft,
+			_moveButton[0].top - 10 - cameraTop, _animation);
     }
     else
     {
-        IMAGEMANAGER->findImage("npcBar")->aniRender(getMemDC(), playerPos.x, playerPos.y, _animation);
+        IMAGEMANAGER->findImage("npcBar")->aniRender(getMemDC(), 
+			_moveButton[1].left + 60 - cameraLeft,
+			_moveButton[1].top - 10 - cameraTop, _animation);
     }
 
     IMAGEMANAGER->alphaRender("curMap", getMemDC(), 230);
@@ -120,14 +128,8 @@ void MapScene::render(void)
 				wcslen(_viMapButton->_textInfo), TA_CENTER, RGB(207, 207, 207));
 		}
 	}
-	Rectangle(getMemDC(), _moveButton[0].left,
-		_moveButton[0].top,
-		_moveButton[0].right,
-		_moveButton[0].bottom);
-    Rectangle(getMemDC(), _moveButton[1].left,
-        _moveButton[1].top,
-        _moveButton[1].right,
-        _moveButton[1].bottom);
+
 	IMAGEMANAGER->findImage("normalCursor")->aniRender(getMemDC(), _ptMouse.x, _ptMouse.y, _aniCursor);
+
     _camera->render();
 }

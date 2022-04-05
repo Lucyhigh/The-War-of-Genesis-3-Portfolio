@@ -43,8 +43,10 @@ private:
 	RECT _endRc;
 	RECT _moveRc;
 	vector<POINT> _check;
-	queue<pair<int,Cell*>> _qMoveTile;//
-    vector<Cell*> _vMoveableTile;//
+	queue<pair<int,Cell*>> _qMoveTile;
+    vector<Cell*> _vMoveableTile;
+    vector<Cell*> _vAttackableTile;
+	bitset<3> _moveTileBit;
 	//float _x, _y; //체력바 위치
 	float _currentHp;
 	float _maxHp;
@@ -57,6 +59,7 @@ private:
 	int _enemyBit;
 
 	bool _isMoveTileOn;
+	bool _isAlphaIncrese;
 
 public:
 	HRESULT init(void);
@@ -69,12 +72,11 @@ public:
 	void rectMoveToPath();
 	void curAstar();
     void changeImage();
-	//void showClickTile();
 	void find4WaysTile();
 	void Attack();
-    //타일 4개를 여기에 넣을거임
+
     void computeShowMoveableTile(int range,Cell* cell,bool isMoveable);
-    //여기안에 큐에 쌓여야함;;타일 정보를 큐에 쌓을거임
+	void computeShowAttackableTile(int range, Cell* cell, bool isMoveable);
     void startShowMoveableTile(int range,Cell* cell,bool isMoveable);
 
 	POINT lerp(POINT start, POINT end, float percentage);

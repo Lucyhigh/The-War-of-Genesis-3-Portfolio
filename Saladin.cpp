@@ -272,7 +272,7 @@ void Saladin::render(void)
             IMAGEMANAGER->frameRender("sUpIdle", getMemDC(), left, top);
             break;
         case SALADINSTATE::BOTTOM:
-            IMAGEMANAGER->frameRender("sDownIdle", getMemDC(), left, top);
+            IMAGEMANAGER->frameRender("sDownIdle", getMemDC(), left-10, top-15);
             break;
         }
     }
