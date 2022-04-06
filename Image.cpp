@@ -558,39 +558,113 @@ void Image::alphaRender(HDC hdc, int destX, int destY, BYTE alpha)
 
 void Image::alphaRender(HDC hdc, int destX, int destY, int sourX, int sourY, int sourWidth, int sourHeight, BYTE alpha)
 {
+	// 알파블랜드를 처음 사용하는지 확인
+	if (!_blendImage) initForAlphaBlend();
+
+	_blendFunc.SourceConstantAlpha = alpha;
+
+	if (_isTrans)
+	{
+		// 1 출력해야할 DC에 그려져 있는 내용을 블렌드 이미지에 그린다. 
+		BitBlt
+		(
+			_blendImage->hMemDC,
+			0, 0,
+			_imageInfo->width,
+			_imageInfo->height,
+			hdc,
+			destX, destY, SRCCOPY
+		);
+
+
+		// 2 원본 이미지 배경을 없앤 후 블랜드 이미지에 그린다.
+		GdiTransparentBlt
+		(
+			hdc,
+			destX, destY,
+			sourWidth,
+			sourHeight,
+			//------------------
+			_imageInfo->hMemDC,
+			sourX, sourY,
+			sourWidth,
+			sourHeight,
+			//------------------
+			_transColor
+		);
+
+		// 3 블렌드 이미지를 화면에 그린다 
+		AlphaBlend
+		(
+			hdc,
+			destX, destY,
+			sourWidth,
+			sourHeight,
+			_blendImage->hMemDC, // 지뢰조심
+			0, 0,
+			sourWidth,
+			sourHeight,
+			_blendFunc
+		);
+	}
+	else {
+		AlphaBlend
+		(
+			hdc,
+			destX, destY,
+			sourWidth,
+			sourHeight,
+			_imageInfo->hMemDC,
+			0, 0,
+			sourWidth,
+			sourHeight,
+			_blendFunc);
+	}
+}
+
+void Image::alphaframeRender(HDC hdc, int destX, int destY, int currentFrameX, int currentFrameY, BYTE alpha)
+{
+	_imageInfo->currentFrameX = currentFrameX;
+	_imageInfo->currentFrameY = currentFrameY;
+	if (currentFrameX > _imageInfo->maxFrameX)
+	{
+		_imageInfo->currentFrameX = _imageInfo->maxFrameX;
+	}
+	if (currentFrameY > _imageInfo->maxFrameY)
+	{
+		_imageInfo->currentFrameY = _imageInfo->maxFrameY;
+	}
+
+	if (!_blendImage) this->initForAlphaBlend();
+	_blendFunc.SourceConstantAlpha = alpha;
+	if (_isTrans)//배경색 없애고 출력
+	{
+		BitBlt(_blendImage->hMemDC, 0, 0, _imageInfo->frameWidth, _imageInfo->frameHeight, hdc, destX, destY, SRCCOPY);
+		GdiTransparentBlt(
+			_blendImage->hMemDC,
+			0,0,
+			_imageInfo->frameWidth,      //복사할 이미지 가로크기
+			_imageInfo->frameHeight,   //복사할 이미지 세로크기
+			_imageInfo->hMemDC,      //복사될 대상 DC
+			_imageInfo->currentFrameX * _imageInfo->frameWidth,
+			_imageInfo->currentFrameY * _imageInfo->frameHeight,      //복사될 대상의 시작지점
+			_imageInfo->frameWidth,      //복사 영역 가로크기
+			_imageInfo->frameHeight,   //복사 영역 세로크기
+			_transColor);         //복사할때 제외할 색상(일반적으로 마젠타)
+
+		GdiAlphaBlend(hdc, destX, destY, _imageInfo->frameWidth, _imageInfo->frameHeight,
+			_blendImage->hMemDC, 0, 0, _imageInfo->frameWidth, _imageInfo->frameHeight, _blendFunc);
+	}
+	else
+	{
+		GdiAlphaBlend(hdc, destX, destY, _imageInfo->frameWidth, _imageInfo->frameHeight,
+			_imageInfo->hMemDC, 0, 0, _imageInfo->frameWidth, _imageInfo->frameHeight, _blendFunc);
+	}
 }
 
 void Image::frameRender(HDC hdc, int destX, int destY)
 {
-	if (_isTrans)
-	{
-		GdiTransparentBlt
-		(
-			hdc,						// 복사할 장소의 DC(화면DC(화면에 보여줄))
-			destX, destY,				// 복사될 좌표 시작 : X, Y
-			_imageInfo->frameWidth,		// 복사할 이미지 크기 : 가로, 세로
-			_imageInfo->frameHeight,
-			//------------------------------------------------------------------
-			_imageInfo->hMemDC,			// 복사될 대상의 메모리DC
-			_imageInfo->currentFrameX * _imageInfo->frameWidth,			// 복사 시작 지점 : X, Y
-			_imageInfo->currentFrameY * _imageInfo->frameHeight,
-			_imageInfo->frameWidth,		// 복사 영역 크기 : 가로, 세로 
-			_imageInfo->frameHeight,
-			//------------------------------------------------------------------
-			_transColor					// 복사할 때 제외할 색상
-		);
-	}
-
-	else // 맵, 화면 전체적으로 들어가는 이미지 등 ...
-	{
-		BitBlt(hdc, destX, destY, 
-			_imageInfo->frameWidth, 
-			_imageInfo->frameHeight,
-			_imageInfo->hMemDC, 
-			_imageInfo->currentFrameX * _imageInfo->frameWidth,
-			_imageInfo->currentFrameY * _imageInfo->frameHeight,
-			SRCCOPY);
-	}
+	
 }
 
 void Image::frameRender(HDC hdc, int destX, int destY, int currentFrameX, int currentFrameY)
@@ -716,3 +790,8 @@ void Image::aniRender(HDC hdc, int destX, int destY, Animation* ani)
                               ani->getFrameWidth(), ani->getFrameHeight());
 }
 
+void Image::aniAlphaRender(HDC hdc, int destX, int destY, int currentFrameX, int currentFrameY, BYTE alpha, Animation* ani)
+{
+	//alphaRender(hdc, destX, destY, ani->getFramePos().x, ani->getFramePos().y,
+	//ani->getFrameWidth(), ani->getFrameHeight(), alpha);
+}

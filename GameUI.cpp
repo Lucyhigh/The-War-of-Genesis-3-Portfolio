@@ -19,8 +19,8 @@ HRESULT GameUI::init(void)
 	_moveRange = 5;
 
 	_isPlayerTurn = true;
-	_isMenu = false;
-	_isTileSetting = false;
+	_isMainMenu = false;
+	_isSkillMenu = false;
 
 	float startX = -250;
 	float startY = -30;
@@ -40,7 +40,7 @@ HRESULT GameUI::init(void)
 			_battleImageInfo._index = _buttonIndex;
 
 			_vMenuButton.push_back(_battleImageInfo);
-			_vMenuButton[_buttonIndex]._textInfo = _uiText[_buttonIndex];
+			_vMenuButton[_buttonIndex]._textInfo = _uiMainText[_buttonIndex];
 			_buttonIndex++;
 		};
 	}
@@ -92,7 +92,7 @@ void GameUI::release(void)
 
 void GameUI::update(void)
 {
-    if (_isMenu)
+    if (_isMainMenu)
     {
         for (_viMenuButton = _vMenuButton.begin(); _viMenuButton != _vMenuButton.end(); ++_viMenuButton)
         {
@@ -102,6 +102,7 @@ void GameUI::update(void)
 				{
 				case 0:
 					cout << "어빌리티" << endl;
+					_isSkillMenu = true;
 					break;
 				case 1:
 					break;
@@ -111,7 +112,7 @@ void GameUI::update(void)
 				case 3:
 					break;
 				}
-				_isMenu = false;
+				_isMainMenu = false;
 			}
         }
     }
@@ -123,7 +124,7 @@ void GameUI::render(void)
 	int _textPosX = -57;
 	int _textPosY = 8;
 	char buttomText[512];
-	if (_isMenu)
+	if (_isMainMenu)
 	{
         for (_viMenuButton = _vMenuButton.begin(); _viMenuButton != _vMenuButton.end(); ++_viMenuButton)
 		{
@@ -139,7 +140,12 @@ void GameUI::render(void)
 											  _viMenuButton->_buttonRect.top + _textPosY, "가을체",
 								  20, 13, _viMenuButton->_textInfo, wcslen(_viMenuButton->_textInfo), TA_CENTER, RGB(255,255,255));
 		}
-	}           
+	}        
+
+	if (_isSkillMenu)
+	{
+
+	}
 }
 
 POINT GameUI::getPos()
@@ -154,12 +160,12 @@ bool GameUI::getPlayerTurn()
 
 bool GameUI::getMenu()
 {
-	return _isMenu;
+	return _isMainMenu;
 }
 
 void GameUI::showBattleMenu(POINT menuPos)
 {
-    _isMenu = true;
+    _isMainMenu = true;
     for (_viMenuButton = _vMenuButton.begin(); _viMenuButton != _vMenuButton.end(); ++_viMenuButton)
     {
         _uiPos = { menuPos.x + _viMenuButton->_defaultPos.x, menuPos.y + _viMenuButton->_defaultPos.y };

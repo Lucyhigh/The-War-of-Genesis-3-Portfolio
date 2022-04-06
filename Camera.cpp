@@ -23,25 +23,25 @@ void Camera::update(void)
 {
 	if (KEYMANAGER->isStayKeyDown(VK_RIGHT) || _ptMouse.x > WINSIZE_X -10)
 	{
-		_trace.x += 10;
+		_trace.x += 20;
 		if (_trace.x > _rightLimit)
 			_trace.x = _rightLimit;
 	}
 	if (KEYMANAGER->isStayKeyDown(VK_LEFT) || _ptMouse.x < 10)
 	{
-		_trace.x -= 10;
+		_trace.x -= 20;
 		if (_trace.x < _leftLimit)
 			_trace.x = _leftLimit;
 	}
 	if (KEYMANAGER->isStayKeyDown(VK_UP) || _ptMouse.y < 10)
 	{
-		_trace.y -= 10;
+		_trace.y -= 20;
 		if (_trace.y < _topLimit)
 			_trace.y = _topLimit;
 	}
 	if (KEYMANAGER->isStayKeyDown(VK_DOWN) || _ptMouse.y > WINSIZE_Y - 10)
 	{
-		_trace.y += 10;
+		_trace.y += 20;
 		if (_trace.y > _bottomLimit)
 			_trace.y = _bottomLimit;
 	}

@@ -62,6 +62,7 @@ public:
 	// «¡∑π¿” ∑ª¥ı
 	void frameRender(string strKey, HDC hdc, int destX, int destY);
 	void frameRender(string strKey, HDC hdc, int destX, int destY, int currentFrameX, int currentFrameY);
+	void alphaFrameRender(string strKey, HDC hdc, int destX, int destY, int currentFrameX, int currentFrameY, BYTE alpha);
 
 	// ∑Á«¡ ∑ª¥ı 
 	void loopRender(string strKey, HDC hdc, const LPRECT dramArea, int offsetX, int offsetY);

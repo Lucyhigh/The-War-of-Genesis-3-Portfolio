@@ -111,7 +111,10 @@ HRESULT ImageClass::init(void)
 	IMAGEMANAGER->addFrameImage("normalCursor", "Resources/Images/UI/normalCursor.bmp", 112, 24, 7, 1, true, RGB(80, 120, 116));
 	IMAGEMANAGER->addFrameImage("clickTile", "Resources/Images/UI/clickTile.bmp", 240, 32, 6, 1);
 #pragma endregion
+#pragma region effect
+	IMAGEMANAGER->addFrameImage("skill1", "Resources/Images/Effect/skill1.bmp", 1500, 1500, 5, 5,true, RGB(80, 0, 0));
 
+#pragma endregion
 #pragma region Animation
 	ANIMATIONMANAGER->addAnimation("sMovesheet", "sMovesheet", 0, 23, 5, false, true);
     //UI
@@ -126,6 +129,9 @@ HRESULT ImageClass::init(void)
     ANIMATIONMANAGER->addAnimation("eHpBar", "eHpBar", 10, false, false);
     ANIMATIONMANAGER->addAnimation("normalCursor", "normalCursor", 5, false, true);
     ANIMATIONMANAGER->addAnimation("clickTile", "clickTile", 5, false, true);
+	//Effect
+    ANIMATIONMANAGER->addAnimation("skill1", "skill1", 8, false, true);
+
 #pragma endregion
 	return S_OK;
 }

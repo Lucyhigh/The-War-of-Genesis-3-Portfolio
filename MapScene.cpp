@@ -69,14 +69,13 @@ void MapScene::update(void)
 	if (!_moveNext)
 	{
 		if (_camera->getCameraPos().x != _vMapButton[1]._buttonRect.left && _camera->getCameraPos().y != _vMapButton[1]._buttonRect.top)
-			_camera->setCameraPos({_camera->getCameraPos().x - 3, _camera->getCameraPos().y - 3});
+		{
+			_camera->setCameraPos({_camera->getCameraPos().x - 8, _camera->getCameraPos().y - 8});
+		}
 	}
-	else
-	{
 
-	}
 	_camera->update();
-	_camera->setCameraPos(_camera->getCameraPos());//시작하면 캐릭터 좌표쪽으로 화면이 조절...
+	_camera->setCameraPos(_camera->getCameraPos());
 	_camera->setScreenRect(_camera->getScreenRect());
 }
 
