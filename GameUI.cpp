@@ -35,7 +35,7 @@ HRESULT GameUI::init(void)
 			POINT _buttomPos = { startX * (-1)*i - 27, startY * (-2.5)*j - 40 };
 			_battleImageInfo._imgPos = _buttomPos;
 			_battleImageInfo._iconPos = _buttomPos;
-			_battleImageInfo._buttonRect = RectMake(_buttomPos.x, _buttomPos.y, _image->getWidth(), _image->getHeight());//
+			_battleImageInfo._buttonRect = RectMake(_buttomPos.x, _buttomPos.y, _image->getWidth(), _image->getHeight());
 			_battleImageInfo._defaultPos = _buttomPos;
 			_battleImageInfo._index = _buttonIndex;
 
@@ -44,7 +44,20 @@ HRESULT GameUI::init(void)
 			_buttonIndex++;
 		};
 	}
+    for (int i = 0,_buttonIndex=0; i <= 3; i++)
+    {
+        tagSkillMenu _skillMenuInfo;
+        POINT _skillTextPos = { 150 + i * 50,30 };
+        _skillMenuInfo._imgPos = _skillTextPos;
+        _skillMenuInfo._buttonRect = RectMake(_skillTextPos.x, _skillTextPos.y, 80, 50);
+        _skillMenuInfo._defaultPos = _skillTextPos;
+        _skillMenuInfo._index = _buttonIndex;
 
+        _vSkillButton.push_back(_skillMenuInfo);
+        _vSkillButton[_buttonIndex]._textInfo = _uiSkillText[_buttonIndex];
+        _buttonIndex++;
+    }
+    /*
 	for (int i = -1; i < _moveRange ; i++)
 	{
 		for (int j = _moveRange - i; j > 0; j--) 
@@ -75,7 +88,7 @@ HRESULT GameUI::init(void)
 			_vMoveTile.push_back(_tagMoveTile);
 		}
 		_indexY=0;
-	}
+	}*/
 
 	return S_OK;
 }
@@ -144,7 +157,14 @@ void GameUI::render(void)
 
 	if (_isSkillMenu)
 	{
-
+			IMAGEMANAGER->alphaRender("skillText", getMemDC(), _viSkillButton->_imgPos.x, _viSkillButton->_imgPos.y, _buttonAlpha);
+            for (_viSkillButton = _vSkillButton.begin(); _viSkillButton != _vSkillButton.end(); ++_viSkillButton)
+            {
+                Rectangle(getMemDC(), _viSkillButton->_buttonRect.left, _viSkillButton->_buttonRect.top, _viSkillButton->_buttonRect.right, _viSkillButton->_buttonRect.bottom);
+                FONTMANAGER->drawText(getMemDC(), _viSkillButton->_buttonRect.right + _textPosX,
+                _viSkillButton->_buttonRect.top + _textPosY, "°¡À»Ã¼",
+                20, 13, _viSkillButton->_textInfo, wcslen(_viSkillButton->_textInfo), TA_LEFT, RGB(255, 255, 255));
+            }
 	}
 }
 
@@ -178,8 +198,18 @@ void GameUI::showBattleMenu(POINT menuPos)
     }
 }
 
-void GameUI::showMoveTile(POINT center)
+void GameUI::showSkillMenu(POINT menuPos)
 {
+    _isSkillMenu = true;
+    for (_viSkillButton = _vSkillButton.begin(); _viSkillButton != _vSkillButton.end(); ++_viSkillButton)
+    {
+        _uiPos = { menuPos.x + _viMenuButton->_defaultPos.x, menuPos.y + _viMenuButton->_defaultPos.y };
+        _viSkillButton->_imgPos = _uiPos;
+        _viSkillButton->_buttonRect.left = _uiPos.x;
+        _viSkillButton->_buttonRect.top = _uiPos.y;
+        _viSkillButton->_buttonRect.right = _uiPos.x + _image->getWidth();
+        _viSkillButton->_buttonRect.bottom = _uiPos.y + _image->getHeight();
+    }
 }
 
 void GameUI::MakeMoveTile()

@@ -36,6 +36,9 @@ private:
 	vector<tagBattleMenu> _vMenuButton;
     vector<tagBattleMenu>::iterator _viMenuButton;
 
+    vector<tagSkillMenu> _vSkillButton;
+    vector<tagSkillMenu>::iterator _viSkillButton;
+
 	vector<tagMoveTile> _vMoveTile;
 	vector<tagMoveTile>::iterator _viMoveTile;
 	POINT _uiPos;
@@ -61,7 +64,7 @@ public:
 	bool getPlayerTurn();
 	bool getMenu();
 	void showBattleMenu(POINT menuPos);
-	void showMoveTile(POINT center);
+	void showSkillMenu(POINT menuPos);
 	void MakeMoveTile();
 	void setMoveTileRange(int range);
 	void setMoveCenter(POINT center);

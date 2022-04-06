@@ -22,14 +22,14 @@ private:
 	Animation* _aniCursor;
 	Animation* _tileClick;
 	Animation* _turnMark;
-	Animation* _effect;
+	//Animation* _effect;
 	ProgressBar* _hpBar;
 	Player* _player;
 	TurnSystem* _turnSystem;
 	GameUI* _gameUI;
 	vector<Cell*>* _cells;
 	Image* _image;
-	Image* _effectImage;
+	//Image* _effectImage;
 	Saladin* _saladin;
 	Camera* _camera;
 	AStar::Generator* _generator;
@@ -40,8 +40,6 @@ private:
 	POINT _playerPathGoal;
     CELL_TYPE _mouseType;
     CELL_TYPE _beforeMouseType;
-	int _indexB;
-	int cdt;
 	RECT _mouseRc;
 	RECT _endRc;
 	RECT _moveRc;

@@ -10,8 +10,7 @@ HRESULT FinalScene::init(void)
 
 	_gameUI = new GameUI;
 	_gameUI->init();
-	_indexB = 0;
-	cdt = 1;
+
 	_aniCursor = ANIMATIONMANAGER->findAnimation("normalCursor");
 	_tileClick = ANIMATIONMANAGER->findAnimation("clickTile");
 	_tileClick->AniStart();
@@ -19,8 +18,6 @@ HRESULT FinalScene::init(void)
 	_turnMark->AniStart();
 
 	_image = IMAGEMANAGER->findImage("Final");
-	_effectImage = IMAGEMANAGER->findImage("skill1");
-
 	_cells = _mapTileInfo->getCell();
 
 	_player = new Player;
@@ -385,7 +382,7 @@ void FinalScene::update(void)
 	    }
     }
 	//cout<<_moveTileBit.to_string() << endl;
-	_count++;
+	/*_count++;
 	if (KEYMANAGER->isStayKeyDown('I'))
 	{
 
@@ -399,7 +396,7 @@ void FinalScene::update(void)
 		}
 		IMAGEMANAGER->findImage("skill1")->setFrameX(_indexB);
 		cout << _indexB << "," << cdt<< endl;
-	}
+	}*/
 }
 
 void FinalScene::render(void)
@@ -544,9 +541,6 @@ void FinalScene::render(void)
 			_saladin->getSaladinPosY() + MarkPos.y - _camera->getScreenRect().top, _turnMark);
 		break;
 	}
-
-	IMAGEMANAGER->alphaFrameRender("skill1",getMemDC(), 0, 0, _effectImage->getFrameWidth(), _effectImage->getFrameHeight(), _tileAlpha);
-	//IMAGEMANAGER->findImage("skill1")->aniAlphaRender(getMemDC(),0,0, _effectImage->getFrameWidth(), _effectImage->getFrameHeight(),_tileAlpha, _effect);
 }
 
 void FinalScene::drawMapCellInfo()//µð¹ö±×
@@ -969,7 +963,6 @@ void FinalScene::Attack()
 						if (cell->getType() != CELL_TYPE::WALL)
 						{
 							cell->setType(CELL_TYPE::START);
-							//_cMoveStart = cell;//======================================================================================
 						}
 					}
 				}
@@ -1019,8 +1012,6 @@ void FinalScene::startShowMoveableTile(int range, Cell* cell, bool isMoveable)
 
 	for (auto iter = _vMoveableTile.begin(); iter != _vMoveableTile.end(); ++iter)
 	{
-        //if (cell->getType() == CELL_TYPE::ENEMY) continue;
-        //else
         (*iter)->setType(CELL_TYPE::MOVEABLE);
 	}
 }
@@ -1054,8 +1045,6 @@ void FinalScene::startShowAttackableTile(int range, Cell* cell, bool isMoveable)
 
 	for (auto iter = _vAttackableTile.begin(); iter != _vAttackableTile.end(); ++iter)
 	{
-        //if (cell->getType() == CELL_TYPE::ENEMY) continue;
-        //else 
             (*iter)->setType(CELL_TYPE::ATTACKABLE);
 	}
 }

@@ -664,7 +664,33 @@ void Image::alphaframeRender(HDC hdc, int destX, int destY, int currentFrameX, i
 
 void Image::frameRender(HDC hdc, int destX, int destY)
 {
-	
+    if (_isTrans)
+    {
+        GdiTransparentBlt
+        (
+            hdc,						
+            destX, destY,				
+            _imageInfo->frameWidth,		
+            _imageInfo->frameHeight,
+            _imageInfo->hMemDC,			
+            _imageInfo->currentFrameX * _imageInfo->frameWidth,	
+            _imageInfo->currentFrameY * _imageInfo->frameHeight,
+            _imageInfo->frameWidth,		
+            _imageInfo->frameHeight,
+            _transColor					
+        );
+    }
+
+    else
+    {
+        BitBlt(hdc, destX, destY,
+            _imageInfo->frameWidth,
+            _imageInfo->frameHeight,
+            _imageInfo->hMemDC,
+            _imageInfo->currentFrameX * _imageInfo->frameWidth,
+            _imageInfo->currentFrameY * _imageInfo->frameHeight,
+            SRCCOPY);
+    }
 }
 
 void Image::frameRender(HDC hdc, int destX, int destY, int currentFrameX, int currentFrameY)
