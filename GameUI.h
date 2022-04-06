@@ -3,8 +3,10 @@
 struct tagBattleMenu
 {
 	Image* _image;
+	Image* _iconImage;
 	RECT _buttonRect;
 	POINT _imgPos;
+	POINT _iconPos;
 	POINT _defaultPos;
     LPCWSTR _textInfo;
 	int _index;
@@ -15,8 +17,6 @@ struct tagMoveTile
 	Image* _image;
 	RECT _buttonRect;
 	POINT _tilePos;
-	//float _tileAlpha;
-	//int _isAlphaIncrese;
 };
 
 class GameUI:public GameNode
@@ -24,6 +24,7 @@ class GameUI:public GameNode
 private:
 	Image* _image;
 	Image* _tileImage;
+	Image* _iconImage;
 	vector<tagBattleMenu> _vMenuButton;
     vector<tagBattleMenu>::iterator _viMenuButton;
 

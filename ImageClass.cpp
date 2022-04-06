@@ -88,16 +88,21 @@ HRESULT ImageClass::init(void)
 	IMAGEMANAGER->addImage("introtext", "Resources/Images/UI/introtext.bmp", 230, 105);
 	IMAGEMANAGER->addImage("storyText", "Resources/Images/UI/storyText.bmp", 511*1.33,111 * 1.33);
 	IMAGEMANAGER->addImage("mapInfoAll", "Resources/Images/UI/mapInfoAll.bmp", 230, 105);
-	IMAGEMANAGER->addImage("button", "Resources/Images/UI/UI_button.bmp", 102, 28, MGT);
+	IMAGEMANAGER->addImage("button", "Resources/Images/UI/UI_button.bmp", 102*1.3, 28*1.3, MGT);
 	IMAGEMANAGER->addImage("MapButton", "Resources/Images/UI/UI_buttonMap.bmp", 164,48, MGT);
 	IMAGEMANAGER->addImage("mapMark", "Resources/Images/UI/mapMark.bmp", 127,136, MGT);
+	IMAGEMANAGER->addImage("battleMark", "Resources/Images/UI/battleMark.bmp", 36,32, true, RGB(0, 252, 0));
 	IMAGEMANAGER->addImage("storyText", "Resources/Images/UI/storyText.bmp", 511, 111);
+	IMAGEMANAGER->addImage("skillText", "Resources/Images/UI/skillText.bmp", 328, 171);
+	IMAGEMANAGER->addImage("shadow", "Resources/Images/UI/shadow.bmp", 42, 29, true, RGB(252, 252, 0));
+	IMAGEMANAGER->addImage("moveTile", "Resources/Images/UI/moveable.bmp", 40, 32);
+	IMAGEMANAGER->addImage("attackTile", "Resources/Images/UI/attackable.bmp", 40, 32);
+	IMAGEMANAGER->addImage("ScenarioClear", "Resources/Images/UI/ScenarioClear.bmp", 960, 90);
+
+	IMAGEMANAGER->addFrameImage("selectIcon", "Resources/Images/UI/selectIcon.bmp", 96, 25,4,1, MGT);
 	IMAGEMANAGER->addFrameImage("npcBar", "Resources/Images/UI/npcbar.bmp", 800, 91,8,1,MGT);
 	IMAGEMANAGER->addFrameImage("pHpBar", "Resources/Images/UI/pHpBar.bmp", 1440 * 0.2, 1200 * 0.2, 4, 4, true, RGB(0, 44, 0));
 	IMAGEMANAGER->addFrameImage("eHpBar", "Resources/Images/UI/eHpBar.bmp", 1440 * 0.2, 1200 * 0.2, 4, 4, true, RGB(0, 44, 0));
-
-	IMAGEMANAGER->addImage("moveTile", "Resources/Images/UI/moveable.bmp", 40, 32);
-	IMAGEMANAGER->addImage("attackTile", "Resources/Images/UI/attackable.bmp", 40, 32);
 	IMAGEMANAGER->addFrameImage("notMoveable", "Resources/Images/UI/notMoveable.bmp", 76, 24,2,1,true, RGB(80, 120, 116));
 	IMAGEMANAGER->addFrameImage("turnMark", "Resources/Images/UI/turnMark.bmp", 40, 7, 8, 1, true, RGB(80, 120, 116));
 	IMAGEMANAGER->addFrameImage("playerMark", "Resources/Images/UI/playerMark.bmp", 72, 11, 8, 1, true, RGB(80, 120, 116));

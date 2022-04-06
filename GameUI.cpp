@@ -5,6 +5,9 @@ HRESULT GameUI::init(void)
 	_image = new Image;
 	_image = IMAGEMANAGER->findImage("button");
 
+	_iconImage = new Image;
+	_iconImage = IMAGEMANAGER->findImage("selectIcon");
+
 	_tileImage = new Image;
 	_tileImage = IMAGEMANAGER->findImage("moveTile");
 
@@ -19,17 +22,19 @@ HRESULT GameUI::init(void)
 	_isMenu = false;
 	_isTileSetting = false;
 
-	int startX = -250;
-	int startY = -50;
+	float startX = -250;
+	float startY = -30;
 	int _indexY = 0;
+
 	for (int i = -1; i < 1; i++)
 	{
 		for (int j = -1; j < 1; j++)
 		{
 			
 			tagBattleMenu _battleImageInfo;
-			POINT _buttomPos = { startX * (-1)*i, startY * (-2)*j };
+			POINT _buttomPos = { startX * (-1)*i - 27, startY * (-2.5)*j - 40 };
 			_battleImageInfo._imgPos = _buttomPos;
+			_battleImageInfo._iconPos = _buttomPos;
 			_battleImageInfo._buttonRect = RectMake(_buttomPos.x, _buttomPos.y, _image->getWidth(), _image->getHeight());//
 			_battleImageInfo._defaultPos = _buttomPos;
 			_battleImageInfo._index = _buttonIndex;
@@ -39,10 +44,7 @@ HRESULT GameUI::init(void)
 			_buttonIndex++;
 		};
 	}
-	//MakeMoveTile();
-	//함수로 다하고 지정해줄거임
-	//아래방향
-	//for (int i = _moveRange - 2; i > -1; i--)
+
 	for (int i = -1; i < _moveRange ; i++)
 	{
 		for (int j = _moveRange - i; j > 0; j--) 
@@ -58,7 +60,7 @@ HRESULT GameUI::init(void)
 		}
 		_indexY = 0;
 	}
-	//위방향
+
 	for (int i = _moveRange; i >= 0; i--)
 	{
 		for (int j = 1; j < _moveRange - i; j++) 
@@ -82,6 +84,10 @@ void GameUI::release(void)
 {
     _image->release();
     SAFE_DELETE(_image);
+	_iconImage->release();
+	SAFE_DELETE(_iconImage);
+	_tileImage->release();
+	SAFE_DELETE(_tileImage);
 }
 
 void GameUI::update(void)
@@ -95,6 +101,7 @@ void GameUI::update(void)
 				switch (_viMenuButton->_index)
 				{
 				case 0:
+					cout << "어빌리티" << endl;
 					break;
 				case 1:
 					break;
@@ -112,22 +119,27 @@ void GameUI::update(void)
 
 void GameUI::render(void)
 {
-	int _buttonAlpha = 30;
-	int _textPosY = 5;
+	int _buttonAlpha = 100;
+	int _textPosX = -57;
+	int _textPosY = 8;
 	char buttomText[512];
 	if (_isMenu)
 	{
         for (_viMenuButton = _vMenuButton.begin(); _viMenuButton != _vMenuButton.end(); ++_viMenuButton)
 		{
-			IMAGEMANAGER->alphaRender("button", getMemDC(), _viMenuButton->_imgPos.x, _viMenuButton->_imgPos.y,_buttonAlpha);
-			FONTMANAGER->drawText(getMemDC(), (_viMenuButton->_buttonRect.left+_viMenuButton->_buttonRect.right)/2,
-											  _viMenuButton->_buttonRect.top+ _textPosY, "가을체",
-								  18, 13, _viMenuButton->_textInfo, wcslen(_viMenuButton->_textInfo), TA_CENTER, RGB(255,255,255));
+			if (PtInRect(&_viMenuButton->_buttonRect, _ptMouse))
+			{
+				_buttonAlpha = 30;
+			}
+			else _buttonAlpha = 100;
+			IMAGEMANAGER->alphaRender("button", getMemDC(), _viMenuButton->_imgPos.x, _viMenuButton->_imgPos.y, _buttonAlpha);
+			IMAGEMANAGER->frameRender("selectIcon", getMemDC(), _viMenuButton->_imgPos.x+ 13, _viMenuButton->_imgPos.y+4, _viMenuButton->_index,1);
+
+			FONTMANAGER->drawText(getMemDC(), _viMenuButton->_buttonRect.right + _textPosX,
+											  _viMenuButton->_buttonRect.top + _textPosY, "가을체",
+								  20, 13, _viMenuButton->_textInfo, wcslen(_viMenuButton->_textInfo), TA_CENTER, RGB(255,255,255));
 		}
-	}
-	//if (_tileAlpha == 0 || _tileAlpha == 255) _isAlphaIncrese = !_isAlphaIncrese;
-	//if (_isAlphaIncrese)_tileAlpha += 1.0f; else _tileAlpha -= 1.5f;
-            
+	}           
 }
 
 POINT GameUI::getPos()
@@ -152,6 +164,7 @@ void GameUI::showBattleMenu(POINT menuPos)
     {
         _uiPos = { menuPos.x + _viMenuButton->_defaultPos.x, menuPos.y + _viMenuButton->_defaultPos.y };
         _viMenuButton->_imgPos = _uiPos;
+        _viMenuButton->_iconPos = _uiPos;
         _viMenuButton->_buttonRect.left = _uiPos.x;
         _viMenuButton->_buttonRect.top = _uiPos.y;
 		_viMenuButton->_buttonRect.right = _uiPos.x+_image->getWidth();

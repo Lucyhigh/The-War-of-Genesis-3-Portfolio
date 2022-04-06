@@ -198,7 +198,6 @@ void FinalScene::update(void)
                                 find4WaysTile();
                                 break;
                             }
-							//cout << (int)(*iterator)->getType() << endl;
                         }
                     }
                 }
@@ -212,10 +211,7 @@ void FinalScene::update(void)
                     {
                         if (PtInRect(&(*iterator)->getRect(), cameraMouse) && KEYMANAGER->isStayKeyDown(VK_LBUTTON))
                         {
-							
-
-                            //find4WaysTile();
-                            _turnSystem->setPlayerBit(2);
+                           if((*iterator)->getType() == CELL_TYPE::ENEMY) _turnSystem->setPlayerBit(2);
                         }
                     }
 				}
@@ -243,7 +239,7 @@ void FinalScene::update(void)
 					cell->setType(CELL_TYPE::NORMAL);
 				}
 			}
-            POINT enemyPos = { _saladin->getSaladinPosX() - TILESIZEX, _saladin->getSaladinPosY() };//
+            POINT enemyPos = { _saladin->getSaladinPosX() - TILESIZEX, _saladin->getSaladinPosY() };
             for (auto cellsIter = _cells->begin(); cellsIter != _cells->end(); ++cellsIter)
             {
                 Cell* cell = (*cellsIter);
@@ -285,6 +281,7 @@ void FinalScene::update(void)
 				else
 				{
 					_turnSystem->changeToEnemy();
+					_moveTileBit.reset();
 					for (auto cellsIter = _cells->begin(); cellsIter != _cells->end(); ++cellsIter)//클릭 가능한 타일만 되게 지정
 					{
 						Cell* cell = (*cellsIter);
@@ -405,8 +402,6 @@ void FinalScene::render(void)
 	}
 	if (_moveTileBit.test(0) == 0 && _moveTileBit.test(1) == 1)
 	{
-		int cameraLeft = _camera->getScreenRect().left;
-		int cameraTop = _camera->getScreenRect().top;
 		for (auto cellsIter = _cells->begin(); cellsIter != _cells->end(); ++cellsIter)
 		{
 			Cell* cell = (*cellsIter);
@@ -431,8 +426,6 @@ void FinalScene::render(void)
 	}
 	else if (_moveTileBit.test(0) == 1 && _moveTileBit.test(1) == 0 && _moveTileBit.test(2) == 1)
 	{
-		int cameraLeft = _camera->getScreenRect().left;
-		int cameraTop = _camera->getScreenRect().top;
 		for (auto cellsIter = _cells->begin(); cellsIter != _cells->end(); ++cellsIter)
 		{
 			Cell* cell = (*cellsIter);
@@ -453,7 +446,8 @@ void FinalScene::render(void)
 		}
 	}
 	AstarTileInfo();
-
+	IMAGEMANAGER->alphaRender("shadow", getMemDC(), _player->getPlayerPosX()- cameraLeft-47, _player->getPlayerPosY()+10- cameraTop, 150);
+	IMAGEMANAGER->alphaRender("shadow", getMemDC(), _saladin->getSaladinPosX()- cameraLeft-50, _saladin->getSaladinPosY()+10- cameraTop, 150);
 	_saladin->render();
     _player->render();
     _gameUI->render();
