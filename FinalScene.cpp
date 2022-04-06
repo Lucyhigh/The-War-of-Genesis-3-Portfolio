@@ -92,6 +92,10 @@ void FinalScene::release(void)
 
 void FinalScene::update(void)
 {
+	POINT playerUI = {
+								_player->getPlayerPosX() - _camera->getScreenRect().left,
+								_player->getPlayerPosY() - _camera->getScreenRect().top
+	};
     //검사용 버튼
 	if (KEYMANAGER->isOnceKeyDown('H'))
 	{
@@ -259,16 +263,11 @@ void FinalScene::update(void)
            
 			if (KEYMANAGER->isOnceKeyDown(VK_RBUTTON))
 			{
-				int posUI = 60;
-				POINT playerUI = {
-									_player->getPlayerPosX() + posUI - _camera->getScreenRect().left,
-									_player->getPlayerPosY() + posUI - _camera->getScreenRect().top
-				};
-				_gameUI->showBattleMenu(playerUI);
 				_turnSystem->setPlayerBit(0);
+				_gameUI->showBattleMenu(playerUI);
 			}
 		}
-		// 0000 0001 : 메뉴창염 - 타일클릭해도 이동안됨 버튼클릭상태
+		// 0000 0001 : 메뉴창염 - 타일클릭해도 이동안되어야함 버튼클릭상태
 		else if (_turnSystem->getPlayerBit(0) == 1)
 		{
 			_gameUI->update();
@@ -278,22 +277,26 @@ void FinalScene::update(void)
 				{
 					_turnSystem->changeToPlayer();
 				}
+				else if (_gameUI->getSkillMenu())
+				{
+					_gameUI->showSkillMenu(playerUI);
+					cout << "스킬창" << endl;
+				}
 				else
 				{
 					_turnSystem->changeToEnemy();
 					_moveTileBit.reset();
-					for (auto cellsIter = _cells->begin(); cellsIter != _cells->end(); ++cellsIter)//클릭 가능한 타일만 되게 지정
-					{
-						Cell* cell = (*cellsIter);
-						if (PtInRect(&cell->getRect(), { (long)_player->getPlayerPosX() - TILESIZEX, (long)_player->getPlayerPosY() }))
-						{
-							if (cell->getType() != CELL_TYPE::WALL)
-							{
-								cell->setType(CELL_TYPE::START);
-								//_cMoveStart = cell;//======================================================================================
-							}
-						}
-					}
+					//for (auto cellsIter = _cells->begin(); cellsIter != _cells->end(); ++cellsIter)//클릭 가능한 타일만 되게 지정
+					//{
+					//	Cell* cell = (*cellsIter);
+					//	if (PtInRect(&cell->getRect(), { (long)_player->getPlayerPosX() - TILESIZEX, (long)_player->getPlayerPosY() }))
+					//	{
+					//		if (cell->getType() != CELL_TYPE::WALL)
+					//		{
+					//			cell->setType(CELL_TYPE::START);
+					//		}
+					//	}
+					//}일단 제외시킴 이동 후 재지정을 햇기에
 				}
 			}
 		}
@@ -381,22 +384,6 @@ void FinalScene::update(void)
 	    	startShowAttackableTile(1, _cMoveStart, false);
 	    }
     }
-	//cout<<_moveTileBit.to_string() << endl;
-	/*_count++;
-	if (KEYMANAGER->isStayKeyDown('I'))
-	{
-
-		if (_count % 20 == 0)_indexB++;
-		IMAGEMANAGER->findImage("skill1")->setFrameY(cdt);
-		if (_indexB > 5)
-		{
-			_indexB = 0;
-			if (cdt < 5)cdt++;
-			else cdt = 0;
-		}
-		IMAGEMANAGER->findImage("skill1")->setFrameX(_indexB);
-		cout << _indexB << "," << cdt<< endl;
-	}*/
 }
 
 void FinalScene::render(void)

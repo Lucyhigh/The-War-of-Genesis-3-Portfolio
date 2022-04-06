@@ -13,9 +13,8 @@ struct tagBattleMenu
 };
 struct tagSkillMenu
 {
-	Image* _image;
 	RECT _buttonRect;
-	POINT _imgPos;
+	POINT _textPos;
 	POINT _defaultPos;
 	LPCWSTR _textInfo;
 	int _index;
@@ -42,6 +41,7 @@ private:
 	vector<tagMoveTile> _vMoveTile;
 	vector<tagMoveTile>::iterator _viMoveTile;
 	POINT _uiPos;
+	POINT _PlayerPos;
 	POINT _tileCenter;
 	LPCWSTR _uiMainText[4];
 	LPCWSTR _uiSkillText[4];
@@ -60,7 +60,7 @@ public:
 	void update(void);
 	void render(void);
 
-	POINT getPos();
+	bool getSkillMenu();
 	bool getPlayerTurn();
 	bool getMenu();
 	void showBattleMenu(POINT menuPos);

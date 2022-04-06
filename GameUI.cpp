@@ -21,7 +21,7 @@ HRESULT GameUI::init(void)
 	_isPlayerTurn = true;
 	_isMainMenu = false;
 	_isSkillMenu = false;
-
+	_PlayerPos = { 0,0 };
 	float startX = -250;
 	float startY = -30;
 	int _indexY = 0;
@@ -30,9 +30,8 @@ HRESULT GameUI::init(void)
 	{
 		for (int j = -1; j < 1; j++)
 		{
-			
 			tagBattleMenu _battleImageInfo;
-			POINT _buttomPos = { startX * (-1)*i - 27, startY * (-2.5)*j - 40 };
+			POINT _buttomPos = { startX * (-1)*i+30, startY * (-2.5)*j +10 };
 			_battleImageInfo._imgPos = _buttomPos;
 			_battleImageInfo._iconPos = _buttomPos;
 			_battleImageInfo._buttonRect = RectMake(_buttomPos.x, _buttomPos.y, _image->getWidth(), _image->getHeight());
@@ -47,8 +46,8 @@ HRESULT GameUI::init(void)
     for (int i = 0,_buttonIndex=0; i <= 3; i++)
     {
         tagSkillMenu _skillMenuInfo;
-        POINT _skillTextPos = { 150 + i * 50,30 };
-        _skillMenuInfo._imgPos = _skillTextPos;
+        POINT _skillTextPos = { 150,30 + i * 50 };
+        _skillMenuInfo._textPos = _skillTextPos;
         _skillMenuInfo._buttonRect = RectMake(_skillTextPos.x, _skillTextPos.y, 80, 50);
         _skillMenuInfo._defaultPos = _skillTextPos;
         _skillMenuInfo._index = _buttonIndex;
@@ -114,7 +113,6 @@ void GameUI::update(void)
 				switch (_viMenuButton->_index)
 				{
 				case 0:
-					cout << "어빌리티" << endl;
 					_isSkillMenu = true;
 					break;
 				case 1:
@@ -157,20 +155,20 @@ void GameUI::render(void)
 
 	if (_isSkillMenu)
 	{
-			IMAGEMANAGER->alphaRender("skillText", getMemDC(), _viSkillButton->_imgPos.x, _viSkillButton->_imgPos.y, _buttonAlpha);
-            for (_viSkillButton = _vSkillButton.begin(); _viSkillButton != _vSkillButton.end(); ++_viSkillButton)
-            {
-                Rectangle(getMemDC(), _viSkillButton->_buttonRect.left, _viSkillButton->_buttonRect.top, _viSkillButton->_buttonRect.right, _viSkillButton->_buttonRect.bottom);
-                FONTMANAGER->drawText(getMemDC(), _viSkillButton->_buttonRect.right + _textPosX,
-                _viSkillButton->_buttonRect.top + _textPosY, "가을체",
-                20, 13, _viSkillButton->_textInfo, wcslen(_viSkillButton->_textInfo), TA_LEFT, RGB(255, 255, 255));
-            }
+		IMAGEMANAGER->alphaRender("skillText", getMemDC(), _PlayerPos.x, _PlayerPos.y, 80);
+        for (_viSkillButton = _vSkillButton.begin(); _viSkillButton != _vSkillButton.end(); ++_viSkillButton)
+        {
+            Rectangle(getMemDC(), _viSkillButton->_buttonRect.left, _viSkillButton->_buttonRect.top, _viSkillButton->_buttonRect.right, _viSkillButton->_buttonRect.bottom);
+            FONTMANAGER->drawText(getMemDC(), _viSkillButton->_buttonRect.right + _textPosX,
+            _viSkillButton->_buttonRect.top + _textPosY, "가을체",
+            20, 13, _viSkillButton->_textInfo, wcslen(_viSkillButton->_textInfo), TA_LEFT, RGB(255, 255, 255));
+        }
 	}
 }
 
-POINT GameUI::getPos()
+bool GameUI::getSkillMenu()
 {
-	return _uiPos;
+	return _isSkillMenu;
 }
 
 bool GameUI::getPlayerTurn()
@@ -201,10 +199,11 @@ void GameUI::showBattleMenu(POINT menuPos)
 void GameUI::showSkillMenu(POINT menuPos)
 {
     _isSkillMenu = true;
+	_PlayerPos = menuPos;
     for (_viSkillButton = _vSkillButton.begin(); _viSkillButton != _vSkillButton.end(); ++_viSkillButton)
     {
         _uiPos = { menuPos.x + _viMenuButton->_defaultPos.x, menuPos.y + _viMenuButton->_defaultPos.y };
-        _viSkillButton->_imgPos = _uiPos;
+        _viSkillButton->_textPos = _uiPos;
         _viSkillButton->_buttonRect.left = _uiPos.x;
         _viSkillButton->_buttonRect.top = _uiPos.y;
         _viSkillButton->_buttonRect.right = _uiPos.x + _image->getWidth();
