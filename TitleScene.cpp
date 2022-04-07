@@ -131,7 +131,7 @@ void TitleScene::render(void)
                 FONTMANAGER->drawText(getMemDC(), 
                     (_viTitleButton->_buttonRect.left + _viTitleButton->_buttonRect.right) / 2,
                     _viTitleButton->_buttonRect.top , "가을체", 28, 13, _viTitleButton->_textInfo,
-                    wcslen(_viTitleButton->_textInfo), TA_CENTER, RGB(170, 170, 170));//가을체
+                    wcslen(_viTitleButton->_textInfo), TA_CENTER, RGB(170, 170, 170));
             }
             else
             {

@@ -253,7 +253,7 @@ void Player::update(void)
     //01000 Á×À½
     }
 	_rcPlayer = RectMakeCenter(_playerPos.x, _playerPos.y, _image->getFrameWidth(), _image->getFrameHeight());
-	cout << _stateBit.to_string() << endl;
+	//cout << _stateBit.to_string() << endl;
 }
 
 

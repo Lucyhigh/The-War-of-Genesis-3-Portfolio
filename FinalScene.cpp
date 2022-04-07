@@ -95,7 +95,7 @@ void FinalScene::update(void)
 	POINT playerUI = {
 								_player->getPlayerPosX() - _camera->getScreenRect().left,
 								_player->getPlayerPosY() - _camera->getScreenRect().top
-	};
+					 };
     //검사용 버튼
 	if (KEYMANAGER->isOnceKeyDown('H'))
 	{
@@ -275,9 +275,9 @@ void FinalScene::update(void)
 			{
 				if (_gameUI->getPlayerTurn())
 				{
-					_turnSystem->changeToPlayer();
+					//_turnSystem->changeToPlayer();
 				}
-				else if (_gameUI->getSkillMenu())
+				if (_gameUI->getSkillMenu())
 				{
 					_gameUI->showSkillMenu(playerUI);
 					cout << "스킬창" << endl;
@@ -315,7 +315,6 @@ void FinalScene::update(void)
 		else if (_turnSystem->getPlayerBit(3) == 1)
 		{
 			changeImage();
-
 		}
 	}
 	else if (_turnSystem->getStatus() == CHANGINGSTATUS::ENEMYTURN)
@@ -324,9 +323,7 @@ void FinalScene::update(void)
 		if (_turnSystem->isEnemyIdle() == 1)
 		{
 			// : 대기- 대기이미지 - 캐릭터 시작타일 파악후 캐릭터 좌우상하 4개 타일 중 가까운 타일 선택해 그곳을 목표로 3칸씩 이동?
-           
             find4WaysTile();
-
 		}
 		// 0000 0010 : 이동중 - 
 		else if (_turnSystem->getEnemyBit(1) == 1)
@@ -342,7 +339,6 @@ void FinalScene::update(void)
 		else if (_turnSystem->getEnemyBit(3) == 1)
 		{
 			changeImage();
-
 		}
 	}
 
@@ -401,6 +397,7 @@ void FinalScene::render(void)
 	{
 		drawMapCellInfo();
 	}
+
 	if (_moveTileBit.test(0) == 0 && _moveTileBit.test(1) == 1)
 	{
 		for (auto cellsIter = _cells->begin(); cellsIter != _cells->end(); ++cellsIter)

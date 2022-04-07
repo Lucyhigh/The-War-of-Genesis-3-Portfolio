@@ -13,7 +13,7 @@ HRESULT GameUI::init(void)
 
 	_uiPos = { 0,0 };
 	_tileCenter = { 0, 0 };
-	
+
 	_tileAlpha = 0.0f;
 	_buttonIndex = 0;
 	_moveRange = 5;
@@ -43,52 +43,23 @@ HRESULT GameUI::init(void)
 			_buttonIndex++;
 		};
 	}
+
     for (int i = 0,_buttonIndex=0; i <= 3; i++)
     {
         tagSkillMenu _skillMenuInfo;
-        POINT _skillTextPos = { 150,30 + i * 50 };
+        POINT _skillTextPos = { 85,-45 + i * 36 };
         _skillMenuInfo._textPos = _skillTextPos;
-        _skillMenuInfo._buttonRect = RectMake(_skillTextPos.x, _skillTextPos.y, 80, 50);
+        _skillMenuInfo._buttonRect = RectMake(_skillTextPos.x, _skillTextPos.y, 80, 10);
         _skillMenuInfo._defaultPos = _skillTextPos;
         _skillMenuInfo._index = _buttonIndex;
 
         _vSkillButton.push_back(_skillMenuInfo);
-        _vSkillButton[_buttonIndex]._textInfo = _uiSkillText[_buttonIndex];
+        _vSkillButton[_buttonIndex]._skillNameInfo = _uiSkillText[_buttonIndex];
+        _vSkillButton[_buttonIndex]._skillLvInfo = _uiSkillLvText[_buttonIndex];
+        _vSkillButton[_buttonIndex]._skillSPInfo = _uiSkillSPText[_buttonIndex];
         _buttonIndex++;
     }
-    /*
-	for (int i = -1; i < _moveRange ; i++)
-	{
-		for (int j = _moveRange - i; j > 0; j--) 
-		{
-			continue;
-		}
-		for (int j = i * 2+1; j > 0; j--)
-		{
-			tagMoveTile _tagMoveTile;
-			POINT _movePos = { i ,_indexY};
-			_indexY++;
-			_vMoveTile.push_back(_tagMoveTile);
-		}
-		_indexY = 0;
-	}
-
-	for (int i = _moveRange; i >= 0; i--)
-	{
-		for (int j = 1; j < _moveRange - i; j++) 
-		{
-			continue;
-		}
-		for (int j = 0; j < i * 2 + 1 ; j++)
-		{
-			tagMoveTile _tagMoveTile;
-			POINT _movePos = { i , _indexY };
-			_indexY++;
-			_vMoveTile.push_back(_tagMoveTile);
-		}
-		_indexY=0;
-	}*/
-
+   
 	return S_OK;
 }
 
@@ -127,6 +98,28 @@ void GameUI::update(void)
 			}
         }
     }
+
+	if (_isSkillMenu)
+	{
+		for (_viSkillButton = _vSkillButton.begin(); _viSkillButton != _vSkillButton.end(); ++_viSkillButton)
+		{
+			if (PtInRect(&_viSkillButton->_buttonRect, _ptMouse) && KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+			{
+				switch (_viSkillButton->_index)
+				{
+				case 0:
+
+					break;
+				case 1:
+					break;
+				case 2:
+					break;
+				case 3:
+					break;
+				}
+			}
+		}
+	}
 }
 
 void GameUI::render(void)
@@ -149,19 +142,46 @@ void GameUI::render(void)
 
 			FONTMANAGER->drawText(getMemDC(), _viMenuButton->_buttonRect.right + _textPosX,
 											  _viMenuButton->_buttonRect.top + _textPosY, "가을체",
-								  20, 13, _viMenuButton->_textInfo, wcslen(_viMenuButton->_textInfo), TA_CENTER, RGB(255,255,255));
+											 20, 13, _viMenuButton->_textInfo, wcslen(_viMenuButton->_textInfo), TA_CENTER, RGB(255,255,255));
 		}
 	}        
 
 	if (_isSkillMenu)
 	{
-		IMAGEMANAGER->alphaRender("skillText", getMemDC(), _PlayerPos.x, _PlayerPos.y, 80);
+		IMAGEMANAGER->alphaRender("skillText", getMemDC(), _PlayerPos.x+30, _PlayerPos.y - 60, 170);
         for (_viSkillButton = _vSkillButton.begin(); _viSkillButton != _vSkillButton.end(); ++_viSkillButton)
         {
-            Rectangle(getMemDC(), _viSkillButton->_buttonRect.left, _viSkillButton->_buttonRect.top, _viSkillButton->_buttonRect.right, _viSkillButton->_buttonRect.bottom);
-            FONTMANAGER->drawText(getMemDC(), _viSkillButton->_buttonRect.right + _textPosX,
-            _viSkillButton->_buttonRect.top + _textPosY, "가을체",
-            20, 13, _viSkillButton->_textInfo, wcslen(_viSkillButton->_textInfo), TA_LEFT, RGB(255, 255, 255));
+			if (PtInRect(&_viSkillButton->_buttonRect, _ptMouse))
+			{
+				FONTMANAGER->drawText(getMemDC(),
+					_viSkillButton->_buttonRect.left,
+					_viSkillButton->_buttonRect.top + _textPosY,
+					"가을체", 20, 13, _viSkillButton->_skillNameInfo,
+					wcslen(_viSkillButton->_skillNameInfo),
+					TA_LEFT, RGB(255, 255, 255));
+			}
+			else
+			{
+				FONTMANAGER->drawText(getMemDC(),
+					_viSkillButton->_buttonRect.left,
+					_viSkillButton->_buttonRect.top + _textPosY,
+					"가을체", 20, 13, _viSkillButton->_skillNameInfo,
+					wcslen(_viSkillButton->_skillNameInfo),
+					TA_LEFT, RGB(170, 170, 170));
+			}
+			FONTMANAGER->drawText(getMemDC(),
+				_viSkillButton->_buttonRect.left + 110,
+				_viSkillButton->_buttonRect.top + _textPosY,
+				"가을체", 20, 13, _viSkillButton->_skillLvInfo,
+				wcslen(_viSkillButton->_skillLvInfo),
+				TA_LEFT, RGB(227, 155, 139));
+
+			FONTMANAGER->drawText(getMemDC(),
+				_viSkillButton->_buttonRect.left+170,
+				_viSkillButton->_buttonRect.top + _textPosY,
+				"가을체", 20, 13, _viSkillButton->_skillSPInfo,
+				wcslen(_viSkillButton->_skillSPInfo),
+				TA_LEFT, RGB(252, 255, 181));
         }
 	}
 }
@@ -202,17 +222,13 @@ void GameUI::showSkillMenu(POINT menuPos)
 	_PlayerPos = menuPos;
     for (_viSkillButton = _vSkillButton.begin(); _viSkillButton != _vSkillButton.end(); ++_viSkillButton)
     {
-        _uiPos = { menuPos.x + _viMenuButton->_defaultPos.x, menuPos.y + _viMenuButton->_defaultPos.y };
+        _uiPos = { menuPos.x + _viSkillButton->_defaultPos.x, menuPos.y + _viSkillButton->_defaultPos.y };
         _viSkillButton->_textPos = _uiPos;
         _viSkillButton->_buttonRect.left = _uiPos.x;
         _viSkillButton->_buttonRect.top = _uiPos.y;
         _viSkillButton->_buttonRect.right = _uiPos.x + _image->getWidth();
         _viSkillButton->_buttonRect.bottom = _uiPos.y + _image->getHeight();
     }
-}
-
-void GameUI::MakeMoveTile()
-{
 }
 
 void GameUI::setMoveTileRange(int range)
