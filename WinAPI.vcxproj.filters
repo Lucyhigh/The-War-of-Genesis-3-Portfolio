@@ -170,8 +170,10 @@
       <Filter>Portfolio\A%2a</Filter>
     </ClCompile>
     <ClCompile Include="AnimationManager.cpp">
-      <Filter>API\Animation</Filter>
+      <Filter>API\Manager</Filter>
     </ClCompile>
+    <ClCompile Include="CEvent.cpp" />
+    <ClCompile Include="CSkill.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameNode.h">
@@ -347,8 +349,10 @@
       <Filter>Portfolio\A%2a</Filter>
     </ClInclude>
     <ClInclude Include="AnimationManager.h">
-      <Filter>API\Animation</Filter>
+      <Filter>API\Manager</Filter>
     </ClInclude>
+    <ClInclude Include="CEvent.h" />
+    <ClInclude Include="CSkill.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="API">

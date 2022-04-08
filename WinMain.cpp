@@ -75,7 +75,6 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 
 	_mg->release();
 	delete(_mg);
-	////! 윈도우 클래스 등록 해제
 	UnregisterClass(WINNAME, hInstance);
 
 	return message.wParam;

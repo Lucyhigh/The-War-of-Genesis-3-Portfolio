@@ -152,7 +152,9 @@
     <ClCompile Include="BFS.cpp" />
     <ClCompile Include="Bullets.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="CEvent.cpp" />
     <ClCompile Include="collision.cpp" />
+    <ClCompile Include="CSkill.cpp" />
     <ClCompile Include="EndingScene.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyManager.cpp" />
@@ -224,7 +226,9 @@
     <ClInclude Include="BFS.h" />
     <ClInclude Include="Bullets.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="CEvent.h" />
     <ClInclude Include="CommonMacroFunction.h" />
+    <ClInclude Include="CSkill.h" />
     <ClInclude Include="EndingScene.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyManager.h" />

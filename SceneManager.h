@@ -31,7 +31,7 @@ public:
 	HRESULT changeScene(string sceneName);
 
 	//로딩 스레드 함수
-	//보이드 포인트
+	//보이드 포인터
 	//LPVOID: void*형 (어떤 타입으로도 변환 가능)
 	//friend 들어온 이유는 단 하나 씬 전환을 위해서  현재신 로딩신 레디신...
 	//ㄴ 상속관계를 무시하기위해서임

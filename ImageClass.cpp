@@ -99,7 +99,8 @@ HRESULT ImageClass::init(void)
 	IMAGEMANAGER->addImage("attackTile", "Resources/Images/UI/attackable.bmp", 40, 32);
 	IMAGEMANAGER->addImage("ScenarioClear", "Resources/Images/UI/ScenarioClear.bmp", 960, 90);
 
-	IMAGEMANAGER->addFrameImage("selectIcon", "Resources/Images/UI/selectIcon.bmp", 96, 25,4,1, MGT);
+	IMAGEMANAGER->addFrameImage("selectIcon", "Resources/Images/UI/selectIcon.bmp", 96,25,4,1, MGT);
+	IMAGEMANAGER->addFrameImage("skillIcon", "Resources/Images/UI/skillIcon.bmp", 119,17,7,1, MGT);
 	IMAGEMANAGER->addFrameImage("npcBar", "Resources/Images/UI/npcbar.bmp", 800, 91,8,1,MGT);
 	IMAGEMANAGER->addFrameImage("pHpBar", "Resources/Images/UI/pHpBar.bmp", 1440 * 0.2, 1200 * 0.2, 4, 4, true, RGB(0, 44, 0));
 	IMAGEMANAGER->addFrameImage("eHpBar", "Resources/Images/UI/eHpBar.bmp", 1440 * 0.2, 1200 * 0.2, 4, 4, true, RGB(0, 44, 0));
@@ -110,10 +111,6 @@ HRESULT ImageClass::init(void)
 	IMAGEMANAGER->addFrameImage("attackMark", "Resources/Images/UI/attackMark.bmp", 217, 32, 7, 1, true, RGB(80, 120, 116));
 	IMAGEMANAGER->addFrameImage("normalCursor", "Resources/Images/UI/normalCursor.bmp", 112, 24, 7, 1, true, RGB(80, 120, 116));
 	IMAGEMANAGER->addFrameImage("clickTile", "Resources/Images/UI/clickTile.bmp", 240, 32, 6, 1);
-#pragma endregion
-#pragma region effect
-	IMAGEMANAGER->addFrameImage("skill1", "Resources/Images/Effect/single/skill1.bmp", 1500, 1500, 5, 5,true, RGB(80, 0, 0));
-
 #pragma endregion
 #pragma region Animation
 	ANIMATIONMANAGER->addAnimation("sMovesheet", "sMovesheet", 0, 23, 5, false, true);
@@ -129,9 +126,34 @@ HRESULT ImageClass::init(void)
     ANIMATIONMANAGER->addAnimation("eHpBar", "eHpBar", 10, false, false);
     ANIMATIONMANAGER->addAnimation("normalCursor", "normalCursor", 5, false, true);
     ANIMATIONMANAGER->addAnimation("clickTile", "clickTile", 5, false, true);
-	//Effect
-    ANIMATIONMANAGER->addAnimation("skill1", "skill1", 8, false, true);
 
+#pragma endregion
+#pragma region Skill
+	//skill 천지파열무
+	IMAGEMANAGER->addFrameImage("skillStart", "Resources/Images/Player/skillStart.bmp", 832, 223, 4,1,MGT);
+	IMAGEMANAGER->addFrameImage("smog", "Resources/Images/Effect/all/smog.bmp", 448, 146,7,2,true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("smog2", "Resources/Images/Effect/all/smog2.bmp", 650, 650, 5,5,true,RGB(4,72,4));
+	IMAGEMANAGER->addFrameImage("circle", "Resources/Images/Effect/all/circle.bmp", 1592, 628, 8,4,true,RGB(4,108,0));
+	IMAGEMANAGER->addFrameImage("fire", "Resources/Images/Effect/all/fire.bmp", 660, 920, 12,4,true, RGB(8, 88, 8));
+	IMAGEMANAGER->addFrameImage("groundCrack", "Resources/Images/Effect/all/groundCrack.bmp", 1200, 150, 24,3,true, RGB(8, 88, 8));
+	IMAGEMANAGER->addFrameImage("48fire", "Resources/Images/Effect/all/48fire.bmp", 872, 131, 8,1,true, RGB(252, 252, 236));
+	IMAGEMANAGER->addFrameImage("95light", "Resources/Images/Effect/all/95light.bmp", 3502, 218, 17,1,true, RGB(252, 252, 252));
+	IMAGEMANAGER->addFrameImage("184light", "Resources/Images/Effect/all/184light.bmp", 2460, 172, 12,1,true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("203smog", "Resources/Images/Effect/all/203smog.bmp", 680, 72, 10,1,true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("115stone", "Resources/Images/Effect/all/115stone.bmp", 3502, 218, 8,2,true, RGB(156, 148, 140));
+	IMAGEMANAGER->addFrameImage("skill1", "Resources/Images/Effect/all/skill1.bmp", 1500, 1500, 5,5,true, RGB(80, 0, 0));
+	IMAGEMANAGER->addFrameImage("skill5", "Resources/Images/Effect/all/skill5.bmp", 660, 400, 6,4,true,RGB(8,88,8));
+
+	IMAGEMANAGER->addFrameImage("one", "Resources/Images/Effect/all/one.bmp", 200, 2400, 4,8,true, RGB(252, 236, 212));
+	IMAGEMANAGER->addFrameImage("double", "Resources/Images/Effect/all/double.bmp", 300, 1500, 6,5,true, RGB(252, 236, 212));
+	IMAGEMANAGER->addFrameImage("triple", "Resources/Images/Effect/all/triple.bmp", 400, 1200, 8,4,true, RGB(252, 236, 212));
+
+	//skill 풍아열공참
+	//Effect
+
+	IMAGEMANAGER->addFrameImage("skill1", "Resources/Images/Effect/single/skill1.bmp", 1500, 1500, 5, 5,true, RGB(80, 0, 0));
+	//animation
+    ANIMATIONMANAGER->addAnimation("skill1", "skill1", 8, false, true);
 #pragma endregion
 	return S_OK;
 }
