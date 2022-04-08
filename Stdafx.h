@@ -91,6 +91,13 @@ using namespace MY_UTIL;
 #define SAFE_DELETE(p)			{if(p) {delete (p); (p) = nullptr;}}
 #define SAFE_DELETE_ARRAY(p)	{if(p) {delete[] (p); (p) = nullptr;}}
 #define SAFE_RELEASE(p)			{if(p) {(p)->release(); (p) = nullptr;}}
+//델리게이트 필요 콜백언제시킬지 정함
+#define SAFE_RELEASE(p)	 \
+{                        \
+//언제호출될지정하기
+}
+
+
 
 extern HINSTANCE	_hInstance;
 extern HWND			_hWnd;

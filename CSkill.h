@@ -1,9 +1,10 @@
 #pragma once
 #include "GameNode.h"
+#include "Animation.h"
 
-typedef void(*CALLBACK_FUNCTION)(void);
+typedef void(*CALLBACKFUNCTION)(void);
 
-enum SKILL_INDEX
+enum SKILL_INDEX_NUMBER
 {
 	SKILL_INDEX_NULL,
 	SKILL_INDEX_START,
@@ -16,27 +17,30 @@ enum SKILL_INDEX
 class CSkill:public GameNode
 {
 private:
-	SKILL_INDEX _skillIndex;
-	Image* _image;
+	CALLBACKFUNCTION _callBackFunction;
 
-	int _index;
+	SKILL_INDEX_NUMBER _skillIndexNum;
+	Image* _image;
+    Animation* _currentAnimation;
+	const char* skillAniName;
+	int _skillIndex;
+	int _attackIndex;
+    int _behavior;
 	float _x, _y;
-	const char* _imageName;
-	CALLBACK_FUNCTION _callBackFunction;
+    int frameX;
+    int frameY;
+    SAFE_RELEASE(_callBackFunction)
 public:
-	CSkill()
-		:_callBackFunction(nullptr)
-	{}
+	CSkill() :_callBackFunction(nullptr){}
 	~CSkill(){}
-	HRESULT init(const char* skillAniName, int fX, int fY,
-		POINT btnDownFramePoint, POINT btnUpFramePoint);
-	HRESULT init(const char* skillAniName, int fX, int fY,
-		POINT btnDownFramePoint, POINT btnUpFramePoint,
-		CALLBACK_FUNCTION cbFunction);
+	//HRESULT init(const char* skillAniName, int frameX, int frameY, const[]);
+	//HRESULT init(const char* skillAniName, int frameX, int frameY,const[], CALLBACK_FUNCTION cbFunction);
 
 	void release(void);
 	void update(void);
 	void render(void);
+
+    bool IsAttackIndex(void);
 };
 
 //callBack _cSkill* 스킬이름(char* _ skillName, int fX, int fY,,,,,const[image operating]);
