@@ -24,6 +24,8 @@ private:
 
     bool _isPlay;
     bool _loop;
+    bool _alpha;
+    int _nAlpha;
     DWORD _nowPlayIdx;
 
 public:
@@ -34,6 +36,7 @@ public:
     void setDefPlayFrame(bool reverse = false, bool loop = false);
     void setPlayFrame(int* playArr = nullptr, int arrLen = 0, bool loop = false);
     void setPlayFrame(int start, int end, bool reverse = false, bool loop = false);
+   // void setPlayFrame(int start, int end, bool reverse = false, bool loop = false,bool alpha = false);
     void setPlayReverseFrame(int start, int end, int framX, bool loop);
     inline void SetFrameUpdateTime(float updateTime) 
     { _frameUpdateSec = updateTime; }

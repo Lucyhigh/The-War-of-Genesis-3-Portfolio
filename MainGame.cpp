@@ -11,9 +11,7 @@
 #include "EndingScene.h"
 #include "MapScene.h"
 #include "Inventory.h"
-#include "Store.h"
 #include "PixelScene.h"
-//#include "SoundScene.h"
 #include "JsonDataScene.h"
 #pragma endregion 
 HRESULT MainGame::init(void)
@@ -23,10 +21,9 @@ HRESULT MainGame::init(void)
 	imageClass.init();
 
 	SCENEMANAGER->addScene("inven", new Inventory);
-	SCENEMANAGER->addScene("store", new Store);
 	//SCENEMANAGER->addScene("pixel", new PixelScene);
-	//SCENEMANAGER->addScene("sound", new SoundScene);
 	SCENEMANAGER->addScene("json", new JsonDataScene);
+
 	//Scene
 	SCENEMANAGER->addScene("title", new TitleScene);
 	SCENEMANAGER->addScene("first", new FirstScene);

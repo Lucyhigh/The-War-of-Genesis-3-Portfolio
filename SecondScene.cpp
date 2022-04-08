@@ -26,8 +26,6 @@ void SecondScene::release(void)
 
 void SecondScene::update(void)
 {
-	TEMPSOUNDMANAGER->stopMp3WithKey("History of Absolution");
-
     _count++;
 	int size = _text[_textIndex].imageVec.size();
 
@@ -41,14 +39,14 @@ void SecondScene::update(void)
         {
 			//넘김 효과음 재생
             _textBufferCnt = 0;
-			TEMPSOUNDMANAGER->playSoundWithKey("button");
+			SOUNDMANAGER->play("changeScene", 1.0f);
             _textIndex++;
 			_alpha = 150;
         }
     }
 	if (KEYMANAGER->isOnceKeyDown('P'))
 	{
-		TEMPSOUNDMANAGER->playSoundWithKey("button");
+		SOUNDMANAGER->play("changeScene", 1.0f);
 	}
     if (_count % 2 == 0 && _textBufferCnt < wcslen(_text[_textIndex].script))
     {

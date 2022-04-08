@@ -816,8 +816,10 @@ void Image::aniRender(HDC hdc, int destX, int destY, Animation* ani)
                               ani->getFrameWidth(), ani->getFrameHeight());
 }
 
-void Image::aniAlphaRender(HDC hdc, int destX, int destY, int currentFrameX, int currentFrameY, BYTE alpha, Animation* ani)
+void Image::aniAlphaRender(HDC hdc, int destX, int destY,BYTE alpha, Animation* ani)
 {
-	//alphaRender(hdc, destX, destY, ani->getFramePos().x, ani->getFramePos().y,
-	//ani->getFrameWidth(), ani->getFrameHeight(), alpha);
+	//alphaframeRender(hdc, destX, destY, ani->getFramePos().x, ani->getFramePos().y,
+	//	ani->getFrameWidth(), ani->getFrameHeight(), alpha);
+	alphaRender(hdc, destX, destY, ani->getFramePos().x, ani->getFramePos().y,
+								   ani->getFrameWidth(), ani->getFrameHeight(), alpha);
 }

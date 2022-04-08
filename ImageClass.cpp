@@ -112,13 +112,13 @@ HRESULT ImageClass::init(void)
 	IMAGEMANAGER->addFrameImage("clickTile", "Resources/Images/UI/clickTile.bmp", 240, 32, 6, 1);
 #pragma endregion
 #pragma region effect
-	IMAGEMANAGER->addFrameImage("skill1", "Resources/Images/Effect/skill1.bmp", 1500, 1500, 5, 5,true, RGB(80, 0, 0));
+	IMAGEMANAGER->addFrameImage("skill1", "Resources/Images/Effect/single/skill1.bmp", 1500, 1500, 5, 5,true, RGB(80, 0, 0));
 
 #pragma endregion
 #pragma region Animation
 	ANIMATIONMANAGER->addAnimation("sMovesheet", "sMovesheet", 0, 23, 5, false, true);
     //UI
-	ANIMATIONMANAGER->addAnimation("TitleEfx", "TitleEfx", 5, false, true);
+	ANIMATIONMANAGER->addAnimation("TitleEfx", "TitleEfx", 10, false, true);
 	ANIMATIONMANAGER->addAnimation("notMoveable", "notMoveable",5, false, true);
 	ANIMATIONMANAGER->addAnimation("turnMark", "turnMark", 5, false, true);
 	ANIMATIONMANAGER->addAnimation("playerMark", "playerMark", 5, false, true);

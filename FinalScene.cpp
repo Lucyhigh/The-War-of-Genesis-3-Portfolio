@@ -4,7 +4,8 @@
 HRESULT FinalScene::init(void)
 {
     ShowCursor(false);//나중에 메인게임으로 이전예정
-
+	SOUNDMANAGER->addSound("brother", "Resources/Sounds/brother.mp3", true, true);
+	SOUNDMANAGER->play("brother", 1.0f);
 	_mapTileInfo = new MapTileInfo;
 	_mapTileInfo->init();
 
@@ -96,6 +97,12 @@ void FinalScene::update(void)
 								_player->getPlayerPosX() - _camera->getScreenRect().left,
 								_player->getPlayerPosY() - _camera->getScreenRect().top
 					 };
+
+	if (KEYMANAGER->isOnceKeyDown('Q'))
+	{
+		_camera->shakeStart(3.0f);
+	}
+
     //검사용 버튼
 	if (KEYMANAGER->isOnceKeyDown('H'))
 	{
@@ -286,17 +293,6 @@ void FinalScene::update(void)
 				{
 					_turnSystem->changeToEnemy();
 					_moveTileBit.reset();
-					//for (auto cellsIter = _cells->begin(); cellsIter != _cells->end(); ++cellsIter)//클릭 가능한 타일만 되게 지정
-					//{
-					//	Cell* cell = (*cellsIter);
-					//	if (PtInRect(&cell->getRect(), { (long)_player->getPlayerPosX() - TILESIZEX, (long)_player->getPlayerPosY() }))
-					//	{
-					//		if (cell->getType() != CELL_TYPE::WALL)
-					//		{
-					//			cell->setType(CELL_TYPE::START);
-					//		}
-					//	}
-					//}일단 제외시킴 이동 후 재지정을 햇기에
 				}
 			}
 		}
@@ -831,7 +827,7 @@ void FinalScene::find4WaysTile()
 			{ _playerPathGoal.x,_playerPathGoal.y });
 
 		_check.clear();
-		int pathNum = 10;//나중에 타일로 정해줄거임
+		int pathNum = 10;
 		int pathSize = path.size() < pathNum ? path.size() : pathNum;
 		for (int i = path.size() - pathSize; i < path.size(); ++i)
 		{

@@ -122,7 +122,7 @@ public:
 	void loopAlphaRender(HDC hdc, const LPRECT dramArea, int offsetX, int offsetY, BYTE alpha);
     //애니메이션 렌더
     void aniRender(HDC hdc, int destX, int destY, Animation* ani);
-	void aniAlphaRender(HDC hdc, int destX, int destY, int currentFrameX, int currentFrameY, BYTE alpha, Animation* ani);
+	void aniAlphaRender(HDC hdc, int destX, int destY, BYTE alpha, Animation* ani);
 
 
 

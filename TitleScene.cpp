@@ -5,8 +5,8 @@ HRESULT TitleScene::init(void)
 {
 	ShowCursor(false);
     _startBit = 0;
-	TEMPSOUNDMANAGER->addMp3FileWithKey("changeScene", "Resources/Sounds/changeScene.mp3");
-	TEMPSOUNDMANAGER->addMp3FileWithKey("History of Absolution", "Resources/Sounds/History of Absolution.mp3");
+	SOUNDMANAGER->addSound("changeScene", "Resources/Sounds/changeScene.mp3",false,false);
+	SOUNDMANAGER->addSound("History of Absolution", "Resources/Sounds/History of Absolution.mp3",true,true);
 	_animation = ANIMATIONMANAGER->findAnimation("TitleEfx");
 	_animation->AniStart();
 	_aniCursor = ANIMATIONMANAGER->findAnimation("normalCursor");
@@ -41,6 +41,7 @@ HRESULT TitleScene::init(void)
 
     _isfadeOut = false;
 	_alpha = 0.0f;
+	SOUNDMANAGER->play("History of Absolution", 1.0f);
 
 	return S_OK;
 }
@@ -50,7 +51,11 @@ void TitleScene::release(void){
 
 void TitleScene::update(void)
 {
-	//TEMPSOUNDMANAGER->playSoundWithKey("History of Absolution");
+
+	if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
+	{
+		SOUNDMANAGER->play("changeScene", 1.0f);
+	}
     // 0000 타이틀화면
     if (_startBit.none() == 1)
     {
@@ -66,12 +71,12 @@ void TitleScene::update(void)
                 {
                 case 0:
                     _isfadeOut = true;
-					TEMPSOUNDMANAGER->playSoundWithKey("changeScene");
+					SOUNDMANAGER->play("changeScene", 1.0f);
                     break;
                 case 1:
                     _startBit.reset();
                     _startBit.set(1);
-					TEMPSOUNDMANAGER->playSoundWithKey("changeScene");
+					SOUNDMANAGER->play("changeScene", 1.0f);
                     break;
                 case 2:
                     PostQuitMessage(0);
@@ -91,7 +96,7 @@ void TitleScene::update(void)
                 {
                 case 0:
                     _isfadeOut = true;
-					TEMPSOUNDMANAGER->playSoundWithKey("changeScene");
+					SOUNDMANAGER->play("changeScene", 1.0f);
                     break;
                 }
             }
@@ -103,7 +108,7 @@ void TitleScene::update(void)
 		if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 		{
 			_isfadeOut = true;
-			TEMPSOUNDMANAGER->playSoundWithKey("changeScene");
+			SOUNDMANAGER->play("changeScene", 1.0f);
 		}
     }
 	
@@ -152,8 +157,6 @@ void TitleScene::render(void)
 				clickScene = 1;
                 
 			}
-
-            
         }
         IMAGEMANAGER->frameRender("SceneList", getMemDC(), 0, 0, clickScene, 0);
     }
@@ -166,6 +169,7 @@ void TitleScene::render(void)
 	if (_isfadeOut)
 	{
 		IMAGEMANAGER->alphaRender("cutChange", getMemDC(), _fadeAlpha);
+		SOUNDMANAGER->pause("History of Absolution");
 	}
 
 }

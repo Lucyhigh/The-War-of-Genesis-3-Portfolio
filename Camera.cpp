@@ -9,6 +9,13 @@ Camera::Camera()
 
 	_screen = RectMakeCenter(_trace.x, _trace.y, WINSIZE_X, WINSIZE_Y);
 	_leftLimit = CENTER_X;
+
+	_isShaking = false;
+	_isShakingIncrease = false;
+	_shakingOffsetCount =0;
+	_beforeShakingPt = {0,0};
+	_shakingStartTime = 0;
+	_shakingTime =0;
 }
 
 HRESULT Camera::init(void)
@@ -45,7 +52,32 @@ void Camera::update(void)
 		if (_trace.y > _bottomLimit)
 			_trace.y = _bottomLimit;
 	}
+
+	if (_isShaking)
+	{
+		cout << "_isShaking" << endl;
+		_shakingOffsetCount++;
+		if (_shakingOffsetCount > 1)
+		{
+			_shakingOffsetCount = 0;
+			_isShakingIncrease = !_isShakingIncrease;
+			if (_isShakingIncrease)_trace.y += 10;
+			else _trace.y -= 10;
+		}
+		cout << "_trace : "<< _trace.y  << endl;
+
+		if (TIMEMANAGER->getWorldTime() > _shakingStartTime + _shakingTime)
+		{
+			_isShaking = false;
+			_shakingStartTime = 0;
+			_shakingTime = 0;
+			_trace = _beforeShakingPt;
+		}
+	}
+	
 	_screen = RectMakeCenter(_trace.x, _trace.y, WINSIZE_X, WINSIZE_Y);
+
+
 }
 
 void Camera::render(void){
@@ -71,6 +103,15 @@ void Camera::setLimitsY(float topLimit, float bottomLimit)
 {
 	_topLimit = topLimit;
 	_bottomLimit = bottomLimit - CENTER_Y;
+}
+
+void Camera::shakeStart(float time)
+{
+	_shakingStartTime = TIMEMANAGER->getWorldTime();
+	_isShaking = true;
+	_isShakingIncrease = true;
+	_shakingTime = time;
+	_beforeShakingPt = _trace;
 }
 
 POINT Camera::getCameraPos()

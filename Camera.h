@@ -12,6 +12,14 @@ private:
 	float _topLimit;
 	float _bottomLimit;
 
+
+	bool   _isShaking;
+	bool   _isShakingIncrease;
+	int      _shakingOffsetCount;
+	POINT   _beforeShakingPt;
+	float   _shakingStartTime;
+	float   _shakingTime;
+
 public:
 	Camera();
 	~Camera() {}
@@ -28,4 +36,7 @@ public:
 
 	void setLimitsX(float leftLimit, float rightLimit);
 	void setLimitsY(float topLimit, float bottomLimit);
+
+	void shakeStart(float time);
+	
 };
