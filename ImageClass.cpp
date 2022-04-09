@@ -6,9 +6,9 @@ HRESULT ImageClass::init(void)
 #pragma region Script Image
 	IMAGEMANAGER->addImage("store", "Resources/Images/UI/store.bmp", 300,333, MGT);
 	IMAGEMANAGER->addImage("weaponShop", "Resources/Images/UI/weaponShop.bmp", 300, 360, MGT);
-	IMAGEMANAGER->addImage("vermont", "Resources/Images/UI/vermont.bmp", 259, 480,MGT);
+	IMAGEMANAGER->addImage("vermont", "Resources/Images/UI/vermont.bmp", 400, 480,MGT);
 	IMAGEMANAGER->addImage("saladin", "Resources/Images/UI/saladin.bmp", 400,480,MGT);
-	IMAGEMANAGER->addImage("sheherazade", "Resources/Images/UI/sheherazade.bmp", 424, 480, MGT);
+	IMAGEMANAGER->addImage("sheherazade", "Resources/Images/UI/sheherazade.bmp", 524, 480, MGT);
 
 #pragma endregion
 #pragma region Player Image
@@ -63,12 +63,20 @@ HRESULT ImageClass::init(void)
 	IMAGEMANAGER->addFrameImage("SceneList", "Resources/Images/BackGround/SceneList.bmp", 1900, WINSIZE_Y,2,1);
 	// Stage 1
 	IMAGEMANAGER->addImage("Field", "Resources/Images/BackGround/Field.bmp", 2120, 1536);
+	IMAGEMANAGER->addImage("battleScene", "Resources/Images/BackGround/Field.bmp", 839, 1121);
 	// Stage 2
 	IMAGEMANAGER->addImage("storyStart", "Resources/Images/BackGround/storyStart.bmp", WINSIZE_X, WINSIZE_Y);
 	IMAGEMANAGER->addImage("battleBefore", "Resources/Images/BackGround/battleBefore.bmp", WINSIZE_X, WINSIZE_Y);
 	IMAGEMANAGER->addImage("battleAfter1", "Resources/Images/BackGround/battleAfter1.bmp", WINSIZE_X, WINSIZE_Y);
 	IMAGEMANAGER->addImage("battleAfter2", "Resources/Images/BackGround/battleAfter2.bmp", WINSIZE_X, WINSIZE_Y);
 	IMAGEMANAGER->addImage("battleAfter3", "Resources/Images/BackGround/battleAfter3.bmp", WINSIZE_X, WINSIZE_Y);
+	IMAGEMANAGER->addImage("deadHer", "Resources/Images/BackGround/deadHer.bmp", WINSIZE_X, WINSIZE_Y);
+	IMAGEMANAGER->addImage("deadHer2", "Resources/Images/BackGround/deadHer2.bmp", WINSIZE_X, WINSIZE_Y);
+	IMAGEMANAGER->addImage("0110", "Resources/Images/BackGround/0110.bmp", WINSIZE_X, WINSIZE_Y);
+	IMAGEMANAGER->addImage("0129", "Resources/Images/BackGround/0129.bmp", WINSIZE_X, WINSIZE_Y);
+	IMAGEMANAGER->addImage("0151", "Resources/Images/BackGround/0151.bmp", WINSIZE_X, WINSIZE_Y);
+	IMAGEMANAGER->addImage("0154", "Resources/Images/BackGround/0154.bmp", WINSIZE_X, WINSIZE_Y);
+	IMAGEMANAGER->addImage("0167", "Resources/Images/BackGround/0167.bmp", WINSIZE_X, WINSIZE_Y);
 	IMAGEMANAGER->addFrameImage("deadHer", "Resources/Images/UI/story/deadHer.bmp", 258,75,3,1, true, RGB(72, 221, 157));
 	IMAGEMANAGER->addFrameImage("truth", "Resources/Images/UI/story/truth.bmp", 432, 80,6,1, true, RGB(72, 221, 157));
 	// Stage 3
@@ -84,6 +92,7 @@ HRESULT ImageClass::init(void)
 #pragma endregion
 #pragma region UI Scene
 	IMAGEMANAGER->addImage("cutChange", "Resources/Images/BackGround/cutChange.bmp", WINSIZE_X, WINSIZE_Y);
+	IMAGEMANAGER->addImage("cutChangeRed", "Resources/Images/BackGround/cutChangeRed.bmp", WINSIZE_X, WINSIZE_Y);
 	IMAGEMANAGER->addImage("curMap", "Resources/Images/UI/curMap.bmp", 241, 111, MGT);
 	IMAGEMANAGER->addImage("introtext", "Resources/Images/UI/introtext.bmp", 230, 105);
 	IMAGEMANAGER->addImage("storyText", "Resources/Images/UI/storyText.bmp", 511*1.33,111 * 1.33);
@@ -159,17 +168,30 @@ HRESULT ImageClass::init(void)
 	ANIMATIONMANAGER->addAnimation("184light", "184light", 20, false, false);
 	ANIMATIONMANAGER->addAnimation("203smog", "203smog", 20, false, false);
 	ANIMATIONMANAGER->addAnimation("115stone", "115stone", 20, false, false);
-	ANIMATIONMANAGER->addAnimation("skill1", "skill1", 20, false, false);
+	ANIMATIONMANAGER->addAnimation("skill1", "skill1", 8, false, false);
 	ANIMATIONMANAGER->addAnimation("skill5", "skill5", 20, false, false);
 	ANIMATIONMANAGER->addAnimation("one", "one", 20, false, false);
 	ANIMATIONMANAGER->addAnimation("double", "double", 20, false, false);
 	ANIMATIONMANAGER->addAnimation("triple", "triple", 20, false, false);
 	//skill Ç³¾Æ¿­°øÂü
-	//Effect
+	IMAGEMANAGER->addFrameImage("skill2", "Resources/Images/Effect/single/skill2.bmp", 1200, 2400, 4, 8, MGT);
+	IMAGEMANAGER->addFrameImage("skill3", "Resources/Images/Effect/single/skill3.bmp", 2700, 900, 9, 3, MGT);
+	IMAGEMANAGER->addFrameImage("skill4", "Resources/Images/Effect/single/skill4.bmp", 1200, 900, 4, 3, MGT);
+	IMAGEMANAGER->addFrameImage("skill6", "Resources/Images/Effect/single/skill6.bmp", 3000, 300, 10, 1, MGT);
+	IMAGEMANAGER->addFrameImage("skill7", "Resources/Images/Effect/single/skill7.bmp", 3300, 300, 11, 1, MGT);
+	IMAGEMANAGER->addFrameImage("skill8", "Resources/Images/Effect/single/skill8.bmp", 3300, 300, 11, 1, MGT);
+	IMAGEMANAGER->addFrameImage("skill9", "Resources/Images/Effect/single/skill9.bmp", 1500, 900, 5, 3, MGT);
+	IMAGEMANAGER->addFrameImage("skill10", "Resources/Images/Effect/single/skill10.bmp", 1200, 1200, 4, 4, MGT);
 
-	IMAGEMANAGER->addFrameImage("skill1", "Resources/Images/Effect/single/skill1.bmp", 1500, 1500, 5, 5,true, RGB(80, 0, 0));
-	//animation
-    ANIMATIONMANAGER->addAnimation("skill1", "skill1", 8, false, true);
+	//skill animation
+	ANIMATIONMANAGER->addAnimation("skill2", "skill2", 20, false, false);
+	ANIMATIONMANAGER->addAnimation("skill3", "skill3", 20, false, false);
+	ANIMATIONMANAGER->addAnimation("skill4", "skill4", 20, false, false);
+	ANIMATIONMANAGER->addAnimation("skill6", "skill6", 20, false, false);
+	ANIMATIONMANAGER->addAnimation("skill7", "skill7", 20, false, false);
+	ANIMATIONMANAGER->addAnimation("skill8", "skill8", 20, false, false);
+	ANIMATIONMANAGER->addAnimation("skill9", "skill9", 20, false, false);
+	ANIMATIONMANAGER->addAnimation("skill10","skill10", 20, false, false);
 #pragma endregion
 	return S_OK;
 }

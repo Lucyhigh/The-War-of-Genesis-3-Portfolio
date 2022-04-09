@@ -6,6 +6,10 @@ HRESULT SecondScene::init(void)
 	ShowCursor(false);
 	_aniCursor = ANIMATIONMANAGER->findAnimation("normalCursor");
 	_aniCursor->AniStart();
+	SOUNDMANAGER->addSound("Memory", "Resources/Sounds/Memory.mp3", true, true);
+	SOUNDMANAGER->addSound("Tears", "Resources/Sounds/Tears.mp3", true, true);
+	SOUNDMANAGER->play("Tears", 1.0f);
+
     _count = 0;
     _moveCount = 0;
     _textBufferCnt = 0;
@@ -37,17 +41,13 @@ void SecondScene::update(void)
         }
         else if(_textBufferCnt == wcslen(_text[_textIndex].script))
         {
-			//넘김 효과음 재생
             _textBufferCnt = 0;
 			SOUNDMANAGER->play("changeScene", 1.0f);
-            _textIndex++;
+           if(_textIndex<TEXTNumTWO) _textIndex++;
 			_alpha = 150;
         }
     }
-	if (KEYMANAGER->isOnceKeyDown('P'))
-	{
-		SOUNDMANAGER->play("changeScene", 1.0f);
-	}
+
     if (_count % 2 == 0 && _textBufferCnt < wcslen(_text[_textIndex].script))
     {
         _textBufferCnt++;
@@ -62,6 +62,8 @@ void SecondScene::update(void)
     if (_alpha < 0) _alpha = 0;
     if (_eventAlpha >= 255) _eventAlpha = 255;
     if (_textAlpha >= 210) _textAlpha = 210;
+
+	cout << _textIndex << endl;
 }
 
 void SecondScene::render(void)
@@ -80,7 +82,7 @@ void SecondScene::render(void)
     {
 		if (size == 1)
 		{
-			IMAGEMANAGER->alphaRender(_text[_textIndex].imageVec[i], getMemDC(), CENTER_X - 130, CENTER_Y-120, _alpha);
+			IMAGEMANAGER->alphaRender(_text[_textIndex].imageVec[i], getMemDC(), CENTER_X - 230, CENTER_Y-120, _alpha);
 		}
 		else
 		{
@@ -102,5 +104,37 @@ void SecondScene::render(void)
             wcslen(_text[_textIndex].script) - SCRIPT_MAX_LENGTH : _textBufferCnt - SCRIPT_MAX_LENGTH, TA_LEFT, RGB(255, 255, 255));
     }
 
+
+	if (_isfadeOut)
+	{
+		IMAGEMANAGER->alphaRender("cutChange", getMemDC(), _fadeAlpha);
+	}
+
 	IMAGEMANAGER->findImage("normalCursor")->aniRender(getMemDC(), _ptMouse.x, _ptMouse.y, _aniCursor);
+}
+void SecondScene::fadeout()
+{
+	if (_isfadeOut)
+	{
+		_fadeAlpha += 5.0f;
+		if (_fadeAlpha > 253)
+		{
+			_isfadeOut = false;
+			_fadeAlpha = 0;
+
+			//if (_startBit.none() == 1)
+			//{
+			//	_startBit.reset();
+			//	_startBit.set(0);
+			//}
+			//else if (_startBit.test(0) == 1)
+			//{
+			//	SCENEMANAGER->changeScene("map");
+			//}
+			//else if (_startBit.test(1) == 1)
+			//{
+			//	SCENEMANAGER->changeScene("second");
+			//}
+		}
+	}
 }

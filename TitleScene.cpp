@@ -6,16 +6,18 @@ HRESULT TitleScene::init(void)
 	ShowCursor(false);
     _startBit = 0;
 	SOUNDMANAGER->addSound("changeScene", "Resources/Sounds/changeScene.mp3",false,false);
+	SOUNDMANAGER->addSound("Tutorial", "Resources/Sounds/Tutorial.mp3",true,true);
 	SOUNDMANAGER->addSound("History of Absolution", "Resources/Sounds/History of Absolution.mp3",true,true);
 	_animation = ANIMATIONMANAGER->findAnimation("TitleEfx");
-	//SKill skill(0, _animation);
-	//SKill skill(0, _animation);
-	//SKill skill(10, _animation);
-	//UniteSKill unite;
-	//unite.add(skill);
-	//unite.add(skill);
-	//unite.add(skill);
-	//unite.start();
+
+	//Skill skill(0, _animation);
+	//Skill skill2(0,  _animation);
+	//Skill skill3(10, _animation);
+	//UniteSkill uniteSkill;
+	//uniteSkill.add(skill);
+	//uniteSkill.add(skill2);
+	//uniteSkill.add(skill3);
+	//uniteSkill.start();
 
 	_animation->AniStart();
 	_aniCursor = ANIMATIONMANAGER->findAnimation("normalCursor");
@@ -81,6 +83,7 @@ void TitleScene::update(void)
                 case 0:
                     _isfadeOut = true;
 					SOUNDMANAGER->play("changeScene", 1.0f);
+					SOUNDMANAGER->stop("History of Absolution");
                     break;
                 case 1:
                     _startBit.reset();
@@ -88,6 +91,7 @@ void TitleScene::update(void)
 					SOUNDMANAGER->play("changeScene", 1.0f);
                     break;
                 case 2:
+					SOUNDMANAGER->play("changeScene", 1.0f);
                     PostQuitMessage(0);
                     break;
                 }
@@ -97,6 +101,7 @@ void TitleScene::update(void)
     // 0001 스타트게임
     else if (_startBit.test(0) == 1)
     {
+		SOUNDMANAGER->play("Tutorial", 1.0f);
         for (_viSceneButton = _vSceneButton.begin(); _viSceneButton != _vSceneButton.end(); ++_viSceneButton)
         {
             if (PtInRect(&_viSceneButton->_buttonRect, _ptMouse) && KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
@@ -178,7 +183,6 @@ void TitleScene::render(void)
 	if (_isfadeOut)
 	{
 		IMAGEMANAGER->alphaRender("cutChange", getMemDC(), _fadeAlpha);
-		SOUNDMANAGER->pause("History of Absolution");
 	}
 
 }

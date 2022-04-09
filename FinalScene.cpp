@@ -4,8 +4,8 @@
 HRESULT FinalScene::init(void)
 {
     ShowCursor(false);//나중에 메인게임으로 이전예정
-	SOUNDMANAGER->addSound("brother", "Resources/Sounds/brother.mp3", true, true);
-	SOUNDMANAGER->play("brother", 1.0f);
+	SOUNDMANAGER->addSound("General of Blonde 2", "Resources/Sounds/General of Blonde 2.mp3", true, true);
+	SOUNDMANAGER->play("General of Blonde 2", 1.0f);
 	_mapTileInfo = new MapTileInfo;
 	_mapTileInfo->init();
 

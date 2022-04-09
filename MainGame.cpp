@@ -21,7 +21,6 @@ HRESULT MainGame::init(void)
 	imageClass.init();
 
 	SCENEMANAGER->addScene("inven", new Inventory);
-	//SCENEMANAGER->addScene("pixel", new PixelScene);
 	SCENEMANAGER->addScene("json", new JsonDataScene);
 
 	//Scene
@@ -32,7 +31,7 @@ HRESULT MainGame::init(void)
 	SCENEMANAGER->addScene("ending", new EndingScene);
 	SCENEMANAGER->addScene("map", new MapScene);
 
-    SCENEMANAGER->changeScene("title");
+    SCENEMANAGER->changeScene("second");
 	return S_OK;
 }
 

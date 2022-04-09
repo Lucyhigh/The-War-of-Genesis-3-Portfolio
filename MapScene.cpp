@@ -6,7 +6,6 @@ HRESULT MapScene::init(void)
 	ShowCursor(false);//나중에 메인게임으로 이전예정
     _image = new Image;
     _image = IMAGEMANAGER->findImage("Map");
-	TEMPSOUNDMANAGER->addMp3FileWithKey("changeScene", "Resources/Sounds/changeScene.mp3");
 	_buttonImage = *IMAGEMANAGER->findImage("MapButton");
 	_animation = ANIMATIONMANAGER->findAnimation("npcBar");
 	_animation->AniStart();
@@ -59,7 +58,7 @@ void MapScene::update(void)
     }
     else if (_moveNext && PtInRect(&_vMapButton[1]._buttonRect, _ptMouse) && KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
     {
-		TEMPSOUNDMANAGER->playSoundWithKey("changeScene");
+		SOUNDMANAGER->play("changeScene", 1.0f);
         SCENEMANAGER->changeScene("final");
     }
 
