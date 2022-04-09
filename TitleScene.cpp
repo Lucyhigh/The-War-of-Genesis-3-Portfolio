@@ -8,6 +8,15 @@ HRESULT TitleScene::init(void)
 	SOUNDMANAGER->addSound("changeScene", "Resources/Sounds/changeScene.mp3",false,false);
 	SOUNDMANAGER->addSound("History of Absolution", "Resources/Sounds/History of Absolution.mp3",true,true);
 	_animation = ANIMATIONMANAGER->findAnimation("TitleEfx");
+	//SKill skill(0, _animation);
+	//SKill skill(0, _animation);
+	//SKill skill(10, _animation);
+	//UniteSKill unite;
+	//unite.add(skill);
+	//unite.add(skill);
+	//unite.add(skill);
+	//unite.start();
+
 	_animation->AniStart();
 	_aniCursor = ANIMATIONMANAGER->findAnimation("normalCursor");
 	_aniCursor->AniStart();
@@ -124,7 +133,7 @@ void TitleScene::render(void)
     if (_startBit.none() == 1)
     {
         IMAGEMANAGER->render("TitleBg", getMemDC());
-		IMAGEMANAGER->findImage("TitleEfx")->aniRender(getMemDC(), CENTER_X - 190, CENTER_Y - 140,_animation);
+		IMAGEMANAGER->findImage("TitleEfx")->aniAlphaRender(getMemDC(), CENTER_X - 190, CENTER_Y - 140,70,_animation);
 		IMAGEMANAGER->alphaRender("cutChange", getMemDC(), 40);
 
         IMAGEMANAGER->alphaRender("TitleName",getMemDC(),_alpha);

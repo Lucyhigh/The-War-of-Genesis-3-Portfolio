@@ -36,6 +36,8 @@ public:
 
 	void setLimitsX(float leftLimit, float rightLimit);
 	void setLimitsY(float topLimit, float bottomLimit);
+	float getLeftLimit() { return _leftLimit; }
+	float getTopLImit() { return _topLimit; }
 
 	void shakeStart(float time);
 	

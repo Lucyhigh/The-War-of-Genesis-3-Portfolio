@@ -22,9 +22,7 @@
 #include <memory.h>
 #include <tchar.h>
 #include <time.h>
-
 #include <mmsystem.h>
-
 #include <mciapi.h>
 
 //! C++ 
@@ -81,9 +79,6 @@ using namespace MY_UTIL;
 #define WINSIZE_Y	 720
 #define WINSTYLE	 WS_CAPTION  | WS_SYSMENU   // WS_CAPTION  | WS_SYSMENU |WS_POPUP | WS_BORDER | WS_SYSMENU 
 
-
-
-
 #define CENTER_X WINSIZE_X/2
 #define CENTER_Y WINSIZE_Y/2
 #define MGT true,RGB(255,0,255)
@@ -91,12 +86,13 @@ using namespace MY_UTIL;
 #define SAFE_DELETE(p)			{if(p) {delete (p); (p) = nullptr;}}
 #define SAFE_DELETE_ARRAY(p)	{if(p) {delete[] (p); (p) = nullptr;}}
 #define SAFE_RELEASE(p)			{if(p) {(p)->release(); (p) = nullptr;}}
-//델리게이트 필요 콜백언제시킬지 정함
-#define SAFE_RELEASE(p)	 \
-{                        \
-//언제호출될지정하기
-}
 
+////델리게이트 필요 콜백언제시킬지 정함
+//#define SAFE_RELEASE(p)	 \
+//{                        \
+////언제호출될지정하기
+//}
+//
 
 
 extern HINSTANCE	_hInstance;

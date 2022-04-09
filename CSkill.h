@@ -29,7 +29,7 @@ private:
 	float _x, _y;
     int frameX;
     int frameY;
-    SAFE_RELEASE(_callBackFunction)
+    //SAFE_RELEASE(_callBackFunction)
 public:
 	CSkill() :_callBackFunction(nullptr){}
 	~CSkill(){}

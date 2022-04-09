@@ -66,11 +66,17 @@ void MapScene::update(void)
 	if (_alpha < 15 || _alpha >= 190) _isAlphaIncrese = !_isAlphaIncrese;
 	if (_isAlphaIncrese)_alpha += 2.5f; else _alpha -= 2.5f;
 	
-	if (!_moveNext)
+	if (!_isCameraArrived)
 	{
 		if (_camera->getCameraPos().x != _vMapButton[1]._buttonRect.left && _camera->getCameraPos().y != _vMapButton[1]._buttonRect.top)
 		{
-			_camera->setCameraPos({_camera->getCameraPos().x - 8, _camera->getCameraPos().y - 8});
+			_camera->setCameraPos({ _camera->getCameraPos().x - 8, _camera->getCameraPos().y - 8 });
+		}
+
+		if ( (_camera->getCameraPos().x == _vMapButton[1]._buttonRect.left && _camera->getCameraPos().y == _vMapButton[1]._buttonRect.top)
+			|| (_camera->getCameraPos().x == _camera->getLeftLimit() && _camera->getCameraPos().y == _camera->getTopLImit()) )
+		{
+			_isCameraArrived = true;
 		}
 	}
 

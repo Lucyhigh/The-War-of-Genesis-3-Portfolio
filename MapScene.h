@@ -32,6 +32,7 @@ private:
 	float _alpha;
 	float _fadeAlpha;
     bool _moveNext;
+	bool _isCameraArrived;
     bool _isAlphaIncrese;
 public:
 	HRESULT init(void);
@@ -39,7 +40,7 @@ public:
 	void update(void);
 	void render(void);
 public:
-	MapScene() :_isAlphaIncrese(false),_moveNext(false),_uiText{ L"이 동", L"진 입", L"상 태",L"턴종료" } {}
+	MapScene() :_isAlphaIncrese(false),_moveNext(false), _isCameraArrived(false), _uiText{ L"이 동", L"진 입", L"상 태",L"턴종료" } {}
 	~MapScene() {}
 };
 

@@ -126,7 +126,7 @@ HRESULT ImageClass::init(void)
     ANIMATIONMANAGER->addAnimation("eHpBar", "eHpBar", 10, false, false);
     ANIMATIONMANAGER->addAnimation("normalCursor", "normalCursor", 5, false, true);
     ANIMATIONMANAGER->addAnimation("clickTile", "clickTile", 5, false, true);
-
+	
 #pragma endregion
 #pragma region Skill
 	//skill 천지파열무
@@ -147,7 +147,23 @@ HRESULT ImageClass::init(void)
 	IMAGEMANAGER->addFrameImage("one", "Resources/Images/Effect/all/one.bmp", 200, 2400, 4,8,true, RGB(252, 236, 212));
 	IMAGEMANAGER->addFrameImage("double", "Resources/Images/Effect/all/double.bmp", 300, 1500, 6,5,true, RGB(252, 236, 212));
 	IMAGEMANAGER->addFrameImage("triple", "Resources/Images/Effect/all/triple.bmp", 400, 1200, 8,4,true, RGB(252, 236, 212));
-
+	//skill animation
+	ANIMATIONMANAGER->addAnimation("skillStart", "skillStart", 3, false, false);
+	ANIMATIONMANAGER->addAnimation("smog", "smog", 20, false, false);
+	ANIMATIONMANAGER->addAnimation("smog2", "smog2", 20, false, false);
+	ANIMATIONMANAGER->addAnimation("circle", "circle", 20, false, false);
+	ANIMATIONMANAGER->addAnimation("fire", "fire", 20, false, false);
+	ANIMATIONMANAGER->addAnimation("groundCrack", "groundCrack", 20, false, false);
+	ANIMATIONMANAGER->addAnimation("48fire", "48fire", 20, false, false);
+	ANIMATIONMANAGER->addAnimation("95light", "95light", 20, false, false);
+	ANIMATIONMANAGER->addAnimation("184light", "184light", 20, false, false);
+	ANIMATIONMANAGER->addAnimation("203smog", "203smog", 20, false, false);
+	ANIMATIONMANAGER->addAnimation("115stone", "115stone", 20, false, false);
+	ANIMATIONMANAGER->addAnimation("skill1", "skill1", 20, false, false);
+	ANIMATIONMANAGER->addAnimation("skill5", "skill5", 20, false, false);
+	ANIMATIONMANAGER->addAnimation("one", "one", 20, false, false);
+	ANIMATIONMANAGER->addAnimation("double", "double", 20, false, false);
+	ANIMATIONMANAGER->addAnimation("triple", "triple", 20, false, false);
 	//skill 풍아열공참
 	//Effect
 
