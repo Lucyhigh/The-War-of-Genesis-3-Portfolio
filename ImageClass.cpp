@@ -150,8 +150,8 @@ HRESULT ImageClass::init(void)
 	IMAGEMANAGER->addFrameImage("184light", "Resources/Images/Effect/all/184light.bmp", 2460, 172, 12,1,true, RGB(0, 0, 0));
 	IMAGEMANAGER->addFrameImage("203smog", "Resources/Images/Effect/all/203smog.bmp", 680, 72, 10,1,true, RGB(0, 0, 0));
 	IMAGEMANAGER->addFrameImage("115stone", "Resources/Images/Effect/all/115stone.bmp", 3502, 218, 8,2,true, RGB(156, 148, 140));
-	IMAGEMANAGER->addFrameImage("skill1", "Resources/Images/Effect/all/skill1.bmp", 1500, 1500, 5,5,true, RGB(80, 0, 0));
-	IMAGEMANAGER->addFrameImage("skill5", "Resources/Images/Effect/all/skill5.bmp", 660, 400, 6,4,true,RGB(8,88,8));
+	IMAGEMANAGER->addFrameImage("skillStartLight", "Resources/Images/Effect/all/skillStartLight.bmp", 1500, 1500, 5,5,true, RGB(80, 0, 0));
+	IMAGEMANAGER->addFrameImage("enemyAttack", "Resources/Images/Effect/all/enemyAttack.bmp", 660, 400, 6,4,true,RGB(8,88,8));
 
 	IMAGEMANAGER->addFrameImage("one", "Resources/Images/Effect/all/one.bmp", 200, 2400, 4,8,true, RGB(252, 236, 212));
 	IMAGEMANAGER->addFrameImage("double", "Resources/Images/Effect/all/double.bmp", 300, 1500, 6,5,true, RGB(252, 236, 212));

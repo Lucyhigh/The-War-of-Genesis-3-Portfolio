@@ -172,7 +172,6 @@
     <ClCompile Include="AnimationManager.cpp">
       <Filter>API\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="CEvent.cpp" />
     <ClCompile Include="CSkill.cpp" />
     <ClCompile Include="Skill.cpp" />
     <ClCompile Include="UniteSkill.cpp" />
@@ -353,7 +352,6 @@
     <ClInclude Include="AnimationManager.h">
       <Filter>API\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="CEvent.h" />
     <ClInclude Include="CSkill.h" />
     <ClInclude Include="Skill.h" />
     <ClInclude Include="UniteSkill.h" />

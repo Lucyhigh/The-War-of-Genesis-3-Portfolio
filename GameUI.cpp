@@ -108,13 +108,20 @@ void GameUI::update(void)
 				switch (_viSkillButton->_index)
 				{
 				case 0:
-
+					cout << "연" << endl;
+					_skillIndex = SKILL_INDEX_EYUN;
 					break;
 				case 1:
+					cout << "댓쉬" << endl;
+					_skillIndex = SKILL_INDEX_DASH;
 					break;
 				case 2:
+					cout << "천지파열무" << endl;
+					_skillIndex = SKILL_INDEX_WORLDBROKEN;
 					break;
 				case 3:
+					cout << "풍아열공참" << endl;
+					_skillIndex = SKILL_INDEX_WINDEYUN;
 					break;
 				}
 			}
@@ -239,4 +246,9 @@ void GameUI::setMoveTileRange(int range)
 void GameUI::setMoveCenter(POINT center)
 {
 	_tileCenter = center;
+}
+
+SKILL_NUMBER GameUI::getSkillNum()
+{
+	return _skillIndex;
 }

@@ -4,8 +4,8 @@
 HRESULT FinalScene::init(void)
 {
     ShowCursor(false);//나중에 메인게임으로 이전예정
-	SOUNDMANAGER->addSound("General of Blonde 2", "Resources/Sounds/General of Blonde 2.mp3", true, true);
-	SOUNDMANAGER->play("General of Blonde 2", 1.0f);
+	SOUNDMANAGER->addSound("General of Blonde 1", "Resources/Sounds/General of Blonde 1.mp3", true, true);
+	SOUNDMANAGER->play("General of Blonde 1", 1.0f);
 	_mapTileInfo = new MapTileInfo;
 	_mapTileInfo->init();
 
@@ -284,15 +284,20 @@ void FinalScene::update(void)
 				{
 					//_turnSystem->changeToPlayer();
 				}
-				if (_gameUI->getSkillMenu())
-				{
-					_gameUI->showSkillMenu(playerUI);
-					cout << "스킬창" << endl;
-				}
 				else
 				{
 					_turnSystem->changeToEnemy();
 					_moveTileBit.reset();
+				}
+
+				if (_gameUI->getSkillMenu())
+				{
+					_gameUI->showSkillMenu(playerUI);
+					if (_gameUI->getSkillNum() == SKILL_INDEX_WORLDBROKEN)
+					{
+						_turnSystem->setPlayerBit(4);
+						_player->setPlayerStateBit(3);
+					}
 				}
 			}
 		}
@@ -311,6 +316,11 @@ void FinalScene::update(void)
 		else if (_turnSystem->getPlayerBit(3) == 1)
 		{
 			changeImage();
+		}
+		//0001 0000 : 스킬 사용
+		else if (_turnSystem->getPlayerBit(4) == 1)
+		{
+
 		}
 	}
 	else if (_turnSystem->getStatus() == CHANGINGSTATUS::ENEMYTURN)
@@ -442,6 +452,8 @@ void FinalScene::render(void)
 	AstarTileInfo();
 	IMAGEMANAGER->alphaRender("shadow", getMemDC(), _player->getPlayerPosX()- cameraLeft-47, _player->getPlayerPosY()+10- cameraTop, 150);
 	IMAGEMANAGER->alphaRender("shadow", getMemDC(), _saladin->getSaladinPosX()- cameraLeft-50, _saladin->getSaladinPosY()+10- cameraTop, 150);
+	IMAGEMANAGER->alphaRender("cutChange", getMemDC(), WINSIZE_X, WINSIZE_Y,0);//
+	IMAGEMANAGER->alphaRender("cutChangeRed", getMemDC(), WINSIZE_X, WINSIZE_Y,0);//
 	_saladin->render();
     _player->render();
     _gameUI->render();

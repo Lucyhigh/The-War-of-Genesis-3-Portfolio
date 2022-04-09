@@ -1,7 +1,5 @@
 #pragma once
 #include "GameNode.h"
-#include "UniteSkill.h"
-#include "Skill.h"
 
 struct TitlebuttomInfo
 {
@@ -19,8 +17,6 @@ private:
 	Animation* _animation;
 	Animation* _aniCursor;
 	Image* _image;
-	UniteSkill uniteSkill;
-
     vector<TitlebuttomInfo> _vTitleButton;
     vector<TitlebuttomInfo>::iterator _viTitleButton;
     LPCWSTR _uiText[3];

@@ -1,5 +1,15 @@
 #pragma once
 #include "GameNode.h"
+enum SKILL_NUMBER
+{
+	SKILL_INDEX_NULL,
+	SKILL_INDEX_EYUN,
+	SKILL_INDEX_DASH,
+	SKILL_INDEX_WORLDBROKEN,
+	SKILL_INDEX_WINDEYUN,
+	SKILL_INDEX_END
+};
+
 struct tagBattleMenu
 {
 	Image* _image;
@@ -49,7 +59,7 @@ private:
 	LPCWSTR _uiSkillText[4];
 	LPCWSTR _uiSkillLvText[4];
 	LPCWSTR _uiSkillSPText[4];
-	
+	SKILL_NUMBER _skillIndex;
 	float _tileAlpha;
     int _buttonIndex;
     int _moveRange;
@@ -69,8 +79,9 @@ public:
 	void showSkillMenu(POINT menuPos);
 	void setMoveTileRange(int range);
 	void setMoveCenter(POINT center);
+	SKILL_NUMBER getSkillNum();
 public:
-	GameUI() :_uiMainText{ L"어빌리티",L"아이템",L"휴 식",L"상 태" }, _uiSkillText{ L"  연",L"댓쉬",L"천지파열무",L"풍아열공참" },
+	GameUI() :_skillIndex(SKILL_INDEX_NULL),_uiMainText{ L"어빌리티",L"아이템",L"휴 식",L"상 태" }, _uiSkillText{ L"  연",L"댓쉬",L"천지파열무",L"풍아열공참" },
 		_uiSkillLvText{ L"LV10", L"LV5", L"LV1", L"LV1"}, _uiSkillSPText{ L"30", L"40", L"140", L"200"}{}
 	~GameUI() {}
 };

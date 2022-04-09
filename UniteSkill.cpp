@@ -13,7 +13,6 @@ void UniteSkill::release(void)
 		Skill* skill = (*viSkillList);
 		SAFE_DELETE(skill);
 	}
-
 }
 
 void UniteSkill::update(void)
@@ -28,7 +27,6 @@ void UniteSkill::update(void)
 		}
 	}
 	_skillIndex++;
-	
 }
 
 void UniteSkill::render(void)

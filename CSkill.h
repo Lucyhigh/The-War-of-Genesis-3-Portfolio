@@ -4,7 +4,7 @@
 
 typedef void(*CALLBACKFUNCTION)(void);
 
-enum SKILL_INDEX_NUMBER
+enum SKILL_NUMBER
 {
 	SKILL_INDEX_NULL,
 	SKILL_INDEX_START,
@@ -19,7 +19,7 @@ class CSkill:public GameNode
 private:
 	CALLBACKFUNCTION _callBackFunction;
 
-	SKILL_INDEX_NUMBER _skillIndexNum;
+	SKILL_NUMBER _skillIndexNum;
 	Image* _image;
     Animation* _currentAnimation;
 	const char* skillAniName;

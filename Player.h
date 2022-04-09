@@ -2,7 +2,9 @@
 #include "GameNode.h"
 #include "ProgressBar.h"
 #include "Inventory.h"
-//#include "Camera.h"
+#include "UniteSkill.h"
+#include "Skill.h"
+
 enum class PLAYERSTATE
 {
 	RIGHT,
@@ -17,9 +19,10 @@ private:
 	playerBit _stateBit;
 	Image* _image;
 	ProgressBar* _hpBar;
-	RECT _rcPlayer;
+	RECT* _rcPlayer;
     Inventory* _inventory;
 	PLAYERSTATE _imageState;
+	UniteSkill uniteSkill;
 
     POINT _playerPos;
     RECT _cameraRect;
@@ -44,7 +47,7 @@ public:
 	void release(void);
 	void update(void);
 	void render(void);
-
+	void worldBrokenSkill();
 	float getPlayerPosX();
 	float getPlayerPosY();
 	void setPlayerPos(POINT pos);

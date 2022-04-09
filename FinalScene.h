@@ -15,6 +15,7 @@ struct tagQMoveTile
 	int _cellX;
 	int _cellY;
 };
+
 class FinalScene : public GameNode
 {
 private:
@@ -22,14 +23,13 @@ private:
 	Animation* _aniCursor;
 	Animation* _tileClick;
 	Animation* _turnMark;
-	//Animation* _effect;
+
 	ProgressBar* _hpBar;
 	Player* _player;
 	TurnSystem* _turnSystem;
 	GameUI* _gameUI;
 	vector<Cell*>* _cells;
 	Image* _image;
-	//Image* _effectImage;
 	Saladin* _saladin;
 	Camera* _camera;
 	AStar::Generator* _generator;
