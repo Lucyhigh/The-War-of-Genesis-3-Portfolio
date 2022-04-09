@@ -8,22 +8,43 @@ HRESULT UniteSkill::init(void)
 
 void UniteSkill::release(void)
 {
+	for (viSkillList = vSkillList.begin(); viSkillList != vSkillList.end(); ++viSkillList)
+	{
+		Skill* skill = (*viSkillList);
+		SAFE_DELETE(skill);
+	}
+
 }
 
 void UniteSkill::update(void)
 {
 	if (!_isStart) return;
-	//for(viSkillList)
-	//if (_behavior == SKILL_INDEX_NUMBER::SKILL_INDEX_SECOND)
-	//{
-	// if (_currentAnimation->getNowPlayIdx() == _attackIndex)
-	//	 return true;
-	//}
+	for (viSkillList = vSkillList.begin(); viSkillList != vSkillList.end(); ++viSkillList)
+	{
+		Skill* skill = (*viSkillList);
+		if (skill->getSkillIndex() == _skillIndex)
+		{
+			skill->getSkillAnimation()->AniStart();
+		}
+	}
+	_skillIndex++;
+	
 }
 
 void UniteSkill::render(void)
 {
 	if (!_isStart) return;
+	for (viSkillList = vSkillList.begin(); viSkillList != vSkillList.end(); ++viSkillList)
+	{
+		Skill* skill = (*viSkillList);
+		if (skill->getSkillAnimation()->getIsPlay() == false)
+			continue;
+
+		IMAGEMANAGER->findImage(skill->getSkillName())->aniRender(getMemDC(),
+																  skill->getAniPosRect()->left,
+																  skill->getAniPosRect()->top,
+																  skill->getSkillAnimation());
+	}
 }
 
 void UniteSkill::startSkill()

@@ -9,14 +9,17 @@ HRESULT TitleScene::init(void)
 	SOUNDMANAGER->addSound("Tutorial", "Resources/Sounds/Tutorial.mp3",true,true);
 	SOUNDMANAGER->addSound("History of Absolution", "Resources/Sounds/History of Absolution.mp3",true,true);
 	_animation = ANIMATIONMANAGER->findAnimation("TitleEfx");
+	RECT* testRc = new RECT { CENTER_X,CENTER_Y,100,100 };
 
-	Skill skill(0, _animation);
-	Skill skill2(0,  _animation);
-	Skill skill3(10, _animation);
-	UniteSkill uniteSkill;
-	uniteSkill.add(&skill);
-	uniteSkill.add(&skill2);
-	uniteSkill.add(&skill3);
+	Animation* _testani = ANIMATIONMANAGER->findAnimation("skill1");
+	Animation* _testani2 = ANIMATIONMANAGER->findAnimation("circle");
+	Animation* _testani3 = ANIMATIONMANAGER->findAnimation("fire");
+	Skill* skill =	new Skill(30,"skill1", testRc, _testani);
+	Skill* skill2=	new Skill(10, "circle", testRc, _testani2);
+	Skill* skill3=	new Skill(20, "fire", testRc, _testani3);
+	uniteSkill.add(skill);
+	uniteSkill.add(skill2);
+	uniteSkill.add(skill3);
 	uniteSkill.startSkill();
 
 	_animation->AniStart();
@@ -62,6 +65,7 @@ void TitleScene::release(void){
 
 void TitleScene::update(void)
 {
+	uniteSkill.update();
 
 	if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
 	{
@@ -185,6 +189,7 @@ void TitleScene::render(void)
 		IMAGEMANAGER->alphaRender("cutChange", getMemDC(), _fadeAlpha);
 	}
 
+	uniteSkill.render();
 }
 
 void TitleScene::fadeout()

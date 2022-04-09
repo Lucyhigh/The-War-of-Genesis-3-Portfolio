@@ -19,6 +19,7 @@ private:
 	Animation* _animation;
 	Animation* _aniCursor;
 	Image* _image;
+	UniteSkill uniteSkill;
 
     vector<TitlebuttomInfo> _vTitleButton;
     vector<TitlebuttomInfo>::iterator _viTitleButton;

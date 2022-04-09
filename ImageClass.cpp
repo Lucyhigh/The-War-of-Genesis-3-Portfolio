@@ -160,8 +160,8 @@ HRESULT ImageClass::init(void)
 	ANIMATIONMANAGER->addAnimation("skillStart", "skillStart", 3, false, false);
 	ANIMATIONMANAGER->addAnimation("smog", "smog", 20, false, false);
 	ANIMATIONMANAGER->addAnimation("smog2", "smog2", 20, false, false);
-	ANIMATIONMANAGER->addAnimation("circle", "circle", 20, false, false);
-	ANIMATIONMANAGER->addAnimation("fire", "fire", 20, false, false);
+	ANIMATIONMANAGER->addAnimation("circle", "circle", 8, false, false);
+	ANIMATIONMANAGER->addAnimation("fire", "fire", 8, false, false);
 	ANIMATIONMANAGER->addAnimation("groundCrack", "groundCrack", 20, false, false);
 	ANIMATIONMANAGER->addAnimation("48fire", "48fire", 20, false, false);
 	ANIMATIONMANAGER->addAnimation("95light", "95light", 20, false, false);

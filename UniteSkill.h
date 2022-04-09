@@ -19,7 +19,7 @@ public:
 	void startSkill();
 	void add(Skill* skill);
 public:
-	UniteSkill() :_isStart(false) {}
+	UniteSkill() :_isStart(false),_skillIndex(0) {}
 	~UniteSkill() {}
 };
 
