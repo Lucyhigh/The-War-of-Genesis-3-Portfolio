@@ -17,7 +17,7 @@ public:
 	void render(void);
 
 	void startSkill();
-	void Add(Skill* skill);
+	void add(Skill* skill);
 public:
 	UniteSkill() :_isStart(false) {}
 	~UniteSkill() {}

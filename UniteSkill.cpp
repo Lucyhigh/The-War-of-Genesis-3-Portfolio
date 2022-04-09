@@ -13,12 +13,12 @@ void UniteSkill::release(void)
 void UniteSkill::update(void)
 {
 	if (!_isStart) return;
-	
-	/* if (_behavior == SKILL_INDEX_NUMBER::SKILL_INDEX_SECOND)
-	{
-	 if (_currentAnimation->getNowPlayIdx() == _attackIndex)
-		 return true;
-	}*/
+	//for(viSkillList)
+	//if (_behavior == SKILL_INDEX_NUMBER::SKILL_INDEX_SECOND)
+	//{
+	// if (_currentAnimation->getNowPlayIdx() == _attackIndex)
+	//	 return true;
+	//}
 }
 
 void UniteSkill::render(void)
@@ -31,7 +31,7 @@ void UniteSkill::startSkill()
 	_isStart = true;
 }
 
-void UniteSkill::Add(Skill* skill)
+void UniteSkill::add(Skill* skill)
 {
 	vSkillList.push_back(skill);
 }

@@ -3,7 +3,7 @@
 #include "Text.h"
 
 #define TEXTNumTWO 56
-#define BgImageNUMTWO 6
+#define BgImageNUMTWO 13
 #define SELECTNUM 15
 class SecondScene : public GameNode
 {
@@ -47,9 +47,11 @@ public:
 		{0,"cutChange"},
 		{1,"storyStart"},
 		{5,"deadHer"},
+		{5,"deadHer2"},
 		{9,"battleBefore"},
 		{11,"battleAfter1"},
 		{13,"battleAfter2"},
+		{13,"battleAfter3"},
 		{15,"0154"},
 		{15,"0110"},
 		{15,"0129"},

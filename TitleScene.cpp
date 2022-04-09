@@ -10,14 +10,14 @@ HRESULT TitleScene::init(void)
 	SOUNDMANAGER->addSound("History of Absolution", "Resources/Sounds/History of Absolution.mp3",true,true);
 	_animation = ANIMATIONMANAGER->findAnimation("TitleEfx");
 
-	//Skill skill(0, _animation);
-	//Skill skill2(0,  _animation);
-	//Skill skill3(10, _animation);
-	//UniteSkill uniteSkill;
-	//uniteSkill.add(skill);
-	//uniteSkill.add(skill2);
-	//uniteSkill.add(skill3);
-	//uniteSkill.start();
+	Skill skill(0, _animation);
+	Skill skill2(0,  _animation);
+	Skill skill3(10, _animation);
+	UniteSkill uniteSkill;
+	uniteSkill.add(&skill);
+	uniteSkill.add(&skill2);
+	uniteSkill.add(&skill3);
+	uniteSkill.startSkill();
 
 	_animation->AniStart();
 	_aniCursor = ANIMATIONMANAGER->findAnimation("normalCursor");

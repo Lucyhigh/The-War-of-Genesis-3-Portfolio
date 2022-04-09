@@ -1,8 +1,7 @@
 #pragma once
 #include "GameNode.h"
-
-class Skill;
-class UniteSkill;
+#include "UniteSkill.h"
+#include "Skill.h"
 
 struct TitlebuttomInfo
 {
