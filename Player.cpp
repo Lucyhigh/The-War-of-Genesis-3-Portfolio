@@ -6,6 +6,7 @@ HRESULT Player::init(void)
 	_image = IMAGEMANAGER->findImage("pRightIdle");
 	_image = IMAGEMANAGER->findImage("pRightMove");
 	_image = IMAGEMANAGER->findImage("pDamageSheet");
+	_image = IMAGEMANAGER->findImage("skillStart");
 	worldBrokenSkill();
 
     _stateBit = 0;//Idle
@@ -15,7 +16,7 @@ HRESULT Player::init(void)
     _speed = 10;
     _playerPos.x = 0;
     _playerPos.y = WINSIZE_Y-140;
-	_rcPlayer = &RectMakeCenter(_playerPos.x, _playerPos.y, _image->getFrameWidth(), _image->getFrameHeight());
+	_rcPlayer = RectMakeCenter(_playerPos.x, _playerPos.y, _image->getFrameWidth(), _image->getFrameHeight());
 	_tmp = 1;
 	_cdt = 0;
 	_currentHp = 10;
@@ -267,15 +268,16 @@ void Player::update(void)
 		}
     //10000 죽음
     }
-	_rcPlayer = &RectMakeCenter(_playerPos.x, _playerPos.y, _image->getFrameWidth(), _image->getFrameHeight());
+	_rcPlayer = RectMakeCenter(_playerPos.x, _playerPos.y, _image->getFrameWidth(), _image->getFrameHeight());
 	//cout << _stateBit.to_string() << endl;
 }
 
 
 void Player::render(void)
 {
-    float left = _rcPlayer->left - _cameraRect.left;
-    float top = _rcPlayer->top - _cameraRect.top;
+    float left = _rcPlayer.left - _cameraRect.left;
+    float top = _rcPlayer.top - _cameraRect.top;
+	cout << left << endl;
     if (_stateBit.none() == 1)
     {
         switch (_imageState)
@@ -302,7 +304,7 @@ void Player::render(void)
             IMAGEMANAGER->frameRender("pRightMove", getMemDC(), left, top);
             break;
         case PLAYERSTATE::LEFT:
-            IMAGEMANAGER->frameRender("pLeftMove", getMemDC(), left-20, top);
+            IMAGEMANAGER->frameRender("pLeftMove", getMemDC(), left-40, top);
             break;
         case PLAYERSTATE::TOP:
             IMAGEMANAGER->frameRender("pUpMove", getMemDC(), left, top);
@@ -359,7 +361,7 @@ void Player::render(void)
 
 void Player::worldBrokenSkill()
 {
-	RECT* testRc = new RECT{ _playerPos.x, _playerPos.y,100,100 };
+	RECT* testRc = &_rcPlayer;
 
 	Animation* _skillAni1  = ANIMATIONMANAGER->findAnimation("184light");
 	Animation* _skillAni2  = ANIMATIONMANAGER->findAnimation("circle");
@@ -390,10 +392,10 @@ void Player::worldBrokenSkill()
 	Skill* skill11 = new Skill(20, "115stone", testRc, _skillAni11);//돌 튀어 오르며 사라짐
 
 	Skill* skill6  = new Skill(1, "enemyAttack", testRc, _skillAni12);
-	Skill* skill13 = new Skill(2, "one", testRc, _skillAni12);//에너미도 셋 랜덤
+	//skill13 = new Skill(2, "one", testRc, _skillAni12);//에너미도 셋 랜덤
 	Skill* skill8  = new Skill(3, "95light", testRc, _skillAni8);
 	Skill* skill10 = new Skill(3, "203smog", testRc, _skillAni10);//이후 컷변화 레드켜짐- 여기서 같이 돌릴가
-	Skill* skill11 = new Skill(20, "115stone", testRc, _skillAni11);//돌 높이 튀어 오르며 사라짐
+	// skill11 = new Skill(20, "115stone", testRc, _skillAni11);//돌 높이 튀어 오르며 사라짐
 
 	uniteSkill.add(skill);
 	uniteSkill.add(skill2);
@@ -434,7 +436,7 @@ void Player::setPlayerPosY(float y)
 
 RECT Player::getPlayerRect()
 {
-	return (*_rcPlayer);
+	return _rcPlayer;
 }
 
 

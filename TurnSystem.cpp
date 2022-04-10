@@ -19,14 +19,12 @@ void TurnSystem::update(void)
     case CHANGINGSTATUS::WAIT :
             break;
     case CHANGINGSTATUS::PLAYERTURN :
-
             break;
            
     case CHANGINGSTATUS::ENEMYTURN :
-
             break;
     }
-	cout << _playerbit.to_string() << endl;
+	//cout << _playerbit.to_string() << endl;
 }
 
 void TurnSystem::render(void){

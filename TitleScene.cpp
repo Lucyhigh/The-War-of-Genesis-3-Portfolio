@@ -7,7 +7,7 @@ HRESULT TitleScene::init(void)
     _startBit = 0;
 	SOUNDMANAGER->addSound("changeScene", "Resources/Sounds/changeScene.mp3",false,false);
 	SOUNDMANAGER->addSound("Tutorial", "Resources/Sounds/Tutorial.mp3",true,true);
-	SOUNDMANAGER->addSound("History of Absolution", "Resources/Sounds/History of Absolution.mp3",true,true);
+	SOUNDMANAGER->addSound("Prologue", "Resources/Sounds/Prologue.mp3",true,true);
 
 	_animation = ANIMATIONMANAGER->findAnimation("TitleEfx");
 	_animation->AniStart();
@@ -45,7 +45,7 @@ HRESULT TitleScene::init(void)
 
     _isfadeOut = false;
 	_alpha = 0.0f;
-	SOUNDMANAGER->play("History of Absolution", 1.0f);
+	SOUNDMANAGER->play("Prologue", 1.0f);
 
 	return S_OK;
 }
@@ -76,7 +76,8 @@ void TitleScene::update(void)
                 case 0:
                     _isfadeOut = true;
 					SOUNDMANAGER->play("changeScene", 1.0f);
-					SOUNDMANAGER->stop("History of Absolution");
+					SOUNDMANAGER->stop("Prologue");
+					SOUNDMANAGER->play("Tutorial", 1.0f);
                     break;
                 case 1:
                     _startBit.reset();
@@ -94,7 +95,6 @@ void TitleScene::update(void)
     // 0001 스타트게임
     else if (_startBit.test(0) == 1)
     {
-		SOUNDMANAGER->play("Tutorial", 1.0f);
         for (_viSceneButton = _vSceneButton.begin(); _viSceneButton != _vSceneButton.end(); ++_viSceneButton)
         {
             if (PtInRect(&_viSceneButton->_buttonRect, _ptMouse) && KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
@@ -198,10 +198,12 @@ void TitleScene::fadeout()
 			else if (_startBit.test(0) == 1)
 			{
 				SCENEMANAGER->changeScene("map");
+				SOUNDMANAGER->stop("Tutorial");
 			}
 			else if (_startBit.test(1) == 1)
 			{
 				SCENEMANAGER->changeScene("second");
+				SOUNDMANAGER->stop("Prologue");
 			}
 		}
 	}

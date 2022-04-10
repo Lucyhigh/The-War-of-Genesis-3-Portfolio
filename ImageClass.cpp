@@ -52,8 +52,8 @@ HRESULT ImageClass::init(void)
 #pragma region Stage Scene
 	//Title
 	IMAGEMANAGER->addImage("TitleBg", "Resources/Images/BackGround/Title.bmp", WINSIZE_X, WINSIZE_Y);
-	IMAGEMANAGER->addFrameImage("TitleEfx", "Resources/Images/UI/titleEfx.bmp", 2241,2025,6,6,true,RGB(4, 0, 4));
 	IMAGEMANAGER->addImage("TitleName", "Resources/Images/UI/TitleGameName.bmp", WINSIZE_X, WINSIZE_Y, MGT);
+	IMAGEMANAGER->addFrameImage("TitleEfx", "Resources/Images/UI/titleEfx.bmp", 2241,2025,6,6,true,RGB(4, 0, 4));
 
 	//Map
 	IMAGEMANAGER->addImage("Map", "Resources/Images/UI/map.bmp", 1657, 1737, true, RGB(255,252,0));
@@ -168,8 +168,8 @@ HRESULT ImageClass::init(void)
 	ANIMATIONMANAGER->addAnimation("184light", "184light", 20, false, false);
 	ANIMATIONMANAGER->addAnimation("203smog", "203smog", 20, false, false);
 	ANIMATIONMANAGER->addAnimation("115stone", "115stone", 20, false, false);
-	ANIMATIONMANAGER->addAnimation("skill1", "skill1", 8, false, false);
-	ANIMATIONMANAGER->addAnimation("skill5", "skill5", 20, false, false);
+	ANIMATIONMANAGER->addAnimation("skillStartLight", "skillStartLight", 8, false, false);
+	ANIMATIONMANAGER->addAnimation("enemyAttack", "enemyAttack", 20, false, false);
 	ANIMATIONMANAGER->addAnimation("one", "one", 20, false, false);
 	ANIMATIONMANAGER->addAnimation("double", "double", 20, false, false);
 	ANIMATIONMANAGER->addAnimation("triple", "triple", 20, false, false);

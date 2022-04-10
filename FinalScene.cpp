@@ -293,10 +293,9 @@ void FinalScene::update(void)
 				if (_gameUI->getSkillMenu())
 				{
 					_gameUI->showSkillMenu(playerUI);
-					if (_gameUI->getSkillNum() == SKILL_INDEX_WORLDBROKEN)
+					if (_gameUI->getSkillNum() == SKILL_INDEX_WORLDBROKEN )//&& PtInRect)
 					{
 						_turnSystem->setPlayerBit(4);
-						_player->setPlayerStateBit(3);
 					}
 				}
 			}
@@ -320,7 +319,7 @@ void FinalScene::update(void)
 		//0001 0000 : 스킬 사용
 		else if (_turnSystem->getPlayerBit(4) == 1)
 		{
-
+			_player->setPlayerStateBit(3);
 		}
 	}
 	else if (_turnSystem->getStatus() == CHANGINGSTATUS::ENEMYTURN)
@@ -452,7 +451,7 @@ void FinalScene::render(void)
 	AstarTileInfo();
 	IMAGEMANAGER->alphaRender("shadow", getMemDC(), _player->getPlayerPosX()- cameraLeft-47, _player->getPlayerPosY()+10- cameraTop, 150);
 	IMAGEMANAGER->alphaRender("shadow", getMemDC(), _saladin->getSaladinPosX()- cameraLeft-50, _saladin->getSaladinPosY()+10- cameraTop, 150);
-	IMAGEMANAGER->alphaRender("cutChange", getMemDC(), WINSIZE_X, WINSIZE_Y,0);//
+	IMAGEMANAGER->alphaRender("cutChange", getMemDC(), WINSIZE_X, WINSIZE_Y,0);//스킬용
 	IMAGEMANAGER->alphaRender("cutChangeRed", getMemDC(), WINSIZE_X, WINSIZE_Y,0);//
 	_saladin->render();
     _player->render();
@@ -650,7 +649,7 @@ void FinalScene::rectMoveToPath()
 			if (_turnSystem->getStatus() == CHANGINGSTATUS::PLAYERTURN)
 			{
 				_player->setPlayerStateBit(0);
-				_player->setPlayerPos({ _moveRc.right,_moveRc.top });
+				_player->setPlayerPos({ _moveRc.left,_moveRc.top });
 			}
 			if (_lerpPercentage >= 1)
 			{
@@ -1024,6 +1023,9 @@ void FinalScene::computeShowAttackableTile(int range, Cell* cell, bool isMoveabl
 	_qAttackTile.push(make_pair(range - 1, (*_cells)[tempX + (tempY + 2) * STAGE3TILEX]));
 	_qAttackTile.push(make_pair(range - 1, (*_cells)[tempX + (tempY - 2)* STAGE3TILEX]));
 }
+void FinalScene::computeShowSkillAttackableTile(int range, Cell * cell, bool isMoveable)
+{
+}
 void FinalScene::startShowAttackableTile(int range, Cell* cell, bool isMoveable)
 {
 	_vAttackableTile.clear();
@@ -1039,6 +1041,10 @@ void FinalScene::startShowAttackableTile(int range, Cell* cell, bool isMoveable)
 	{
             (*iter)->setType(CELL_TYPE::ATTACKABLE);
 	}
+}
+
+void FinalScene::startShowSkillAttackableTile(int range, Cell * cell, bool isMoveable)
+{
 }
 
 POINT FinalScene::lerp(POINT start, POINT end, float percentage)

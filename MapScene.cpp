@@ -3,7 +3,7 @@
 
 HRESULT MapScene::init(void)
 {
-	ShowCursor(false);//나중에 메인게임으로 이전예정
+	ShowCursor(false);
     _image = new Image;
     _image = IMAGEMANAGER->findImage("Map");
 	_buttonImage = *IMAGEMANAGER->findImage("MapButton");
@@ -11,6 +11,7 @@ HRESULT MapScene::init(void)
 	_animation->AniStart();
 	_aniCursor = ANIMATIONMANAGER->findAnimation("normalCursor");
 	_aniCursor->AniStart();
+	SOUNDMANAGER->play("Prologue", 1.0f);
     _seaX = 0.0f;
     _seaY = -800.0f;
 	int buttonNum = 4;
@@ -33,7 +34,7 @@ HRESULT MapScene::init(void)
     _camera->init();
     _camera->setLimitsX(CENTER_X, _image->getWidth());
     _camera->setLimitsY(CENTER_Y, _image->getHeight());
-    _camera->setCameraPos({ _image->getWidth(),_image->getHeight() });//0,0
+    _camera->setCameraPos({ _image->getWidth(),_image->getHeight() });
 	return S_OK;
 }
 
@@ -59,6 +60,7 @@ void MapScene::update(void)
     else if (_moveNext && PtInRect(&_vMapButton[1]._buttonRect, _ptMouse) && KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
     {
 		SOUNDMANAGER->play("changeScene", 1.0f);
+		SOUNDMANAGER->stop("Prologue");
         SCENEMANAGER->changeScene("final");
     }
 

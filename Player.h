@@ -19,7 +19,7 @@ private:
 	playerBit _stateBit;
 	Image* _image;
 	ProgressBar* _hpBar;
-	RECT* _rcPlayer;
+	RECT _rcPlayer;
     Inventory* _inventory;
 	PLAYERSTATE _imageState;
 	UniteSkill uniteSkill;

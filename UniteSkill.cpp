@@ -35,8 +35,7 @@ void UniteSkill::render(void)
 	for (viSkillList = vSkillList.begin(); viSkillList != vSkillList.end(); ++viSkillList)
 	{
 		Skill* skill = (*viSkillList);
-		if (skill->getSkillAnimation()->getIsPlay() == false)
-			continue;
+		if (skill->getSkillAnimation()->getIsPlay() == false) continue;
 
 		IMAGEMANAGER->findImage(skill->getSkillName())->aniRender(getMemDC(),
 																  skill->getAniPosRect()->left,

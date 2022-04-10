@@ -76,8 +76,6 @@ void Camera::update(void)
 	}
 	
 	_screen = RectMakeCenter(_trace.x, _trace.y, WINSIZE_X, WINSIZE_Y);
-
-
 }
 
 void Camera::render(void){

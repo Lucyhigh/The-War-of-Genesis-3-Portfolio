@@ -5,6 +5,5 @@ public:
 	HRESULT init(void);
 public:
 	ImageClass() {}
-	~ImageClass() { ANIMATIONMANAGER->deleteAll(); }
+	~ImageClass() {}// { ANIMATIONMANAGER->deleteAll(); }
 };
-
