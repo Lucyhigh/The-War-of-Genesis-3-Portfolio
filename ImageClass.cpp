@@ -91,8 +91,8 @@ HRESULT ImageClass::init(void)
 	IMAGEMANAGER->addImage("brother", "Resources/Images/BackGround/final.bmp", 2120, 1536);
 #pragma endregion
 #pragma region UI Scene
-	IMAGEMANAGER->addImage("cutChange", "Resources/Images/BackGround/cutChange.bmp", WINSIZE_X*1.1, WINSIZE_Y*1.1);
-	IMAGEMANAGER->addImage("cutChangeRed", "Resources/Images/BackGround/cutChangeRed.bmp", WINSIZE_X*1.1, WINSIZE_Y*1.1);
+	IMAGEMANAGER->addImage("cutChange", "Resources/Images/BackGround/cutChange.bmp", WINSIZE_X, WINSIZE_Y);
+	IMAGEMANAGER->addImage("cutChangeRed", "Resources/Images/BackGround/cutChangeRed.bmp", WINSIZE_X, WINSIZE_Y);
 	IMAGEMANAGER->addImage("curMap", "Resources/Images/UI/curMap.bmp", 241, 111, MGT);
 	IMAGEMANAGER->addImage("introtext", "Resources/Images/UI/introtext.bmp", 230, 105);
 	IMAGEMANAGER->addImage("storyText", "Resources/Images/UI/storyText.bmp", 511*1.33,111 * 1.33);

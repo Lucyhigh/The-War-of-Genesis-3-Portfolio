@@ -4,6 +4,7 @@
 #include "Inventory.h"
 #include "UniteSkill.h"
 #include "Skill.h"
+#include "Cell.h"
 
 enum class PLAYERSTATE
 {
@@ -23,11 +24,12 @@ private:
     Inventory* _inventory;
 	PLAYERSTATE _imageState;
 	UniteSkill uniteSkill;
-
+	vector<Cell*>* _vSkillableCells;
     POINT _playerPos;
     POINT _skillPlayerPos;
     POINT _skillPlayerPos2;
     POINT _skillPlayerPos3;
+	vector<POINT> _vSkillCellPos;
     RECT _cameraRect;
     BYTE _skillAlpha;
     BYTE _skillAlpha2;
@@ -84,7 +86,7 @@ public:
 	bool setLive(bool status);
 
 	void hitDamage(float damage);
-	
+	void setCells(vector<Cell*>* cells);
 public:
 	Player():_isWaiting(true),_isLive(true){}
 	~Player() {}

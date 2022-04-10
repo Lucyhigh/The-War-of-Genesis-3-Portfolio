@@ -21,6 +21,7 @@ HRESULT FinalScene::init(void)
 	_cells = _mapTileInfo->getCell();
 
 	_player = new Player;
+	_player->setCells(_cells);
 	_player->init();
 	_player->setPlayerPosX(16 * TILESIZEX);
 	_player->setPlayerPosY(10 * TILESIZEY);

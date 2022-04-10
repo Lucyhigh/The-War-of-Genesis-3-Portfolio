@@ -291,8 +291,27 @@ void Player::render(void)
     _skillPlayerPos = {(long)left-95, (long)top-40};
     _skillPlayerPos2 = {(long)left-95, (long)top-40};
     _skillPlayerPos3 = {(long)left-65, (long)top-40};
-    IMAGEMANAGER->alphaRender("cutChange", getMemDC(), left-430, top- 300, _alphaA);//스킬용
-    IMAGEMANAGER->alphaRender("cutChangeRed", getMemDC(), left- 430, top- 300, _alphaB);//
+	Cell* playerCell = nullptr;
+	for (auto cellsiter = _vSkillableCells->begin(); cellsiter != _vSkillableCells->end(); ++cellsiter)
+	{
+		if ((*cellsiter)->getType() == CELL_TYPE::START)
+		{
+			playerCell = (*cellsiter);
+			break;
+		}
+	}
+	//int pCellPosNum = 1;
+	for (int i = 0; i < _vSkillCellPos.size(); i += 4)
+	{
+		_vSkillCellPos[i]   = { (long)(playerCell->getCellX()-1)* TILESIZEX, (long)(playerCell->getCellY() - 1)* TILESIZEY};
+		_vSkillCellPos[i+1] = { (long)(playerCell->getCellX()-1)* TILESIZEX, (long)(playerCell->getCellY() + 1)* TILESIZEY};
+		_vSkillCellPos[i+2] = { (long)(playerCell->getCellX()+1)* TILESIZEX, (long)(playerCell->getCellY() - 1)* TILESIZEY};
+		_vSkillCellPos[i+3] = { (long)(playerCell->getCellX()+1)* TILESIZEX, (long)(playerCell->getCellY() + 1)* TILESIZEY};
+		//pCellPosNum++;
+	}
+
+    IMAGEMANAGER->alphaRender("cutChange", getMemDC(), 0,0,_alphaA);//스킬용
+    IMAGEMANAGER->alphaRender("cutChangeRed", getMemDC(), 0,0, _alphaB);//
     if (_stateBit.none() == 1)
     {
         switch (_imageState)
@@ -389,15 +408,38 @@ void Player::worldBrokenSkill()
 	//Animation* _skillAni12 = ANIMATIONMANAGER->findAnimation("enemyAttack");
 	//Animation* _skillAni13 = ANIMATIONMANAGER->findAnimation("one");
 	//Animation* _skillAni14 = ANIMATIONMANAGER->findAnimation("double");
-	//Animation* _skillAni15 = ANIMATIONMANAGER->findAnimation("triple");
 	Skill* skill = new Skill(0, "184light", &_skillPlayerPos, &_skillAlpha, _skillAni1);
 	Skill* skill2 = new Skill(3, "circle", &_skillPlayerPos2, &_skillAlpha2, _skillAni2);
 	Skill* skill3 = new Skill(4, "smog2", &_skillPlayerPos3, &_skillAlpha3, _skillAni3);
 
-	////타일 적용필요
+	int cellPosIdx = 0;
+	for (int i = 1; i < 5; ++i)//타이밍 계산시 i* 로 해보기
+	{
+		Animation* _skillAni12 = ANIMATIONMANAGER->findAnimation("triple");
+		//Cell* cellLT = (*_vSkillableCells)[tempPosX - i + (tempPosY - i) * STAGE3TILEX];
+		_vSkillCellPos.push_back({ 0,0 });// { cellLT->getCellX()*STAGE3TILEX, cellLT->getCellY()*STAGE3TILEY });
+		Skill* skillLT = new Skill(1, "triple", &_vSkillCellPos[cellPosIdx++], &_skillAlpha, _skillAni12);
+		uniteSkill.add(skillLT);
+
+		//Cell* cellLB = (*_vSkillableCells)[tempPosX - i + (tempPosY + i) * STAGE3TILEX];
+		_vSkillCellPos.push_back({ 0,0 });//({ cellLB->getCellX()*STAGE3TILEX,cellLB->getCellY()*STAGE3TILEY });
+		Skill* skillLB = new Skill(1, "triple", &_vSkillCellPos[cellPosIdx++], &_skillAlpha, _skillAni12);
+		uniteSkill.add(skillLB);
+
+		//Cell* cellRT = (*_vSkillableCells)[tempPosX + i + (tempPosY - i) * STAGE3TILEX];
+		_vSkillCellPos.push_back({ 0,0 });//({ cellRT->getCellX()*STAGE3TILEX,cellRT->getCellY()*STAGE3TILEY });
+		Skill* skillRT = new Skill(1, "triple", &_vSkillCellPos[cellPosIdx++], &_skillAlpha, _skillAni12);
+		uniteSkill.add(skillRT);
+
+		//Cell* cellRB = (*_vSkillableCells)[tempPosX + i + (tempPosY + i) * STAGE3TILEX];
+		_vSkillCellPos.push_back({ 0,0 });//({ cellRB->getCellX()*STAGE3TILEX,cellRB->getCellY()*STAGE3TILEY });
+		Skill* skillRB = new Skill(1, "triple", &_vSkillCellPos[cellPosIdx++], &_skillAlpha, _skillAni12);
+		uniteSkill.add(skillRB);
+	}
+
+	
 	//Skill* skill13 = new Skill(1, "one", &_skillPlayerPos, _skillAni12);//셋이 다 다르넹...
 	//Skill* skill14 = new Skill(1, "double",  &_skillPlayerPos, _skillAni12);
-	//Skill* skill15 = new Skill(1, "triple", &_skillPlayerPos, _skillAni12);
 	//Skill* skill3 = new Skill(2, "fire", &_skillPlayerPos, _skillAni4);//왼쪽부터 시작 - 멈췄다가 캐릭터 위주부터 다시시작 2 / 3
 	//Skill* skill7 = new Skill(3, "48fire", &_skillPlayerPos, _skillAni7);
 	//Skill* skill4 = new Skill(3, "smog", &_skillPlayerPos, _skillAni5);
@@ -500,6 +542,11 @@ void Player::hitDamage(float damage)
 		return;
 	}
 	_currentHp -= damage;
+}
+
+void Player::setCells(vector<Cell*>* cells)
+{
+	_vSkillableCells = cells;
 }
 
 void Player::setCameraRect(RECT rect)
