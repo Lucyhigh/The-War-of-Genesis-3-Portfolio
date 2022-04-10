@@ -48,6 +48,7 @@ public:
 	void update(void);
 	void render(void);
 	void worldBrokenSkill();
+
 	float getPlayerPosX();
 	float getPlayerPosY();
 	void setPlayerPos(POINT pos);

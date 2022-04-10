@@ -293,10 +293,10 @@ void FinalScene::update(void)
 				if (_gameUI->getSkillMenu())
 				{
 					_gameUI->showSkillMenu(playerUI);
-					if (_gameUI->getSkillNum() == SKILL_INDEX_WORLDBROKEN )//&& PtInRect)
-					{
-						_turnSystem->setPlayerBit(4);
-					}
+				}
+				if (_gameUI->getSkillNum() == SKILL_INDEX_WORLDBROKEN )//&& PtInRect)
+				{
+					_turnSystem->setPlayerBit(4);
 				}
 			}
 		}

@@ -118,6 +118,7 @@ void GameUI::update(void)
 				case 2:
 					cout << "천지파열무" << endl;
 					_skillIndex = SKILL_INDEX_WORLDBROKEN;
+					_isSkillMenu = false;
 					break;
 				case 3:
 					cout << "풍아열공참" << endl;

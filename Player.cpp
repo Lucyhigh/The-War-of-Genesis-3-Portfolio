@@ -3,12 +3,8 @@
 
 HRESULT Player::init(void)
 {
-	_image = IMAGEMANAGER->findImage("pRightIdle");
-	_image = IMAGEMANAGER->findImage("pRightMove");
 	_image = IMAGEMANAGER->findImage("pDamageSheet");
-	_image = IMAGEMANAGER->findImage("skillStart");
 	worldBrokenSkill();
-
     _stateBit = 0;//Idle
 	_count = 0;
 	_indexA = _indexB = 0;
@@ -253,21 +249,20 @@ void Player::update(void)
             setPlayerIdle();
 			_cdt = 0;
         }
-    //01000 스킬
-		else if (_stateBit.test(3) == 1)
-		{
-			if (_count % 60 == 0)
-			{
-				if(_indexB < 4)_indexB++;
-				IMAGEMANAGER->findImage("skillStart")->setFrameY(0);
-				IMAGEMANAGER->findImage("skillStart")->setFrameX(_indexB);
-				//setPlayerIdle();타이밍은 나중에 잡아주기
-				uniteSkill.update();
-
-			}
-		}
-    //10000 죽음
+    //01000 죽음
     }
+	else if (_stateBit.test(3) == 1)
+	{
+		if (_count % 100 == 0)
+		{
+			if (_indexB < 4)_indexB++;
+			IMAGEMANAGER->findImage("skillStart")->setFrameY(0);
+			IMAGEMANAGER->findImage("skillStart")->setFrameX(_indexB);
+			//setPlayerIdle();
+			uniteSkill.update();
+
+		}
+	}
 	_rcPlayer = RectMakeCenter(_playerPos.x, _playerPos.y, _image->getFrameWidth(), _image->getFrameHeight());
 	//cout << _stateBit.to_string() << endl;
 }
@@ -277,7 +272,6 @@ void Player::render(void)
 {
     float left = _rcPlayer.left - _cameraRect.left;
     float top = _rcPlayer.top - _cameraRect.top;
-	cout << left << endl;
     if (_stateBit.none() == 1)
     {
         switch (_imageState)
@@ -354,7 +348,7 @@ void Player::render(void)
     }
 	else if (_stateBit.test(3) == 1)
 	{
-		IMAGEMANAGER->frameRender("skillStart", getMemDC(), left, top);
+		IMAGEMANAGER->frameRender("skillStart", getMemDC(), left -100, top-70);
 		uniteSkill.render();
 	}
 }
@@ -363,14 +357,14 @@ void Player::worldBrokenSkill()
 {
 	RECT* testRc = &_rcPlayer;
 
-	Animation* _skillAni1  = ANIMATIONMANAGER->findAnimation("184light");
-	Animation* _skillAni2  = ANIMATIONMANAGER->findAnimation("circle");
-	Animation* _skillAni3  = ANIMATIONMANAGER->findAnimation("smog2");
+	Animation* _skillAni1 = ANIMATIONMANAGER->findAnimation("184light");
+	Animation* _skillAni2 = ANIMATIONMANAGER->findAnimation("circle");
+	Animation* _skillAni3 = ANIMATIONMANAGER->findAnimation("smog2");
 
-	Animation* _skillAni4  = ANIMATIONMANAGER->findAnimation("fire");
-	Animation* _skillAni5  = ANIMATIONMANAGER->findAnimation("smog");
-	Animation* _skillAni7  = ANIMATIONMANAGER->findAnimation("48fire");
-	Animation* _skillAni8  = ANIMATIONMANAGER->findAnimation("95light");
+	Animation* _skillAni4 = ANIMATIONMANAGER->findAnimation("fire");
+	Animation* _skillAni5 = ANIMATIONMANAGER->findAnimation("smog");
+	Animation* _skillAni7 = ANIMATIONMANAGER->findAnimation("48fire");
+	Animation* _skillAni8 = ANIMATIONMANAGER->findAnimation("95light");
 	Animation* _skillAni10 = ANIMATIONMANAGER->findAnimation("203smog");
 	Animation* _skillAni11 = ANIMATIONMANAGER->findAnimation("115stone");
 	Animation* _skillAni12 = ANIMATIONMANAGER->findAnimation("enemyAttack");
@@ -378,22 +372,22 @@ void Player::worldBrokenSkill()
 	Animation* _skillAni14 = ANIMATIONMANAGER->findAnimation("double");
 	Animation* _skillAni15 = ANIMATIONMANAGER->findAnimation("triple");
 
-	Skill* skill   = new Skill(1, "184light", testRc, _skillAni1);
-	Skill* skill2  = new Skill(2, "circle", testRc, _skillAni2);
-	Skill* skill5  = new Skill(3, "smog2", testRc, _skillAni3);
+	Skill* skill = new Skill(1, "184light", testRc, _skillAni1);
+	Skill* skill2 = new Skill(2, "circle", testRc, _skillAni2);
+	Skill* skill5 = new Skill(3, "smog2", testRc, _skillAni3);
 
 	//타일 적용필요
 	Skill* skill13 = new Skill(1, "one", testRc, _skillAni12);//셋이 다 다르넹...
 	Skill* skill14 = new Skill(1, "double", testRc, _skillAni12);
 	Skill* skill15 = new Skill(1, "triple", testRc, _skillAni12);
-	Skill* skill3  = new Skill(2, "fire", testRc, _skillAni4);//왼쪽부터 시작 - 멈췄다가 캐릭터 위주부터 다시시작 2 / 3
-	Skill* skill7  = new Skill(3, "48fire", testRc, _skillAni7);
-	Skill* skill4  = new Skill(3, "smog", testRc, _skillAni5);
+	Skill* skill3 = new Skill(2, "fire", testRc, _skillAni4);//왼쪽부터 시작 - 멈췄다가 캐릭터 위주부터 다시시작 2 / 3
+	Skill* skill7 = new Skill(3, "48fire", testRc, _skillAni7);
+	Skill* skill4 = new Skill(3, "smog", testRc, _skillAni5);
 	Skill* skill11 = new Skill(20, "115stone", testRc, _skillAni11);//돌 튀어 오르며 사라짐
 
-	Skill* skill6  = new Skill(1, "enemyAttack", testRc, _skillAni12);
+	Skill* skill6 = new Skill(1, "enemyAttack", testRc, _skillAni12);
 	//skill13 = new Skill(2, "one", testRc, _skillAni12);//에너미도 셋 랜덤
-	Skill* skill8  = new Skill(3, "95light", testRc, _skillAni8);
+	Skill* skill8 = new Skill(3, "95light", testRc, _skillAni8);
 	Skill* skill10 = new Skill(3, "203smog", testRc, _skillAni10);//이후 컷변화 레드켜짐- 여기서 같이 돌릴가
 	// skill11 = new Skill(20, "115stone", testRc, _skillAni11);//돌 높이 튀어 오르며 사라짐
 
