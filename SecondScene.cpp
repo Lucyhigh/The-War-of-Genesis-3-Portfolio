@@ -34,7 +34,7 @@ void SecondScene::update(void)
     _count++;
 	int size = _text[_textIndex].imageVec.size();
 
-    if (KEYMANAGER->isOnceKeyDown(VK_SPACE) && _textIndex !=9)
+    if (KEYMANAGER->isOnceKeyDown(VK_SPACE) && _textIndex !=9 && _textIndex < 47)
     {
         if (_textBufferCnt < wcslen(_text[_textIndex].script))
         {
@@ -72,7 +72,7 @@ void SecondScene::update(void)
         fadeout();
     }
 
-	cout << _fadeAlpha << endl;
+	cout << _textIndex << endl;
 }
 
 void SecondScene::render(void)

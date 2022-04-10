@@ -5,6 +5,7 @@ HRESULT EndingScene::init(void)
 {
     _aniCursor = ANIMATIONMANAGER->findAnimation("normalCursor");
     _aniCursor->AniStart();
+    SOUNDMANAGER->addSound("changeScene", "Resources/Sounds/changeScene.mp3", false, false);
     SOUNDMANAGER->addSound("Memory", "Resources/Sounds/Memory.mp3", true, true);
     SOUNDMANAGER->addSound("Tears", "Resources/Sounds/Tears.mp3", true, true);
     SOUNDMANAGER->play("Tears", 1.0f);
@@ -33,7 +34,7 @@ void EndingScene::update(void)
     _count++;
     int size = _text[_textIndex].imageVec.size();
 
-    if (KEYMANAGER->isOnceKeyDown(VK_SPACE) && _textIndex != 9)
+    if (KEYMANAGER->isOnceKeyDown(VK_SPACE) && _textIndex < 8)
     {
         if (_textBufferCnt < wcslen(_text[_textIndex].script))
         {
@@ -124,7 +125,7 @@ void EndingScene::fadeout()
 {
     if (_isfadeOut)
     {
-        _fadeAlpha += 2.0f;
+        _fadeAlpha += 1.0f;
         if (_fadeAlpha > 253)
         {
             _isfadeOut = false;
