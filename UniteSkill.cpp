@@ -37,9 +37,10 @@ void UniteSkill::render(void)
 		Skill* skill = (*viSkillList);
 		if (skill->getSkillAnimation()->getIsPlay() == false) continue;
 
-		IMAGEMANAGER->findImage(skill->getSkillName())->aniRender(getMemDC(),
-																  skill->getAniPosRect()->left,
-																  skill->getAniPosRect()->top,
+		IMAGEMANAGER->findImage(skill->getSkillName())->aniAlphaRender(getMemDC(),
+																  skill->getAniPos()->x,
+																  skill->getAniPos()->y,
+                                                                  *skill->getAlpha(),
 																  skill->getSkillAnimation());
 	}
 }

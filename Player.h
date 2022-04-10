@@ -25,7 +25,13 @@ private:
 	UniteSkill uniteSkill;
 
     POINT _playerPos;
+    POINT _skillPlayerPos;
+    POINT _skillPlayerPos2;
+    POINT _skillPlayerPos3;
     RECT _cameraRect;
+    BYTE _skillAlpha;
+    BYTE _skillAlpha2;
+    BYTE _skillAlpha3;
 
 	int _tmp;
 	int _cdt;

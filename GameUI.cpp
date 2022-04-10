@@ -126,6 +126,10 @@ void GameUI::update(void)
 					break;
 				}
 			}
+            if (KEYMANAGER->isOnceKeyDown(VK_RBUTTON))
+            {
+                _isSkillMenu = false;
+            }
 		}
 	}
 }

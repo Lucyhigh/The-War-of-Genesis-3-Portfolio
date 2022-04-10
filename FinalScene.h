@@ -46,8 +46,10 @@ private:
 	vector<POINT> _check;
 	queue<pair<int,Cell*>> _qMoveTile;
 	queue<pair<int,Cell*>> _qAttackTile;
+	queue<pair<int,Cell*>> _qSkillTile;
     vector<Cell*> _vMoveableTile;
     vector<Cell*> _vAttackableTile;
+    vector<Cell*> _vSkillableTile;
 	bitset<3> _moveTileBit;
 	//float _x, _y; //체력바 위치
 	float _currentHp;
@@ -62,6 +64,7 @@ private:
 
 	bool _isMoveTileOn;
 	bool _isAlphaIncrese;
+	bool _isSkillStart;
 
 public:
 	HRESULT init(void);

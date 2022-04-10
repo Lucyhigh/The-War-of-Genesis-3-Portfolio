@@ -5,14 +5,16 @@ class Skill
 private:
 	int _skillIndex;
 	string _skillName;
-	RECT* _aniPosRect;
+    POINT* _aniPos;
+    BYTE* _alpha;
 	Animation* _skillAnimation;
 public:
-	inline int getSkillIndex()		{ return _skillIndex; }
-	inline string getSkillName()	{return _skillName;}
-	inline RECT* getAniPosRect()	{return _aniPosRect;}
-	inline Animation* getSkillAnimation() 	{ return _skillAnimation;}
+    inline int getSkillIndex()            { return _skillIndex; }
+    inline string getSkillName()          { return _skillName; }
+    inline POINT* getAniPos()             { return _aniPos; }
+    inline BYTE* getAlpha()                { return _alpha; }
+    inline Animation* getSkillAnimation() { return _skillAnimation; }
 public:
-	Skill(int skillIndex,string skillName, RECT* aniPosRect,Animation* animation);
+	Skill(int skillIndex,string skillName, POINT* aniPos, BYTE* alpha, Animation* animation);
 	~Skill() {}
 };

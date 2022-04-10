@@ -106,6 +106,7 @@ HRESULT ImageClass::init(void)
 	IMAGEMANAGER->addImage("shadow", "Resources/Images/UI/shadow.bmp", 42, 29, true, RGB(252, 252, 0));
 	IMAGEMANAGER->addImage("moveTile", "Resources/Images/UI/moveable.bmp", 40, 32);
 	IMAGEMANAGER->addImage("attackTile", "Resources/Images/UI/attackable.bmp", 40, 32);
+	IMAGEMANAGER->addImage("skillTile", "Resources/Images/UI/skillable.bmp", 40, 32);
 	IMAGEMANAGER->addImage("ScenarioClear", "Resources/Images/UI/ScenarioClear.bmp", 960, 90);
 
 	IMAGEMANAGER->addFrameImage("selectIcon", "Resources/Images/UI/selectIcon.bmp", 96,25,4,1, MGT);

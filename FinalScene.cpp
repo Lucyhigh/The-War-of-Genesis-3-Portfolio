@@ -3,7 +3,7 @@
 
 HRESULT FinalScene::init(void)
 {
-    ShowCursor(false);//나중에 메인게임으로 이전예정
+    ShowCursor(false);
 	SOUNDMANAGER->addSound("General of Blonde 1", "Resources/Sounds/General of Blonde 1.mp3", true, true);
 	SOUNDMANAGER->play("General of Blonde 1", 1.0f);
 	_mapTileInfo = new MapTileInfo;
@@ -67,6 +67,7 @@ HRESULT FinalScene::init(void)
     _mouseType = CELL_TYPE::NORMAL;
     _beforeMouseType = CELL_TYPE::GOAL;
 	_isMoveTileOn = false;
+    _isSkillStart = false;
 	_isAlphaIncrese = true;
 	return S_OK;
 }
@@ -94,8 +95,8 @@ void FinalScene::release(void)
 void FinalScene::update(void)
 {
 	POINT playerUI = {
-								_player->getPlayerPosX() - _camera->getScreenRect().left,
-								_player->getPlayerPosY() - _camera->getScreenRect().top
+						_player->getPlayerPosX() - _camera->getScreenRect().left,
+						_player->getPlayerPosY() - _camera->getScreenRect().top
 					 };
 
 	if (KEYMANAGER->isOnceKeyDown('Q'))
@@ -136,6 +137,9 @@ void FinalScene::update(void)
         {
         case CELL_TYPE::NORMAL:
             _aniCursor = ANIMATIONMANAGER->findAnimation("normalCursor");
+            break;
+        case CELL_TYPE::SKILLABLE:
+            _aniCursor = ANIMATIONMANAGER->findAnimation("attackMark");
             break;
         case CELL_TYPE::WALL:
             _aniCursor = ANIMATIONMANAGER->findAnimation("notMoveable");
@@ -294,10 +298,18 @@ void FinalScene::update(void)
 				{
 					_gameUI->showSkillMenu(playerUI);
 				}
-				if (_gameUI->getSkillNum() == SKILL_INDEX_WORLDBROKEN )//&& PtInRect)
+                else
+                {
+                   // _gameUI->showBattleMenu(playerUI);
+                }
+				if (_gameUI->getSkillNum() == SKILL_INDEX_WORLDBROKEN && !_isSkillStart)
 				{
 					_turnSystem->setPlayerBit(4);
 				}
+               /* else if (_gameUI->getSkillNum() == SKILL_INDEX_WORLDBROKEN && !_isSkillStart)
+                {
+                    startShowSkillAttackableTile(1,_cMoveStart, false);
+                }*/
 			}
 		}
 		// 0000 0010 : 이동중 - 메뉴창 뜨면 안됨 다른곳으로 이동못함
@@ -384,6 +396,10 @@ void FinalScene::update(void)
 	    {
 	    	startShowAttackableTile(1, _cMoveStart, false);
 	    }
+       /* else if (_gameUI->getSkillNum() == SKILL_INDEX_WORLDBROKEN && !_isSkillStart)
+        {
+            startShowSkillAttackableTile(10, _cMoveStart, false);
+        }*/
     }
 }
 
@@ -424,6 +440,9 @@ void FinalScene::render(void)
 			case(CELL_TYPE::ENEMY):
 				IMAGEMANAGER->alphaRender("attackTile", getMemDC(), (int)left, (int)top, _tileAlpha+40);
 				break;
+            case(CELL_TYPE::SKILLABLE):
+                IMAGEMANAGER->alphaRender("skillTile", getMemDC(), (int)left, (int)top, _tileAlpha);
+                break;
 			}
 		}
 	}
@@ -439,11 +458,17 @@ void FinalScene::render(void)
 			case(CELL_TYPE::START):
 				IMAGEMANAGER->alphaRender("attackTile", getMemDC(), (int)left, (int)top, _tileAlpha + 20);
 				break;
+            case(CELL_TYPE::MOVEABLE):
+                IMAGEMANAGER->alphaRender("moveTile", getMemDC(), (int)left, (int)top, _tileAlpha);
+                break;
 			case(CELL_TYPE::ATTACKABLE):
 				IMAGEMANAGER->alphaRender("attackTile", getMemDC(), (int)left, (int)top, _tileAlpha);
 				break;
 			case(CELL_TYPE::ENEMY):
 				IMAGEMANAGER->alphaRender("attackTile", getMemDC(), (int)left, (int)top, _tileAlpha - 40);
+				break;
+            case(CELL_TYPE::SKILLABLE):
+                IMAGEMANAGER->alphaRender("skillTile", getMemDC(), (int)left, (int)top, _tileAlpha );
 				break;
 			}
 		}
@@ -451,8 +476,7 @@ void FinalScene::render(void)
 	AstarTileInfo();
 	IMAGEMANAGER->alphaRender("shadow", getMemDC(), _player->getPlayerPosX()- cameraLeft-47, _player->getPlayerPosY()+10- cameraTop, 150);
 	IMAGEMANAGER->alphaRender("shadow", getMemDC(), _saladin->getSaladinPosX()- cameraLeft-50, _saladin->getSaladinPosY()+10- cameraTop, 150);
-	IMAGEMANAGER->alphaRender("cutChange", getMemDC(), WINSIZE_X, WINSIZE_Y,0);//스킬용
-	IMAGEMANAGER->alphaRender("cutChangeRed", getMemDC(), WINSIZE_X, WINSIZE_Y,0);//
+
 	_saladin->render();
     _player->render();
     _gameUI->render();
@@ -504,6 +528,9 @@ void FinalScene::render(void)
 				IMAGEMANAGER->findImage("attackMark")->aniRender(getMemDC(), _ptMouse.x, _ptMouse.y, _aniCursor);
 				_hpBar->render(1, left,top);
 				break;
+            case CELL_TYPE::SKILLABLE:
+                IMAGEMANAGER->findImage("attackMark")->aniRender(getMemDC(), _ptMouse.x, _ptMouse.y, _aniCursor);
+                break;
 			case CELL_TYPE::WALL:
 				IMAGEMANAGER->findImage("notMoveable")->aniRender(getMemDC(), _ptMouse.x - 16, _ptMouse.y - 6, _aniCursor);
 				break;
@@ -586,6 +613,8 @@ void FinalScene::drawMapCellInfo()//디버그
             FillRect(getMemDC(), &rect, brush);
 			break;
 		case(CELL_TYPE::ATTACKABLE):
+			break;
+		case(CELL_TYPE::SKILLABLE):
 			break;
 		}
 		SelectObject(getMemDC(), brush);
@@ -819,7 +848,7 @@ void FinalScene::find4WaysTile()
 				Cell* cell = (*cellsIter);
 				if (cell->getCellX() == temp.x && cell->getCellY() == temp.y)
 				{
-					if (cell->getType() == CELL_TYPE::NORMAL || cell->getType() == CELL_TYPE::MOVEPATH)
+					if (cell->getType() == CELL_TYPE::NORMAL || cell->getType() == CELL_TYPE::MOVEPATH || cell->getType() == CELL_TYPE::MOVEABLE || cell->getType() == CELL_TYPE::ENEMY || cell->getType() == CELL_TYPE::ATTACKABLE)
 					{
 						float distance = getDistance(_cMoveStart->getCellX(), _cMoveStart->getCellY(), temp.x, temp.y);
 						if (distance < minDistance)
@@ -899,7 +928,7 @@ void FinalScene::find4WaysTile()
 				Cell* cell = (*cellsIter);
 				if (cell->getCellX() == temp.x && cell->getCellY() == temp.y)
 				{
-					if (cell->getType() == CELL_TYPE::NORMAL || cell->getType() == CELL_TYPE::MOVEPATH || cell->getType() == CELL_TYPE::ATTACKABLE)
+					if (cell->getType() == CELL_TYPE::NORMAL || cell->getType() == CELL_TYPE::MOVEPATH || cell->getType() == CELL_TYPE::MOVEABLE || cell->getType() == CELL_TYPE::ATTACKABLE || cell->getType() == CELL_TYPE::START)
 					{
 						float distance = getDistance(_cMoveStart->getCellX(), _cMoveStart->getCellY(), temp.x, temp.y);
 						if (distance < minDistance)
@@ -1025,6 +1054,26 @@ void FinalScene::computeShowAttackableTile(int range, Cell* cell, bool isMoveabl
 }
 void FinalScene::computeShowSkillAttackableTile(int range, Cell * cell, bool isMoveable)
 {
+    //천지파열무
+    //풍아는 일반 공격과 범위가 같으므로 연동해서 할듯
+    if (range < 0) return;
+    if (cell->getType() == CELL_TYPE::WALL) return;
+
+    int tempX = cell->getCellX();
+    int tempY = cell->getCellY();
+
+    if (std::find(_vSkillableTile.begin(), _vSkillableTile.end(), cell) == _vSkillableTile.end())
+        _vSkillableTile.push_back(cell);
+
+    _qSkillTile.push(make_pair(range - 1, (*_cells)[tempX + 1 + tempY * STAGE3TILEX]));
+    _qSkillTile.push(make_pair(range - 1, (*_cells)[tempX - 1 + tempY * STAGE3TILEX]));
+    _qSkillTile.push(make_pair(range - 1, (*_cells)[tempX + (tempY + 1) * STAGE3TILEX]));
+    _qSkillTile.push(make_pair(range - 1, (*_cells)[tempX + (tempY - 1)* STAGE3TILEX]));
+    _qSkillTile.push(make_pair(range - 1, (*_cells)[tempX + 1 + (tempY - 1) * STAGE3TILEX]));
+    _qSkillTile.push(make_pair(range - 1, (*_cells)[tempX + 1 + (tempY + 1) * STAGE3TILEX]));
+    _qSkillTile.push(make_pair(range - 1, (*_cells)[tempX - 1 + (tempY - 1) * STAGE3TILEX]));
+    _qSkillTile.push(make_pair(range - 1, (*_cells)[tempX - 1 + (tempY + 1) * STAGE3TILEX]));
+
 }
 void FinalScene::startShowAttackableTile(int range, Cell* cell, bool isMoveable)
 {
@@ -1045,6 +1094,19 @@ void FinalScene::startShowAttackableTile(int range, Cell* cell, bool isMoveable)
 
 void FinalScene::startShowSkillAttackableTile(int range, Cell * cell, bool isMoveable)
 {
+    _vSkillableTile.clear();
+    _qSkillTile.push(make_pair(range, cell));
+
+    while (!_qSkillTile.empty())
+    {
+        computeShowSkillAttackableTile(_qSkillTile.front().first, _qSkillTile.front().second, isMoveable);
+        _qSkillTile.pop();
+    }
+
+    for (auto iter = _vSkillableTile.begin(); iter != _vSkillableTile.end(); ++iter)
+    {
+        (*iter)->setType(CELL_TYPE::SKILLABLE);
+    }
 }
 
 POINT FinalScene::lerp(POINT start, POINT end, float percentage)

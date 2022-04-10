@@ -22,6 +22,7 @@ enum class CELL_TYPE
 	ENEMY,
     MOVEPATH,
     MOVEABLE, 
+    SKILLABLE, 
 	ATTACKABLE
 };
 
