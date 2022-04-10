@@ -9,6 +9,7 @@ HRESULT Player::init(void)
 	_count = 0;
 	_indexA = _indexB = 0;
 	_alphaA = 0;
+    _alphaB = 0;
     _speed = 10;
     _playerPos.x = 0;
     _playerPos.y = WINSIZE_Y-140;
@@ -256,14 +257,26 @@ void Player::update(void)
     }
 	else if (_stateBit.test(3) == 1)
 	{
+        if (_alphaA < 160)_alphaA += 10;
 		if (_count % 200 == 0)
 		{
 			if (_indexB < 4)_indexB++;
 			IMAGEMANAGER->findImage("skillStart")->setFrameY(0);
 			IMAGEMANAGER->findImage("skillStart")->setFrameX(_indexB);
-			//setPlayerIdle();
 			uniteSkill.update();
-
+            _cdt++;
+            if (_cdt > 30)
+            {
+                setPlayerIdle();
+                _cdt = 0;
+               
+            }
+            else if (_cdt == 10)
+            {
+                _alphaB = 240;
+            }
+            else _alphaB = 0;
+            cout << _cdt << endl;
 		}
 	}
 	_rcPlayer = RectMakeCenter(_playerPos.x, _playerPos.y, _image->getFrameWidth(), _image->getFrameHeight());
@@ -276,10 +289,10 @@ void Player::render(void)
     float left = _rcPlayer.left - _cameraRect.left;
     float top = _rcPlayer.top - _cameraRect.top;
     _skillPlayerPos = {(long)left-95, (long)top-40};
-    _skillPlayerPos2 = {(long)left-140, (long)top-30};
-    _skillPlayerPos3 = {(long)left-10, (long)top-10};
-    IMAGEMANAGER->alphaRender("cutChange", getMemDC(), WINSIZE_X, WINSIZE_Y, 0);//스킬용
-    IMAGEMANAGER->alphaRender("cutChangeRed", getMemDC(), WINSIZE_X, WINSIZE_Y, 0);//
+    _skillPlayerPos2 = {(long)left-95, (long)top-40};
+    _skillPlayerPos3 = {(long)left-65, (long)top-40};
+    IMAGEMANAGER->alphaRender("cutChange", getMemDC(), left-430, top- 300, _alphaA);//스킬용
+    IMAGEMANAGER->alphaRender("cutChangeRed", getMemDC(), left- 430, top- 300, _alphaB);//
     if (_stateBit.none() == 1)
     {
         switch (_imageState)
@@ -378,8 +391,8 @@ void Player::worldBrokenSkill()
 	//Animation* _skillAni14 = ANIMATIONMANAGER->findAnimation("double");
 	//Animation* _skillAni15 = ANIMATIONMANAGER->findAnimation("triple");
 	Skill* skill = new Skill(0, "184light", &_skillPlayerPos, &_skillAlpha, _skillAni1);
-	Skill* skill2 = new Skill(3, "circle", &_skillPlayerPos, &_skillAlpha2, _skillAni2);
-	Skill* skill3 = new Skill(4, "smog2", &_skillPlayerPos, &_skillAlpha3, _skillAni3);
+	Skill* skill2 = new Skill(3, "circle", &_skillPlayerPos2, &_skillAlpha2, _skillAni2);
+	Skill* skill3 = new Skill(4, "smog2", &_skillPlayerPos3, &_skillAlpha3, _skillAni3);
 
 	////타일 적용필요
 	//Skill* skill13 = new Skill(1, "one", &_skillPlayerPos, _skillAni12);//셋이 다 다르넹...

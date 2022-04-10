@@ -41,6 +41,7 @@ private:
 	int _indexB;
 	int _indexC;
 	int _alphaA;
+	int _alphaB;
 	float _currentHp;
 	float _maxHp;
 
