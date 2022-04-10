@@ -265,7 +265,7 @@ void Player::update(void)
 			IMAGEMANAGER->findImage("skillStart")->setFrameX(_indexB);
 			uniteSkill.update();
             _cdt++;
-            if (_cdt > 30)
+            if (_cdt > 20)
             {
                 setPlayerIdle();
                 _cdt = 0;
@@ -273,7 +273,7 @@ void Player::update(void)
             }
             else if (_cdt == 10)
             {
-                _alphaB = 240;
+                _alphaB = 200;
             }
             else _alphaB = 0;
             cout << _cdt << endl;

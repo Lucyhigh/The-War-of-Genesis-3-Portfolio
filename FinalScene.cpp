@@ -3,7 +3,6 @@
 
 HRESULT FinalScene::init(void)
 {
-    ShowCursor(false);
 	SOUNDMANAGER->addSound("General of Blonde 1", "Resources/Sounds/General of Blonde 1.mp3", true, true);
 	SOUNDMANAGER->play("General of Blonde 1", 1.0f);
 	_mapTileInfo = new MapTileInfo;

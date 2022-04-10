@@ -2,14 +2,13 @@
 #include "GameNode.h"
 #include "Text.h"
 
-#define TEXTNumTWO 56
-#define BgImageNUMTWO 13
-#define SELECTNUM 15
+#define TEXTNum 48
+#define BgImageNUM 5
 class SecondScene : public GameNode
 {
 private:
-	tagBgImage _bgImage[BgImageNUMTWO];
-	tagText _text[TEXTNumTWO];//이후 json에 대사 이동
+	tagBgImage _bgImage[BgImageNUM];
+	tagText _text[TEXTNum];//이후 json에 대사 이동
 	Animation* _aniCursor;
 	RECT _mouseRc;
 	RECT _endRc;
@@ -49,14 +48,6 @@ public:
 		{5,"deadHer"},
 		{5,"deadHer2"},
 		{9,"battleBefore"},
-		{11,"battleAfter1"},
-		{13,"battleAfter2"},
-		{13,"battleAfter3"},
-		{15,"0154"},
-		{15,"0110"},
-		{15,"0129"},
-		{30,"0151"},
-		{55,"0167"}
 	}, _text
 	{
 		L"[셰라자드]",{"sheherazade"},L"이 시간에 누구시죠 ? 당신은... ?",
@@ -106,23 +97,7 @@ public:
 		L"[셰라자드]",{"sheherazade"},L"......안녕",//배경 변경
 		L"[버몬트]",{"vermont"},L"다 끝내셨나?",
 		L"[살라딘]",{"saladin"},L"복수심에 붙잡혀 있는 불쌍한 인간이군.",
-		L"[버몬트]",{"vermont"},L"너 따위가 나에 대해 뭘 안단 거냐 ? 뭐,상관없지... 자, 각오해라!",
-		/*
-		 ==================전투 전 인게임 스크립트
-		vermont 밟아도 밟아도 다시 되살아나는 녀석들!
-		vermont 그래서, 나는 너희 투르 녀석들이 싫은 것이다!
-		saladin 불쌍한 인간!
-
-		 ====================================
-		*/
-		L"버몬트",{"vermont"},L"죽여라...",
-		L"살라딘",{"saladin"},L"...",
-		L"버몬트",{"vermont"},L"그것만은... 제발 돌려줘 그것만은...",
-		L"",{"이미지1"},L"우리는 이렇게 다시 만났습니다.",
-		L"",{"이미지2"},L"너무나도 기나긴 시간들이 흘러 버렸습니다.",
-		L"",{"이미지3"},L"너무나도 많은 것이 변해 버렸습니다.",
-		L"",{"이미지4"},L"그래도 나는 동생을 사랑합니다.",
-		L"",{"이미지4"},L"좋은 왕이 되어야한다."
+		L"[버몬트]",{"vermont"},L"너 따위가 나에 대해 뭘 안단 거냐 ? 뭐,상관없지... 자, 각오해라!"
 	}{}
 	~SecondScene(){}
 };

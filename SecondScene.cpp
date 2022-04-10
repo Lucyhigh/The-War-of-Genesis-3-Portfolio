@@ -3,9 +3,9 @@
 
 HRESULT SecondScene::init(void)
 {
-	ShowCursor(false);
 	_aniCursor = ANIMATIONMANAGER->findAnimation("normalCursor");
 	_aniCursor->AniStart();
+	SOUNDMANAGER->addSound("changeScene", "Resources/Sounds/changeScene.mp3", false, false);
 	SOUNDMANAGER->addSound("Memory", "Resources/Sounds/Memory.mp3", true, true);
 	SOUNDMANAGER->addSound("Tears", "Resources/Sounds/Tears.mp3", true, true);
 	SOUNDMANAGER->play("Tears", 1.0f);
@@ -20,6 +20,7 @@ HRESULT SecondScene::init(void)
     _eventAlpha = 0;
     _bgAlpha = 0;
     _textAlpha = 0;
+    _fadeAlpha = 0;
     _bgMoved = WINSIZE_X;
     return S_OK;
 }
@@ -33,7 +34,7 @@ void SecondScene::update(void)
     _count++;
 	int size = _text[_textIndex].imageVec.size();
 
-    if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
+    if (KEYMANAGER->isOnceKeyDown(VK_SPACE) && _textIndex !=9)
     {
         if (_textBufferCnt < wcslen(_text[_textIndex].script))
         {
@@ -43,32 +44,40 @@ void SecondScene::update(void)
         {
             _textBufferCnt = 0;
 			SOUNDMANAGER->play("changeScene", 1.0f);
-           if(_textIndex<TEXTNumTWO) _textIndex++;
+           if(_textIndex<TEXTNum) _textIndex++;
 			_alpha = 150;
         }
     }
-
+    if (_textIndex == 9 || _textIndex == 47)
+    {
+        _isfadeOut = true;
+    }
+   
     if (_count % 2 == 0 && _textBufferCnt < wcslen(_text[_textIndex].script))
     {
         _textBufferCnt++;
     }
 	
-        _alpha -= 10.0f;
-        _bgAlpha += 4.0f;
-        _textAlpha += 4.0f;
+    _alpha -= 10.0f;
+    _bgAlpha += 4.0f;
+    _textAlpha += 4.0f;
 
     if (_bgMoved <= -WINSIZE_X) _bgMoved = WINSIZE_X;
     if (_bgAlpha >= 255) _bgAlpha = 255;
     if (_alpha < 0) _alpha = 0;
     if (_eventAlpha >= 255) _eventAlpha = 255;
     if (_textAlpha >= 210) _textAlpha = 210;
+    if (_isfadeOut)
+    {
+        fadeout();
+    }
 
-	cout << _textIndex << endl;
+	cout << _fadeAlpha << endl;
 }
 
 void SecondScene::render(void)
 {
-    for (size_t i = 0; i < BgImageNUMTWO; i++)
+    for (size_t i = 0; i < BgImageNUM; i++)
     {
         if (_textIndex <= _bgImage[i]._textIndex)
         {
@@ -93,7 +102,7 @@ void SecondScene::render(void)
     IMAGEMANAGER->alphaRender("storyText", getMemDC(), WINSIZE_X*0.16, WINSIZE_Y*0.72, _textAlpha);
     FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.17, WINSIZE_Y*0.75, "가을체", 20, 15, _text[_textIndex].name, wcslen(_text[_textIndex].name), TA_LEFT, RGB(72, 221, 157));
 
-    const int SCRIPT_MAX_LENGTH = 40;
+    const int SCRIPT_MAX_LENGTH = 48;
     FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.17, WINSIZE_Y*0.80, "가을체", 18, 100, _text[_textIndex].script, 
 		((_textBufferCnt) > SCRIPT_MAX_LENGTH ? SCRIPT_MAX_LENGTH : (_textBufferCnt)), TA_LEFT, RGB(255, 255, 255));
 
@@ -103,7 +112,6 @@ void SecondScene::render(void)
             _text[_textIndex].script + SCRIPT_MAX_LENGTH, (_textBufferCnt > wcslen(_text[_textIndex].script)) ?
             wcslen(_text[_textIndex].script) - SCRIPT_MAX_LENGTH : _textBufferCnt - SCRIPT_MAX_LENGTH, TA_LEFT, RGB(255, 255, 255));
     }
-
 
 	if (_isfadeOut)
 	{
@@ -116,25 +124,15 @@ void SecondScene::fadeout()
 {
 	if (_isfadeOut)
 	{
-		_fadeAlpha += 5.0f;
+		_fadeAlpha += 2.0f;
 		if (_fadeAlpha > 253)
 		{
 			_isfadeOut = false;
 			_fadeAlpha = 0;
-
-			//if (_startBit.none() == 1)
-			//{
-			//	_startBit.reset();
-			//	_startBit.set(0);
-			//}
-			//else if (_startBit.test(0) == 1)
-			//{
-			//	SCENEMANAGER->changeScene("map");
-			//}
-			//else if (_startBit.test(1) == 1)
-			//{
-			//	SCENEMANAGER->changeScene("second");
-			//}
+            _textBufferCnt = 0;
+            _alpha = 150;
+            _textIndex++;
+            if (_textIndex == 47 ) SCENEMANAGER->changeScene("final");
 		}
 	}
 }

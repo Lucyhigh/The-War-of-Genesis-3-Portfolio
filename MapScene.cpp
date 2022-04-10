@@ -3,7 +3,6 @@
 
 HRESULT MapScene::init(void)
 {
-	ShowCursor(false);
     _image = new Image;
     _image = IMAGEMANAGER->findImage("Map");
 	_buttonImage = *IMAGEMANAGER->findImage("MapButton");

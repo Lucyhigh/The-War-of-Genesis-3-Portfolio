@@ -3,7 +3,6 @@
 
 HRESULT TitleScene::init(void)
 {
-	ShowCursor(false);
     _startBit = 0;
 	SOUNDMANAGER->addSound("changeScene", "Resources/Sounds/changeScene.mp3",false,false);
 	SOUNDMANAGER->addSound("Tutorial", "Resources/Sounds/Tutorial.mp3",true,true);

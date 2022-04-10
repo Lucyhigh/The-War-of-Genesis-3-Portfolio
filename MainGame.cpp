@@ -16,6 +16,8 @@
 #pragma endregion 
 HRESULT MainGame::init(void)
 {
+    ShowCursor(false);
+
 	GameNode::init(TRUE);
 	ImageClass imageClass = ImageClass();
 	imageClass.init();
@@ -31,7 +33,7 @@ HRESULT MainGame::init(void)
 	SCENEMANAGER->addScene("ending", new EndingScene);
 	SCENEMANAGER->addScene("map", new MapScene);
 
-    SCENEMANAGER->changeScene("final");
+    SCENEMANAGER->changeScene("second");
 	return S_OK;
 }
 
