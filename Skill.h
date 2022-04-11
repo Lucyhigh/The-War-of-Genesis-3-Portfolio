@@ -29,8 +29,8 @@ class Skill: public GameNode
 {
 private:
     tagSkill* _tagSkill;
-    vector<tagSkill*> vSkillList;
-    vector<tagSkill*>::iterator viSkillList;
+    vector<tagSkill> vSkillList;
+    vector<tagSkill>::iterator viSkillList;
     int _skillIndex;
     bool _isStart;
 
@@ -61,6 +61,7 @@ public:
     void setPlayer(Player* player);
     void setCamera(Camera* camera);
     void setCells(vector<Cell*>* cells);
+	void pushCellSkill(int idx, string imgKey, int vNum, Animation* anim);
 
 	HRESULT init(void);
 	void release(void);

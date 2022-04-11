@@ -861,7 +861,8 @@ void FinalScene::find4WaysTile()
 				Cell* cell = (*cellsIter);
 				if (cell->getCellX() == temp.x && cell->getCellY() == temp.y)
 				{
-					if (cell->getType() == CELL_TYPE::NORMAL || cell->getType() == CELL_TYPE::MOVEPATH || cell->getType() == CELL_TYPE::MOVEABLE || cell->getType() == CELL_TYPE::ENEMY || cell->getType() == CELL_TYPE::ATTACKABLE)
+					//if (cell->getType() == CELL_TYPE::NORMAL || cell->getType() == CELL_TYPE::MOVEPATH || cell->getType() == CELL_TYPE::MOVEABLE || cell->getType() == CELL_TYPE::ENEMY || cell->getType() == CELL_TYPE::ATTACKABLE)
+					if(cell->getType() != CELL_TYPE::WALL && cell->getType() != CELL_TYPE::GOAL && cell->getType() != CELL_TYPE::START )
 					{
 						float distance = getDistance(_cMoveStart->getCellX(), _cMoveStart->getCellY(), temp.x, temp.y);
 						if (distance < minDistance)
@@ -941,7 +942,8 @@ void FinalScene::find4WaysTile()
 				Cell* cell = (*cellsIter);
 				if (cell->getCellX() == temp.x && cell->getCellY() == temp.y)
 				{
-					if (cell->getType() == CELL_TYPE::NORMAL || cell->getType() == CELL_TYPE::MOVEPATH || cell->getType() == CELL_TYPE::MOVEABLE || cell->getType() == CELL_TYPE::ATTACKABLE)//==================================
+					//if (cell->getType() == CELL_TYPE::NORMAL || cell->getType() == CELL_TYPE::MOVEPATH || cell->getType() == CELL_TYPE::MOVEABLE || cell->getType() == CELL_TYPE::ATTACKABLE)//==================================
+					if (cell->getType() != CELL_TYPE::WALL && cell->getType() != CELL_TYPE::GOAL && cell->getType() != CELL_TYPE::START)
 					{
 						float distance = getDistance(_cMoveStart->getCellX(), _cMoveStart->getCellY(), temp.x, temp.y);
 						if (distance < minDistance)
