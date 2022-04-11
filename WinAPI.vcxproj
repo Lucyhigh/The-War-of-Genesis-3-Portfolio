@@ -190,7 +190,6 @@
     <ClCompile Include="ShootingEffect.cpp" />
     <ClCompile Include="ShootingScene.cpp" />
     <ClCompile Include="Skill.cpp" />
-    <ClCompile Include="UniteSkill.cpp" />
     <ClCompile Include="SoundManager.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClCompile>
@@ -262,7 +261,6 @@
     <ClInclude Include="ShootingScene.h" />
     <ClInclude Include="SingletonBase.h" />
     <ClInclude Include="Skill.h" />
-    <ClInclude Include="UniteSkill.h" />
     <ClInclude Include="SoundManager.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClInclude>

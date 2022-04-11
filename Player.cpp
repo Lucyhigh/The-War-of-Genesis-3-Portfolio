@@ -261,7 +261,7 @@ void Player::update(void)
 			IMAGEMANAGER->findImage("skillStart")->setFrameY(0);
 			IMAGEMANAGER->findImage("skillStart")->setFrameX(_indexB);
 			_cdt++;
-			if (_cdt > 20)
+			if (_cdt > 10)
 			{
 				setPlayerIdle();
 				_cdt = 0;

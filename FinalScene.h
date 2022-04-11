@@ -8,6 +8,7 @@
 #include "Saladin.h"
 #include "Camera.h"
 #include "AStar.h"
+#include "Skill.h"
 
 struct tagQMoveTile
 {
@@ -23,7 +24,7 @@ private:
 	Animation* _aniCursor;
 	Animation* _tileClick;
 	Animation* _turnMark;
-
+    Skill* _skill;
 	ProgressBar* _hpBar;
 	Player* _player;
 	TurnSystem* _turnSystem;

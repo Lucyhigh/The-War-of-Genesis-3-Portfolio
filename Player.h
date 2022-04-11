@@ -2,8 +2,6 @@
 #include "GameNode.h"
 #include "ProgressBar.h"
 #include "Inventory.h"
-#include "UniteSkill.h"
-#include "Skill.h"
 #include "Cell.h"
 
 enum class PLAYERSTATE

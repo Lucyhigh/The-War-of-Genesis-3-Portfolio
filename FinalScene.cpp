@@ -36,6 +36,12 @@ HRESULT FinalScene::init(void)
 	_camera->setLimitsX(CENTER_X, _image->getWidth());
 	_camera->setLimitsY(CENTER_Y, _image->getHeight());
 
+    _skill = new Skill;
+    _skill->setPlayer(_player);
+    _skill->setCamera(_camera);
+    _skill->setCells(_cells);
+    _skill->init();
+
 	_generator = new AStar::Generator;
 	_generator->setWorldSize({ STAGE3TILEX, STAGE3TILEY });
 
@@ -52,6 +58,7 @@ HRESULT FinalScene::init(void)
 	_moveIndex = 0;
 	_lerpPercentage = 0.0f;
 	_enemyPathGoal = { 0,0 };
+
 
 	_hpBar = new ProgressBar;
 	_hpBar->init(0,0, IMAGEMANAGER->findImage("pHpBar")->getFrameWidth(), IMAGEMANAGER->findImage("pHpBar")->getFrameHeight());
@@ -89,6 +96,9 @@ void FinalScene::release(void)
 
 	_camera->release();
 	SAFE_DELETE(_camera);
+
+    _skill->release();
+    SAFE_DELETE(_skill);
 }
 
 void FinalScene::update(void)
@@ -331,6 +341,8 @@ void FinalScene::update(void)
 		else if (_turnSystem->getPlayerBit(4) == 1)
 		{
 			_player->setPlayerStateBit(3);
+            _skill->update();
+            if(_player->getPlayerStateBit(3) == 0) _turnSystem->changeToEnemy();
 		}
 	}
 	else if (_turnSystem->getStatus() == CHANGINGSTATUS::ENEMYTURN)
@@ -384,6 +396,7 @@ void FinalScene::update(void)
 	_player->update();
 	_saladin->setCameraRect(_camera->getScreenRect());
 	_saladin->update();
+
     if (_turnSystem->getStatus() == CHANGINGSTATUS::PLAYERTURN)
     {
 	    if (_moveTileBit.test(0) == 1 && _moveTileBit.test(1) == 1 && _moveTileBit.test(2) == 1)//111의 경우에서 쓰음
@@ -479,7 +492,8 @@ void FinalScene::render(void)
 	_saladin->render();
     _player->render();
     _gameUI->render();
-
+    if (_turnSystem->getPlayerBit(4))   
+        _skill->render();//===========================
 	IMAGEMANAGER->render("mapInfoAll", getMemDC(), WINSIZE_X - 230, 0);
 
     FONTMANAGER->drawText(getMemDC(),
@@ -560,7 +574,7 @@ void FinalScene::render(void)
 	}
 }
 
-void FinalScene::drawMapCellInfo()//디버그
+void FinalScene::drawMapCellInfo()//디버그용
 {
 	char cellIndex[1024];
 	SetTextColor(getMemDC(), RGB(0, 0, 0));

@@ -168,7 +168,6 @@
     </ClCompile>
     <ClCompile Include="CSkill.cpp" />
     <ClCompile Include="Skill.cpp" />
-    <ClCompile Include="UniteSkill.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameNode.h">
@@ -342,7 +341,6 @@
     </ClInclude>
     <ClInclude Include="CSkill.h" />
     <ClInclude Include="Skill.h" />
-    <ClInclude Include="UniteSkill.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="API">
