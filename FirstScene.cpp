@@ -195,6 +195,7 @@ void FirstScene::render(void)
             break;
         }
     }
+
     if (_isMove)
     {
         Rectangle(getMemDC(), _moveRc.left - _camera->getScreenRect().left,
@@ -202,7 +203,6 @@ void FirstScene::render(void)
                               _moveRc.right - _camera->getScreenRect().left,
                               _moveRc.bottom - _camera->getScreenRect().top);
     }
-
 	_player->render();
 }
 
@@ -232,7 +232,6 @@ void FirstScene::AstarTileInfo()
 
 void FirstScene::rectMoveToPath()
 {
-	
 	if (_moveIndex - 1 < 0)
 	{
 		_isMove = false;
@@ -273,7 +272,6 @@ void FirstScene::curAstar()
 		RECT rect = RectMake(left, top, TILESIZEX, TILESIZEY);
 		FillRect(getMemDC(), &rect, rectBrush);
 		DeleteObject(rectBrush);
-
 	}
 }
 

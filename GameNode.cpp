@@ -28,8 +28,6 @@ HRESULT GameNode::init(bool managerInit)
 		// 이미지매니저 초기화
 		IMAGEMANAGER->init();
 
-		//임시 사운드 매니저 초기화
-		TEMPSOUNDMANAGER->init();
 		//타임 매니저 초기화
 		TIMEMANAGER->init();
         //텍스트 데이터 매니저 초기화

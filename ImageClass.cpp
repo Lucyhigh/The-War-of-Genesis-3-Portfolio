@@ -6,7 +6,7 @@ HRESULT ImageClass::init(void)
 #pragma region Script Image
 	IMAGEMANAGER->addImage("store", "Resources/Images/UI/store.bmp", 300,333, MGT);
 	IMAGEMANAGER->addImage("weaponShop", "Resources/Images/UI/weaponShop.bmp", 300, 360, MGT);
-	IMAGEMANAGER->addImage("vermont", "Resources/Images/UI/vermont.bmp", 400, 480,MGT);
+	IMAGEMANAGER->addImage("vermont", "Resources/Images/UI/vermont.bmp", 360, 480,MGT);
 	IMAGEMANAGER->addImage("saladin", "Resources/Images/UI/saladin.bmp", 400,480,MGT);
 	IMAGEMANAGER->addImage("sheherazade", "Resources/Images/UI/sheherazade.bmp", 524, 480, MGT);
 
@@ -171,9 +171,9 @@ HRESULT ImageClass::init(void)
 	ANIMATIONMANAGER->addAnimation("115stone", "115stone", 20, false, false);
 	ANIMATIONMANAGER->addAnimation("skillStartLight", "skillStartLight", 8, false, false);
 	ANIMATIONMANAGER->addAnimation("enemyAttack", "enemyAttack", 20, false, false);
-	ANIMATIONMANAGER->addAnimation("one", "one", 20, false, false);
-	ANIMATIONMANAGER->addAnimation("double", "double", 20, false, false);
-	ANIMATIONMANAGER->addAnimation("triple", "triple", 20, false, false);
+	ANIMATIONMANAGER->addAnimation("one", "one", 5, false, false);
+	ANIMATIONMANAGER->addAnimation("double", "double", 5, false, false);
+	ANIMATIONMANAGER->addAnimation("triple", "triple", 5, false, false);
 	//skill Ç³¾Æ¿­°øÂü
 	IMAGEMANAGER->addFrameImage("skill2", "Resources/Images/Effect/single/skill2.bmp", 1200, 2400, 4, 8, MGT);
 	IMAGEMANAGER->addFrameImage("skill3", "Resources/Images/Effect/single/skill3.bmp", 2700, 900, 9, 3, MGT);

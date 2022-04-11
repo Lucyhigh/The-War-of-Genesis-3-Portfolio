@@ -200,12 +200,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Store.cpp" />
-    <ClCompile Include="TempSoundManager.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="TempSoundTest.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="Text.cpp" />
     <ClCompile Include="TextDataManager.cpp" />
     <ClCompile Include="TileMap.cpp" />
@@ -275,12 +269,6 @@
     <ClInclude Include="SoundScene.h" />
     <ClInclude Include="Stdafx.h" />
     <ClInclude Include="Store.h" />
-    <ClInclude Include="TempSoundManager.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="TempSoundTest.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
-    </ClInclude>
     <ClInclude Include="Text.h" />
     <ClInclude Include="TextDataManager.h" />
     <ClInclude Include="TileMap.h" />

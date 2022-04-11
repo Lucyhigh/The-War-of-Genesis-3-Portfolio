@@ -21,10 +21,9 @@ HRESULT FinalScene::init(void)
 	_cells = _mapTileInfo->getCell();
 
 	_player = new Player;
-	_player->setCells(_cells);
 	_player->init();
 	_player->setPlayerPosX(16 * TILESIZEX);
-	_player->setPlayerPosY(10 * TILESIZEY);
+	_player->setPlayerPosY(20 * TILESIZEY);
 
 	_saladin = new Saladin;
 	_saladin->init();
@@ -284,11 +283,11 @@ void FinalScene::update(void)
 			_gameUI->update();
 			if (!_gameUI->getMenu())
 			{
-				if (_gameUI->getPlayerTurn())
+				if (_gameUI->getPlayerTurn() &&!_gameUI->getSkillMenu())
 				{
-					//_turnSystem->changeToPlayer();
+					_turnSystem->changeToPlayer();
 				}
-				else
+				else if(!_gameUI->getPlayerTurn() && !_gameUI->getSkillMenu())
 				{
 					_turnSystem->changeToEnemy();
 					_moveTileBit.reset();
@@ -928,7 +927,7 @@ void FinalScene::find4WaysTile()
 				Cell* cell = (*cellsIter);
 				if (cell->getCellX() == temp.x && cell->getCellY() == temp.y)
 				{
-					if (cell->getType() == CELL_TYPE::NORMAL || cell->getType() == CELL_TYPE::MOVEPATH || cell->getType() == CELL_TYPE::MOVEABLE || cell->getType() == CELL_TYPE::ATTACKABLE || cell->getType() == CELL_TYPE::START)
+					if (cell->getType() == CELL_TYPE::NORMAL || cell->getType() == CELL_TYPE::MOVEPATH || cell->getType() == CELL_TYPE::MOVEABLE || cell->getType() == CELL_TYPE::ATTACKABLE)//==================================
 					{
 						float distance = getDistance(_cMoveStart->getCellX(), _cMoveStart->getCellY(), temp.x, temp.y);
 						if (distance < minDistance)

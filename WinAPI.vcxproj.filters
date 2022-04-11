@@ -22,12 +22,6 @@
     <ClCompile Include="FontManager.cpp">
       <Filter>API\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="TempSoundManager.cpp">
-      <Filter>API\Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="TempSoundTest.cpp">
-      <Filter>API\ExamClass</Filter>
-    </ClCompile>
     <ClCompile Include="Enemy.cpp">
       <Filter>Portfolio\Character</Filter>
     </ClCompile>
@@ -203,12 +197,6 @@
     </ClInclude>
     <ClInclude Include="FontManager.h">
       <Filter>API\Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="TempSoundManager.h">
-      <Filter>API\Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="TempSoundTest.h">
-      <Filter>API\ExamClass</Filter>
     </ClInclude>
     <ClInclude Include="Enemy.h">
       <Filter>Portfolio\Character</Filter>

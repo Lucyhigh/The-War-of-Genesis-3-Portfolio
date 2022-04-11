@@ -46,7 +46,6 @@ using namespace std;
 #include "KeyManager.h"
 #include "ImageManager.h"
 #include "FontManager.h"
-#include "TempSoundManager.h"
 #include "Utils.h"
 #include "TimeManager.h"
 #include "TextDataManager.h"
@@ -62,7 +61,6 @@ using namespace MY_UTIL;
 #define KEYMANAGER KeyManager::getSingleton()
 #define IMAGEMANAGER ImageManager::getSingleton()
 #define FONTMANAGER FontManager::getSingleton()
-#define TEMPSOUNDMANAGER TempSoundManager::getSingleton()
 #define TIMEMANAGER TimeManager::getSingleton()
 #define TEXTDATAMANAGER TextDataManager::getSingleton()
 #define SCENEMANAGER SceneManager::getSingleton()

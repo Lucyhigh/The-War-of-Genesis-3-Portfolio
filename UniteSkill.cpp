@@ -38,11 +38,13 @@ void UniteSkill::render(void)
 		if (skill->getSkillAnimation()->getIsPlay() == false) continue;
 
 		IMAGEMANAGER->findImage(skill->getSkillName())->aniAlphaRender(getMemDC(),
-																  skill->getAniPos()->x,
-																  skill->getAniPos()->y,
-                                                                  *skill->getAlpha(),
-																  skill->getSkillAnimation());
+																	   skill->getAniPos()->x,
+																	   skill->getAniPos()->y,
+																	   *skill->getAlpha(),
+																	   skill->getSkillAnimation());
 	}
+
+
 }
 
 void UniteSkill::startSkill()

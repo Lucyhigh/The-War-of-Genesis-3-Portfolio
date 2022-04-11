@@ -21,20 +21,13 @@ private:
 	Image* _image;
 	ProgressBar* _hpBar;
 	RECT _rcPlayer;
+	Cell* _playerCell;
+
     Inventory* _inventory;
 	PLAYERSTATE _imageState;
-	UniteSkill uniteSkill;
-	vector<Cell*>* _vSkillableCells;
     POINT _playerPos;
-    POINT _skillPlayerPos;
-    POINT _skillPlayerPos2;
-    POINT _skillPlayerPos3;
-	vector<POINT> _vSkillCellPos;
     RECT _cameraRect;
-    BYTE _skillAlpha;
-    BYTE _skillAlpha2;
-    BYTE _skillAlpha3;
-
+	
 	int _tmp;
 	int _cdt;
     int _speed;
@@ -42,8 +35,7 @@ private:
 	int _indexA;
 	int _indexB;
 	int _indexC;
-	int _alphaA;
-	int _alphaB;
+
 	float _currentHp;
 	float _maxHp;
 
@@ -56,7 +48,6 @@ public:
 	void release(void);
 	void update(void);
 	void render(void);
-	void worldBrokenSkill();
 
 	float getPlayerPosX();
 	float getPlayerPosY();
@@ -86,7 +77,6 @@ public:
 	bool setLive(bool status);
 
 	void hitDamage(float damage);
-	void setCells(vector<Cell*>* cells);
 public:
 	Player():_isWaiting(true),_isLive(true){}
 	~Player() {}

@@ -130,7 +130,7 @@ void TitleScene::render(void)
     if (_startBit.none() == 1)
     {
         IMAGEMANAGER->render("TitleBg", getMemDC());
-		IMAGEMANAGER->findImage("TitleEfx")->aniAlphaRender(getMemDC(), CENTER_X - 190, CENTER_Y - 140,70,_animation);
+		IMAGEMANAGER->findImage("TitleEfx")->aniAlphaRender(getMemDC(), CENTER_X - 190, CENTER_Y - 140,50,_animation);
 		IMAGEMANAGER->alphaRender("cutChange", getMemDC(), 40);
 
         IMAGEMANAGER->alphaRender("TitleName",getMemDC(),_alpha);
@@ -161,7 +161,6 @@ void TitleScene::render(void)
 			if (PtInRect(&_viSceneButton->_buttonRect, _ptMouse))
 			{
 				clickScene = 1;
-                
 			}
         }
         IMAGEMANAGER->frameRender("SceneList", getMemDC(), 0, 0, clickScene, 0);
