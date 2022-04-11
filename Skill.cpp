@@ -33,31 +33,9 @@ void Skill::release(void)
 
 void Skill::update(void)
 {
-    if(!_isStart) return;
-    for (viSkillList = vSkillList.begin(); viSkillList != vSkillList.end(); ++viSkillList)
-    {
-        tagSkill* skill = (*viSkillList);
-        if (skill->_skillIndex == _skillIndex)
-        {
-            skill->_skillAnimation->AniStart();
-        }
-    }
-    _skillIndex++;
-
-	_cdt++;
-	if (_cdt == 10)
-	{
-		_alphaB = 200;
-	}
-	else _alphaB = 0;
-	//cout << _cdt << endl;
-}
-
-void Skill::render(void)
-{
-    float left = _player->getPlayerRect().left -_camera->getScreenRect().left;
-    float top = _player->getPlayerRect().top -_camera->getScreenRect().top;
-    _skillPlayerPos  = { (long)left - 95, (long)top - 40 };
+    float left = _player->getPlayerRect().left - _camera->getScreenRect().left;
+    float top = _player->getPlayerRect().top - _camera->getScreenRect().top;
+    _skillPlayerPos = { (long)left - 95, (long)top - 40 };
     _skillPlayerPos2 = { (long)left - 95, (long)top - 40 };
     _skillPlayerPos3 = { (long)left - 65, (long)top - 40 };
 
@@ -74,12 +52,48 @@ void Skill::render(void)
     int pCellPosNum = 1;
     for (int i = 0; i < _vSkillCellPos.size(); i += 4)
     {
-        _vSkillCellPos[i] = { (long)(playerCell->getCellX() - 1)* TILESIZEX, (long)(playerCell->getCellY() - 1)* TILESIZEY };
-        _vSkillCellPos[i + 1] = { (long)(playerCell->getCellX() - 1)* TILESIZEX, (long)(playerCell->getCellY() + 1)* TILESIZEY };
-        _vSkillCellPos[i + 2] = { (long)(playerCell->getCellX() + 1)* TILESIZEX, (long)(playerCell->getCellY() - 1)* TILESIZEY };
-        _vSkillCellPos[i + 3] = { (long)(playerCell->getCellX() + 1)* TILESIZEX, (long)(playerCell->getCellY() + 1)* TILESIZEY };
+        _vSkillCellPos[i] = { (long)left, (long)top };
+        _vSkillCellPos[i + 1] = { (long)left-20*i, (long)top+20*i};
+        _vSkillCellPos[i + 2] = { (long)left+20*i, (long)top+20*i};
+        _vSkillCellPos[i + 3] = { (long)left+20*i, (long)top-20*i};
         pCellPosNum++;
     }
+    
+
+	_cdt++;
+	if (_cdt == 10)
+	{
+		_alphaB = 200;
+	}
+	else _alphaB = 0;
+	//cout << _cdt << endl;
+}
+
+void Skill::render(void)
+{
+
+
+    if (!_isStart) return;
+    for (viSkillList = vSkillList.begin(); viSkillList != vSkillList.end(); ++viSkillList)
+    {
+        tagSkill* skill = (*viSkillList);
+        if (skill->_skillIndex == _skillIndex)
+        {
+            skill->_skillAnimation->AniStart();
+        }
+    }
+    _skillIndex++;
+
+    int pCellPosNum = 1;
+    for (int i = 0; i < _vSkillCellPos.size(); i += 4)
+    {
+        _vSkillCellPos[i] = { (long)left, (long)top };
+        _vSkillCellPos[i + 1] = { (long)left - 20 * i, (long)top + 20 * i };
+        _vSkillCellPos[i + 2] = { (long)left + 20 * i, (long)top + 20 * i };
+        _vSkillCellPos[i + 3] = { (long)left + 20 * i, (long)top - 20 * i };
+        pCellPosNum++;
+    }
+   
     if (!_isStart) return;
     for (viSkillList = vSkillList.begin(); viSkillList != vSkillList.end(); ++viSkillList)
     {
@@ -118,34 +132,47 @@ void Skill::worldBrokenSkill()
     tagSkill* skill2 = new tagSkill{ 10, "circle", &_skillPlayerPos2, &_skillAlpha2, _skillAni2 };
     tagSkill* skill3 = new tagSkill{ 20, "smog2", &_skillPlayerPos3, &_skillAlpha3, _skillAni3 };
    
-    Animation* _skillAni12 = ANIMATIONMANAGER->findAnimation("triple");
+
+       /* _vSkillCellPos.push_back({ 0,0 });
+        tagSkill skillLT(1, "triple", &_vSkillCellPos[0], &_skillAlpha, _skillAni12);
+        vSkillList.push_back(&skillLT);
+
+        _vSkillCellPos.push_back({ 0,0 });
+        tagSkill skillLB(1, "triple", &_vSkillCellPos[1], &_skillAlpha, _skillAni12);
+        vSkillList.push_back(&skillLB);
+
+        _vSkillCellPos.push_back({ 0,0 });
+        tagSkill skillRT (1, "triple", &_vSkillCellPos[2], &_skillAlpha, _skillAni12);
+        vSkillList.push_back(&skillRT);
+
+        _vSkillCellPos.push_back({ 0,0 });
+        tagSkill skillRB( 1, "triple", &_vSkillCellPos[3], &_skillAlpha, _skillAni12);
+        vSkillList.push_back(&skillRB);*/
+    
+
     int cellPosIdx = 0;
-    for (int i = 1; i < 5; ++i)
+
+    for (int i = 0; i < 4; ++i)
     {
-        //Cell* cellLT = (*_vSkillableCells)[tempPosX - i + (tempPosY - i) * STAGE3TILEX];
-        _vSkillCellPos.push_back({ 0,0 });// { cellLT->getCellX()*STAGE3TILEX, cellLT->getCellY()*STAGE3TILEY });
-        tagSkill skillLT = { 1, "triple", &_vSkillCellPos[cellPosIdx++], &_skillAlpha, _skillAni12 };
-        add(&skillLT);
+        Animation* _skillAni12 = ANIMATIONMANAGER->findAnimation("triple");
 
-        //Cell* cellLB = (*_vSkillableCells)[tempPosX - i + (tempPosY + i) * STAGE3TILEX];
-        _vSkillCellPos.push_back({ 0,0 });//({ cellLB->getCellX()*STAGE3TILEX,cellLB->getCellY()*STAGE3TILEY });
-        tagSkill skillLB = { 1, "triple", &_vSkillCellPos[cellPosIdx++], &_skillAlpha, _skillAni12 };
-        //tagSkill* skillLB = new tagSkill(1, "triple", &_vSkillCellPos[cellPosIdx++], &_skillAlpha, _skillAni12);
-        add(&skillLB);
+        _vSkillCellPos.push_back({ 0,0 });
+        tagSkill* skillLT = new tagSkill(1, "triple", &_vSkillCellPos[cellPosIdx++], &_skillAlpha, _skillAni12);
+        vSkillList.push_back(skillLT);
 
-        //Cell* cellRT = (*_vSkillableCells)[tempPosX + i + (tempPosY - i) * STAGE3TILEX];
-        _vSkillCellPos.push_back({ 0,0 });//({ cellRT->getCellX()*STAGE3TILEX,cellRT->getCellY()*STAGE3TILEY });
-        tagSkill skillRT = { 1, "triple", &_vSkillCellPos[cellPosIdx++], &_skillAlpha, _skillAni12 };
-        //tagSkill* skillRT = new tagSkill(1, "triple", &_vSkillCellPos[cellPosIdx++], &_skillAlpha, _skillAni12);
-        add(&skillRT);
+        _vSkillCellPos.push_back({ 0,0 });
+        tagSkill* skillLB = new tagSkill(1, "triple", &_vSkillCellPos[cellPosIdx++], &_skillAlpha, _skillAni12);
+        vSkillList.push_back(skillLB);
 
-        //Cell* cellRB = (*_vSkillableCells)[tempPosX + i + (tempPosY + i) * STAGE3TILEX];
-        _vSkillCellPos.push_back({ 0,0 });//({ cellRB->getCellX()*STAGE3TILEX,cellRB->getCellY()*STAGE3TILEY });
-        tagSkill skillRB = { 1, "triple", &_vSkillCellPos[cellPosIdx++], &_skillAlpha, _skillAni12 };
-        //tagSkill* skillRB = new tagSkill(1, "triple", &_vSkillCellPos[cellPosIdx++], &_skillAlpha, _skillAni12);
-        add(&skillRB);
+        _vSkillCellPos.push_back({ 0,0 });
+        tagSkill* skillRT = new tagSkill(1, "triple", &_vSkillCellPos[cellPosIdx++], &_skillAlpha, _skillAni12);
+        vSkillList.push_back(skillRT);
+
+        _vSkillCellPos.push_back({ 0,0 });
+        tagSkill* skillRB = new tagSkill(1, "triple", &_vSkillCellPos[cellPosIdx++], &_skillAlpha, _skillAni12);
+        vSkillList.push_back(skillRB);
+        //cout << vSkillList.size() << endl;
     }
-
 
 	//Skill* skill13 = new Skill(1, "one", &_skillPlayerPos, _skillAni12);//셋이 다 다르넹...
 	//Skill* skill14 = new Skill(1, "double",  &_skillPlayerPos, _skillAni12);
@@ -159,12 +186,12 @@ void Skill::worldBrokenSkill()
 	//Skill* skill10 = new Skill(3, "203smog", &_skillPlayerPos, _skillAni10);//이후 컷변화 레드켜짐- 여기서 같이 돌릴가
 	//// skill11 = new Skill(20, "115stone", testRc, _skillAni11);//돌 높이 튀어 오르며 사라짐
 
-	add(skill);
-	add(skill2);
-	add(skill3);
+    vSkillList.push_back(skill);
+    vSkillList.push_back(skill2);
+    vSkillList.push_back(skill3);
     startSkill();
-	/*
-		uniteSkill.add(skill3);
+    /*
+        uniteSkill.add(skill3);
 		uniteSkill.add(skill4);
 		uniteSkill.add(skill6);
 		uniteSkill.add(skill7);
@@ -176,11 +203,6 @@ void Skill::startSkill()
 {
     _isStart = true;
     if (_alphaA < 160) _alphaA += 10;
-}
-
-void Skill::add(tagSkill* skill)
-{
-    vSkillList.push_back(skill);
 }
 
 void Skill::setPlayer(Player * player)
