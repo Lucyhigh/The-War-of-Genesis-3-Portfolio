@@ -162,20 +162,20 @@ HRESULT ImageClass::init(void)
 	IMAGEMANAGER->addFrameImage("tripleL", "Resources/Images/Effect/all/tripleL.bmp", 400, 1200, 8,4,true, RGB(252, 236, 212));
 	//skill animation
 	ANIMATIONMANAGER->addAnimation("skillStart", "skillStart", 3, false, false);
-	ANIMATIONMANAGER->addAnimation("smog", "smog", 20, false, false);
-	ANIMATIONMANAGER->addAnimation("smog2", "smog2", 20, false, false);
+	ANIMATIONMANAGER->addAnimation("smog", "smog", 10, false, false);
+	ANIMATIONMANAGER->addAnimation("smog2", "smog2", 10, false, false);
 	ANIMATIONMANAGER->addAnimation("circle", "circle", 8, false, false);
 	ANIMATIONMANAGER->addAnimation("fire", "fire", 8, false, false);
 	ANIMATIONMANAGER->addAnimation("fireL", "fireL", 8, false, false);
 	ANIMATIONMANAGER->addAnimation("groundCrack", "groundCrack", 8, false, false);//0,11
 	ANIMATIONMANAGER->addAnimation("groundCrackL", "groundCrackL", 8, false, false);
 	ANIMATIONMANAGER->addAnimation("48fire", "48fire", 10, false, false);
-	ANIMATIONMANAGER->addAnimation("95light", "95light", 20, false, false);
-	ANIMATIONMANAGER->addAnimation("184light", "184light", 20, false, false);
-	ANIMATIONMANAGER->addAnimation("203smog", "203smog", 20, false, false);
-	ANIMATIONMANAGER->addAnimation("115stone", "115stone", 20, false, false);
+	ANIMATIONMANAGER->addAnimation("95light", "95light", 10, false, false);
+	ANIMATIONMANAGER->addAnimation("184light", "184light", 10, false, false);
+	ANIMATIONMANAGER->addAnimation("203smog", "203smog", 10, false, false);
+	ANIMATIONMANAGER->addAnimation("115stone", "115stone", 10, false, false);
 	ANIMATIONMANAGER->addAnimation("skillStartLight", "skillStartLight", 8, false, false);
-	ANIMATIONMANAGER->addAnimation("enemyAttack", "enemyAttack", 20, false, false);
+	ANIMATIONMANAGER->addAnimation("enemyAttack", "enemyAttack", 10, false, false);
 	ANIMATIONMANAGER->addAnimation("one", "one", 10, false, false);
 	ANIMATIONMANAGER->addAnimation("double", "double", 10, false, false);
 	ANIMATIONMANAGER->addAnimation("tripleR", "tripleR", 10, false, false);

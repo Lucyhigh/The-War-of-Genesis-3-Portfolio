@@ -36,12 +36,6 @@ HRESULT FinalScene::init(void)
 	_camera->setLimitsX(CENTER_X, _image->getWidth());
 	_camera->setLimitsY(CENTER_Y, _image->getHeight());
 
-    _skill = new Skill;
-    _skill->setPlayer(_player);
-    _skill->setCamera(_camera);
-    _skill->setCells(_cells);
-    _skill->init();
-
 	_generator = new AStar::Generator;
 	_generator->setWorldSize({ STAGE3TILEX, STAGE3TILEY });
 
@@ -59,6 +53,11 @@ HRESULT FinalScene::init(void)
 	_lerpPercentage = 0.0f;
 	_enemyPathGoal = { 0,0 };
 
+	_skill = new Skill;
+	_skill->setPlayer(_player);
+	_skill->setCamera(_camera);
+	_skill->setCells(_cells);
+	_skill->init();
 
 	_hpBar = new ProgressBar;
 	_hpBar->init(0,0, IMAGEMANAGER->findImage("pHpBar")->getFrameWidth(), IMAGEMANAGER->findImage("pHpBar")->getFrameHeight());
@@ -107,11 +106,6 @@ void FinalScene::update(void)
 						_player->getPlayerPosX() - _camera->getScreenRect().left,
 						_player->getPlayerPosY() - _camera->getScreenRect().top
 					 };
-
-	if (KEYMANAGER->isOnceKeyDown('Q'))
-	{
-		_camera->shakeStart(3.0f);
-	}
 
     //검사용 버튼
 	if (KEYMANAGER->isOnceKeyDown('H'))
@@ -314,6 +308,7 @@ void FinalScene::update(void)
 				if (_gameUI->getSkillNum() == SKILL_INDEX_WORLDBROKEN && !_isSkillStart)
 				{
 					_turnSystem->setPlayerBit(4);
+					_player->setPlayerStateBit(3);
 				}
                /* else if (_gameUI->getSkillNum() == SKILL_INDEX_WORLDBROKEN && !_isSkillStart)
                 {
@@ -337,10 +332,10 @@ void FinalScene::update(void)
 		{
 			changeImage();
 		}
-		//0001 0000 : 스킬 사용
+		//0001 0000 : 천지파열무 스킬 사용
 		else if (_turnSystem->getPlayerBit(4) == 1)
 		{
-			_player->setPlayerStateBit(3);
+			
             _skill->update();
             if(_player->getPlayerStateBit(3) == 0) _turnSystem->changeToEnemy();
 		}
@@ -691,7 +686,7 @@ void FinalScene::rectMoveToPath()
 			if (_turnSystem->getStatus() == CHANGINGSTATUS::PLAYERTURN)
 			{
 				_player->setPlayerStateBit(0);
-				_player->setPlayerPos({ _moveRc.left,_moveRc.top });
+				_player->setPlayerPos({ _moveRc.right,_moveRc.top });
 			}
 			if (_lerpPercentage >= 1)
 			{
@@ -717,6 +712,7 @@ void FinalScene::rectMoveToPath()
 
 			_moveIndex = 0;
 			_lerpPercentage = 0.0f;
+			_check.clear();//==============================================================================================
 			return;
 		}
 		else
@@ -861,8 +857,7 @@ void FinalScene::find4WaysTile()
 				Cell* cell = (*cellsIter);
 				if (cell->getCellX() == temp.x && cell->getCellY() == temp.y)
 				{
-					//if (cell->getType() == CELL_TYPE::NORMAL || cell->getType() == CELL_TYPE::MOVEPATH || cell->getType() == CELL_TYPE::MOVEABLE || cell->getType() == CELL_TYPE::ENEMY || cell->getType() == CELL_TYPE::ATTACKABLE)
-					if(cell->getType() != CELL_TYPE::WALL && cell->getType() != CELL_TYPE::GOAL && cell->getType() != CELL_TYPE::START )
+					if(cell->getType() != CELL_TYPE::WALL && cell->getType() != CELL_TYPE::GOAL )
 					{
 						float distance = getDistance(_cMoveStart->getCellX(), _cMoveStart->getCellY(), temp.x, temp.y);
 						if (distance < minDistance)

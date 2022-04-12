@@ -326,7 +326,7 @@ void Saladin::render(void)
             break;
         case SALADINSTATE::BOTTOM:
             {
-                IMAGEMANAGER->frameRender("sAttacksheet", getMemDC(), left -20, top -20);//==========
+                IMAGEMANAGER->frameRender("sAttacksheet", getMemDC(), left -30, top -20);//==========
             }
             break;
         }
