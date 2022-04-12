@@ -32,7 +32,7 @@ void Player::release(void)
 
 void Player::update(void)
 {
-	_count+= 4;
+    _count += 4;
     if (KEYMANAGER->isOnceKeyDown('1'))
     {
         _imageState = PLAYERSTATE::RIGHT;
@@ -73,7 +73,7 @@ void Player::update(void)
                     _indexA = 5;
                 }
                 IMAGEMANAGER->findImage("pRightIdle")->setFrameX(_indexA);
-                
+
                 break;
             case PLAYERSTATE::LEFT:
                 _indexA++;
@@ -83,7 +83,7 @@ void Player::update(void)
                     _indexA = 0;
                 }
                 IMAGEMANAGER->findImage("pLeftIdle")->setFrameX(_indexA);
-                
+
                 break;
             case PLAYERSTATE::TOP:
                 _indexA--;
@@ -93,7 +93,7 @@ void Player::update(void)
                     _indexA = 5;
                 }
                 IMAGEMANAGER->findImage("pUpIdle")->setFrameX(_indexA);
-                
+
                 break;
             case PLAYERSTATE::BOTTOM:
                 _indexA--;
@@ -103,7 +103,7 @@ void Player::update(void)
                     _indexA = 5;
                 }
                 IMAGEMANAGER->findImage("pDownIdle")->setFrameX(_indexA);
-                
+
                 break;
             }
         }
@@ -123,7 +123,7 @@ void Player::update(void)
                     _indexB = 0;
                 }
                 IMAGEMANAGER->findImage("pRightMove")->setFrameX(_indexB);
-                
+
                 break;
             case PLAYERSTATE::LEFT:
                 _indexB++;
@@ -142,7 +142,7 @@ void Player::update(void)
                     _indexB = 0;
                 }
                 IMAGEMANAGER->findImage("pUpMove")->setFrameX(_indexB);
-                
+
                 break;
             case PLAYERSTATE::BOTTOM:
                 _indexB++;
@@ -152,7 +152,7 @@ void Player::update(void)
                     _indexB = 0;
                 }
                 IMAGEMANAGER->findImage("pDownMove")->setFrameX(_indexB);
-                
+
                 break;
             }
         }
@@ -216,58 +216,115 @@ void Player::update(void)
     {
         switch (_imageState)
         {
-            case PLAYERSTATE::RIGHT:
-            {
-                IMAGEMANAGER->findImage("pDamageSheet")->setFrameY(0);
-                IMAGEMANAGER->findImage("pDamageSheet")->setFrameX(3);
-            }
-            break;
-            case PLAYERSTATE::LEFT:
-            {
-                IMAGEMANAGER->findImage("pDamageSheet")->setFrameY(0);
-                IMAGEMANAGER->findImage("pDamageSheet")->setFrameX(2);
-            }
-            break;
-            case PLAYERSTATE::TOP:
-            {
-                IMAGEMANAGER->findImage("pDamageSheet")->setFrameY(0);
-                IMAGEMANAGER->findImage("pDamageSheet")->setFrameX(0);
-            }
-            break;
-            case PLAYERSTATE::BOTTOM:
-            {
-                IMAGEMANAGER->findImage("pDamageSheet")->setFrameY(0);
-                IMAGEMANAGER->findImage("pDamageSheet")->setFrameX(1);
-            }
-            break;
+        case PLAYERSTATE::RIGHT:
+        {
+            IMAGEMANAGER->findImage("pDamageSheet")->setFrameY(0);
+            IMAGEMANAGER->findImage("pDamageSheet")->setFrameX(3);
         }
-		if (_count % 20 == 0)
-		{
-			_tmp *= -1;
-			_cdt++;
-		}
-        if (_cdt >5)
+        break;
+        case PLAYERSTATE::LEFT:
+        {
+            IMAGEMANAGER->findImage("pDamageSheet")->setFrameY(0);
+            IMAGEMANAGER->findImage("pDamageSheet")->setFrameX(2);
+        }
+        break;
+        case PLAYERSTATE::TOP:
+        {
+            IMAGEMANAGER->findImage("pDamageSheet")->setFrameY(0);
+            IMAGEMANAGER->findImage("pDamageSheet")->setFrameX(0);
+        }
+        break;
+        case PLAYERSTATE::BOTTOM:
+        {
+            IMAGEMANAGER->findImage("pDamageSheet")->setFrameY(0);
+            IMAGEMANAGER->findImage("pDamageSheet")->setFrameX(1);
+        }
+        break;
+        }
+        if (_count % 20 == 0)
+        {
+            _tmp *= -1;
+            _cdt++;
+        }
+        if (_cdt > 5)
         {
             setPlayerIdle();
-			_cdt = 0;
+            _cdt = 0;
         }
-    //01000 Á×À½
+        //001000 ÃµÁöÆÄ¿­¹«
     }
-	else if (_stateBit.test(3) == 1)
-	{
-		if (_count % 200 == 0)
-		{
-			if (_indexB < 4)_indexB++;
-			IMAGEMANAGER->findImage("skillStart")->setFrameY(0);
-			IMAGEMANAGER->findImage("skillStart")->setFrameX(_indexB);
-			_cdt++;
-			if (_cdt > 10)
-			{
-				setPlayerIdle();
-				_cdt = 0;
-			}
-		}
-	}
+    else if (_stateBit.test(3) == 1)
+    {
+        if (_count % 200 == 0)
+        {
+            if (_indexB < 4)_indexB++;
+            IMAGEMANAGER->findImage("skillStart")->setFrameY(0);
+            IMAGEMANAGER->findImage("skillStart")->setFrameX(_indexB);
+            _cdt++;
+            if (_cdt > 18)
+            {
+                setPlayerIdle();
+                _cdt = 0;
+            }
+        }
+    }
+    //010000 Ç³¾Æ¿­°øÂü
+    else if (_stateBit.test(4) == 1)
+    {
+        if (_count % 30 == 0)
+        {
+            switch (_imageState)
+            {
+            case PLAYERSTATE::RIGHT:
+                _indexB--;
+                IMAGEMANAGER->findImage("playerSkillFrame")->setFrameY(0);
+                if (_indexB < 0)
+                {
+                    _indexB = 19;
+
+                    _isAttack = true;
+                    setPlayerIdle();
+                }
+                IMAGEMANAGER->findImage("playerSkillFrame")->setFrameX(_indexB);
+                break;
+            case PLAYERSTATE::LEFT:
+                _indexB++;
+                IMAGEMANAGER->findImage("playerSkillFrame")->setFrameY(1);
+                if (_indexB >= 19)
+                {
+                    _indexB = 0;
+                    _isAttack = true;
+                    setPlayerIdle();
+                }
+                IMAGEMANAGER->findImage("playerSkillFrame")->setFrameX(_indexB);
+                break;
+            case PLAYERSTATE::TOP:
+                _indexB++;
+                IMAGEMANAGER->findImage("playerSkillFrame")->setFrameY(1);
+                if (_indexB >= 4)
+                {
+                    _indexB = 0;
+                    _isAttack = true;
+                    setPlayerIdle();
+                }
+                IMAGEMANAGER->findImage("playerSkillFrame")->setFrameX(_indexB);
+                break;
+            case PLAYERSTATE::BOTTOM:
+                _indexB++;
+                IMAGEMANAGER->findImage("playerSkillFrame")->setFrameY(1);
+                if (_indexB >= 4)
+                {
+                    _indexB = 0;
+                    _isAttack = true;
+                    setPlayerIdle();
+                }
+                IMAGEMANAGER->findImage("playerSkillFrame")->setFrameX(_indexB);
+                break;
+            }
+        }
+    }
+
+    //100000 Á×À½
 	_rcPlayer = RectMakeCenter(_playerPos.x, _playerPos.y, _image->getFrameWidth(), _image->getFrameHeight());
 	//cout << _stateBit.to_string() << endl;
 }
@@ -464,7 +521,7 @@ unsigned int Player::getPlayerStateBit(int index)
     return _stateBit[index];
 }
 
-bitset<5> Player::getPlayerStateBit()
+bitset<6> Player::getPlayerStateBit()
 {
 	return _stateBit;
 }

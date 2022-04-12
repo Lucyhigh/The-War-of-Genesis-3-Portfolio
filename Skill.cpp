@@ -4,9 +4,9 @@
 HRESULT Skill::init(void)
 {
 	_playerPos = { _player->getPlayerRect().left, _player->getPlayerRect().top };
-	_skillAlpha = (BYTE)15;
-	_skillAlpha2 = (BYTE)40;
-	_skillAlpha3 = (BYTE)50;
+	_skillAlpha = (BYTE)15;//
+	_skillAlpha2 = (BYTE)40;//
+	_skillAlpha3 = (BYTE)50;//
     _isStart = false;
     _skillIndex = 0;
 	_alphaA = 0;
@@ -26,10 +26,12 @@ void Skill::release(void)
 
 void Skill::update(void)
 {
+    if (_alphaA < 80) _alphaA += 10;
+
     float left = _player->getPlayerRect().left - _camera->getScreenRect().left;
     float top = _player->getPlayerRect().top   - _camera->getScreenRect().top;
     float cellLeft = _player->getPlayerRect().left-20 - _camera->getScreenRect().left;
-    float cellTop = _player->getPlayerRect().top-175 - _camera->getScreenRect().top;
+    float cellTop = _player->getPlayerRect().top-185 - _camera->getScreenRect().top;
 
     _skillPlayerPos = { (long)left - 95, (long)top - 40 };
     _skillPlayerPos2 = { (long)left - 95, (long)top - 40 };
@@ -77,19 +79,19 @@ void Skill::update(void)
 	}
 	for (int i = 0; i < 48; i += 4)
 	{
-		_vSkillCellPos[i + skillArr3]	  = { (long)left - 20 - 10 * (i + 1), (long)top + 10 - 8 * (i + 1) };
-		_vSkillCellPos[i + skillArr3 + 2] = { (long)left - 20 + 10 * (i + 1), (long)top + 10 + 8 * (i + 1) };
-		_vSkillCellPos[i + skillArr3 + 1] = { (long)left - 20 - 10 * (i + 1), (long)top + 10 + 8 * (i + 1) };
-		_vSkillCellPos[i + skillArr3 + 3] = { (long)left - 20 + 10 * (i + 1), (long)top + 10 - 8 * (i + 1) };//========== groundCrack /가까운거부터 먼저랜더 필요 / 4가지 랜덤랜더필요 
+		_vSkillCellPos[i + skillArr3]	  = { (long)left - 20 - 10 * (i + 1), (long)top + 20 - 8 * (i + 1) };
+		_vSkillCellPos[i + skillArr3 + 2] = { (long)left - 20 + 10 * (i + 1), (long)top + 20 + 8 * (i + 1) };
+		_vSkillCellPos[i + skillArr3 + 1] = { (long)left - 20 - 10 * (i + 1), (long)top + 20 + 8 * (i + 1) };
+		_vSkillCellPos[i + skillArr3 + 3] = { (long)left - 20 + 10 * (i + 1), (long)top + 20 - 8 * (i + 1) };//========== groundCrack /가까운거부터 먼저랜더 필요 / 4가지 랜덤랜더필요 
 	}
 	POINT enemyPos = { (long)enemyCell->getCellX()*TILESIZEX -_camera->getScreenRect().left ,
 					   (long)enemyCell->getCellY()*TILESIZEY -_camera->getScreenRect().top };
 	for (int i = 0; i < 4; i += 4)
 	{																																		 
-		_vSkillCellPos[i + skillArr4]	  = { enemyPos.x - 30, enemyPos.y - 50 };																  //"one");
-		_vSkillCellPos[i + skillArr4 + 1] = { enemyPos.x - 90, enemyPos.y - 80 };																  //"95light");
-		_vSkillCellPos[i + skillArr4 + 2] = { enemyPos.x - 30, enemyPos.y - 50 };																  //"48fire");
-		_vSkillCellPos[i + skillArr4 + 3] = { enemyPos.x - 30, enemyPos.y - 30 };//========== enemy /가까운거부터 먼저랜더 필요 / 4가지 랜덤랜더필요  //"enemyAttack");
+		_vSkillCellPos[i + skillArr4]	  = { enemyPos.x - 30, enemyPos.y - 150 };																  //"one");
+		_vSkillCellPos[i + skillArr4 + 1] = { enemyPos.x - 90, enemyPos.y - 100 };																  //"95light");
+		_vSkillCellPos[i + skillArr4 + 2] = { enemyPos.x - 30, enemyPos.y - 70 };																  //"48fire");
+		_vSkillCellPos[i + skillArr4 + 3] = { enemyPos.x - 40, enemyPos.y - 30 };//========== enemy /가까운거부터 먼저랜더 필요 / 4가지 랜덤랜더필요  //"enemyAttack");
 	}
 	_cdt++;
 	if ( 200 <= _cdt && _cdt <= 230 )
@@ -97,7 +99,7 @@ void Skill::update(void)
 		_alphaB = 200;
 	}
 	else _alphaB = 0;
-	cout << _cdt << endl;
+	//cout << _cdt << endl;
 
 	if (!_isStart) return;
 	for (viSkillList = vSkillList.begin(); viSkillList != vSkillList.end(); ++viSkillList)
@@ -111,7 +113,7 @@ void Skill::update(void)
 		{
 			_camera->shakeStart(0.5f);
 		}
-		cout<<skill._skillIndex << endl;
+		//cout<<skill._skillIndex << endl;
 	}
 	if (_cdt % 3 == 0) _skillIndex++;
 }
@@ -152,14 +154,14 @@ void Skill::worldBrokenSkill()
 	//Animation* _skillAni13 = ANIMATIONMANAGER->findAnimation("one");
 	//Animation* _skillAni14 = ANIMATIONMANAGER->findAnimation("double");
 
-    tagSkill skill =  tagSkill{ 80, "184light", &_skillPlayerPos, &_skillAlpha, _skillAni1 };
-    tagSkill skill2 = tagSkill{ 80, "circle", &_skillPlayerPos2, &_skillAlpha2, _skillAni2 };
-    tagSkill skill3 = tagSkill{ 90, "smog2", &_skillPlayerPos3, &_skillAlpha3, _skillAni3 };    
+    tagSkill skill =  tagSkill{ 60, "184light", &_skillPlayerPos, &_skillAlpha, _skillAni1 };
+    tagSkill skill2 = tagSkill{ 60, "circle", &_skillPlayerPos2, &_skillAlpha2, _skillAni2 };
+    tagSkill skill3 = tagSkill{ 70, "smog2", &_skillPlayerPos3, &_skillAlpha3, _skillAni3 };    
 
     int cellPosIdx = 0;
 	int skillArr1 = 24;
 	int skillArr2 = 48;
-	//전체 애니메이션 푸시백
+	//전체 애니메이션 삽입
     for (int i = 0; i < 172; ++i) _vSkillCellPos.push_back({ 0,0 });//168 + enemy 4
 	
 	Animation* _skillAni4  = ANIMATIONMANAGER->findAnimation("tripleR");
@@ -176,19 +178,19 @@ void Skill::worldBrokenSkill()
 
 	for (int i = 0; i < skillArr1; ++i)
     {
-		if (i % 2 == 1 )					pushCellSkill(100, "tripleR", cellPosIdx++, _skillAlpha, _skillAni4);
-		else if (i % 2 == 0)				pushCellSkill(100, "tripleL", cellPosIdx++, _skillAlpha, _skillAni5);
+		if (i % 2 == 1 )					pushCellSkill(90, "tripleR", cellPosIdx++, _skillAlpha, _skillAni4);
+		else if (i % 2 == 0)				pushCellSkill(90, "tripleL", cellPosIdx++, _skillAlpha, _skillAni5);
     }
 
 	for (int i = 0; i < skillArr2; ++i)
 	{
-		if (i % 2 == 1)						pushCellSkill(130, "fire", cellPosIdx++, (BYTE)10,_skillAni6);
-		else if (i % 2 == 0)				pushCellSkill(130, "fireL", cellPosIdx++, (BYTE)10, _skillAni7);
+		if (i % 2 == 1)						pushCellSkill(120, "fire", cellPosIdx++, (BYTE)10,_skillAni6);
+		else if (i % 2 == 0)				pushCellSkill(120, "fireL", cellPosIdx++, (BYTE)10, _skillAni7);
 	}
 
 	for (int i = 0; i < skillArr2; ++i)
 	{
-		pushCellSkill(60, "smog", cellPosIdx++, (BYTE)30, _skillAni8);
+		pushCellSkill(150, "smog", cellPosIdx++, (BYTE)30, _skillAni8);
 	}
 
 	for (int i = 0; i < skillArr2; ++i)
@@ -246,7 +248,6 @@ void Skill::pushCellSkill(int idx,string imgKey, int vNum, BYTE alpha,Animation*
 void Skill::startSkill()
 {
     _isStart = true;
-    if (_alphaA < 230) _alphaA += 10;
 }
 
 void Skill::setPlayer(Player * player)

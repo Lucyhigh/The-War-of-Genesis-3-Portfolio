@@ -150,7 +150,7 @@ HRESULT ImageClass::init(void)
 	IMAGEMANAGER->addFrameImage("groundCrackL", "Resources/Images/Effect/all/groundCrackL.bmp", 600, 150, 12,3,true, RGB(8, 88, 8));
 	IMAGEMANAGER->addFrameImage("48fire", "Resources/Images/Effect/all/48fire.bmp", 872, 131, 8,1,true, RGB(252, 252, 236));
 	IMAGEMANAGER->addFrameImage("95light", "Resources/Images/Effect/all/95light.bmp", 3502, 218, 17,1,true, RGB(252, 252, 252));
-	IMAGEMANAGER->addFrameImage("184light", "Resources/Images/Effect/all/184light.bmp", 2460, 172, 12,1,true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("184light", "Resources/Images/Effect/single/184light.bmp", 2460, 172, 12,1,true, RGB(0, 0, 0));
 	IMAGEMANAGER->addFrameImage("203smog", "Resources/Images/Effect/all/203smog.bmp", 680, 72, 10,1,true, RGB(0, 0, 0));
 	IMAGEMANAGER->addFrameImage("115stone", "Resources/Images/Effect/all/115stone.bmp", 3502, 218, 8,2,true, RGB(156, 148, 140));
 	IMAGEMANAGER->addFrameImage("skillStartLight", "Resources/Images/Effect/all/skillStartLight.bmp", 1500, 1500, 5,5,true, RGB(80, 0, 0));
@@ -160,6 +160,10 @@ HRESULT ImageClass::init(void)
 	IMAGEMANAGER->addFrameImage("double", "Resources/Images/Effect/all/double.bmp", 300, 1500, 6,5,true, RGB(252, 236, 212));
 	IMAGEMANAGER->addFrameImage("tripleR", "Resources/Images/Effect/all/tripleR.bmp", 400, 1200, 8,4,true, RGB(252, 236, 212));
 	IMAGEMANAGER->addFrameImage("tripleL", "Resources/Images/Effect/all/tripleL.bmp", 400, 1200, 8,4,true, RGB(252, 236, 212));
+
+    //skill Ç³¾Æ¿­°øÂü
+	IMAGEMANAGER->addFrameImage("playerSkillFrame", "Resources/Images/Player/playerSkillFrame.bmp", 3990, 400, 19,2,MGT);
+
 	//skill animation
 	ANIMATIONMANAGER->addAnimation("skillStart", "skillStart", 3, false, false);
 	ANIMATIONMANAGER->addAnimation("smog", "smog", 10, false, false);

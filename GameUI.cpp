@@ -258,3 +258,7 @@ SKILL_NUMBER GameUI::getSkillNum()
 {
 	return _skillIndex;
 }
+void GameUI::setSkillNum(SKILL_NUMBER state)
+{
+    _skillIndex = state;
+}

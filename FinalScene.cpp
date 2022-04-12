@@ -72,7 +72,6 @@ HRESULT FinalScene::init(void)
     _mouseType = CELL_TYPE::NORMAL;
     _beforeMouseType = CELL_TYPE::GOAL;
 	_isMoveTileOn = false;
-    _isSkillStart = false;
 	_isAlphaIncrese = true;
 	return S_OK;
 }
@@ -305,7 +304,7 @@ void FinalScene::update(void)
                 {
                    // _gameUI->showBattleMenu(playerUI);
                 }
-				if (_gameUI->getSkillNum() == SKILL_INDEX_WORLDBROKEN && !_isSkillStart)
+				if (_gameUI->getSkillNum() == SKILL_INDEX_WORLDBROKEN)
 				{
 					_turnSystem->setPlayerBit(4);
 					_player->setPlayerStateBit(3);
@@ -335,9 +334,12 @@ void FinalScene::update(void)
 		//0001 0000 : 천지파열무 스킬 사용
 		else if (_turnSystem->getPlayerBit(4) == 1)
 		{
-			
             _skill->update();
-            if(_player->getPlayerStateBit(3) == 0) _turnSystem->changeToEnemy();
+            if (_player->getPlayerStateBit(3) == 0)
+            {
+                _turnSystem->changeToEnemy();
+                _gameUI->setSkillNum(SKILL_NUMBER::SKILL_INDEX_NULL);
+            }
 		}
 	}
 	else if (_turnSystem->getStatus() == CHANGINGSTATUS::ENEMYTURN)

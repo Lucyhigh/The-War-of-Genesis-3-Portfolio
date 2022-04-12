@@ -80,6 +80,7 @@ public:
 	void setMoveTileRange(int range);
 	void setMoveCenter(POINT center);
 	SKILL_NUMBER getSkillNum();
+    void setSkillNum(SKILL_NUMBER state);
 public:
 	GameUI() :_skillIndex(SKILL_INDEX_NULL),_uiMainText{ L"어빌리티",L"아이템",L"휴 식",L"상 태" }, _uiSkillText{ L"  연",L"댓쉬",L"천지파열무",L"풍아열공참" },
 		_uiSkillLvText{ L"LV10", L"LV5", L"LV1", L"LV1"}, _uiSkillSPText{ L"30", L"40", L"140", L"200"}{}

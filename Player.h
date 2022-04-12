@@ -14,7 +14,7 @@ enum class PLAYERSTATE
 class Player : public GameNode
 {
 private:
-	typedef bitset<5> playerBit;
+	typedef bitset<6> playerBit;
 	playerBit _stateBit;
 	Image* _image;
 	ProgressBar* _hpBar;
