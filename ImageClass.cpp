@@ -146,7 +146,8 @@ HRESULT ImageClass::init(void)
 	IMAGEMANAGER->addFrameImage("circle", "Resources/Images/Effect/all/circle.bmp", 1592, 628, 8,4,true,RGB(4,108,0));
 	IMAGEMANAGER->addFrameImage("fire", "Resources/Images/Effect/all/fire.bmp", 660, 920, 12,4,true, RGB(8, 88, 8));
 	IMAGEMANAGER->addFrameImage("fireL", "Resources/Images/Effect/all/fireL.bmp", 660, 920, 12,4,true, RGB(8, 88, 8));
-	IMAGEMANAGER->addFrameImage("groundCrack", "Resources/Images/Effect/all/groundCrack.bmp", 1200, 150, 24,3,true, RGB(8, 88, 8));
+	IMAGEMANAGER->addFrameImage("groundCrack", "Resources/Images/Effect/all/groundCrack.bmp", 600, 150, 12,3,true, RGB(8, 88, 8));
+	IMAGEMANAGER->addFrameImage("groundCrackL", "Resources/Images/Effect/all/groundCrackL.bmp", 600, 150, 12,3,true, RGB(8, 88, 8));
 	IMAGEMANAGER->addFrameImage("48fire", "Resources/Images/Effect/all/48fire.bmp", 872, 131, 8,1,true, RGB(252, 252, 236));
 	IMAGEMANAGER->addFrameImage("95light", "Resources/Images/Effect/all/95light.bmp", 3502, 218, 17,1,true, RGB(252, 252, 252));
 	IMAGEMANAGER->addFrameImage("184light", "Resources/Images/Effect/all/184light.bmp", 2460, 172, 12,1,true, RGB(0, 0, 0));
@@ -166,7 +167,8 @@ HRESULT ImageClass::init(void)
 	ANIMATIONMANAGER->addAnimation("circle", "circle", 8, false, false);
 	ANIMATIONMANAGER->addAnimation("fire", "fire", 8, false, false);
 	ANIMATIONMANAGER->addAnimation("fireL", "fireL", 8, false, false);
-	ANIMATIONMANAGER->addAnimation("groundCrack", "groundCrack", 20, false, false);
+	ANIMATIONMANAGER->addAnimation("groundCrack", "groundCrack", 8, false, false);//0,11
+	ANIMATIONMANAGER->addAnimation("groundCrackL", "groundCrackL", 8, false, false);
 	ANIMATIONMANAGER->addAnimation("48fire", "48fire", 10, false, false);
 	ANIMATIONMANAGER->addAnimation("95light", "95light", 20, false, false);
 	ANIMATIONMANAGER->addAnimation("184light", "184light", 20, false, false);
