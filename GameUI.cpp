@@ -123,6 +123,7 @@ void GameUI::update(void)
 				case 3:
 					cout << "Ç³¾Æ¿­°øÂü" << endl;
 					_skillIndex = SKILL_INDEX_WINDEYUN;
+                    _isSkillMenu = false;
 					break;
 				}
 			}

@@ -19,7 +19,7 @@ HRESULT Player::init(void)
 
 	_playerCell = { 0 };//¿¨;
 	//_hpBar = new ProgressBar;
-	//_hpBar->init(280, WINSIZE_Y - 250, 52, 4);
+	//_hpBar->init(0, 0, 52, 4);
 	_imageState = PLAYERSTATE::BOTTOM;
 	return S_OK;
 }
@@ -268,7 +268,7 @@ void Player::update(void)
             }
         }
     }
-    //010000 Ç³¾Æ¿­°øÂü
+    //010 000 Ç³¾Æ¿­°øÂü
     else if (_stateBit.test(4) == 1)
     {
         if (_count % 30 == 0)

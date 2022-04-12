@@ -309,10 +309,11 @@ void FinalScene::update(void)
 					_turnSystem->setPlayerBit(4);
 					_player->setPlayerStateBit(3);
 				}
-               /* else if (_gameUI->getSkillNum() == SKILL_INDEX_WORLDBROKEN && !_isSkillStart)
+                else if (_gameUI->getSkillNum() == SKILL_INDEX_WINDEYUN)
                 {
-                    startShowSkillAttackableTile(1,_cMoveStart, false);
-                }*/
+					_turnSystem->setPlayerBit(5);
+                    _player->setPlayerStateBit(4);
+                }
 			}
 		}
 		// 0000 0010 : 이동중 - 메뉴창 뜨면 안됨 다른곳으로 이동못함
@@ -341,6 +342,16 @@ void FinalScene::update(void)
                 _gameUI->setSkillNum(SKILL_NUMBER::SKILL_INDEX_NULL);
             }
 		}
+        //0010 0000 : 풍아열공참 스킬 사용
+        else if (_turnSystem->getPlayerBit(5) == 1)
+        {
+            _skill->update();
+            if (_player->getPlayerStateBit(4) == 0)
+            {
+                _turnSystem->changeToEnemy();
+                _gameUI->setSkillNum(SKILL_NUMBER::SKILL_INDEX_NULL);
+            }
+        }
 	}
 	else if (_turnSystem->getStatus() == CHANGINGSTATUS::ENEMYTURN)
 	{

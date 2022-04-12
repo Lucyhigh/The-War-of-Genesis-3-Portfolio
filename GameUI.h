@@ -21,6 +21,7 @@ struct tagBattleMenu
     LPCWSTR _textInfo;
 	int _index;
 };
+
 struct tagSkillMenu
 {
 	RECT _buttonRect;
@@ -31,6 +32,7 @@ struct tagSkillMenu
 	LPCWSTR _skillSPInfo;
 	int _index;
 };
+
 struct tagMoveTile
 {
 	Image* _image;

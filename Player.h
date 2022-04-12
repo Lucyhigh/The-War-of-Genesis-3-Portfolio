@@ -17,7 +17,7 @@ private:
 	typedef bitset<6> playerBit;
 	playerBit _stateBit;
 	Image* _image;
-	ProgressBar* _hpBar;
+	//ProgressBar* _hpBar;
 	RECT _rcPlayer;
 	Cell* _playerCell;
 
