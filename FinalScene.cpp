@@ -489,11 +489,11 @@ void FinalScene::render(void)
 	IMAGEMANAGER->alphaRender("shadow", getMemDC(), _player->getPlayerPosX()- cameraLeft-47, _player->getPlayerPosY()+10- cameraTop, 150);
 	IMAGEMANAGER->alphaRender("shadow", getMemDC(), _saladin->getSaladinPosX()- cameraLeft-50, _saladin->getSaladinPosY()+10- cameraTop, 150);
 
+    if (_turnSystem->getPlayerBit(4))   
+        _skill->render();//===========================
 	_saladin->render();
     _player->render();
     _gameUI->render();
-    if (_turnSystem->getPlayerBit(4))   
-        _skill->render();//===========================
 	IMAGEMANAGER->render("mapInfoAll", getMemDC(), WINSIZE_X - 230, 0);
 
     FONTMANAGER->drawText(getMemDC(),

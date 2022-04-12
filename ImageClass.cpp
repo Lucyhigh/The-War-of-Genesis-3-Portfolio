@@ -110,7 +110,7 @@ HRESULT ImageClass::init(void)
 	IMAGEMANAGER->addImage("ScenarioClear", "Resources/Images/UI/ScenarioClear.bmp", 960, 90);
 
 	IMAGEMANAGER->addFrameImage("selectIcon", "Resources/Images/UI/selectIcon.bmp", 96,25,4,1, MGT);
-	IMAGEMANAGER->addFrameImage("skillIcon", "Resources/Images/UI/skillIcon.bmp", 119,17,7,1, MGT);
+	IMAGEMANAGER->addFrameImage("skillIcon", "Resources/Images/UI/skillIcon.bmp", 68*1.5,17*1.5,4,1, MGT);
 	IMAGEMANAGER->addFrameImage("npcBar", "Resources/Images/UI/npcbar.bmp", 800, 91,8,1,MGT);
 	IMAGEMANAGER->addFrameImage("pHpBar", "Resources/Images/UI/pHpBar.bmp", 1440 * 0.2, 1200 * 0.2, 4, 4, true, RGB(0, 44, 0));
 	IMAGEMANAGER->addFrameImage("eHpBar", "Resources/Images/UI/eHpBar.bmp", 1440 * 0.2, 1200 * 0.2, 4, 4, true, RGB(0, 44, 0));
@@ -145,6 +145,7 @@ HRESULT ImageClass::init(void)
 	IMAGEMANAGER->addFrameImage("smog2", "Resources/Images/Effect/all/smog2.bmp", 650, 650, 5,5,true,RGB(4,72,4));
 	IMAGEMANAGER->addFrameImage("circle", "Resources/Images/Effect/all/circle.bmp", 1592, 628, 8,4,true,RGB(4,108,0));
 	IMAGEMANAGER->addFrameImage("fire", "Resources/Images/Effect/all/fire.bmp", 660, 920, 12,4,true, RGB(8, 88, 8));
+	IMAGEMANAGER->addFrameImage("fireL", "Resources/Images/Effect/all/fireL.bmp", 660, 920, 12,4,true, RGB(8, 88, 8));
 	IMAGEMANAGER->addFrameImage("groundCrack", "Resources/Images/Effect/all/groundCrack.bmp", 1200, 150, 24,3,true, RGB(8, 88, 8));
 	IMAGEMANAGER->addFrameImage("48fire", "Resources/Images/Effect/all/48fire.bmp", 872, 131, 8,1,true, RGB(252, 252, 236));
 	IMAGEMANAGER->addFrameImage("95light", "Resources/Images/Effect/all/95light.bmp", 3502, 218, 17,1,true, RGB(252, 252, 252));
@@ -156,24 +157,27 @@ HRESULT ImageClass::init(void)
 
 	IMAGEMANAGER->addFrameImage("one", "Resources/Images/Effect/all/one.bmp", 200, 2400, 4,8,true, RGB(252, 236, 212));
 	IMAGEMANAGER->addFrameImage("double", "Resources/Images/Effect/all/double.bmp", 300, 1500, 6,5,true, RGB(252, 236, 212));
-	IMAGEMANAGER->addFrameImage("triple", "Resources/Images/Effect/all/triple.bmp", 400, 1200, 8,4,true, RGB(252, 236, 212));
+	IMAGEMANAGER->addFrameImage("tripleR", "Resources/Images/Effect/all/tripleR.bmp", 400, 1200, 8,4,true, RGB(252, 236, 212));
+	IMAGEMANAGER->addFrameImage("tripleL", "Resources/Images/Effect/all/tripleL.bmp", 400, 1200, 8,4,true, RGB(252, 236, 212));
 	//skill animation
 	ANIMATIONMANAGER->addAnimation("skillStart", "skillStart", 3, false, false);
 	ANIMATIONMANAGER->addAnimation("smog", "smog", 20, false, false);
 	ANIMATIONMANAGER->addAnimation("smog2", "smog2", 20, false, false);
 	ANIMATIONMANAGER->addAnimation("circle", "circle", 8, false, false);
 	ANIMATIONMANAGER->addAnimation("fire", "fire", 8, false, false);
+	ANIMATIONMANAGER->addAnimation("fireL", "fireL", 8, false, false);
 	ANIMATIONMANAGER->addAnimation("groundCrack", "groundCrack", 20, false, false);
-	ANIMATIONMANAGER->addAnimation("48fire", "48fire", 20, false, false);
+	ANIMATIONMANAGER->addAnimation("48fire", "48fire", 10, false, false);
 	ANIMATIONMANAGER->addAnimation("95light", "95light", 20, false, false);
 	ANIMATIONMANAGER->addAnimation("184light", "184light", 20, false, false);
 	ANIMATIONMANAGER->addAnimation("203smog", "203smog", 20, false, false);
 	ANIMATIONMANAGER->addAnimation("115stone", "115stone", 20, false, false);
 	ANIMATIONMANAGER->addAnimation("skillStartLight", "skillStartLight", 8, false, false);
 	ANIMATIONMANAGER->addAnimation("enemyAttack", "enemyAttack", 20, false, false);
-	ANIMATIONMANAGER->addAnimation("one", "one", 5, false, false);
-	ANIMATIONMANAGER->addAnimation("double", "double", 5, false, false);
-	ANIMATIONMANAGER->addAnimation("triple", "triple", 5, false, false);
+	ANIMATIONMANAGER->addAnimation("one", "one", 10, false, false);
+	ANIMATIONMANAGER->addAnimation("double", "double", 10, false, false);
+	ANIMATIONMANAGER->addAnimation("tripleR", "tripleR", 10, false, false);
+	ANIMATIONMANAGER->addAnimation("tripleL", "tripleL", 10, false, false);
 	//skill Ç³¾Æ¿­°øÂü
 	IMAGEMANAGER->addFrameImage("skill2", "Resources/Images/Effect/single/skill2.bmp", 1200, 2400, 4, 8, MGT);
 	IMAGEMANAGER->addFrameImage("skill3", "Resources/Images/Effect/single/skill3.bmp", 2700, 900, 9, 3, MGT);

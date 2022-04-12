@@ -4,7 +4,7 @@
 HRESULT Skill::init(void)
 {
 	_playerPos = { _player->getPlayerRect().left, _player->getPlayerRect().top };
-	_skillAlpha = (BYTE)40;
+	_skillAlpha = (BYTE)10;
 	_skillAlpha2 = (BYTE)40;
 	_skillAlpha3 = (BYTE)50;
     _isStart = false;
@@ -35,6 +35,9 @@ void Skill::update(void)
 {
     float left = _player->getPlayerRect().left - _camera->getScreenRect().left;
     float top = _player->getPlayerRect().top - _camera->getScreenRect().top;
+    float cellLeft = _player->getPlayerRect().left-25 - _camera->getScreenRect().left;
+    float cellTop = _player->getPlayerRect().top-215 - _camera->getScreenRect().top;
+
     _skillPlayerPos = { (long)left - 95, (long)top - 40 };
     _skillPlayerPos2 = { (long)left - 95, (long)top - 40 };
     _skillPlayerPos3 = { (long)left - 65, (long)top - 40 };
@@ -48,27 +51,42 @@ void Skill::update(void)
             break;
         }
     }
-
-    //int pCellPosNum = 1;
-    for (int i = 0; i < _vSkillCellPos.size(); i += 8)
+	int skillArr1 = 24;
+	int skillArr2 = 72;
+	int skillArr3 = 120;
+    for (int i = 0; i < skillArr1; i += 4)
     {
-		_vSkillCellPos[i]     = { (long)left - 20 * (i + 1), (long)top - 20 * (i + 1)	};
-		_vSkillCellPos[i + 1] = { (long)left - 20 * (i + 1), (long)top + 20 * (i + 1)	};
-        _vSkillCellPos[i + 2] = { (long)left+20* (i + 1), (long)top+20* (i + 1) };
-        _vSkillCellPos[i + 3] = { (long)left+20* (i + 1), (long)top-20* (i + 1) };
-
-		_vSkillCellPos[i + 4] = { (long)left - 20 * (i + 1), (long)top - 20 * (i + 1) };
-		_vSkillCellPos[i + 5] = { (long)left - 20 * (i + 1), (long)top + 20 * (i + 1) };
-		_vSkillCellPos[i + 6] = { (long)left + 20 * (i + 1), (long)top + 20 * (i + 1) };
-		_vSkillCellPos[i + 7] = { (long)left + 20 * (i + 1), (long)top - 20 * (i + 1) };
-		//_vSkillCellPos[i]     = {(long) left - 30, (long)top - 30 };
-		//_vSkillCellPos[i + 1] = {(long) left - 20, (long)top + 20 };
-		//_vSkillCellPos[i + 2] = {(long) left + 30, (long)top + 30 };
-		//_vSkillCellPos[i + 3] = {(long) left + 20, (long)top - 20 };
-        //pCellPosNum++;
+		if (skillArr1 > i)
+		{
+			_vSkillCellPos[i]     = { (long)cellLeft - 20 * (i + 1), (long)cellTop - 16 * (i + 1) };//LT
+			_vSkillCellPos[i + 2] = { (long)cellLeft + 20 * (i + 1), (long)cellTop + 16 * (i + 1) };//RB
+			_vSkillCellPos[i + 1] = { (long)cellLeft - 20 * (i + 1), (long)cellTop + 16 * (i + 1) };//LB
+			_vSkillCellPos[i + 3] = { (long)cellLeft + 20 * (i + 1), (long)cellTop - 16 * (i + 1) };//RT========== triple 더블, 원 랜덤랜더필요
+		}
     }
-    
 
+	for (int i = 0; i < 48; i += 4)
+	{
+		_vSkillCellPos[i + skillArr1]	  = { (long)cellLeft - 10 * (i + 1), (long)cellTop + 50 - 8 * (i + 1) };
+		_vSkillCellPos[i + skillArr1 + 2] = { (long)cellLeft + 10 * (i + 1), (long)cellTop + 50 + 8 * (i + 1) };
+		_vSkillCellPos[i + skillArr1 + 1] = { (long)cellLeft - 10 * (i + 1), (long)cellTop + 50 + 8 * (i + 1) };
+		_vSkillCellPos[i + skillArr1 + 3] = { (long)cellLeft + 10 * (i + 1), (long)cellTop + 50 - 8 * (i + 1) };//========== fire 4가지 랜덤랜더필요 / 가까운거부터 먼저랜더 필요
+	}
+
+	for (int i = 0; i < 48; i += 4)
+	{
+		_vSkillCellPos[i + skillArr2]	  = { (long)left- 60 - 10 * (i + 1), (long)top - 40 - 8 * (i + 1) };
+		_vSkillCellPos[i + skillArr2 + 2] = { (long)left- 60 + 10 * (i + 1), (long)top - 40 + 8 * (i + 1) };
+		_vSkillCellPos[i + skillArr2 + 1] = { (long)left- 60 - 10 * (i + 1), (long)top - 40 + 8 * (i + 1) };
+		_vSkillCellPos[i + skillArr2 + 3] = { (long)left- 60 + 10 * (i + 1), (long)top - 40 - 8 * (i + 1) };//========== 48fire /가까운거부터 먼저랜더 필요
+	}
+	for (int i = 0; i < 48; i += 4)
+	{
+		_vSkillCellPos[i + skillArr3] = { (long)left - 60 - 10 * (i + 1), (long)top - 40 - 8 * (i + 1) };
+		_vSkillCellPos[i + skillArr3 + 2] = { (long)left - 60 + 10 * (i + 1), (long)top - 40 + 8 * (i + 1) };
+		_vSkillCellPos[i + skillArr3 + 1] = { (long)left - 60 - 10 * (i + 1), (long)top - 40 + 8 * (i + 1) };
+		_vSkillCellPos[i + skillArr3 + 3] = { (long)left - 60 + 10 * (i + 1), (long)top - 40 - 8 * (i + 1) };//========== groundCrack /가까운거부터 먼저랜더 필요
+	}
 	_cdt++;
 	if (_cdt == 10)
 	{
@@ -90,16 +108,6 @@ void Skill::render(void)
         }
     }
     _skillIndex++;
-/*
-    int pCellPosNum = 1;
-    for (int i = 0; i < _vSkillCellPos.size(); i += 4)
-    {
-        _vSkillCellPos[i] = { (long)left, (long)top };
-        _vSkillCellPos[i + 1] = { (long)left - 20 * i, (long)top + 20 * i };
-        _vSkillCellPos[i + 2] = { (long)left + 20 * i, (long)top + 20 * i };
-        _vSkillCellPos[i + 3] = { (long)left + 20 * i, (long)top - 20 * i };
-        pCellPosNum++;
-    }*/
    
     if (!_isStart) return;
     for (viSkillList = vSkillList.begin(); viSkillList != vSkillList.end(); ++viSkillList)
@@ -107,7 +115,6 @@ void Skill::render(void)
         tagSkill skill = (*viSkillList);
         if (skill._skillAnimation->getIsPlay() == false) continue;
 
-		cout << skill._aniPos->x << ", " << skill._aniPos->y << endl;
         IMAGEMANAGER->findImage(skill._skillName)->
                 aniAlphaRender(getMemDC(),
                 skill._aniPos->x,
@@ -115,7 +122,6 @@ void Skill::render(void)
                 *skill._alpha,
                 skill._skillAnimation);
     }
-	cout << endl;
 
 	IMAGEMANAGER->alphaRender("cutChange", getMemDC(), 0, 0, _alphaA);
 	IMAGEMANAGER->alphaRender("cutChangeRed", getMemDC(), 0, 0, _alphaB);
@@ -139,54 +145,37 @@ void Skill::worldBrokenSkill()
 
     tagSkill skill =  tagSkill{ 0, "184light", &_skillPlayerPos, &_skillAlpha, _skillAni1 };
     tagSkill skill2 = tagSkill{ 50, "circle", &_skillPlayerPos2, &_skillAlpha2, _skillAni2 };
-    tagSkill skill3 = tagSkill{ 30, "smog2", &_skillPlayerPos3, &_skillAlpha3, _skillAni3 };
-   
-
-       /* _vSkillCellPos.push_back({ 0,0 });
-        tagSkill skillLT(1, "triple", &_vSkillCellPos[0], &_skillAlpha, _skillAni12);
-        vSkillList.push_back(&skillLT);
-
-        _vSkillCellPos.push_back({ 0,0 });
-        tagSkill skillLB(1, "triple", &_vSkillCellPos[1], &_skillAlpha, _skillAni12);
-        vSkillList.push_back(&skillLB);
-
-        _vSkillCellPos.push_back({ 0,0 });
-        tagSkill skillRT (1, "triple", &_vSkillCellPos[2], &_skillAlpha, _skillAni12);
-        vSkillList.push_back(&skillRT);
-
-        _vSkillCellPos.push_back({ 0,0 });
-        tagSkill skillRB( 1, "triple", &_vSkillCellPos[3], &_skillAlpha, _skillAni12);
-        vSkillList.push_back(&skillRB);*/
-    
+    tagSkill skill3 = tagSkill{ 30, "smog2", &_skillPlayerPos3, &_skillAlpha3, _skillAni3 };    
 
     int cellPosIdx = 0;
-    for (int i = 0; i < 32; ++i)
-		_vSkillCellPos.push_back({ 0,0 });
+	int skillArr1 = 24;
+	int skillArr2 = 48;
+	//전체 애니메이션 푸시백
+    for (int i = 0; i < 120; ++i) _vSkillCellPos.push_back({ 0,0 });
 	
-	for (int i = 0; i < 16; ++i)
+	Animation* _skillAni4 = ANIMATIONMANAGER->findAnimation("tripleR");
+	Animation* _skillAni5 = ANIMATIONMANAGER->findAnimation("tripleL");
+	Animation* _skillAni6 = ANIMATIONMANAGER->findAnimation("fire");
+	Animation* _skillAni7 = ANIMATIONMANAGER->findAnimation("fireL");
+	Animation* _skillAni8 = ANIMATIONMANAGER->findAnimation("48fire");
+	Animation* _skillAni9 = ANIMATIONMANAGER->findAnimation("groundCrack");
+	for (int i = 0; i < skillArr1; ++i)
     {
-		Animation* _skillAni11 = ANIMATIONMANAGER->findAnimation("triple");
-		Animation* _skillAni12 = ANIMATIONMANAGER->findAnimation("48fire");
-		pushCellSkill(5, "triple", cellPosIdx++, _skillAni11);
-		pushCellSkill(7, "48fire", cellPosIdx++, _skillAni12);
-  //      _vSkillCellPos.push_back({ 0,0 });
-  //      tagSkill skillLT = tagSkill(1, "triple", &_vSkillCellPos[cellPosIdx++], &_skillAlpha, _skillAni12);
-  //      vSkillList.push_back(skillLT);
-
-  //      _vSkillCellPos.push_back({ 0,0 });
-  //      tagSkill skillLB = tagSkill(1, "triple", &_vSkillCellPos[cellPosIdx++], &_skillAlpha, _skillAni12);
-  //      vSkillList.push_back(skillLB);
-
-  //      _vSkillCellPos.push_back({ 0,0 });
-  //      tagSkill skillRT = tagSkill(1, "triple", &_vSkillCellPos[cellPosIdx++], &_skillAlpha, _skillAni12);
-  //      vSkillList.push_back(skillRT);
-
-  //      _vSkillCellPos.push_back({ 0,0 });
-		//tagSkill skillRB = tagSkill(1, "triple", &_vSkillCellPos[cellPosIdx++], &_skillAlpha, _skillAni12);
-  //      vSkillList.push_back(skillRB);
-
-        //cout << vSkillList.size() << endl;
+		if (i % 2 == 1 )					pushCellSkill(10, "tripleR", cellPosIdx++,240, _skillAni4);
+		else if (i % 2 == 0)				pushCellSkill(10, "tripleL", cellPosIdx++,20, _skillAni5);
     }
+
+	for (int i = 0; i < skillArr2; ++i)
+	{
+		if (i % 2 == 1)						pushCellSkill(40, "fire", cellPosIdx++, 70,_skillAni6);
+		else if (i % 2 == 0)				pushCellSkill(40, "fireL", cellPosIdx++,100, _skillAni7);
+	}
+
+	for (int i = 0; i < skillArr2; ++i)
+	{
+		pushCellSkill(60, "48fire", cellPosIdx++, 100, _skillAni8);
+	}
+
 
 	//Skill* skill13 = new Skill(1, "one", &_skillPlayerPos, _skillAni12);//셋이 다 다르넹...
 	//Skill* skill14 = new Skill(1, "double",  &_skillPlayerPos, _skillAni12);
@@ -204,20 +193,13 @@ void Skill::worldBrokenSkill()
     vSkillList.push_back(skill2);
     vSkillList.push_back(skill3);
     startSkill();
-    /*
-        uniteSkill.add(skill3);
-		uniteSkill.add(skill4);
-		uniteSkill.add(skill6);
-		uniteSkill.add(skill7);
-		uniteSkill.add(skill8);
-		uniteSkill.add(skill10);*/
 }
 
-void Skill::pushCellSkill(int idx,string imgKey, int vNum, Animation* anim)
+void Skill::pushCellSkill(int idx,string imgKey, int vNum, BYTE alpha,Animation* anim)//알파값 이상함
 {
-	tagSkill skillLT = tagSkill(idx, imgKey, &_vSkillCellPos[vNum], &_skillAlpha, anim);
+	tagSkill skill = tagSkill(idx, imgKey, &_vSkillCellPos[vNum], &_skillAlpha, anim);
 
-	vSkillList.push_back(skillLT);
+	vSkillList.push_back(skill);
 }
 
 void Skill::startSkill()

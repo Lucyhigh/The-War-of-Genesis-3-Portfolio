@@ -13,6 +13,7 @@ public:
     POINT* _aniPos;
     BYTE* _alpha;
     Animation* _skillAnimation;
+
     tagSkill() {}
     tagSkill(int skillIndex, string skillName, POINT* aniPos, BYTE* alpha, Animation* animation) 
     {
@@ -50,18 +51,12 @@ private:
 	int _alphaB;
 
 public:
-    int getSkillIndex()            { return _tagSkill->_skillIndex; }
-    string getSkillName()          { return _tagSkill->_skillName; }
-    POINT* getAniPos()             { return _tagSkill->_aniPos; }
-    BYTE* getAlpha()                { return _tagSkill->_alpha; }
-    Animation* getSkillAnimation() { return _tagSkill->_skillAnimation; }
-
+    
     void startSkill();
-    void add(tagSkill* skill);
     void setPlayer(Player* player);
     void setCamera(Camera* camera);
     void setCells(vector<Cell*>* cells);
-	void pushCellSkill(int idx, string imgKey, int vNum, Animation* anim);
+	void pushCellSkill(int idx, string imgKey, int vNum, BYTE alpha, Animation* anim);
 
 	HRESULT init(void);
 	void release(void);

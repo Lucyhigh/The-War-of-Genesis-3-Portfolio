@@ -163,6 +163,7 @@ void GameUI::render(void)
 		IMAGEMANAGER->alphaRender("skillText", getMemDC(), _PlayerPos.x+30, _PlayerPos.y - 60, 170);
         for (_viSkillButton = _vSkillButton.begin(); _viSkillButton != _vSkillButton.end(); ++_viSkillButton)
         {
+			IMAGEMANAGER->frameRender("skillIcon", getMemDC(), _viSkillButton->_buttonRect.left-30, _viSkillButton->_buttonRect.top+5, _viSkillButton->_index, 1);
 			if (PtInRect(&_viSkillButton->_buttonRect, _ptMouse))
 			{
 				FONTMANAGER->drawText(getMemDC(),
