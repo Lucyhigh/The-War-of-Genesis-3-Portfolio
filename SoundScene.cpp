@@ -1,75 +1,214 @@
 #include "Stdafx.h"
-//#include "SoundScene.h"
-//iterator로 돌려라...
-//HRESULT SoundScene::init(void)
-//{
-//	IMAGEMANAGER->addImage("엘든링","Resources/Images/BackGround/Ring.bmp",WINSIZE_X, CENTER_Y);//YENA 대신
-//	IMAGEMANAGER->addImage("츄","Resources/Images/BackGround/CHUU.bmp",WINSIZE_X, CENTER_Y);
-//	IMAGEMANAGER->addImage("수스","Resources/Images/BackGround/SS.bmp",WINSIZE_X, CENTER_Y);
-//	IMAGEMANAGER->addImage("그냥","Resources/Images/BackGround/JUSTRing.bmp",WINSIZE_X, CENTER_Y);
-//	IMAGEMANAGER->addImage("미카","Resources/Images/BackGround/MIKA.bmp",WINSIZE_X, CENTER_Y);
-//	IMAGEMANAGER->addImage("장기하","Resources/Images/BackGround/JGH.bmp",WINSIZE_X, CENTER_Y);
-//	IMAGEMANAGER->addImage("미노이","Resources/Images/BackGround/MINOI.bmp",WINSIZE_X, CENTER_Y);
-//
-//	//SOUNDMANAGER->addSound("찬란","Resources/Sounds/OBLIVION.wav", true, true);
-//	//SOUNDMANAGER->addSound("LightSwitch","Resources/Sounds/LightSwitch.mp3", true, false);
-//	//SOUNDMANAGER->addSound("GraceKelly","Resources/Sounds/GraceKelly.mp3", true, true);
-//	//SOUNDMANAGER->addSound("SRSR","Resources/Sounds/SRSR.mp3", true, true);
-//	//SOUNDMANAGER->addSound("Lxxk2U","Resources/Sounds/Lxxk2U.mp3", true, true);
-//	//SOUNDMANAGER->addSound("Just","Resources/Sounds/Just.mp3", true, true);
-//	//SOUNDMANAGER->addSound("Not","Resources/Sounds/Not.mp3", true, true);
-//	//SOUNDMANAGER->addSound("HeartAttack","Resources/Sounds/HeartAttack.mp3", true, true);
-//	//SOUNDMANAGER->setUp("Resources/Sounds/Golden.mp3", SOUND_BGM, true, true); c스타일
-//
-//    _volume = 1.0f;
-//	return S_OK;
-//}
-//
-//void SoundScene::release(void)
-//{
-//}
-//
-//void SoundScene::update(void)
-//{
-//	if (KEYMANAGER->isOnceKeyDown(VK_RETURN))
-//	{
-//		SOUNDMANAGER->play("LightSwitch", _volume);
-//     
-//		//SOUNDMANAGER->play(SOUND_BGM, 1.0f);  c스타일
-//	}
-//	if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
-//	{
-//		SOUNDMANAGER->stop("LightSwitch");
-//	}
-//	if (KEYMANAGER->isOnceKeyDown(VK_F1))
-//	{
-//		SOUNDMANAGER->pause("LightSwitch");
-//	}
-//	if (KEYMANAGER->isOnceKeyDown(VK_F2))
-//	{
-//		SOUNDMANAGER->resume("LightSwitch");
-//	}
-//
-//    if (SOUNDMANAGER->isPlaySound("LightSwitch"))
-//    {
-//        if (KEYMANAGER->isOnceKeyDown(VK_UP))
-//        {
-//            _volume += 2.0f;
-//        } 
-//        else if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
-//        {
-//            _volume -= 2.0f;
-//        }
-//        cout << _volume << endl;
-//    }
-//	SOUNDMANAGER->update();
-//}
-//
-//void SoundScene::render(void)
-//{
-//	IMAGEMANAGER->render("엘든링", getMemDC(),0,CENTER_Y);
-//}
-//
-//SoundScene::SoundScene()
-//{
-//}
+#include "SoundScene.h"
+
+HRESULT SoundScene::init(void)
+{
+	_isPause = true;
+	_isPlay = false;
+	_soundVolume = 1.0f;
+	_score = 0.0f;
+	_maxScore = 1.0f;
+
+	string path = "Resource/Sound/mp3player/";
+	_vMp3Name = getFilesInDirectory(path, "*.mp3");
+	for (string name : _vMp3Name)
+	{
+		cout << name << endl;
+		SOUNDMANAGER->addSound(name, path + name, true, false);
+	}
+
+	path = "Resource/Images/mp3player/button/";
+	vector<string> vBtnImg = getFilesInDirectory(path, "*.mp3");
+	int index = 0;
+	for (string imgName : vBtnImg)
+	{
+		string temp = path + imgName;
+		_controlBtnImg[index] = IMAGEMANAGER->addImage(imgName, temp.c_str(), 48, 48);
+		index++;
+		cout << temp << endl;
+	}
+
+	path = "Resource/Images/mp3player/";
+	_vMp3ImgStr = getFilesInDirectory(path, "*.bmp");
+	index = 0;
+	for (string imgName : _vMp3ImgStr)
+	{
+		string temp = path + imgName;
+		IMAGEMANAGER->addImage(imgName, temp.c_str(), WINSIZE_X, WINSIZE_X);
+		index++;
+	}
+
+	_progressBar = new ProgressBar;
+	_progressBar->init(0, WINSIZE_Y - 78, WINSIZE_X, 20);
+	_progressRc = RectMake(0, WINSIZE_Y - 68, WINSIZE_X, 20);
+
+	_controlBtnRect[PREVIUS] = RectMake(0, WINSIZE_Y - 48, 48, 48);
+	_controlBtnRect[PLAY] = RectMake(48, WINSIZE_Y - 48, 48, 48);
+	_controlBtnRect[PAUSE] = RectMake(48, WINSIZE_Y - 48, 48, 48);
+	_controlBtnRect[NEXT] = RectMake(48 * 2, WINSIZE_Y - 48, 48, 48);
+	_controlBtnRect[STOP] = RectMake(48 * 4, WINSIZE_Y - 48, 48, 48);
+	_controlBtnRect[VOLUME_DOWN] = RectMake(48 * 5, WINSIZE_Y - 48, 48, 48);
+	_controlBtnRect[VOLUME_UP] = RectMake(48 * 6, WINSIZE_Y - 48, 48, 48);
+
+	_rcBottomBar = RectMake(0, WINSIZE_Y - 48, WINSIZE_X, 55);
+	
+	return S_OK;
+
+}
+
+void SoundScene::release(void)
+{
+	SAFE_DELETE(_progressBar);
+}
+
+void SoundScene::update(void)
+{
+	if (KEYMANAGER->isOnceKeyUp(VK_LBUTTON))
+	{
+		if (PtInRect(&_controlBtnRect[PLAY], _ptMouse))
+		{
+			if (_isPlay)
+			{
+				if (_isPause)
+				{
+					resumeSound();
+					_isPause = !_isPause;
+				}
+				else
+				{
+					pauseSound();
+					_isPause = !_isPause;
+				}
+			}
+			else
+			{
+				playSound();
+				_isPlay = true;
+				_isPause = false;
+			}
+		}
+
+		else if (PtInRect(&_controlBtnRect[NEXT], _ptMouse))
+		{
+			nextSound();
+			_isPause = false;
+		}
+
+		else if (PtInRect(&_controlBtnRect[PREVIUS], _ptMouse))
+		{
+			previusSound();
+			_isPause = false;
+		}
+
+		else if (PtInRect(&_controlBtnRect[STOP], _ptMouse))
+		{
+			stop();
+			_isPlay = false;
+			_isPause = true;
+			_score = 0.0f;
+			_maxScore = 1.0f;
+		}
+	}
+
+	SOUNDMANAGER->update();
+
+	if (_isPlay && !_isPause)
+	{
+		if (_score >= _maxScore)
+		{
+			nextSound();
+		}
+	}
+}
+
+void SoundScene::render(void)
+{
+	IMAGEMANAGER->render(_vMp3ImgStr[_playIndex], getMemDC());
+	_whiteBox->render(getMemDC(), 0, WINSIZE_Y - 48);
+	if (_isPlay)
+	{
+		if (_isPause)
+		{
+			_controlBtnImg[PLAY]->render(getMemDC(), _controlBtnRect[PLAY].left, _controlBtnRect[PLAY].top);
+		}
+		else
+		{
+			_controlBtnImg[PAUSE]->render(getMemDC(), _controlBtnRect[PAUSE].left, _controlBtnRect[PAUSE].top);
+		}
+	}
+	else
+	{
+		_controlBtnImg[PLAY]->render(getMemDC(), _controlBtnRect[PLAY].left, _controlBtnRect[PLAY].top);
+	}
+
+	_controlBtnImg[NEXT]->render(getMemDC(), _controlBtnRect[NEXT].left, _controlBtnRect[NEXT].top);
+
+	_controlBtnImg[PREVIUS]->render(getMemDC(), _controlBtnRect[PREVIUS].left, _controlBtnRect[PREVIUS].top);
+
+	_controlBtnImg[STOP]->render(getMemDC(), _controlBtnRect[STOP].left, _controlBtnRect[STOP].top);
+
+	_controlBtnImg[VOLUME_DOWN]->render(getMemDC(), _controlBtnRect[VOLUME_DOWN].left, _controlBtnRect[VOLUME_DOWN].top);
+
+	_controlBtnImg[VOLUME_UP]->render(getMemDC(), _controlBtnRect[VOLUME_UP].left, _controlBtnRect[VOLUME_UP].top);
+
+	char* cstr = new char[_vMp3Name[_playIndex].size() + 1];
+	copy(_vMp3Name[_playIndex].begin(), _vMp3Name[_playIndex].end(), cstr);
+	cstr[_vMp3Name[_playIndex].size()] = '\0';
+
+	//FONTMANAGER->drawText(getMemDC(), 0, WINSIZE_Y - 88, "", 20, 100, cstr, strlen(cstr), RGB(255, 255, 255));
+	SAFE_DELETE_ARRAY(cstr);
+
+	char volumeStr[32];
+	sprintf(volumeStr, "%d", static_cast<int>(_soundVolume * 100));
+	//FONTMANAGER->drawText(getMemDC(), 48 * 7, WINSIZE_Y - 48, "", 48, 100, volumeStr, strlen(volumeStr), RGB(0, 0, 0));
+}
+
+
+void SoundScene::resumeSound()
+{
+	SOUNDMANAGER->resume(_vMp3Name[_playIndex]);
+}
+
+void SoundScene::pauseSound()
+{
+	SOUNDMANAGER->pause(_vMp3Name[_playIndex]);
+}
+
+void SoundScene::playSound()
+{
+	SOUNDMANAGER->play(_vMp3Name[_playIndex], 1.0f);
+}
+
+void SoundScene::nextSound()
+{
+	cout << "NEXT" << endl;
+	SOUNDMANAGER->stop(_vMp3Name[_playIndex]);
+	if (_playIndex < _vMp3Name.size() - 1)
+	{
+		_playIndex++;
+	}
+	else
+	{
+		_playIndex = _vMp3Name.size() - 1;
+	}
+	SOUNDMANAGER->play(_vMp3Name[_playIndex], _soundVolume);
+}
+
+void SoundScene::previusSound()
+{
+	SOUNDMANAGER->stop(_vMp3Name[_playIndex]);
+	if (_playIndex > 0)
+	{
+		_playIndex--;
+	}
+	else
+	{
+		_playIndex = 0;
+	}
+	SOUNDMANAGER->play(_vMp3Name[_playIndex], _soundVolume);
+}
+
+void SoundScene::stop()
+{
+	SOUNDMANAGER->stop(_vMp3Name[_playIndex]);
+}

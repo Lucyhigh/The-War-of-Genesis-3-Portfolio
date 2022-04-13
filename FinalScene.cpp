@@ -338,18 +338,21 @@ void FinalScene::update(void)
             _skill->update();
             if (_player->getPlayerStateBit(3) == 0)
             {
-                _turnSystem->changeToEnemy();
+				_saladin->getEnemyStateBit(3);
                 _gameUI->setSkillNum(SKILL_NUMBER::SKILL_INDEX_NULL);
+				_skill->setCdt(0);
             }
 		}
         //0010 0000 : 풍아열공참 스킬 사용
         else if (_turnSystem->getPlayerBit(5) == 1)
         {
+			_skill->windEyun();
             _skill->update();
             if (_player->getPlayerStateBit(4) == 0)
             {
                 _turnSystem->changeToEnemy();
                 _gameUI->setSkillNum(SKILL_NUMBER::SKILL_INDEX_NULL);
+				_skill->setCdt(0);
             }
         }
 	}
@@ -497,10 +500,13 @@ void FinalScene::render(void)
 	IMAGEMANAGER->alphaRender("shadow", getMemDC(), _player->getPlayerPosX()- cameraLeft-47, _player->getPlayerPosY()+10- cameraTop, 150);
 	IMAGEMANAGER->alphaRender("shadow", getMemDC(), _saladin->getSaladinPosX()- cameraLeft-50, _saladin->getSaladinPosY()+10- cameraTop, 150);
 
-    if (_turnSystem->getPlayerBit(4))   
-        _skill->render();//===========================
-	_saladin->render();
-    _player->render();
+	
+	if(_saladin->getLive())_saladin->render();
+	if (_player->getPlayerStateBit(3) == 1 || _player->getPlayerStateBit(4) == 1)
+	{
+		_skill->render();//===========================
+	}
+	if (_player->getLive())_player->render();
     _gameUI->render();
 	IMAGEMANAGER->render("mapInfoAll", getMemDC(), WINSIZE_X - 230, 0);
 

@@ -72,6 +72,18 @@ void AnimationManager::addAnimation(string animationKeyName, char * imageKeyName
 	_mAnimationList.insert(make_pair(animationKeyName, ani));
 }
 
+void AnimationManager::addAnimation(string animationKeyName, char * imageKeyName, int fps, bool reverse, bool loop, Animation * anim)
+{
+	Image* img = IMAGEMANAGER->findImage(imageKeyName);
+	anim = new Animation;
+
+	anim->init(img->getWidth(), img->getHeight(), img->getFrameWidth(), img->getFrameHeight());
+	anim->setDefPlayFrame(reverse, loop);
+	anim->setFPS(fps);
+
+	_mAnimationList.insert(make_pair(animationKeyName, anim));
+}
+
 void AnimationManager::addAnimation(string animationKeyName, char * imageKeyName, int start, int end, int fps, bool reverse, bool loop)
 {
 	Image* img = IMAGEMANAGER->findImage(imageKeyName);

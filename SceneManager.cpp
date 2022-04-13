@@ -55,7 +55,7 @@ void SceneManager::render(void)
 	if (_currentScene)_currentScene->render();
 }
 
-GameNode * SceneManager::addScene(string sceneName, GameNode * scene)
+GameNode* SceneManager::addScene(string sceneName, GameNode* scene)
 {
 	if (!scene) return nullptr;
 

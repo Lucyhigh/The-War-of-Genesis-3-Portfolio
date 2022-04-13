@@ -23,22 +23,7 @@ HRESULT SoundManager::init(void)
 	//메모리 한번 밀자
 	memset(_sound, 0, sizeof(Sound*) * (totalSoundChannel));
 	memset(_channel, 0, sizeof(Channel*) * (totalSoundChannel));
-	/*
-	//사운드 시스템 생성
-	System_Create(&_system);
-
-	//시스템 초기화
-	_system->init(TOTAL_SOUND_CHANNEL, FMOD_INIT_NORMAL,0);
-
-	//채널 수 만큼 메모리 버퍼 및 사운드를 생성
-	_sound = new Sound*[TOTAL_SOUND_CHANNEL];
-	_channel = new Channel*[TOTAL_SOUND_CHANNEL];
-
-	//메모리 한번 밀자
-	memset(_sound, 0, sizeof(Sound*) * (TOTAL_SOUND_CHANNEL));
-	memset(_channel, 0, sizeof(Channel*) * (TOTAL_SOUND_CHANNEL));
 	
-	*/
 	return S_OK;
 }
 
@@ -69,35 +54,7 @@ void SoundManager::release(void)
 		_system->release();
 		_system->close();
 	}
-    //Map 비우기
-    //sounds.clear();
-	/*
-	//destroy
-	if (_channel != nullptr || _sound != nullptr)
-	{
-		for (int i = 0; i < TOTAL_SOUND_CHANNEL; i++)
-		{
-			if (_channel != nullptr)
-			{
-				if(_channel[i])_channel[i]->stop();
-			}
-			if (_sound != nullptr)
-			{
-				if(_sound != nullptr)_sound[i]->release();
-
-			}
-		}
-	}
-	SAFE_DELETE_ARRAY(_channel);
-	SAFE_DELETE_ARRAY(_sound);
-
-	if (_system != nullptr)
-	{
-		_system->release();
-		_system->close();
-	}
-	
-	*/
+    
 }
 
 void SoundManager::addSound(string keyName, string soundName, bool backGround,bool loop)
@@ -136,28 +93,16 @@ void SoundManager::play(string keyName, float volume)
 	arrSoundsIter iter = _mTotalSounds.begin();
 
 	int count = 0;
-	//논리오류 찾기 : 사운드를 5개 줬을경우...++iter, count++.....
-	//for (iter; iter != _mTotalSounds.end(); ++iter, count++)
-	//선택적 논리 오류...찾기도 힘들고 어렵다 count 가 항상 다음과 같은지 봐야한다
-	//_system->playSound(FMOD_CHANNEL_FREE, _sound[count], false, &_channel[count]);
-	//_system->playSound(FMOD_CHANNEL_FREE, _sound[*iter->second], false, &_channel[count]);
-	//2개이상으로 할때 2번째꺼를 못찾을것이다..*iter->second를 해도 세컨드롤 못찾음 어케할가
-	// 0 0 
-	// 0 1
-	// 1 2
-	// 2 3.....이렇게 들어감..그래서 첫번째꺼만 들어감
+	
 	for (iter; iter != _mTotalSounds.end(); ++iter, count++)
 	{
 		if (keyName == iter->first)
 		{
-			//사운드 플레이
-            //auto next == iter->second;
-			_system->playSound(FMOD_CHANNEL_FREE,   //비어있는 채널 사용
+			_system->playSound(FMOD_CHANNEL_FREE,  
                 *iter->second,
-                false,                              //안멈춤
+                false,                              
                 &_channel[count]);
 
-			//볼륨 설정
 			_channel[count]->setVolume(volume);
 			break;
 		}
@@ -202,15 +147,11 @@ void SoundManager::resume(string keyName)
 
 bool SoundManager::isPlaySound(string keyName)
 {
-    //모든 채널 검사해서 하나라도 플레이 중이면 true반환
-	//bool isPlay;
 	int count = 0;
 	arrSoundsIter iter = _mTotalSounds.begin();
 	for (iter; iter != _mTotalSounds.end(); ++iter, count++)
 	{
-        //keyName과 일치하는 음원이 있다면
 		if (keyName == iter->first)
-            //재생중이라면 isPlay를 true로 설정
 			_channel[count]->isPlaying(&isPlay);
 		break;
 	}

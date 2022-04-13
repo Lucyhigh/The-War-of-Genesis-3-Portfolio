@@ -5,6 +5,16 @@
 #include "Player.h"
 #include "Camera.h"
 
+struct tagWindSkill
+{
+	string imgKey;
+	int frameX;
+	int frameY;
+	int posX;
+	int posY;
+	BYTE alpha;
+};
+
 class tagSkill
 {
 public:
@@ -46,32 +56,31 @@ private:
 	POINT _skillPlayerPos;
 	POINT _skillPlayerPos2;
 	POINT _skillPlayerPos3;
+
+	vector<tagWindSkill> _vWindSkill;
+	int _count;
 	int _cdt;
+	int frameX;
+	int frameY;
+
 	int _alphaA;
 	int _alphaB;
 
 public:
-    
+	int getSkillIndex() { return _skillIndex; }
     void startSkill();
     void setPlayer(Player* player);
     void setCamera(Camera* camera);
     void setCells(vector<Cell*>* cells);
 	void pushCellSkill(int idx, string imgKey, int vNum, BYTE alpha, Animation* anim);
 
+	void setCdt(int cdt) { _cdt = cdt; }
 	HRESULT init(void);
 	void release(void);
 	void update(void);
 	void render(void);
 	void worldBrokenSkill();
-
-	/*
-	스킬 1번
-	.
-	.
-	.
-	.	
-	스킬 14번 이사...
-	*/
+	void windEyun();
 
 public:
     Skill() {}

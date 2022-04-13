@@ -185,14 +185,15 @@ HRESULT ImageClass::init(void)
 	ANIMATIONMANAGER->addAnimation("tripleR", "tripleR", 10, false, false);
 	ANIMATIONMANAGER->addAnimation("tripleL", "tripleL", 10, false, false);
 	//skill Ç³¾Æ¿­°øÂü
-	IMAGEMANAGER->addFrameImage("skill2", "Resources/Images/Effect/single/skill2.bmp", 1200, 2400, 4, 8, MGT);
-	IMAGEMANAGER->addFrameImage("skill3", "Resources/Images/Effect/single/skill3.bmp", 2700, 900, 9, 3, MGT);
-	IMAGEMANAGER->addFrameImage("skill4", "Resources/Images/Effect/single/skill4.bmp", 1200, 900, 4, 3, MGT);
-	IMAGEMANAGER->addFrameImage("skill6", "Resources/Images/Effect/single/skill6.bmp", 3000, 300, 10, 1, MGT);
-	IMAGEMANAGER->addFrameImage("skill7", "Resources/Images/Effect/single/skill7.bmp", 3300, 300, 11, 1, MGT);
-	IMAGEMANAGER->addFrameImage("skill8", "Resources/Images/Effect/single/skill8.bmp", 3300, 300, 11, 1, MGT);
-	IMAGEMANAGER->addFrameImage("skill9", "Resources/Images/Effect/single/skill9.bmp", 1500, 900, 5, 3, MGT);
-	IMAGEMANAGER->addFrameImage("skill10", "Resources/Images/Effect/single/skill10.bmp", 1200, 1200, 4, 4, MGT);
+	//skillStartLight
+	IMAGEMANAGER->addFrameImage("skill2", "Resources/Images/Effect/single/skill2.bmp", 1200, 2400, 4, 8, true, RGB(152, 0, 0));
+	IMAGEMANAGER->addFrameImage("skill3", "Resources/Images/Effect/single/skill3.bmp", 2700, 900, 9, 3, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("skill4", "Resources/Images/Effect/single/skill4.bmp", 1200, 900, 4, 3, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("skill6", "Resources/Images/Effect/single/skill6.bmp", 3000, 300, 10, 1, true, RGB(4, 64, 0));
+	IMAGEMANAGER->addFrameImage("skill7", "Resources/Images/Effect/single/skill7.bmp", 3300, 300, 11, 1, true, RGB(4, 96, 4));
+	IMAGEMANAGER->addFrameImage("skill8", "Resources/Images/Effect/single/skill8.bmp", 3300, 300, 11, 1, true, RGB(4, 100, 4));
+	IMAGEMANAGER->addFrameImage("skill9", "Resources/Images/Effect/single/skill9.bmp", 1500, 900, 5, 3, true,RGB(0,0,0));
+	IMAGEMANAGER->addFrameImage("skill10", "Resources/Images/Effect/single/skill10.bmp", 1200, 1200, 4, 4, true, RGB(248, 252, 252));
 
 	//skill animation
 	ANIMATIONMANAGER->addAnimation("skill2", "skill2", 20, false, false);

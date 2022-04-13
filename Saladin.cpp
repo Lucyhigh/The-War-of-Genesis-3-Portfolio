@@ -248,8 +248,12 @@ void Saladin::update(void)
 			_cdt = 0;
 			setEnemyIdle();
 		}
-        //01000 Á×À½
     }
+    //01000 Á×À½
+	else if (_stateBit.test(3) == 1)
+	{
+		_isLive = false;
+	}
      _rcSaladin = RectMakeCenter(_saladinPos.x, _saladinPos.y, _image->getFrameWidth(), _image->getFrameHeight());
 }
 
@@ -358,6 +362,10 @@ void Saladin::render(void)
             break;
         }
     }
+	else if (_stateBit.test(3) == 1)
+	{
+		//Á×¾î¼­ ÀÌ¹ÌÁö ¾øÀ½
+	}
 }
 
 float Saladin::getSaladinPosX()

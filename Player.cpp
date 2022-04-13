@@ -276,14 +276,13 @@ void Player::update(void)
             switch (_imageState)
             {
             case PLAYERSTATE::RIGHT:
-                _indexB--;
+                _indexB++;
                 IMAGEMANAGER->findImage("playerSkillFrame")->setFrameY(0);
-                if (_indexB < 0)
-                {
-                    _indexB = 19;
-
+				if (_indexB >= 19)
+				{
+					_indexB = 0;
                     _isAttack = true;
-                    setPlayerIdle();
+                   //setPlayerIdle();
                 }
                 IMAGEMANAGER->findImage("playerSkillFrame")->setFrameX(_indexB);
                 break;
@@ -294,29 +293,29 @@ void Player::update(void)
                 {
                     _indexB = 0;
                     _isAttack = true;
-                    setPlayerIdle();
+                    //setPlayerIdle();
                 }
                 IMAGEMANAGER->findImage("playerSkillFrame")->setFrameX(_indexB);
                 break;
             case PLAYERSTATE::TOP:
                 _indexB++;
                 IMAGEMANAGER->findImage("playerSkillFrame")->setFrameY(1);
-                if (_indexB >= 4)
+                if (_indexB >= 19)
                 {
                     _indexB = 0;
                     _isAttack = true;
-                    setPlayerIdle();
+                    //setPlayerIdle();
                 }
                 IMAGEMANAGER->findImage("playerSkillFrame")->setFrameX(_indexB);
                 break;
             case PLAYERSTATE::BOTTOM:
                 _indexB++;
                 IMAGEMANAGER->findImage("playerSkillFrame")->setFrameY(1);
-                if (_indexB >= 4)
+                if (_indexB >= 19)
                 {
                     _indexB = 0;
                     _isAttack = true;
-                    setPlayerIdle();
+                    //setPlayerIdle();
                 }
                 IMAGEMANAGER->findImage("playerSkillFrame")->setFrameX(_indexB);
                 break;
@@ -411,7 +410,11 @@ void Player::render(void)
     }
 	else if (_stateBit.test(3) == 1)
 	{
-		IMAGEMANAGER->frameRender("skillStart", getMemDC(), left -100, top-70);
+		IMAGEMANAGER->frameRender("skillStart", getMemDC(), left - 100, top - 70);
+	}
+	else if (_stateBit.test(4) == 1)
+	{
+		IMAGEMANAGER->frameRender("playerSkillFrame", getMemDC(), left - 100, top - 70);
 	}
 }
 

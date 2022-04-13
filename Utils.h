@@ -34,7 +34,5 @@ namespace MY_UTIL
 	//start부터 end까지의 각을 라디안으로 구한다.
 	float getAngle(float startX, float statrY, float endX, float endY);
 
+	vector<string> getFilesInDirectory(const string& _path, const string& _filter);
 }
-
-
-
