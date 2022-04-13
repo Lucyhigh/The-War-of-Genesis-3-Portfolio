@@ -283,38 +283,73 @@ void FinalScene::update(void)
 		// 0000 0001 : 메뉴창염 - 타일클릭해도 이동안되어야함 버튼클릭상태
 		else if (_turnSystem->getPlayerBit(0) == 1)
 		{
+			_moveTileBit.set(2);//100
+
 			_gameUI->update();
 			if (!_gameUI->getMenu())
 			{
-				if (_gameUI->getPlayerTurn() &&!_gameUI->getSkillMenu())
+				if (_gameUI->getPlayerTurn() &&!_gameUI->getSkillMenu() && _gameUI->getSkillNum() == SKILL_INDEX_NULL)
 				{
 					_turnSystem->changeToPlayer();
+					_moveTileBit.reset();
+					cout << "1번째" << _gameUI->getPlayerTurn() << endl;
 				}
-				else if(!_gameUI->getPlayerTurn() && !_gameUI->getSkillMenu())
+				else if(!_gameUI->getPlayerTurn() && !_gameUI->getSkillMenu() && _gameUI->getSkillNum() == SKILL_INDEX_NULL)
 				{
+					_vAttackableTile.clear();
 					_turnSystem->changeToEnemy();
 					_moveTileBit.reset();
+					cout<<"2번째 _gameUI->getPlayerTurn() "<< _gameUI->getPlayerTurn() <<endl;
 				}
 
 				if (_gameUI->getSkillMenu())
 				{
 					_gameUI->showSkillMenu(playerUI);
 				}
-                else
-                {
-                   // _gameUI->showBattleMenu(playerUI);
-                }
+
 				if (_gameUI->getSkillNum() == SKILL_INDEX_WORLDBROKEN)
 				{
 					_turnSystem->setPlayerBit(4);
 					_player->setPlayerStateBit(3);
+					//_moveTileBit.set(0); //101- 공격타일 활성화 상태
 				}
                 else if (_gameUI->getSkillNum() == SKILL_INDEX_WINDEYUN)
                 {
-					_turnSystem->setPlayerBit(5);
-                    _player->setPlayerStateBit(4);
+					_moveTileBit.set(0,true); //101- 공격타일 활성화 상태
+					if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+					{
+						for (auto iterator = _vAttackableTile.begin(); iterator != _vAttackableTile.end(); ++iterator)
+						{
+							if (PtInRect(&(*iterator)->getRect(), cameraMouse) && KEYMANAGER->isStayKeyDown(VK_LBUTTON))
+							{
+								if ((*iterator)->getType() == CELL_TYPE::ENEMY)
+								{
+									_turnSystem->setPlayerBit(5);
+									_player->setPlayerStateBit(4);
+									//_moveTileBit.reset();
+									cout << "공격" << _moveTileBit << endl;
+								}
+								else
+								{
+									_gameUI->setSkillNum(SKILL_NUMBER::SKILL_INDEX_NULL);
+									_turnSystem->setPlayerBit(0);
+									_moveTileBit.reset();
+									cout << "다시 대기중으로 000" << _moveTileBit << endl;
+
+								}
+							}
+							if (KEYMANAGER->isOnceKeyDown(VK_RBUTTON))
+							{
+								
+								//_moveTileBit.reset();
+							}
+						}
+					}
+
                 }
 			}
+			//cout << _moveTileBit << endl;
+
 		}
 		// 0000 0010 : 이동중 - 메뉴창 뜨면 안됨 다른곳으로 이동못함
 		else if (_turnSystem->getPlayerBit(1) == 1)
@@ -354,6 +389,8 @@ void FinalScene::update(void)
                 _gameUI->setSkillNum(SKILL_NUMBER::SKILL_INDEX_NULL);
 				_skill->setCdt(0);
             }
+			cout << "_player->getPlayerStateBit(4) 1 ==" << _player->getPlayerStateBit(4)<< endl;
+
         }
 	}
 	else if (_turnSystem->getStatus() == CHANGINGSTATUS::ENEMYTURN)
@@ -674,7 +711,9 @@ void FinalScene::rectMoveToPath()
 				(*iter)->setType(CELL_TYPE::NORMAL);
 			}
 			_vMoveableTile.clear();
-			
+			_vAttackableTile.clear();
+			//_moveTileBit.reset();
+
 			_moveTileBit.reset(1);
 			if (_cMoveStart->getCellX() == _enemyPathGoal.x && _cMoveStart->getCellY() == _enemyPathGoal.y)
 			{
@@ -957,7 +996,7 @@ void FinalScene::find4WaysTile()
 				if (cell->getCellX() == temp.x && cell->getCellY() == temp.y)
 				{
 					//if (cell->getType() == CELL_TYPE::NORMAL || cell->getType() == CELL_TYPE::MOVEPATH || cell->getType() == CELL_TYPE::MOVEABLE || cell->getType() == CELL_TYPE::ATTACKABLE)//==================================
-					if (cell->getType() != CELL_TYPE::WALL && cell->getType() != CELL_TYPE::GOAL && cell->getType() != CELL_TYPE::START)
+					if (cell->getType() != CELL_TYPE::WALL && cell->getType() != CELL_TYPE::GOAL )
 					{
 						float distance = getDistance(_cMoveStart->getCellX(), _cMoveStart->getCellY(), temp.x, temp.y);
 						if (distance < minDistance)
@@ -1117,7 +1156,7 @@ void FinalScene::startShowAttackableTile(int range, Cell* cell, bool isMoveable)
 
 	for (auto iter = _vAttackableTile.begin(); iter != _vAttackableTile.end(); ++iter)
 	{
-            (*iter)->setType(CELL_TYPE::ATTACKABLE);
+            if((*iter)->getType() != CELL_TYPE::ENEMY) (*iter)->setType(CELL_TYPE::ATTACKABLE);
 	}
 }
 

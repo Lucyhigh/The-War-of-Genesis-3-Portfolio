@@ -270,7 +270,7 @@ void Skill::windEyun()
 	int left = _player->getPlayerRect().left - _camera->getScreenRect().left;
 	int top = _player->getPlayerRect().top - _camera->getScreenRect().top;
 
-	string skillArr[11] = { "184light" ,"skill2", "skill3", "skill4", "184light", "skill6", "skill7", "skill8", "skill9","skill10" };
+	string skillArr[10] = { "184light" ,"skill2", "skill3", "skill4", "184light", "skill6", "skill7", "skill8", "skill9","skill10" };
 	//for (int i = 0; i < 11; i++)
 	{
 		cnt++;
