@@ -547,7 +547,7 @@ void FinalScene::render(void)
 	if(_saladin->getLive())_saladin->render();
 	if (_player->getPlayerStateBit(3) == 1 || _player->getPlayerStateBit(4) == 1)
 	{
-		_skill->render();//===========================
+		_skill->render();
 	}
 	if (_player->getLive())_player->render();
     _gameUI->render();

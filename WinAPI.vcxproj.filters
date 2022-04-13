@@ -152,7 +152,7 @@
       <Filter>Portfolio\Character</Filter>
     </ClCompile>
     <ClCompile Include="TurnSystem.cpp">
-      <Filter>Portfolio\Turn</Filter>
+      <Filter>Portfolio\TurnSystem</Filter>
     </ClCompile>
     <ClCompile Include="GameUI.cpp">
       <Filter>Portfolio\UI</Filter>
@@ -166,8 +166,9 @@
     <ClCompile Include="AnimationManager.cpp">
       <Filter>API\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="CSkill.cpp" />
-    <ClCompile Include="Skill.cpp" />
+    <ClCompile Include="Skill.cpp">
+      <Filter>Portfolio\Skill</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameNode.h">
@@ -322,7 +323,7 @@
       <Filter>Portfolio\Character</Filter>
     </ClInclude>
     <ClInclude Include="TurnSystem.h">
-      <Filter>Portfolio\Turn</Filter>
+      <Filter>Portfolio\TurnSystem</Filter>
     </ClInclude>
     <ClInclude Include="GameUI.h">
       <Filter>Portfolio\UI</Filter>
@@ -339,8 +340,9 @@
     <ClInclude Include="AnimationManager.h">
       <Filter>API\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="CSkill.h" />
-    <ClInclude Include="Skill.h" />
+    <ClInclude Include="Skill.h">
+      <Filter>Portfolio\Skill</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="API">
@@ -442,11 +444,14 @@
     <Filter Include="Portfolio\UI\MapUI">
       <UniqueIdentifier>{4b27e0f5-bed1-4fde-8e0f-5d82c34487cf}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Portfolio\Turn">
-      <UniqueIdentifier>{89794040-647c-4721-a51f-70ab7862a6ab}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Portfolio\Character">
       <UniqueIdentifier>{e41ec2b4-efce-4d15-b917-39c0635f522b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Portfolio\Skill">
+      <UniqueIdentifier>{31ac36bc-a87a-47d5-92dd-1f4b367eb2bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Portfolio\TurnSystem">
+      <UniqueIdentifier>{89794040-647c-4721-a51f-70ab7862a6ab}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

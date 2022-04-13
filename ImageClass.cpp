@@ -196,10 +196,10 @@ HRESULT ImageClass::init(void)
 	IMAGEMANAGER->addFrameImage("skill7", "Resources/Images/Effect/single/skill7.bmp", 3300, 300, 11, 1, true, RGB(4, 96, 4));
 	IMAGEMANAGER->addFrameImage("skill8", "Resources/Images/Effect/single/skill8.bmp", 3300, 300, 11, 1, true, RGB(4, 100, 4));
 	IMAGEMANAGER->addFrameImage("skill9", "Resources/Images/Effect/single/skill9.bmp", 1500, 900, 5, 3, true,RGB(0,0,0));
-	IMAGEMANAGER->addFrameImage("skill10L", "Resources/Images/Effect/single/skill10L.bmp", 1200, 300, 4, 1, true, RGB(248, 252, 252));
-    IMAGEMANAGER->addFrameImage("skill10R", "Resources/Images/Effect/single/skill10R.bmp", 1200, 300, 4, 1, true, RGB(248, 252, 252));
-    IMAGEMANAGER->addFrameImage("skill10T", "Resources/Images/Effect/single/skill10T.bmp", 1200, 300, 4, 1, true, RGB(248, 252, 252));
-    IMAGEMANAGER->addFrameImage("skill10B", "Resources/Images/Effect/single/skill10B.bmp", 1200, 300, 4, 1, true, RGB(248, 252, 252));
+	IMAGEMANAGER->addFrameImage("skill10L", "Resources/Images/Effect/single/skill10L.bmp", 636, 150, 4, 1, true, RGB(0,0,0));
+    IMAGEMANAGER->addFrameImage("skill10R", "Resources/Images/Effect/single/skill10R.bmp", 636, 150, 4, 1, true, RGB(0,0,0));
+    IMAGEMANAGER->addFrameImage("skill10T", "Resources/Images/Effect/single/skill10T.bmp", 636, 150, 4, 1, true, RGB(0,0,0));
+    IMAGEMANAGER->addFrameImage("skill10B", "Resources/Images/Effect/single/skill10B.bmp", 636, 150, 4, 1, true, RGB(0,0,0));
 
 #pragma endregion
 	return S_OK;

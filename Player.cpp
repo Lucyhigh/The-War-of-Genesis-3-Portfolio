@@ -275,7 +275,7 @@ void Player::update(void)
         switch (_imageState)
         {
         case PLAYERSTATE::RIGHT:
-            IMAGEMANAGER->findImage("playerSkillFrame")->setFrameY(0);
+            IMAGEMANAGER->findImage("playerSkillFrame")->setFrameY(1);
             IMAGEMANAGER->findImage("playerSkillFrame")->setFrameX(_indexB);
             break;
         case PLAYERSTATE::LEFT:
@@ -283,7 +283,7 @@ void Player::update(void)
             IMAGEMANAGER->findImage("playerSkillFrame")->setFrameX(_indexB);
             break;
         case PLAYERSTATE::TOP:
-            IMAGEMANAGER->findImage("playerSkillFrame")->setFrameY(0);
+            IMAGEMANAGER->findImage("playerSkillFrame")->setFrameY(1);
             IMAGEMANAGER->findImage("playerSkillFrame")->setFrameX(_indexB);
             break;
         case PLAYERSTATE::BOTTOM:
@@ -292,29 +292,28 @@ void Player::update(void)
             break;
         }
         
-        if (_indexB == 0 || _indexB == 1 || _indexB == 2 || _indexB == 14  || _indexB == 18)
+        if (_indexB == 0 || _indexB == 1 || _indexB == 2 || _indexB == 12 || _indexB == 14 || _indexB == 15 || _indexB == 18)
         {
-            if (_count % 70 == 0) _indexB++;
+            if (_count % 160 == 0) _indexB++;
         }
-        else if (_indexB == 3 || _indexB == 4 || _indexB == 15 || _indexB == 16 || _indexB == 17)
+        else if (_indexB == 3 || _indexB == 4 || _indexB == 7 || _indexB == 13 || _indexB == 16 || _indexB == 17)
         {
-            if (_count % 50 == 0) _indexB++;
+            if (_count % 120 == 0) _indexB++;
         }
 
-        else if (5 <= _indexB && _indexB < 14)
+        else if (_indexB == 5 || _indexB == 6 || _indexB == 8 || _indexB == 9 || _indexB == 10 || _indexB == 11 )
         {
-            if (_count % 10 == 0) _indexB++;
+            if (_count % 20 == 0) _indexB++;
         }
         else if (_indexB >= 19)
         {
             _isAttack = true;
-            if (_count % 400 == 0)
+            if (_count % 1000 == 0)
             {
                 setPlayerIdle();
                 _indexB = 0;
             }
         }
-            cout << "_indexB : " << _indexB <<"_count: "<< _count << endl;
     }
 
     //100000 Á×À½
@@ -408,7 +407,7 @@ void Player::render(void)
 	}
 	else if (_stateBit.test(4) == 1)
 	{
-		IMAGEMANAGER->frameRender("playerSkillFrame", getMemDC(), left - 100, top - 70);
+		IMAGEMANAGER->frameRender("playerSkillFrame", getMemDC(), left - 100, top - 80);
 	}
 }
 
