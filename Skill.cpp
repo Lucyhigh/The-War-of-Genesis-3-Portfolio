@@ -14,8 +14,10 @@ HRESULT Skill::init(void)
 
 	_count = 10;
 	_cdt = 0;
-	frameX = 0;
-	frameY = 0;
+
+    _windSkillTick = 100;
+    _windSkillCnt = 0;
+    _windSkillIndex = 0;
 
     _skillPlayerPos = { 0,0 };
     _skillPlayerPos2 = { 0,0 };
@@ -33,7 +35,7 @@ void Skill::update(void)
 {
     if (_player->getPlayerStateBit(3) == 1)
     {
-        if (_alphaA < 80) _alphaA += 10;
+        if (_alphaA < 80) _alphaA += 5;
 
         float left = _player->getPlayerRect().left - _camera->getScreenRect().left;
         float top = _player->getPlayerRect().top - _camera->getScreenRect().top;
@@ -95,7 +97,7 @@ void Skill::update(void)
                            (long)enemyCell->getCellY()*TILESIZEY - _camera->getScreenRect().top };
         for (int i = 0; i < 4; i += 4)
         {
-            _vSkillCellPos[i + skillArr4] = { enemyPos.x - 20, enemyPos.y - 250 };																  //"one");
+            _vSkillCellPos[i + skillArr4]     = { enemyPos.x - 20, enemyPos.y - 250 };																  //"one");
             _vSkillCellPos[i + skillArr4 + 1] = { enemyPos.x - 90, enemyPos.y - 100 };																  //"95light");
             _vSkillCellPos[i + skillArr4 + 2] = { enemyPos.x - 30, enemyPos.y - 70 };																  //"48fire");
             _vSkillCellPos[i + skillArr4 + 3] = { enemyPos.x - 40, enemyPos.y - 30 };//========== enemy /가까운거부터 먼저랜더 필요 / 4가지 랜덤랜더필요  //"enemyAttack");==============
@@ -125,6 +127,7 @@ void Skill::update(void)
     }
     else if (_player->getPlayerStateBit(4) == 1)
     {
+        if (_alphaA < 40) _alphaA += 10;
 		_cdt++;
 		if (_count < _cdt)
 		{
@@ -132,21 +135,23 @@ void Skill::update(void)
 			for (auto iter = _vWindSkill.begin(); iter != _vWindSkill.end();)
 			{
 				Image* img = IMAGEMANAGER->findImage(iter->imgKey);
-				if (iter->frameX != img->getMaxFrameX()) 
-				{
-					iter->frameX++;  
-					++iter; 
-				}
-				else if (iter->frameX == img->getMaxFrameX() && iter->frameY != img->getMaxFrameY())
-				{
-					iter->frameX = 0;
-					iter->frameY++;
-					++iter;
-				}
-				else if (iter->frameX == img->getMaxFrameX() && iter->frameY == img->getMaxFrameY())
-				{
-					iter = _vWindSkill.erase(iter);
-				}
+
+                if (iter->frameX != img->getMaxFrameX())
+                {
+                    iter->frameX++;
+                    ++iter;
+                }
+                else if (iter->frameX == img->getMaxFrameX() && iter->frameY != img->getMaxFrameY())
+                {
+                    iter->frameX = 0;
+                    iter->frameY++;
+                    ++iter;
+                }
+                else if (iter->frameX == img->getMaxFrameX() && iter->frameY == img->getMaxFrameY())
+                {
+                    iter = _vWindSkill.erase(iter);
+                }
+                
 			}
 		}
     }
@@ -168,9 +173,6 @@ void Skill::render(void)
 														*skill._alpha,
 														skill._skillAnimation);
         }
-
-        IMAGEMANAGER->alphaRender("cutChange", getMemDC(), 0, 0, _alphaA);
-        IMAGEMANAGER->alphaRender("cutChangeRed", getMemDC(), 0, 0, _alphaB);
     }
     else if (_player->getPlayerStateBit(4) == 1)
     {
@@ -182,6 +184,8 @@ void Skill::render(void)
 										   iter->alpha);
 		}
     }
+    IMAGEMANAGER->alphaRender("cutChange", getMemDC(), 0, 0, _alphaA);
+    IMAGEMANAGER->alphaRender("cutChangeRed", getMemDC(), 0, 0, _alphaB);
 }
 
 void Skill::worldBrokenSkill()
@@ -262,26 +266,82 @@ void Skill::worldBrokenSkill()
     startSkill();
 }
 
-int tick = 50;
-int cnt = 0;
-int tskill = 0;
+
 void Skill::windEyun()
 {
 	int left = _player->getPlayerRect().left - _camera->getScreenRect().left;
 	int top = _player->getPlayerRect().top - _camera->getScreenRect().top;
+    //오른쪽기준으로 맞춤
+	string skillArr[11] = { "184light" ,"skill10R", "skill8", "skill9", "skill4R", "skill7", "skill9", "184light", "skill7","skill8","skill9" };
+    POINT skillPosArr[11] =
+    {
+        {left - 100, top - 70},
+        {left -150,  top - 80},
+        {left -60 , top - 110},
+        {left -60,  top - 110},
+        {0,       0 - 100},
+        {0,       0 - 100},
+        {0,       0 - 100},
+        {0 - 100, 0},
+        {0,       0 - 100},
+        {0,       0 - 100},
+        {0,       0 - 100}
+    };
+ /*   switch(_player->getImageState)
+    {
+    case PLAYERSTATE::RIGHT:
+	    skillArr[11] = { "184light" ,"skill10R", "skill8", "skill9", "skill4R", "skill7", "skill9", "184light", "skill7","skill8","skill9" };
+        break;
+    case PLAYERSTATE::LEFT:
+	    skillArr[11] = { "184light" ,"skill10L", "skill8", "skill9", "skill4L", "skill7", "skill9", "184light", "skill7","skill8","skill9" };
+        break;
+    case PLAYERSTATE::TOP:
+	    skillArr[11] = { "184light" ,"skill10T", "skill8", "skill9", "skill4T", "skill7", "skill9", "184light", "skill7","skill8","skill9" };
+        break;
+    case PLAYERSTATE::BOTTOM:
+	    skillArr[11] = { "184light" ,"skill10B", "skill8", "skill9", "skill4B", "skill7", "skill9", "184light", "skill7","skill8","skill9" };
+        break;
+    }*/
 
-	string skillArr[10] = { "184light" ,"skill2", "skill3", "skill4", "184light", "skill6", "skill7", "skill8", "skill9","skill10" };
-	//for (int i = 0; i < 11; i++)
+    
+    //BYTE skillAlpha[11];
+	_windSkillCnt++;
+	if (_windSkillCnt > _windSkillTick)
 	{
-		cnt++;
-		if (cnt > tick)
-		{
-			cnt = 0;
-			tagWindSkill skill = tagWindSkill{ skillArr[tskill++],0,0,left,top,200 };
-			_vWindSkill.push_back(skill);
-			if (tskill >= 10) tskill = 10;
-		}
+		_windSkillCnt = 0;
+		tagWindSkill skill = tagWindSkill{ skillArr[_windSkillIndex],0,0,
+                                           (int)skillPosArr[_windSkillIndex].x,
+                                           (int)skillPosArr[_windSkillIndex++].y,200 };
+		_vWindSkill.push_back(skill);
+        if (_windSkillIndex == 0) _windSkillTick = 1;
+        if (_windSkillIndex == 1) _windSkillTick = 1;//1,2번 동시나옴
+        else if (_windSkillIndex == 2) _windSkillTick = 50;
+        else if (_windSkillIndex == 3) _windSkillTick = 50;
+        else _windSkillTick = 500;
+
+        if (_windSkillIndex == 3 )
+        {
+            _alphaB = 200;
+        }
+        else _alphaB = 0;
 	}
+
+    /*for (auto iter = _vWindSkill.begin(); iter != _vWindSkill.end();)
+    {
+        Image* img = IMAGEMANAGER->findImage(iter->imgKey);
+        if (iter->frameX != img->getMaxFrameX())
+        {
+
+        }
+        else if (iter->frameX == img->getMaxFrameX() && iter->frameY != img->getMaxFrameY())
+        {
+
+        }
+        else if (iter->frameX == img->getMaxFrameX() && iter->frameY == img->getMaxFrameY())
+        {
+
+        }
+    }*/
 }
 
 void Skill::pushCellSkill(int idx,string imgKey, int vNum, BYTE alpha,Animation* anim)//알파값 이상함
@@ -294,6 +354,13 @@ void Skill::pushCellSkill(int idx,string imgKey, int vNum, BYTE alpha,Animation*
 void Skill::startSkill()
 {
     _isStart = true;
+}
+
+void Skill::reset()
+{
+    _cdt = 0;
+    _windSkillIndex = 0;
+    _windSkillTick = 100;
 }
 
 void Skill::setPlayer(Player * player)

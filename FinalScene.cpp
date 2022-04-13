@@ -23,11 +23,11 @@ HRESULT FinalScene::init(void)
 	_player = new Player;
 	_player->init();
 	_player->setPlayerPosX(16 * TILESIZEX);
-	_player->setPlayerPosY(20 * TILESIZEY);
+	_player->setPlayerPosY(10 * TILESIZEY);
 
 	_saladin = new Saladin;
 	_saladin->init();
-	_saladin->setSaladinPosX(19 * TILESIZEX);
+	_saladin->setSaladinPosX(18 * TILESIZEX);
 	_saladin->setSaladinPosY(10 * TILESIZEY);
     _saladin->setEnemyIdle();
 
@@ -326,22 +326,18 @@ void FinalScene::update(void)
 								{
 									_turnSystem->setPlayerBit(5);
 									_player->setPlayerStateBit(4);
-									//_moveTileBit.reset();
-									cout << "공격" << _moveTileBit << endl;
 								}
 								else
 								{
 									_gameUI->setSkillNum(SKILL_NUMBER::SKILL_INDEX_NULL);
 									_turnSystem->setPlayerBit(0);
 									_moveTileBit.reset();
-									cout << "다시 대기중으로 000" << _moveTileBit << endl;
-
 								}
 							}
 							if (KEYMANAGER->isOnceKeyDown(VK_RBUTTON))
 							{
-								
-								//_moveTileBit.reset();
+                                _turnSystem->changeToPlayer();
+								_moveTileBit.reset();
 							}
 						}
 					}
@@ -375,7 +371,7 @@ void FinalScene::update(void)
             {
 				_saladin->getEnemyStateBit(3);
                 _gameUI->setSkillNum(SKILL_NUMBER::SKILL_INDEX_NULL);
-				_skill->setCdt(0);
+				_skill->reset();
             }
 		}
         //0010 0000 : 풍아열공참 스킬 사용
@@ -385,12 +381,13 @@ void FinalScene::update(void)
             _skill->update();
             if (_player->getPlayerStateBit(4) == 0)
             {
-                _turnSystem->changeToEnemy();
+                _vAttackableTile.clear();
                 _gameUI->setSkillNum(SKILL_NUMBER::SKILL_INDEX_NULL);
-				_skill->setCdt(0);
+				_skill->reset();
+                _turnSystem->changeToEnemy();
+                _moveTileBit.reset();
+                cout << "그만" << endl;
             }
-			cout << "_player->getPlayerStateBit(4) 1 ==" << _player->getPlayerStateBit(4)<< endl;
-
         }
 	}
 	else if (_turnSystem->getStatus() == CHANGINGSTATUS::ENEMYTURN)
@@ -399,6 +396,19 @@ void FinalScene::update(void)
 		if (_turnSystem->isEnemyIdle() == 1)
 		{
 			// : 대기- 대기이미지 - 캐릭터 시작타일 파악후 캐릭터 좌우상하 4개 타일 중 가까운 타일 선택해 그곳을 목표로 3칸씩 이동?
+            POINT playerPos = { _player->getPlayerPosX() - TILESIZEX, _player->getPlayerPosY() };
+            for (auto cellsIter = _cells->begin(); cellsIter != _cells->end(); ++cellsIter)//클릭 가능한 타일만 되게 지정
+            {
+                Cell* cell = (*cellsIter);
+                if (PtInRect(&cell->getRect(), playerPos))
+                {
+                    if (cell->getType() != CELL_TYPE::WALL)
+                    {
+                        cell->setType(CELL_TYPE::START);
+                        _cMoveStart = cell;
+                    }
+                }
+            }
             find4WaysTile();
 		}
 		// 0000 0010 : 이동중 - 
@@ -456,10 +466,6 @@ void FinalScene::update(void)
 	    {
 	    	startShowAttackableTile(1, _cMoveStart, false);
 	    }
-       /* else if (_gameUI->getSkillNum() == SKILL_INDEX_WORLDBROKEN && !_isSkillStart)
-        {
-            startShowSkillAttackableTile(10, _cMoveStart, false);
-        }*/
     }
 }
 
@@ -1120,6 +1126,24 @@ void FinalScene::computeShowAttackableTile(int range, Cell* cell, bool isMoveabl
 	_qAttackTile.push(make_pair(range - 1, (*_cells)[tempX + (tempY + 2) * STAGE3TILEX]));
 	_qAttackTile.push(make_pair(range - 1, (*_cells)[tempX + (tempY - 2)* STAGE3TILEX]));
 }
+
+void FinalScene::startShowAttackableTile(int range, Cell* cell, bool isMoveable)
+{
+    _vAttackableTile.clear();
+    _qAttackTile.push(make_pair(range, cell));
+
+    while (!_qAttackTile.empty())
+    {
+        computeShowAttackableTile(_qAttackTile.front().first, _qAttackTile.front().second, isMoveable);
+        _qAttackTile.pop();
+    }
+
+    for (auto iter = _vAttackableTile.begin(); iter != _vAttackableTile.end(); ++iter)
+    {
+        if ((*iter)->getType() != CELL_TYPE::ENEMY) (*iter)->setType(CELL_TYPE::ATTACKABLE);
+    }
+}
+
 void FinalScene::computeShowSkillAttackableTile(int range, Cell * cell, bool isMoveable)
 {
     //천지파열무
@@ -1142,22 +1166,6 @@ void FinalScene::computeShowSkillAttackableTile(int range, Cell * cell, bool isM
     _qSkillTile.push(make_pair(range - 1, (*_cells)[tempX - 1 + (tempY - 1) * STAGE3TILEX]));
     _qSkillTile.push(make_pair(range - 1, (*_cells)[tempX - 1 + (tempY + 1) * STAGE3TILEX]));
 
-}
-void FinalScene::startShowAttackableTile(int range, Cell* cell, bool isMoveable)
-{
-	_vAttackableTile.clear();
-	_qAttackTile.push(make_pair(range, cell));
-
-	while (!_qAttackTile.empty())
-	{
-		computeShowAttackableTile(_qAttackTile.front().first, _qAttackTile.front().second, isMoveable);
-		_qAttackTile.pop();
-	}
-
-	for (auto iter = _vAttackableTile.begin(); iter != _vAttackableTile.end(); ++iter)
-	{
-            if((*iter)->getType() != CELL_TYPE::ENEMY) (*iter)->setType(CELL_TYPE::ATTACKABLE);
-	}
 }
 
 void FinalScene::startShowSkillAttackableTile(int range, Cell * cell, bool isMoveable)

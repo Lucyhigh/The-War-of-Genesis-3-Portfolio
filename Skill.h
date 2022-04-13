@@ -60,12 +60,12 @@ private:
 	vector<tagWindSkill> _vWindSkill;
 	int _count;
 	int _cdt;
-	int frameX;
-	int frameY;
 
 	int _alphaA;
 	int _alphaB;
-
+    int _windSkillTick;
+    int _windSkillCnt;
+    int _windSkillIndex;
 public:
 	int getSkillIndex() { return _skillIndex; }
     void startSkill();
@@ -74,7 +74,7 @@ public:
     void setCells(vector<Cell*>* cells);
 	void pushCellSkill(int idx, string imgKey, int vNum, BYTE alpha, Animation* anim);
 
-	void setCdt(int cdt) { _cdt = cdt; }
+    void reset();
 	HRESULT init(void);
 	void release(void);
 	void update(void);

@@ -87,11 +87,14 @@ void GameUI::update(void)
 					_isSkillMenu = true;
 					break;
 				case 1:
+                    cout << "캐릭터" << endl;
 					break;
 				case 2:
 					_isPlayerTurn = false;
+                    cout << "휴식" << endl;
 					break;
 				case 3:
+                    cout << "상태" << endl;
 					break;
 				}
 				_isMainMenu = false;

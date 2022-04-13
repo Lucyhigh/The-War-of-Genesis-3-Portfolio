@@ -253,6 +253,7 @@ void Player::update(void)
         }
         //001000 천지파열무
     }
+    //001 000 천지파열무
     else if (_stateBit.test(3) == 1)
     {
         if (_count % 200 == 0)
@@ -271,56 +272,49 @@ void Player::update(void)
     //010 000 풍아열공참
     else if (_stateBit.test(4) == 1)
     {
-        if (_count % 30 == 0)
+        switch (_imageState)
         {
-            switch (_imageState)
+        case PLAYERSTATE::RIGHT:
+            IMAGEMANAGER->findImage("playerSkillFrame")->setFrameY(0);
+            IMAGEMANAGER->findImage("playerSkillFrame")->setFrameX(_indexB);
+            break;
+        case PLAYERSTATE::LEFT:
+            IMAGEMANAGER->findImage("playerSkillFrame")->setFrameY(1);
+            IMAGEMANAGER->findImage("playerSkillFrame")->setFrameX(_indexB);
+            break;
+        case PLAYERSTATE::TOP:
+            IMAGEMANAGER->findImage("playerSkillFrame")->setFrameY(0);
+            IMAGEMANAGER->findImage("playerSkillFrame")->setFrameX(_indexB);
+            break;
+        case PLAYERSTATE::BOTTOM:
+            IMAGEMANAGER->findImage("playerSkillFrame")->setFrameY(1);
+            IMAGEMANAGER->findImage("playerSkillFrame")->setFrameX(_indexB);
+            break;
+        }
+        
+        if (_indexB == 0 || _indexB == 1 || _indexB == 2 || _indexB == 14  || _indexB == 18)
+        {
+            if (_count % 70 == 0) _indexB++;
+        }
+        else if (_indexB == 3 || _indexB == 4 || _indexB == 15 || _indexB == 16 || _indexB == 17)
+        {
+            if (_count % 50 == 0) _indexB++;
+        }
+
+        else if (5 <= _indexB && _indexB < 14)
+        {
+            if (_count % 10 == 0) _indexB++;
+        }
+        else if (_indexB >= 19)
+        {
+            _isAttack = true;
+            if (_count % 400 == 0)
             {
-            case PLAYERSTATE::RIGHT:
-                _indexB++;
-                IMAGEMANAGER->findImage("playerSkillFrame")->setFrameY(0);
-				if (_indexB >= 19)
-				{
-					_indexB = 0;
-                    _isAttack = true;
-                   //setPlayerIdle();
-                }
-                IMAGEMANAGER->findImage("playerSkillFrame")->setFrameX(_indexB);
-                break;
-            case PLAYERSTATE::LEFT:
-                _indexB++;
-                IMAGEMANAGER->findImage("playerSkillFrame")->setFrameY(1);
-                if (_indexB >= 19)
-                {
-                    _indexB = 0;
-                    _isAttack = true;
-                    //setPlayerIdle();
-                }
-                IMAGEMANAGER->findImage("playerSkillFrame")->setFrameX(_indexB);
-                break;
-            case PLAYERSTATE::TOP:
-                _indexB++;
-                IMAGEMANAGER->findImage("playerSkillFrame")->setFrameY(1);
-                if (_indexB >= 19)
-                {
-                    _indexB = 0;
-                    _isAttack = true;
-                    //setPlayerIdle();
-                }
-                IMAGEMANAGER->findImage("playerSkillFrame")->setFrameX(_indexB);
-                break;
-            case PLAYERSTATE::BOTTOM:
-                _indexB++;
-                IMAGEMANAGER->findImage("playerSkillFrame")->setFrameY(1);
-                if (_indexB >= 19)
-                {
-                    _indexB = 0;
-                    _isAttack = true;
-                    //setPlayerIdle();
-                }
-                IMAGEMANAGER->findImage("playerSkillFrame")->setFrameX(_indexB);
-                break;
+                setPlayerIdle();
+                _indexB = 0;
             }
         }
+            cout << "_indexB : " << _indexB <<"_count: "<< _count << endl;
     }
 
     //100000 죽음

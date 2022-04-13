@@ -188,22 +188,19 @@ HRESULT ImageClass::init(void)
 	//skillStartLight
 	IMAGEMANAGER->addFrameImage("skill2", "Resources/Images/Effect/single/skill2.bmp", 1200, 2400, 4, 8, true, RGB(152, 0, 0));
 	IMAGEMANAGER->addFrameImage("skill3", "Resources/Images/Effect/single/skill3.bmp", 2700, 900, 9, 3, true, RGB(0, 0, 0));
-	IMAGEMANAGER->addFrameImage("skill4", "Resources/Images/Effect/single/skill4.bmp", 1200, 900, 4, 3, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("skill4L", "Resources/Images/Effect/single/skill4L.bmp", 1200, 300, 4, 1, true, RGB(0, 0, 0));
+    IMAGEMANAGER->addFrameImage("skill4R", "Resources/Images/Effect/single/skill4R.bmp", 1200, 300, 4, 1, true, RGB(0, 0, 0));
+    IMAGEMANAGER->addFrameImage("skill4T", "Resources/Images/Effect/single/skill4T.bmp", 1200, 300, 4, 1, true, RGB(0, 0, 0));
+    IMAGEMANAGER->addFrameImage("skill4B", "Resources/Images/Effect/single/skill4B.bmp", 1200, 300, 4, 1, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addFrameImage("skill6", "Resources/Images/Effect/single/skill6.bmp", 3000, 300, 10, 1, true, RGB(4, 64, 0));
 	IMAGEMANAGER->addFrameImage("skill7", "Resources/Images/Effect/single/skill7.bmp", 3300, 300, 11, 1, true, RGB(4, 96, 4));
 	IMAGEMANAGER->addFrameImage("skill8", "Resources/Images/Effect/single/skill8.bmp", 3300, 300, 11, 1, true, RGB(4, 100, 4));
 	IMAGEMANAGER->addFrameImage("skill9", "Resources/Images/Effect/single/skill9.bmp", 1500, 900, 5, 3, true,RGB(0,0,0));
-	IMAGEMANAGER->addFrameImage("skill10", "Resources/Images/Effect/single/skill10.bmp", 1200, 1200, 4, 4, true, RGB(248, 252, 252));
+	IMAGEMANAGER->addFrameImage("skill10L", "Resources/Images/Effect/single/skill10L.bmp", 1200, 300, 4, 1, true, RGB(248, 252, 252));
+    IMAGEMANAGER->addFrameImage("skill10R", "Resources/Images/Effect/single/skill10R.bmp", 1200, 300, 4, 1, true, RGB(248, 252, 252));
+    IMAGEMANAGER->addFrameImage("skill10T", "Resources/Images/Effect/single/skill10T.bmp", 1200, 300, 4, 1, true, RGB(248, 252, 252));
+    IMAGEMANAGER->addFrameImage("skill10B", "Resources/Images/Effect/single/skill10B.bmp", 1200, 300, 4, 1, true, RGB(248, 252, 252));
 
-	//skill animation
-	ANIMATIONMANAGER->addAnimation("skill2", "skill2", 20, false, false);
-	ANIMATIONMANAGER->addAnimation("skill3", "skill3", 20, false, false);
-	ANIMATIONMANAGER->addAnimation("skill4", "skill4", 20, false, false);
-	ANIMATIONMANAGER->addAnimation("skill6", "skill6", 20, false, false);
-	ANIMATIONMANAGER->addAnimation("skill7", "skill7", 20, false, false);
-	ANIMATIONMANAGER->addAnimation("skill8", "skill8", 20, false, false);
-	ANIMATIONMANAGER->addAnimation("skill9", "skill9", 20, false, false);
-	ANIMATIONMANAGER->addAnimation("skill10","skill10", 20, false, false);
 #pragma endregion
 	return S_OK;
 }
