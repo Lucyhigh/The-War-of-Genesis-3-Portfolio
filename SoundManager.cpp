@@ -1,9 +1,45 @@
 #include "Stdafx.h"
 #include "SoundManager.h"
 
+unsigned int SoundManager::getLength(string keyName)
+{
+    Sound* currentSound = nullptr;
+    unsigned int length = 0;
+    int count = 0;
+    arrSoundsIter iter = _mTotalSounds.begin();
+    for (iter; iter != _mTotalSounds.end(); ++iter, count++)
+    {
+        if (keyName == iter->first)
+        {
+            _channel[count]->getCurrentSound(&currentSound);
+            currentSound->getLength(&length, FMOD_TIMEUNIT_MS);
+            break;
+        }
+    }
+    return length;
+}
+
+unsigned int SoundManager::getPosition(string keyName)
+{
+    unsigned int position = 0;
+    int count = 0;
+    arrSoundsIter iter = _mTotalSounds.begin();
+    for (iter; iter != _mTotalSounds.end(); ++iter, count++)
+    {
+        if (keyName == iter->first)
+        {
+            _channel[count]->getPosition(&position, FMOD_TIMEUNIT_MS);
+            break;
+        }
+    }
+    return position;
+
+}
+
 SoundManager::SoundManager() :_system(nullptr),
 _channel(nullptr),
-_sound(nullptr)
+_sound(nullptr),
+isPlay(false)
 {
 }
 
@@ -132,4 +168,22 @@ void SoundManager::resume(string keyName)
 			break;
 		}
 	}
+}
+
+bool SoundManager::isPlaySound(string keyName)
+{
+    
+
+    arrSoundsIter iter = _mTotalSounds.begin();
+    int count = 0;
+    for (iter; iter != _mTotalSounds.end(); ++iter, count++)
+    {
+        if (keyName == iter->first)
+        {
+            _channel[count]->isPlaying(&isPlay);
+            break;
+        }
+    }
+    return isPlay;
+
 }

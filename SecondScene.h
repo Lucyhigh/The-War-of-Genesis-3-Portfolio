@@ -16,7 +16,6 @@ private:
 	RECT _moveRc;
 
 	vector<string> _vSoundName;
-	float _soundVolume;
 	int _playIndex;
 
 
@@ -37,7 +36,8 @@ private:
 	int _moveIndex;
 	int _count;
 	bool _isMove;
-	bool _isfadeOut;
+	bool _isFadeOut;
+	bool _isFadeIn;
 
 public:
 	HRESULT init(void);
@@ -45,8 +45,9 @@ public:
 	void update(void);
 	void render(void);
 	void fadeout();
+	void fadeIn();
 public:
-	SecondScene() :_isfadeOut(false),
+	SecondScene() :
 	_bgImage
 	{
 		{0,"cutChange"},

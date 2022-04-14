@@ -22,18 +22,14 @@ HRESULT MainGame::init(void)
 	ImageClass imageClass = ImageClass();
 	imageClass.init();
 
-	SCENEMANAGER->addScene("inven", new Inventory);
-	SCENEMANAGER->addScene("json", new JsonDataScene);
-
 	//Scene
 	SCENEMANAGER->addScene("title", new TitleScene);
 	SCENEMANAGER->addScene("map", new MapScene);
-	//SCENEMANAGER->addScene("first", new FirstScene);
 	SCENEMANAGER->addScene("second", new SecondScene);
 	SCENEMANAGER->addScene("final", new FinalScene);
 	SCENEMANAGER->addScene("ending", new EndingScene);
 
-    SCENEMANAGER->changeScene("second");
+    SCENEMANAGER->changeScene("ending");
 	return S_OK;
 }
 

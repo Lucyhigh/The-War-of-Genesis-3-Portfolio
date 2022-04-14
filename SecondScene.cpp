@@ -31,7 +31,8 @@ HRESULT SecondScene::init(void)
     _textAlpha = 0;
     _fadeAlpha = 0;
     _bgMoved = WINSIZE_X;
-
+    _isFadeOut = false;
+    _isFadeIn = true;
 
     return S_OK;
 }
@@ -53,7 +54,7 @@ void SecondScene::update(void)
         else if(_textBufferCnt == wcslen(_text[_textIndex].script))
         {
             _textBufferCnt = 0;
-			SOUNDMANAGER->play("changeScene", 1.0f);
+			SOUNDMANAGER->play("changeScene", 0.5f);
            if(_textIndex<TEXTNum) _textIndex++;
 			_alpha = 150;
 			
@@ -66,12 +67,12 @@ void SecondScene::update(void)
 			{
 				_playIndex = _vSoundName.size() - 1;
 			}
-			SOUNDMANAGER->play(_vSoundName[_playIndex], _soundVolume);
+			SOUNDMANAGER->play(_vSoundName[_playIndex], 1.0f);
         }
     }
     if (_textIndex == 9 || _textIndex == 47)
     {
-        _isfadeOut = true;
+        _isFadeOut = true;
     }
    
     if (_count % 2 == 0 && _textBufferCnt < wcslen(_text[_textIndex].script))
@@ -88,7 +89,7 @@ void SecondScene::update(void)
     if (_alpha < 0) _alpha = 0;
     if (_eventAlpha >= 255) _eventAlpha = 255;
     if (_textAlpha >= 210) _textAlpha = 210;
-    if (_isfadeOut)
+    if (_isFadeOut)
     {
         fadeout();
     }
@@ -132,7 +133,7 @@ void SecondScene::render(void)
             wcslen(_text[_textIndex].script) - SCRIPT_MAX_LENGTH : _textBufferCnt - SCRIPT_MAX_LENGTH, TA_LEFT, RGB(255, 255, 255));
     }
 
-	if (_isfadeOut)
+	if (_isFadeOut)
 	{
 		IMAGEMANAGER->alphaRender("cutChange", getMemDC(), _fadeAlpha);
 	}
@@ -141,12 +142,12 @@ void SecondScene::render(void)
 }
 void SecondScene::fadeout()
 {
-	if (_isfadeOut)
+	if (_isFadeOut)
 	{
 		_fadeAlpha += 2.0f;
 		if (_fadeAlpha > 253)
 		{
-			_isfadeOut = false;
+			_isFadeOut = false;
 			_fadeAlpha = 0;
             _textBufferCnt = 0;
             _alpha = 150;
@@ -154,4 +155,20 @@ void SecondScene::fadeout()
             if (_textIndex == 47 ) SCENEMANAGER->changeScene("final");
 		}
 	}
+}
+
+void SecondScene::fadeIn()
+{
+    if (_textIndex == 0)
+    {
+        if (_fadeAlpha < 30) _fadeAlpha -= 5.0f;
+        else
+        {
+            _isFadeIn = false;
+            if (_fadeAlpha <= 20) _fadeAlpha = 30;
+        }
+
+    }
+    cout << _fadeAlpha << endl;
+
 }

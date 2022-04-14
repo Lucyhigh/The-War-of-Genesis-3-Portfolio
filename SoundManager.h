@@ -22,7 +22,7 @@ private:
 	Channel** _channel;      //사운드 채널
 
 	arrSounds _mTotalSounds;
-
+    bool isPlay;
 public:
 	HRESULT init(void);
 	void release(void);
@@ -34,7 +34,10 @@ public:
 	void stop(string keyName);
 	void pause(string keyName);
 	void resume(string keyName);
+    bool isPlaySound(string keyName);
 
+    unsigned int getLength(string keyName);
+    unsigned int getPosition(string keyName);
 	SoundManager();
 	~SoundManager();
 
