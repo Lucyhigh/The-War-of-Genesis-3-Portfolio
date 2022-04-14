@@ -344,8 +344,6 @@ void FinalScene::update(void)
 
                 }
 			}
-			//cout << _moveTileBit << endl;
-
 		}
 		// 0000 0010 : 이동중 - 메뉴창 뜨면 안됨 다른곳으로 이동못함
 		else if (_turnSystem->getPlayerBit(1) == 1)

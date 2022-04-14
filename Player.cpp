@@ -279,7 +279,7 @@ void Player::update(void)
             IMAGEMANAGER->findImage("playerSkillFrame")->setFrameX(_indexB);
             break;
         case PLAYERSTATE::LEFT:
-            IMAGEMANAGER->findImage("playerSkillFrame")->setFrameY(1);
+            IMAGEMANAGER->findImage("playerSkillFrame")->setFrameY(0);
             IMAGEMANAGER->findImage("playerSkillFrame")->setFrameX(_indexB);
             break;
         case PLAYERSTATE::TOP:

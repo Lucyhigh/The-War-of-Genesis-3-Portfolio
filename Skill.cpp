@@ -13,7 +13,7 @@ HRESULT Skill::init(void)
 	_alphaB = 0;
 
 	_count = 10;
-	_cdt = 0;
+	_cdt = 0.0f;
 
     _windSkillTick = 20;
     _windSkillCnt = 0;
@@ -123,15 +123,15 @@ void Skill::update(void)
                 _camera->shakeStart(0.5f);
             }
         }
-        if (_cdt % 3 == 0) _skillIndex++;
+        if ((int)_cdt % 3 == 0) _skillIndex++;
     }
     else if (_player->getPlayerStateBit(4) == 1)
     {
-        if (_alphaA < 80) _alphaA += 10;
+        if (_alphaA < 200) _alphaA += 10;
 		_cdt++;
 		if (_count < _cdt)
 		{
-			_cdt = 0;
+			_cdt = 0.0f;
 			for (auto iter = _vWindSkill.begin(); iter != _vWindSkill.end();)
 			{
 				Image* img = IMAGEMANAGER->findImage(iter->imgKey);
@@ -159,6 +159,8 @@ void Skill::update(void)
 
 void Skill::render(void)
 {
+	IMAGEMANAGER->alphaRender("cutChange", getMemDC(), 0, 0, _alphaA);
+
     if (_player->getPlayerStateBit(3) == 1)
     {
         if (!_isStart) return;
@@ -184,7 +186,6 @@ void Skill::render(void)
 										   iter->alpha);
 		}
     }
-    IMAGEMANAGER->alphaRender("cutChange", getMemDC(), 0, 0, _alphaA);
     IMAGEMANAGER->alphaRender("cutChangeRed", getMemDC(), 0, 0, _alphaB);
 }
 
@@ -269,33 +270,33 @@ void Skill::worldBrokenSkill()
 
 void Skill::windEyun()
 {
-	int left = _player->getPlayerRect().left - _camera->getScreenRect().left;
-	int top = _player->getPlayerRect().top - _camera->getScreenRect().top;
+	int left = _player->getPlayerRect().left - 100 - _camera->getScreenRect().left;
+	int top = _player->getPlayerRect().top - 100 - _camera->getScreenRect().top;
     //오른쪽기준으로 맞춤
 	string skillArr[14] = { "184light" ,"skill10R", "skill8", "skill9", "skill4R","skill10R", "skill7", "skill8", "skill9", "184light", "skill7","skill8","skill9","skill3" };
     POINT skillPosArr[14] =
     {
-		{left - 100, top - 100}, // "184light"
-		{left - 50,  top - 40},	 // "skill10R"
-		{left - 60 , top - 110}, // "skill8",
-		{left - 60,  top - 110}, // "skill9",
-		{left - 60,  top - 100}, // "skill4R",
-		{left - 50,  top - 40},  // "skill10R"
-		{left - 60 , top - 110}, // "skill7",
-		{left - 60 , top - 110}, // "skill8",
-		{left - 60,  top - 110}, // "skill9", 
-		{left - 100, top - 70},	 // "184light"
-		{left - 60 , top - 110}, // "skill7"
-		{left - 60 , top - 110}, // "skill8"
-		{left - 60,  top - 110}, // "skill9" 
-		{left - 40,  top - 100}	 // "skill3" 
+		{left ,		 top },		// "184light"
+		{left + 50,  top + 60},	// "skill10R"
+		{left + 40 , top - 10}, // "skill8",
+		{left + 40,  top - 10}, // "skill9",
+		{left + 40,  top},		// "skill4R",
+		{left + 50,  top + 60}, // "skill10R"
+		{left + 40 , top - 10}, // "skill7",
+		{left + 40 , top - 10}, // "skill8",
+		{left + 40,  top - 10}, // "skill9", 
+		{left ,		 top + 30},	// "184light"
+		{left + 40 , top - 10}, // "skill7"	
+		{left + 40 , top - 10}, // "skill8"	
+		{left + 40,  top - 10}, // "skill9" 
+		{left + 60,  top}		// "skill3" 
     };			
-	BYTE skillAlpha[14] = { 180,255,160,180,220,220,160,160,200,180,160,160,180,255 };
+	BYTE skillAlpha[14] = { 180,255,140,180,220,220,140,140,200,180,140,140,180,255 };
     switch(_player->getImageState())
     {
     case PLAYERSTATE::RIGHT:
 		skillArr[1] = { "skill10R" };
-		skillArr[4] = { "skill4R" };
+		skillArr[4] = {  "skill4R" };
 		skillArr[5] = { "skill10R" };
         break;
     case PLAYERSTATE::LEFT:
@@ -315,7 +316,6 @@ void Skill::windEyun()
         break;
     }
 
-    
     //BYTE skillAlpha[11];
 	_windSkillCnt++;
 	if (_windSkillCnt > _windSkillTick &&_windSkillIndex <= 13)
@@ -334,7 +334,7 @@ void Skill::windEyun()
         else if (_windSkillIndex == 6|| _windSkillIndex == 7) _windSkillTick = 10;
         else if (_windSkillIndex == 8 || _windSkillIndex == 9 || _windSkillIndex == 10 || _windSkillIndex == 11) _windSkillTick = 30;
         else if (_windSkillIndex == 12) _windSkillTick = 10;
-        else if (_windSkillIndex == 13) _windSkillTick = 30;
+        else if (_windSkillIndex == 13) _windSkillTick = 10;
 	
         if (_windSkillIndex == 4 || _windSkillIndex == 7 || _windSkillIndex == 11)
         {

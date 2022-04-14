@@ -8,7 +8,22 @@ HRESULT SecondScene::init(void)
 	SOUNDMANAGER->addSound("changeScene", "Resources/Sounds/changeScene.mp3", false, false);
 	SOUNDMANAGER->addSound("Memory", "Resources/Sounds/Memory.mp3", true, true);
 	SOUNDMANAGER->addSound("Tears", "Resources/Sounds/Tears.mp3", true, true);
-	SOUNDMANAGER->play("Tears", 1.0f);
+	SOUNDMANAGER->play("Tears", 0.1f);
+
+	_isPause = true;
+	_isPlay = false;
+	_soundVolume = 1.0f;
+	_score = 0.0f;
+	_maxScore = 1.0f;
+	_playIndex = 0;
+	string path = "Resources/Sounds/Script/";
+	_vSoundName = getFilesInDirectory(path, "*.mp3");
+	for (string name : _vSoundName)
+	{
+		cout << name << endl;
+		SOUNDMANAGER->addSound(name, path + name, false, false);
+	}
+	SOUNDMANAGER->play(_vSoundName[_playIndex], 1.0f);
 
     _count = 0;
     _moveCount = 0;
@@ -33,7 +48,6 @@ void SecondScene::update(void)
 {
     _count++;
 	int size = _text[_textIndex].imageVec.size();
-
     if (KEYMANAGER->isOnceKeyDown(VK_SPACE) && _textIndex !=9 && _textIndex < 47)
     {
         if (_textBufferCnt < wcslen(_text[_textIndex].script))
@@ -46,6 +60,21 @@ void SecondScene::update(void)
 			SOUNDMANAGER->play("changeScene", 1.0f);
            if(_textIndex<TEXTNum) _textIndex++;
 			_alpha = 150;
+			
+			SOUNDMANAGER->stop(_vSoundName[_playIndex]);
+			cout << "stop " << _playIndex << endl;
+			cout << "stop " << _vSoundName[_playIndex] << endl;
+			if (_playIndex < _vSoundName.size() - 1)
+			{
+				_playIndex++;
+			}
+			else
+			{
+				_playIndex = _vSoundName.size() - 1;
+			}
+			cout << "play " << _playIndex << endl;
+			cout << "play " << _vSoundName[_playIndex] << endl;
+			SOUNDMANAGER->play(_vSoundName[_playIndex], _soundVolume);
         }
     }
     if (_textIndex == 9 || _textIndex == 47)
@@ -72,7 +101,7 @@ void SecondScene::update(void)
         fadeout();
     }
 
-	cout << _textIndex << endl;
+	//cout << _textIndex << endl;
 }
 
 void SecondScene::render(void)

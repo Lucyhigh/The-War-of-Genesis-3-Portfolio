@@ -104,10 +104,13 @@ void SoundManager::play(string keyName, float volume)
                 &_channel[count]);
 
 			_channel[count]->setVolume(volume);
+			cout << count << endl;
 			break;
 		}
 	}
 }
+//맵 검색특화  - 메모리에 정렬이 아니여도 키도 파인드로 찾아서 지울수있음 - 버퍼가 중요한 사운드의 채널 불일치
+//++iter 컨테이너 찾아갈때 널포인터 안뜨게 유니크 포인터 사용
 
 void SoundManager::stop(string keyName)
 {
@@ -115,7 +118,7 @@ void SoundManager::stop(string keyName)
 	int count = 0;
 	for (iter; iter != _mTotalSounds.end(); ++iter, count++)
 	{
-		if (keyName == iter->first)
+		if (keyName == iter->first) 
 			_channel[count]->stop();
 		break;
 	}

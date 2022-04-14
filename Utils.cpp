@@ -23,6 +23,7 @@ namespace MY_UTIL
 	
 		return angle;
 	}
+
 	vector<string> getFilesInDirectory(const string& _path, const string& _filter)
 	{
 		string searching = _path + _filter;

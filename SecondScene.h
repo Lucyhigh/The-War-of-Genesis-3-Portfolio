@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "GameNode.h"
 #include "Text.h"
+//#include "SoundScene.h"
 
 #define TEXTNum 48
 #define BgImageNUM 5
@@ -10,9 +11,18 @@ private:
 	tagBgImage _bgImage[BgImageNUM];
 	tagText _text[TEXTNum];//이후 json에 대사 이동
 	Animation* _aniCursor;
+	//SoundScene* _soundScene;
 	RECT _mouseRc;
 	RECT _endRc;
 	RECT _moveRc;
+
+	vector<string> _vSoundName;
+	float _soundVolume;
+	float _score;
+	float _maxScore;
+	int _playIndex;
+	bool _isPause;
+	bool _isPlay;
 
     float _bgMoved;
     float _textAlpha;

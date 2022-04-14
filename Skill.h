@@ -59,7 +59,7 @@ private:
 
 	vector<tagWindSkill> _vWindSkill;
 	int _count;
-	int _cdt;
+	float _cdt;
 
 	int _alphaA;
 	int _alphaB;

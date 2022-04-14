@@ -9,105 +9,77 @@ HRESULT SoundScene::init(void)
 	_score = 0.0f;
 	_maxScore = 1.0f;
 
-	string path = "Resource/Sound/mp3player/";
-	_vMp3Name = getFilesInDirectory(path, "*.mp3");
-	for (string name : _vMp3Name)
-	{
-		cout << name << endl;
-		SOUNDMANAGER->addSound(name, path + name, true, false);
-	}
 
-	path = "Resource/Images/mp3player/button/";
-	vector<string> vBtnImg = getFilesInDirectory(path, "*.mp3");
-	int index = 0;
-	for (string imgName : vBtnImg)
-	{
-		string temp = path + imgName;
-		_controlBtnImg[index] = IMAGEMANAGER->addImage(imgName, temp.c_str(), 48, 48);
-		index++;
-		cout << temp << endl;
-	}
 
-	path = "Resource/Images/mp3player/";
-	_vMp3ImgStr = getFilesInDirectory(path, "*.bmp");
-	index = 0;
-	for (string imgName : _vMp3ImgStr)
-	{
-		string temp = path + imgName;
-		IMAGEMANAGER->addImage(imgName, temp.c_str(), WINSIZE_X, WINSIZE_X);
-		index++;
-	}
+	//SOUNDMANAGER->play();
+	//path = "Resource/Images/mp3player/button/";
+	//vector<string> vBtnImg = getFilesInDirectory(path, "*.mp3");
+	//int index = 0;
+	//for (string imgName : vBtnImg)
+	//{
+	//	string temp = path + imgName;
+	//	_controlBtnImg[index] = IMAGEMANAGER->addImage(imgName, temp.c_str(), 48, 48);
+	//	index++;
+	//	cout << temp << endl;
+	//}
 
-	_progressBar = new ProgressBar;
-	_progressBar->init(0, WINSIZE_Y - 78, WINSIZE_X, 20);
-	_progressRc = RectMake(0, WINSIZE_Y - 68, WINSIZE_X, 20);
+	//path = "Resource/Images/mp3player/";
+	//_vMp3ImgStr = getFilesInDirectory(path, "*.bmp");
+	//index = 0;
+	//for (string imgName : _vMp3ImgStr)
+	//{
+	//	string temp = path + imgName;
+	//	IMAGEMANAGER->addImage(imgName, temp.c_str(), WINSIZE_X, WINSIZE_X);
+	//	index++;
+	//}
 
-	_controlBtnRect[PREVIUS] = RectMake(0, WINSIZE_Y - 48, 48, 48);
-	_controlBtnRect[PLAY] = RectMake(48, WINSIZE_Y - 48, 48, 48);
-	_controlBtnRect[PAUSE] = RectMake(48, WINSIZE_Y - 48, 48, 48);
-	_controlBtnRect[NEXT] = RectMake(48 * 2, WINSIZE_Y - 48, 48, 48);
-	_controlBtnRect[STOP] = RectMake(48 * 4, WINSIZE_Y - 48, 48, 48);
-	_controlBtnRect[VOLUME_DOWN] = RectMake(48 * 5, WINSIZE_Y - 48, 48, 48);
-	_controlBtnRect[VOLUME_UP] = RectMake(48 * 6, WINSIZE_Y - 48, 48, 48);
+	//_progressBar = new ProgressBar;
+	//_progressBar->init(0, WINSIZE_Y - 78, WINSIZE_X, 20);
+	//_progressRc = RectMake(0, WINSIZE_Y - 68, WINSIZE_X, 20);
 
-	_rcBottomBar = RectMake(0, WINSIZE_Y - 48, WINSIZE_X, 55);
+	//_controlBtn/Rect[PLAY] = RectMake(48, WINSIZE_Y - 48, 48, 48);
+	//_controlBtnRect[PAUSE] = RectMake(48, WINSIZE_Y - 48, 48, 48);
+	//_controlBtnRect[NEXT] = RectMake(48 * 2, WINSIZE_Y - 48, 48, 48);
+	//_controlBtnRect[STOP] = RectMake(48 * 4, WINSIZE_Y - 48, 48, 48);
+
+	//_rcBottomBar = RectMake(0, WINSIZE_Y - 48, WINSIZE_X, 55);
 	
 	return S_OK;
-
 }
 
 void SoundScene::release(void)
 {
-	SAFE_DELETE(_progressBar);
+	//SAFE_DELETE(_progressBar);
 }
 
 void SoundScene::update(void)
 {
 	if (KEYMANAGER->isOnceKeyUp(VK_LBUTTON))
 	{
-		if (PtInRect(&_controlBtnRect[PLAY], _ptMouse))
+		if (_isPlay)
 		{
-			if (_isPlay)
+			if (_isPause)
 			{
-				if (_isPause)
-				{
-					resumeSound();
-					_isPause = !_isPause;
-				}
-				else
-				{
-					pauseSound();
-					_isPause = !_isPause;
-				}
+				resumeSound();
+				_isPause = !_isPause;
 			}
 			else
 			{
-				playSound();
-				_isPlay = true;
-				_isPause = false;
+				pauseSound();
+				_isPause = !_isPause;
 			}
 		}
-
-		else if (PtInRect(&_controlBtnRect[NEXT], _ptMouse))
+		else
 		{
-			nextSound();
+			playSound();
+			_isPlay = true;
 			_isPause = false;
 		}
-
-		else if (PtInRect(&_controlBtnRect[PREVIUS], _ptMouse))
-		{
-			previusSound();
-			_isPause = false;
-		}
-
-		else if (PtInRect(&_controlBtnRect[STOP], _ptMouse))
-		{
-			stop();
-			_isPlay = false;
-			_isPause = true;
-			_score = 0.0f;
-			_maxScore = 1.0f;
-		}
+	}
+	if (KEYMANAGER->isStayKeyDown(VK_SPACE))
+	{
+		nextSound();
+		_isPause = false;
 	}
 
 	SOUNDMANAGER->update();
@@ -123,7 +95,7 @@ void SoundScene::update(void)
 
 void SoundScene::render(void)
 {
-	IMAGEMANAGER->render(_vMp3ImgStr[_playIndex], getMemDC());
+	/*IMAGEMANAGER->render(_vMp3ImgStr[_playIndex], getMemDC());
 	_whiteBox->render(getMemDC(), 0, WINSIZE_Y - 48);
 	if (_isPlay)
 	{
@@ -141,26 +113,7 @@ void SoundScene::render(void)
 		_controlBtnImg[PLAY]->render(getMemDC(), _controlBtnRect[PLAY].left, _controlBtnRect[PLAY].top);
 	}
 
-	_controlBtnImg[NEXT]->render(getMemDC(), _controlBtnRect[NEXT].left, _controlBtnRect[NEXT].top);
-
-	_controlBtnImg[PREVIUS]->render(getMemDC(), _controlBtnRect[PREVIUS].left, _controlBtnRect[PREVIUS].top);
-
-	_controlBtnImg[STOP]->render(getMemDC(), _controlBtnRect[STOP].left, _controlBtnRect[STOP].top);
-
-	_controlBtnImg[VOLUME_DOWN]->render(getMemDC(), _controlBtnRect[VOLUME_DOWN].left, _controlBtnRect[VOLUME_DOWN].top);
-
-	_controlBtnImg[VOLUME_UP]->render(getMemDC(), _controlBtnRect[VOLUME_UP].left, _controlBtnRect[VOLUME_UP].top);
-
-	char* cstr = new char[_vMp3Name[_playIndex].size() + 1];
-	copy(_vMp3Name[_playIndex].begin(), _vMp3Name[_playIndex].end(), cstr);
-	cstr[_vMp3Name[_playIndex].size()] = '\0';
-
-	//FONTMANAGER->drawText(getMemDC(), 0, WINSIZE_Y - 88, "", 20, 100, cstr, strlen(cstr), RGB(255, 255, 255));
-	SAFE_DELETE_ARRAY(cstr);
-
-	char volumeStr[32];
-	sprintf(volumeStr, "%d", static_cast<int>(_soundVolume * 100));
-	//FONTMANAGER->drawText(getMemDC(), 48 * 7, WINSIZE_Y - 48, "", 48, 100, volumeStr, strlen(volumeStr), RGB(0, 0, 0));
+	_controlBtnImg[NEXT]->render(getMemDC(), _controlBtnRect[NEXT].left, _controlBtnRect[NEXT].top);*/
 }
 
 
@@ -186,29 +139,10 @@ void SoundScene::nextSound()
 	if (_playIndex < _vMp3Name.size() - 1)
 	{
 		_playIndex++;
+		SOUNDMANAGER->play(_vMp3Name[_playIndex], _soundVolume);
 	}
 	else
 	{
-		_playIndex = _vMp3Name.size() - 1;
+		SOUNDMANAGER->stop(_vMp3Name[_playIndex]);
 	}
-	SOUNDMANAGER->play(_vMp3Name[_playIndex], _soundVolume);
-}
-
-void SoundScene::previusSound()
-{
-	SOUNDMANAGER->stop(_vMp3Name[_playIndex]);
-	if (_playIndex > 0)
-	{
-		_playIndex--;
-	}
-	else
-	{
-		_playIndex = 0;
-	}
-	SOUNDMANAGER->play(_vMp3Name[_playIndex], _soundVolume);
-}
-
-void SoundScene::stop()
-{
-	SOUNDMANAGER->stop(_vMp3Name[_playIndex]);
 }
