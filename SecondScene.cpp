@@ -16,11 +16,12 @@ HRESULT SecondScene::init(void)
 	_score = 0.0f;
 	_maxScore = 1.0f;
 	_playIndex = 0;
+
 	string path = "Resources/Sounds/Script/";
 	_vSoundName = getFilesInDirectory(path, "*.mp3");
 	for (string name : _vSoundName)
 	{
-		cout << name << endl;
+		//cout << name << endl;
 		SOUNDMANAGER->addSound(name, path + name, false, false);
 	}
 	SOUNDMANAGER->play(_vSoundName[_playIndex], 1.0f);
@@ -37,6 +38,8 @@ HRESULT SecondScene::init(void)
     _textAlpha = 0;
     _fadeAlpha = 0;
     _bgMoved = WINSIZE_X;
+
+
     return S_OK;
 }
 
@@ -62,8 +65,6 @@ void SecondScene::update(void)
 			_alpha = 150;
 			
 			SOUNDMANAGER->stop(_vSoundName[_playIndex]);
-			cout << "stop " << _playIndex << endl;
-			cout << "stop " << _vSoundName[_playIndex] << endl;
 			if (_playIndex < _vSoundName.size() - 1)
 			{
 				_playIndex++;
@@ -72,8 +73,6 @@ void SecondScene::update(void)
 			{
 				_playIndex = _vSoundName.size() - 1;
 			}
-			cout << "play " << _playIndex << endl;
-			cout << "play " << _vSoundName[_playIndex] << endl;
 			SOUNDMANAGER->play(_vSoundName[_playIndex], _soundVolume);
         }
     }
