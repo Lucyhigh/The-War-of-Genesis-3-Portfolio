@@ -6,9 +6,17 @@ HRESULT EndingScene::init(void)
     _aniCursor = ANIMATIONMANAGER->findAnimation("normalCursor");
     _aniCursor->AniStart();
     SOUNDMANAGER->addSound("changeScene", "Resources/Sounds/changeScene.mp3", false, false);
-    SOUNDMANAGER->addSound("Memory", "Resources/Sounds/Memory.mp3", true, true);
     SOUNDMANAGER->addSound("Tears", "Resources/Sounds/Tears.mp3", true, true);
-    SOUNDMANAGER->play("Tears", 1.0f);
+    SOUNDMANAGER->play("Tears", 0.7f);
+
+	string path = "Resources/Sounds/endingScript/";
+	_vSoundName = getFilesInDirectory(path, "*.mp3");
+	for (string name : _vSoundName)
+	{
+		cout << name << endl;
+		SOUNDMANAGER->addSound(name, path + name, false, false);
+	}
+	SOUNDMANAGER->play(_vSoundName[_playIndex], 1.0f);
 
     _count = 0;
     _moveCount = 0;

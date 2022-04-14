@@ -31,7 +31,7 @@ namespace MY_UTIL
 		vector<string> vfileNameList;
 
 		WIN32_FIND_DATA fd;
-		HANDLE hFind = FindFirstFile(searching.c_str(), &fd);  //현재 폴더 내 모든 파일을 찾는다.
+		HANDLE hFind = FindFirstFile(searching.c_str(), &fd);
 
 		if (hFind != INVALID_HANDLE_VALUE)
 		{

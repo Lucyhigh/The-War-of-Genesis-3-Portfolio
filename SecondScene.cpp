@@ -6,22 +6,14 @@ HRESULT SecondScene::init(void)
 	_aniCursor = ANIMATIONMANAGER->findAnimation("normalCursor");
 	_aniCursor->AniStart();
 	SOUNDMANAGER->addSound("changeScene", "Resources/Sounds/changeScene.mp3", false, false);
-	SOUNDMANAGER->addSound("Memory", "Resources/Sounds/Memory.mp3", true, true);
 	SOUNDMANAGER->addSound("Tears", "Resources/Sounds/Tears.mp3", true, true);
-	SOUNDMANAGER->play("Tears", 0.1f);
+	SOUNDMANAGER->play("Tears", 0.8f);
 
-	_isPause = true;
-	_isPlay = false;
-	_soundVolume = 1.0f;
-	_score = 0.0f;
-	_maxScore = 1.0f;
-	_playIndex = 0;
-
-	string path = "Resources/Sounds/Script/";
+	string path = "Resources/Sounds/secondScript/";
 	_vSoundName = getFilesInDirectory(path, "*.mp3");
 	for (string name : _vSoundName)
 	{
-		//cout << name << endl;
+		cout << name << endl;
 		SOUNDMANAGER->addSound(name, path + name, false, false);
 	}
 	SOUNDMANAGER->play(_vSoundName[_playIndex], 1.0f);
@@ -30,6 +22,7 @@ HRESULT SecondScene::init(void)
     _moveCount = 0;
     _textBufferCnt = 0;
     _textIndex = 0;
+	_playIndex = 0;
     _frameIndex = 0;
     _loofIndex = 0;
     _alpha = 255;
@@ -99,8 +92,6 @@ void SecondScene::update(void)
     {
         fadeout();
     }
-
-	//cout << _textIndex << endl;
 }
 
 void SecondScene::render(void)
