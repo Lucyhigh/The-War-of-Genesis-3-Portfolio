@@ -43,6 +43,7 @@ private:
     vector<tagSkill> vSkillList;
     vector<tagSkill>::iterator viSkillList;
     int _skillIndex;
+	int _soundIndex;
     bool _isStart;
 
     Player* _player;
@@ -58,6 +59,9 @@ private:
 	POINT _skillPlayerPos3;
 
 	vector<tagWindSkill> _vWindSkill;
+
+	vector<string> _vSkySoundName;
+	vector<string> _vWindSoundName;
 	int _count;
 	float _cdt;
 

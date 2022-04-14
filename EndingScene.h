@@ -2,7 +2,7 @@
 #include "GameNode.h"
 #include "Text.h"
 
-#define TEXTNumTWO 8
+#define TEXTNumTWO 4
 #define BgImageNUMTWO 9
 class EndingScene:public GameNode
 {
@@ -15,7 +15,7 @@ private:
     RECT _moveRc;
 
 	vector<string> _vSoundName;
-	int _playIndex;
+	int _soundIndex;
 
     float _bgMoved;
     float _textAlpha;
@@ -59,10 +59,6 @@ public:
         L"살라딘",{"saladin"},L"...",
         L"버몬트",{"vermont"},L"그것만은... 제발 돌려줘 그것만은...",
 		//노래재생 이 후 + 타이밍 주고 성우 재생 2부터 애니메이션 재생
-        L"",{"이미지1"},L"우리는 이렇게 다시 만났습니다.",
-        L"",{"이미지2"},L"너무나도 기나긴 시간들이 흘러 버렸습니다.",
-        L"",{"이미지3"},L"너무나도 많은 것이 변해 버렸습니다.",
-        L"",{"이미지4"},L"그래도 나는 동생을 사랑합니다.",
         L"",{"이미지4"},L"좋은 왕이 되어야한다." //엔딩씬 띄우면서 06 이후로는 타이밍으로 성우재생
     }{}
     ~EndingScene() {}

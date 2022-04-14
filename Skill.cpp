@@ -14,7 +14,7 @@ HRESULT Skill::init(void)
 
 	_count = 10;
 	_cdt = 0.0f;
-
+	_soundIndex = 0;
     _windSkillTick = 20;
     _windSkillCnt = 0;
     _windSkillIndex = 0;
@@ -23,6 +23,20 @@ HRESULT Skill::init(void)
     _skillPlayerPos2 = { 0,0 };
     _skillPlayerPos3 = { 0,0 };
     worldBrokenSkill();
+
+	string skyPath = "Resources/Sounds/sky/";
+	_vSkySoundName = getFilesInDirectory(skyPath, "*.mp3");
+	for (string name : _vSkySoundName)
+	{
+		SOUNDMANAGER->addSound(name, skyPath + name, false, false);
+	}
+
+	string windPath = "Resources/Sounds/wind/";
+	_vWindSoundName = getFilesInDirectory(windPath, "*.mp3");
+	for (string name : _vWindSoundName)
+	{
+		SOUNDMANAGER->addSound(name, windPath + name, false, false);
+	}
 
 	return S_OK;
 }
@@ -35,6 +49,7 @@ void Skill::update(void)
 {
     if (_player->getPlayerStateBit(3) == 1)
     {
+		SOUNDMANAGER->play(_vSkySoundName[_soundIndex], 1.0f);
         if (_alphaA < 80) _alphaA += 5;
 
         float left = _player->getPlayerRect().left - _camera->getScreenRect().left;
@@ -42,7 +57,7 @@ void Skill::update(void)
         float cellLeft = _player->getPlayerRect().left - 20 - _camera->getScreenRect().left;
         float cellTop = _player->getPlayerRect().top - 185 - _camera->getScreenRect().top;
 
-        _skillPlayerPos = { (long)left - 95, (long)top - 40 };
+        _skillPlayerPos  = { (long)left - 95, (long)top - 40 };
         _skillPlayerPos2 = { (long)left - 95, (long)top - 40 };
         _skillPlayerPos3 = { (long)left - 55, (long)top - 40 };
 
@@ -127,6 +142,12 @@ void Skill::update(void)
     }
     else if (_player->getPlayerStateBit(4) == 1)
     {
+		SOUNDMANAGER->play(_vWindSoundName[_soundIndex], 1.0f);
+		if (SOUNDMANAGER->getPosition("1skillStart") == SOUNDMANAGER->getLength("1skillStart") && _soundIndex == 0)
+		{
+			_soundIndex++;
+		}
+
         if (_alphaA < 200) _alphaA += 10;
 		_cdt++;
 		if (_count < _cdt)

@@ -34,10 +34,21 @@ public:
 	void stop(string keyName);
 	void pause(string keyName);
 	void resume(string keyName);
-    bool isPlaySound(string keyName);
+	bool isPlaySound(string keyName);
+	bool isPauseSound(string keyName);
 
-    unsigned int getLength(string keyName);
-    unsigned int getPosition(string keyName);
+	int getSoundCount() { return _mTotalSounds.size(); }
+
+	//sound 길이 
+	unsigned int getLength(string keyName);
+	//플레이 위치
+	unsigned int getPosition(string keyName);
+	void setPosition(string keyName, unsigned int position);
+
+	float getVolume(string keyName);
+	void setVolume(string keyName, float volume);
+	void setAllVolume(float volume);
+
 	SoundManager();
 	~SoundManager();
 

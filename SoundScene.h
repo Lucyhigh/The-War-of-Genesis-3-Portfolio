@@ -2,8 +2,6 @@
 #include "GameNode.h"
 #include "ProgressBar.h"
 
-
-
 class SoundScene : public GameNode
 {
 private:
@@ -12,7 +10,10 @@ private:
 		PAUSE = 0,
 		PLAY,
 		NEXT,
+		PREVIUS,
 		STOP,
+		VOLUME_DOWN,
+		VOLUME_UP,
 		BUTTON_END
 	};
 
@@ -39,11 +40,16 @@ public:
 	HRESULT init(void);
 	void release(void);
 	void update(void);
-	void render(void);
-
 	void resumeSound();
 	void pauseSound();
 	void playSound();
 	void nextSound();
+	void previusSound();
+	void stop();
+	void volumeDown();
+	void volumeUp();
+	void render(void);
+
+
 };
 

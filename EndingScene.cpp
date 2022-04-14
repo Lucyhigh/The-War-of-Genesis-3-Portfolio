@@ -7,7 +7,7 @@ HRESULT EndingScene::init(void)
     _aniCursor->AniStart();
     SOUNDMANAGER->addSound("changeScene", "Resources/Sounds/changeScene.mp3", false, false);
     SOUNDMANAGER->addSound("Tears", "Resources/Sounds/Tears.mp3", true, true);
-    _playIndex = 0;
+    _soundIndex = 0;
 
 	string path = "Resources/Sounds/endingScript/";
 	_vSoundName = getFilesInDirectory(path, "*.mp3");
@@ -15,7 +15,7 @@ HRESULT EndingScene::init(void)
 	{
 		SOUNDMANAGER->addSound(name, path + name, false, false);
 	}
-    SOUNDMANAGER->play(_vSoundName[_playIndex], 1.0f);
+    SOUNDMANAGER->play(_vSoundName[_soundIndex], 1.0f);
 
     _count = 0;
     _cdt = 200;
@@ -47,37 +47,37 @@ void EndingScene::update(void)
         fadeIn();
     }
    
-    if (KEYMANAGER->isOnceKeyDown(VK_SPACE) && _textIndex < 3)
+    if (!_isFadeIn && _isStory && KEYMANAGER->isOnceKeyDown(VK_SPACE))
     {
         if (_textBufferCnt < wcslen(_text[_textIndex].script))
         {
-            _textBufferCnt = wcslen(_text[_textIndex].script);
+			_textBufferCnt = wcslen(_text[_textIndex].script);
         }
         else if (_textBufferCnt == wcslen(_text[_textIndex].script))
         {
             _textBufferCnt = 0;
             SOUNDMANAGER->play("changeScene", 0.5f);
 
-            if (_textIndex != 2)_textIndex++;
-            _bgIndex++;
             _alpha = 150;
             _fadeAlpha = 0;
             _isStory = false;
- 
-            SOUNDMANAGER->stop(_vSoundName[_playIndex]);
-            if (_playIndex < _vSoundName.size() - 1)
-            {
-               _playIndex++;
-            }
-            else
-            {
-                _playIndex = _vSoundName.size() - 1;
-            }
-            SOUNDMANAGER->play(_vSoundName[_playIndex], 1.0f);
+			_bgIndex++;
+			_textIndex++;
+
+			SOUNDMANAGER->stop(_vSoundName[_soundIndex]);
+			if (_soundIndex < _vSoundName.size() - 1)
+			{
+				_soundIndex++;
+			}
+			else
+			{
+				_soundIndex = _vSoundName.size() - 1;
+			}
+			SOUNDMANAGER->play(_vSoundName[_soundIndex], 1.0f);
         }
     }
     
-    if (_count % 2 == 0 && _textBufferCnt < wcslen(_text[_textIndex].script))
+    if (_count % 10 == 0 && _textBufferCnt < wcslen(_text[_textIndex].script))
     {
         _textBufferCnt++;
     }
@@ -89,17 +89,23 @@ void EndingScene::update(void)
             if (_count > _cdt)
             {
                 _count = 0;
+				_cdt -= 40;
                 _isStory = true;
             }
         }
-        if (SOUNDMANAGER->isPlaySound("01a"))
-        {
-            cout<< SOUNDMANAGER->getPosition("01a") <<endl;
-            //if (SOUNDMANAGER->getPosition("01a") == SOUNDMANAGER->getLength("01a"))
-            {
-
-            }
-        }
+		else if (_textIndex >= 3)
+		{
+			float soundPos = 0.0f;
+			float maxSoundSize = 0.0f;
+			soundPos = SOUNDMANAGER->getPosition(_vSoundName[_soundIndex]);
+			maxSoundSize = SOUNDMANAGER->getLength(_vSoundName[_soundIndex]);//getLength 122070
+			if (soundPos / maxSoundSize * 100 >= 5)
+			{
+				_bgIndex++;
+				SOUNDMANAGER->play(_vSoundName[++_soundIndex], 1.0f);
+			}
+			cout << soundPos << endl;
+		}
     }
 
     _alpha -= 10.0f;
@@ -111,8 +117,8 @@ void EndingScene::update(void)
     if (_alpha < 0) _alpha = 0;
     if (_eventAlpha >= 255) _eventAlpha = 255;
     if (_textAlpha >= 210) _textAlpha = 210;
-    cout << _isStory << endl;
 
+   // cout << "_isFadeIn" << _isFadeIn <<"_isStory" << _isStory << endl;
 }
 
 void EndingScene::render(void)
@@ -179,8 +185,8 @@ void EndingScene::fadeIn()
     if (_fadeAlpha > 30) _fadeAlpha -= 2.0f;
     else
     {
-        _fadeAlpha = 0;
         _isFadeIn = false;
+        _fadeAlpha = 255;
     }
 }
 
