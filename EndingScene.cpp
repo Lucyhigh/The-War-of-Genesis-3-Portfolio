@@ -108,8 +108,10 @@ void EndingScene::update(void)
                         _count = 0;
                         _fadeAlpha = 255;
                         _isFadeIn = true;
-						if (_soundIndex != 3) SOUNDMANAGER->stop(_vSoundName[_soundIndex]);
+						if (!(_soundIndex == 3 || _bgIndex == 8 || _bgIndex ==10)) SOUNDMANAGER->stop(_vSoundName[_soundIndex]);
                         /*
+                        3 bg 8 10
+
                         7 8 
                         9 10
                         */
