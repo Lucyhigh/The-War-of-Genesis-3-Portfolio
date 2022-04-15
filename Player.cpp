@@ -308,7 +308,7 @@ void Player::update(void)
         else if (_indexB >= 19)
         {
             _isAttack = true;
-            if (_count % 1000 == 0)
+            if (_count % 1500 == 0)
             {
                 setPlayerIdle();
                 _indexB = 0;

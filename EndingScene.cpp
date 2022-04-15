@@ -42,7 +42,7 @@ void EndingScene::release(void)
 void EndingScene::update(void)
 {
     _count++;
-    if (_textIndex == 0 || _textIndex == 3)
+    if (_textIndex == 0 || _textIndex >= 3)
     {
         fadeIn();
     }
@@ -97,14 +97,36 @@ void EndingScene::update(void)
 		{
 			float soundPos = 0.0f;
 			float maxSoundSize = 0.0f;
-			soundPos = SOUNDMANAGER->getPosition(_vSoundName[_soundIndex]);
-			maxSoundSize = SOUNDMANAGER->getLength(_vSoundName[_soundIndex]);//getLength 122070
-			if (soundPos / maxSoundSize * 100 >= 5)
+			float cdt = 3;
+			soundPos = SOUNDMANAGER->getPosition(_vSoundName[3]);
+			maxSoundSize = SOUNDMANAGER->getLength(_vSoundName[3]);//getLength 122070
+			if (soundPos / maxSoundSize * 100 >= cdt)
 			{
-				_bgIndex++;
-				SOUNDMANAGER->play(_vSoundName[++_soundIndex], 1.0f);
+				if (_bgIndex == 3)
+				{
+					_bgIndex++;
+					SOUNDMANAGER->play(_vSoundName[++_soundIndex], 1.0f);//4
+					cout << "1. play :  _bgIndex " << _bgIndex << " _soundIndex " << _soundIndex << endl;
+				}
+				if (cdt < 100)
+				{
+					cdt += 20;
+					cout << "cdt                  " << cdt << endl;
+				}
+				else cdt = 100;
 			}
-			cout << soundPos << endl;
+			if (4 <= _bgIndex < BgImageNUMTWO)
+			{
+				if ( soundPos / maxSoundSize * 100 >= 100)
+				{
+					//_bgIndex++;
+					if(_soundIndex != 3)SOUNDMANAGER->stop(_vSoundName[_soundIndex]);
+					if(_soundIndex < 7 ) SOUNDMANAGER->play(_vSoundName[++_soundIndex], 1.0f);
+					cout << "2. 4 <= _bgIndex :" << _bgIndex << " _soundIndex " << _soundIndex << endl;
+				}
+			}
+			cout << "soundPos / maxSoundSize * 100 : " << soundPos / maxSoundSize * 100 << endl;
+
 		}
     }
 
@@ -182,7 +204,7 @@ void EndingScene::fadeout()
 
 void EndingScene::fadeIn()
 {
-    if (_fadeAlpha > 30) _fadeAlpha -= 2.0f;
+    if (_fadeAlpha > 30) _fadeAlpha -= 1.0f;
     else
     {
         _isFadeIn = false;

@@ -70,6 +70,7 @@ private:
     int _windSkillTick;
     int _windSkillCnt;
     int _windSkillIndex;
+	bool _isPlay;
 public:
 	int getSkillIndex() { return _skillIndex; }
     void startSkill();
@@ -85,6 +86,8 @@ public:
 	void render(void);
 	void worldBrokenSkill();
 	void windEyun();
+	void setplaySound(bool isPlay);
+	void playSound();
 
 public:
     Skill() {}

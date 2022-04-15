@@ -273,7 +273,6 @@ void FinalScene::update(void)
                     cell->setType(CELL_TYPE::NORMAL);
                 }
             }
-           
 			if (KEYMANAGER->isOnceKeyDown(VK_RBUTTON))
 			{
 				_turnSystem->setPlayerBit(0);
@@ -283,9 +282,18 @@ void FinalScene::update(void)
 		// 0000 0001 : 메뉴창염 - 타일클릭해도 이동안되어야함 버튼클릭상태
 		else if (_turnSystem->getPlayerBit(0) == 1)
 		{
-			_moveTileBit.set(2);//100
+			/*	if (_vMoveableTile.size() > 0)
+			{
+				for (auto iter = _vMoveableTile.begin(); iter != _vMoveableTile.end(); ++iter)
+				{
+					(*iter)->setType(CELL_TYPE::NORMAL);
+				}
+				_vMoveableTile.clear();
+			}*/ //=================================================================================스타트 에너미 지정도 다시 해줘야해서 보류
 
+			_moveTileBit.set(2);//100
 			_gameUI->update();
+
 			if (!_gameUI->getMenu())
 			{
 				if (_gameUI->getPlayerTurn() &&!_gameUI->getSkillMenu() && _gameUI->getSkillNum() == SKILL_INDEX_NULL)
@@ -326,6 +334,7 @@ void FinalScene::update(void)
 								{
 									_turnSystem->setPlayerBit(5);
 									_player->setPlayerStateBit(4);
+									_skill->setplaySound(true);
 								}
 								else
 								{
@@ -453,18 +462,19 @@ void FinalScene::update(void)
 	_saladin->setCameraRect(_camera->getScreenRect());
 	_saladin->update();
 
-    if (_turnSystem->getStatus() == CHANGINGSTATUS::PLAYERTURN)
+    if (_turnSystem->isPlayerIdle() == 1 && _turnSystem->getStatus() == CHANGINGSTATUS::PLAYERTURN)
     {
 	    if (_moveTileBit.test(0) == 1 && _moveTileBit.test(1) == 1 && _moveTileBit.test(2) == 1)//111의 경우에서 쓰음
 	    {
 	    	startShowMoveableTile(4, _cMoveStart, false);
 	    	_moveTileBit.reset(0);
 	    }
-	    else if (_moveTileBit.test(0) == 1 && _moveTileBit.test(1) == 0 && _moveTileBit.test(2) == 1)//101
-	    {
-	    	startShowAttackableTile(1, _cMoveStart, false);
-	    }
     }
+
+	if (_moveTileBit.test(0) == 1 && _moveTileBit.test(1) == 0 && _moveTileBit.test(2) == 1)//101
+	{
+	    startShowAttackableTile(1, _cMoveStart, false);
+	}
 }
 
 void FinalScene::render(void)

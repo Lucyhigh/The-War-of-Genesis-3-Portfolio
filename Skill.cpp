@@ -18,7 +18,7 @@ HRESULT Skill::init(void)
     _windSkillTick = 20;
     _windSkillCnt = 0;
     _windSkillIndex = 0;
-
+	_isPlay = false;
     _skillPlayerPos = { 0,0 };
     _skillPlayerPos2 = { 0,0 };
     _skillPlayerPos3 = { 0,0 };
@@ -142,12 +142,6 @@ void Skill::update(void)
     }
     else if (_player->getPlayerStateBit(4) == 1)
     {
-		SOUNDMANAGER->play(_vWindSoundName[_soundIndex], 1.0f);
-		if (SOUNDMANAGER->getPosition("1skillStart") == SOUNDMANAGER->getLength("1skillStart") && _soundIndex == 0)
-		{
-			_soundIndex++;
-		}
-
         if (_alphaA < 200) _alphaA += 10;
 		_cdt++;
 		if (_count < _cdt)
@@ -176,6 +170,9 @@ void Skill::update(void)
 			}
 		}
     }
+
+	playSound();
+
 }
 
 void Skill::render(void)
@@ -362,6 +359,31 @@ void Skill::windEyun()
             _alphaB = 110;
         }
         else _alphaB = 0;
+	}
+}
+
+void Skill::setplaySound(bool isPlay)
+{
+	_isPlay = isPlay;
+}
+
+void Skill::playSound()
+{
+	if (_player->getPlayerStateBit(3) == 1)
+	{
+
+	}
+	else if (_player->getPlayerStateBit(4) == 1)
+	{
+		if (_isPlay)
+		{
+			SOUNDMANAGER->play(_vWindSoundName[_soundIndex], 1.0f);
+			_isPlay = false;
+		}
+		if (SOUNDMANAGER->getPosition(_vWindSoundName[_soundIndex]) == SOUNDMANAGER->getLength(_vWindSoundName[_soundIndex]))
+		{
+			if (_soundIndex == 0) SOUNDMANAGER->play(_vWindSoundName[++_soundIndex], 1.0f);
+		}
 	}
 }
 
