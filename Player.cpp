@@ -6,7 +6,7 @@ HRESULT Player::init(void)
 	_image = IMAGEMANAGER->findImage("pDamageSheet");
     _stateBit = 0;//Idle
 	_count = 0;
-	_indexA = _indexB = 0;
+	_indexA = _indexB = _skyIndex = _windIndex = 0;
 
     _speed = 10;
     _playerPos.x = 0;
@@ -258,9 +258,9 @@ void Player::update(void)
     {
         if (_count % 200 == 0)
         {
-            if (_indexB < 4)_indexB++;
+            if (_skyIndex < 4)_skyIndex++;
             IMAGEMANAGER->findImage("skillStart")->setFrameY(0);
-            IMAGEMANAGER->findImage("skillStart")->setFrameX(_indexB);
+            IMAGEMANAGER->findImage("skillStart")->setFrameX(_skyIndex);
             _cdt++;
             if (_cdt > 18)
             {
@@ -276,42 +276,42 @@ void Player::update(void)
         {
         case PLAYERSTATE::RIGHT:
             IMAGEMANAGER->findImage("playerSkillFrame")->setFrameY(1);
-            IMAGEMANAGER->findImage("playerSkillFrame")->setFrameX(_indexB);
+            IMAGEMANAGER->findImage("playerSkillFrame")->setFrameX(_windIndex);
             break;
         case PLAYERSTATE::LEFT:
             IMAGEMANAGER->findImage("playerSkillFrame")->setFrameY(0);
-            IMAGEMANAGER->findImage("playerSkillFrame")->setFrameX(_indexB);
+            IMAGEMANAGER->findImage("playerSkillFrame")->setFrameX(_windIndex);
             break;
         case PLAYERSTATE::TOP:
             IMAGEMANAGER->findImage("playerSkillFrame")->setFrameY(1);
-            IMAGEMANAGER->findImage("playerSkillFrame")->setFrameX(_indexB);
+            IMAGEMANAGER->findImage("playerSkillFrame")->setFrameX(_windIndex);
             break;
         case PLAYERSTATE::BOTTOM:
             IMAGEMANAGER->findImage("playerSkillFrame")->setFrameY(1);
-            IMAGEMANAGER->findImage("playerSkillFrame")->setFrameX(_indexB);
+            IMAGEMANAGER->findImage("playerSkillFrame")->setFrameX(_windIndex);
             break;
         }
         
-        if (_indexB == 0 || _indexB == 1 || _indexB == 2 || _indexB == 12 || _indexB == 14 || _indexB == 15 || _indexB == 18)
+        if (_windIndex == 0 || _windIndex == 1 || _windIndex == 2 || _windIndex == 12 || _windIndex == 14 || _windIndex == 15 || _windIndex == 18)
         {
-            if (_count % 160 == 0) _indexB++;
+            if (_count % 120 == 0) _windIndex++;
         }
-        else if (_indexB == 3 || _indexB == 4 || _indexB == 7 || _indexB == 13 || _indexB == 16 || _indexB == 17)
+        else if (_windIndex == 3 || _windIndex == 4 || _windIndex == 7 || _windIndex == 13 || _windIndex == 16 || _windIndex == 17)
         {
-            if (_count % 120 == 0) _indexB++;
+            if (_count % 70 == 0) _windIndex++;
         }
 
-        else if (_indexB == 5 || _indexB == 6 || _indexB == 8 || _indexB == 9 || _indexB == 10 || _indexB == 11 )
+        else if (_windIndex == 5 || _windIndex == 6 || _windIndex == 8 || _windIndex == 9 || _windIndex == 10 || _windIndex == 11 )
         {
-            if (_count % 20 == 0) _indexB++;
+            if (_count % 8 == 0) _windIndex++;
         }
-        else if (_indexB >= 19)
+        else if (_windIndex >= 19)
         {
             _isAttack = true;
-            if (_count % 1500 == 0)
+            if (_count % 2000 == 0)
             {
                 setPlayerIdle();
-                _indexB = 0;
+                _windIndex = 0;
             }
         }
     }

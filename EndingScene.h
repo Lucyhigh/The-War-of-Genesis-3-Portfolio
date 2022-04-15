@@ -47,11 +47,11 @@ public:
         {0,"battleAfter1"},
         {1,"battleAfter2"},
         {2,"battleAfter3"},
-        {3,"0154"},
-        {4,"0110"},
-        {5,"0129"},
-        {6,"0151"},
-        {7,"0167"},
+        {3,"song"},
+        {4,"01past"},
+        {5,"02past"},
+        {6,"brother"},
+        {7,"ending"},
         {8,"cutChange"}
     }, _text
     {

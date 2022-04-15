@@ -72,11 +72,11 @@ HRESULT ImageClass::init(void)
 	IMAGEMANAGER->addImage("battleAfter3", "Resources/Images/BackGround/battleAfter3.bmp", WINSIZE_X, WINSIZE_Y);
 	IMAGEMANAGER->addImage("deadHer", "Resources/Images/BackGround/deadHer.bmp", WINSIZE_X, WINSIZE_Y);
 	IMAGEMANAGER->addImage("deadHer2", "Resources/Images/BackGround/deadHer2.bmp", WINSIZE_X, WINSIZE_Y);
-	IMAGEMANAGER->addImage("0110", "Resources/Images/BackGround/0110.bmp", WINSIZE_X, WINSIZE_Y);
-	IMAGEMANAGER->addImage("0129", "Resources/Images/BackGround/0129.bmp", WINSIZE_X, WINSIZE_Y);
-	IMAGEMANAGER->addImage("0151", "Resources/Images/BackGround/0151.bmp", WINSIZE_X, WINSIZE_Y);
-	IMAGEMANAGER->addImage("0154", "Resources/Images/BackGround/0154.bmp", WINSIZE_X, WINSIZE_Y);
-	IMAGEMANAGER->addImage("0167", "Resources/Images/BackGround/0167.bmp", WINSIZE_X, WINSIZE_Y);
+	IMAGEMANAGER->addImage("song", "Resources/Images/BackGround/song.bmp", WINSIZE_X, WINSIZE_Y);
+	IMAGEMANAGER->addImage("01past", "Resources/Images/BackGround/01past.bmp", WINSIZE_X, WINSIZE_Y);
+	IMAGEMANAGER->addImage("02past", "Resources/Images/BackGround/02past.bmp", WINSIZE_X, WINSIZE_Y);
+	IMAGEMANAGER->addImage("brother", "Resources/Images/BackGround/brother.bmp", WINSIZE_X, WINSIZE_Y);
+	IMAGEMANAGER->addImage("ending", "Resources/Images/BackGround/ending.bmp", WINSIZE_X, WINSIZE_Y);	
 	IMAGEMANAGER->addFrameImage("deadHer", "Resources/Images/UI/story/deadHer.bmp", 258,75,3,1, true, RGB(72, 221, 157));
 	IMAGEMANAGER->addFrameImage("truth", "Resources/Images/UI/story/truth.bmp", 432, 80,6,1, true, RGB(72, 221, 157));
 	// Stage 3

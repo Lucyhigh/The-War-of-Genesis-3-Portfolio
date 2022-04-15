@@ -57,6 +57,8 @@ private:
 	float _maxHp;
 	float _lerpPercentage;
 	float _tileAlpha;
+	float _yPos;
+
 	int _mouseIndex;
 	int _endPointIndex;
 	int _moveIndex;
@@ -65,6 +67,7 @@ private:
 
 	bool _isMoveTileOn;
 	bool _isAlphaIncrese;
+	bool _isPosIncrese;
 
 public:
 	HRESULT init(void);

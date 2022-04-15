@@ -12,7 +12,7 @@ HRESULT Skill::init(void)
 	_alphaA = 0;
 	_alphaB = 0;
 
-	_count = 10;
+	_count = 5;
 	_cdt = 0.0f;
 	_soundIndex = 0;
     _windSkillTick = 20;
@@ -49,7 +49,6 @@ void Skill::update(void)
 {
     if (_player->getPlayerStateBit(3) == 1)
     {
-		SOUNDMANAGER->play(_vSkySoundName[_soundIndex], 1.0f);
         if (_alphaA < 80) _alphaA += 5;
 
         float left = _player->getPlayerRect().left - _camera->getScreenRect().left;
@@ -291,25 +290,22 @@ void Skill::windEyun()
 	int left = _player->getPlayerRect().left - 100 - _camera->getScreenRect().left;
 	int top = _player->getPlayerRect().top - 100 - _camera->getScreenRect().top;
     //오른쪽기준으로 맞춤
-	string skillArr[14] = { "184light" ,"skill10R", "skill8", "skill9", "skill4R","skill10R", "skill7", "skill8", "skill9", "184light", "skill7","skill8","skill9","skill3" };
-    POINT skillPosArr[14] =
+	string skillArr[11] = { "184light" ,"skill10R", "skill8", "skill4R","skill10R", "skill7", "skill8", "184light", "skill7","skill8","skill3" };
+    POINT skillPosArr[11] =
     {
 		{left ,		 top },		// "184light"
 		{left + 50,  top + 60},	// "skill10R"
 		{left + 40 , top - 10}, // "skill8",
-		{left + 40,  top - 10}, // "skill9",
 		{left + 40,  top},		// "skill4R",
 		{left + 50,  top + 60}, // "skill10R"
 		{left + 40 , top - 10}, // "skill7",
 		{left + 40 , top - 10}, // "skill8",
-		{left + 40,  top - 10}, // "skill9", 
-		{left ,		 top + 30},	// "184light"
+		{left + 20,	 top + 30},	// "184light"
 		{left + 40 , top - 10}, // "skill7"	
 		{left + 40 , top - 10}, // "skill8"	
-		{left + 40,  top - 10}, // "skill9" 
 		{left + 60,  top}		// "skill3" 
     };			
-	BYTE skillAlpha[14] = { 180,255,140,180,220,220,140,140,200,180,140,140,180,255 };
+	BYTE skillAlpha[11] = { 180,255,140,220,220,140,140,180,140,140,255 };
     switch(_player->getImageState())
     {
     case PLAYERSTATE::RIGHT:
@@ -334,27 +330,24 @@ void Skill::windEyun()
         break;
     }
 
-    //BYTE skillAlpha[11];
 	_windSkillCnt++;
-	if (_windSkillCnt > _windSkillTick &&_windSkillIndex <= 13)
+	if (_windSkillCnt > _windSkillTick &&_windSkillIndex <= 10)
 	{
 		_windSkillCnt = 0;
-		if (_windSkillIndex > 13) return;
+		if (_windSkillIndex > 10) return;
 		tagWindSkill skill = tagWindSkill{ skillArr[_windSkillIndex],0,0,
                                            (int)skillPosArr[_windSkillIndex].x,
                                            (int)skillPosArr[_windSkillIndex].y,skillAlpha[_windSkillIndex++] };
 		_vWindSkill.push_back(skill);
 	
-
-		if (_windSkillIndex == 1) _windSkillTick = 85;//
-        else if (_windSkillIndex == 2 || _windSkillIndex == 3) _windSkillTick = 30;
-        else if (_windSkillIndex == 4 || _windSkillIndex == 5) _windSkillTick = 10;
-        else if (_windSkillIndex == 6|| _windSkillIndex == 7) _windSkillTick = 10;
-        else if (_windSkillIndex == 8 || _windSkillIndex == 9 || _windSkillIndex == 10 || _windSkillIndex == 11) _windSkillTick = 30;
-        else if (_windSkillIndex == 12) _windSkillTick = 10;
-        else if (_windSkillIndex == 13) _windSkillTick = 10;
+		if (_windSkillIndex == 1) _windSkillTick = 55;//
+        else if (_windSkillIndex == 2 ) _windSkillTick = 30;
+        else if (_windSkillIndex == 3 || _windSkillIndex == 4) _windSkillTick = 10;
+        else if (_windSkillIndex == 5|| _windSkillIndex == 6) _windSkillTick = 10;
+        else if (_windSkillIndex == 7 || _windSkillIndex == 8 || _windSkillIndex == 9) _windSkillTick = 30;
+        else if (_windSkillIndex == 10) _windSkillTick = 10;
 	
-        if (_windSkillIndex == 4 || _windSkillIndex == 7 || _windSkillIndex == 11)
+        if (_windSkillIndex == 3 || _windSkillIndex == 6 || _windSkillIndex == 9)
         {
             _alphaB = 110;
         }
@@ -365,12 +358,14 @@ void Skill::windEyun()
 void Skill::setplaySound(bool isPlay)
 {
 	_isPlay = isPlay;
+	_soundIndex = 0;
 }
 
 void Skill::playSound()
 {
 	if (_player->getPlayerStateBit(3) == 1)
 	{
+		SOUNDMANAGER->play(_vSkySoundName[_soundIndex], 1.0f);
 
 	}
 	else if (_player->getPlayerStateBit(4) == 1)

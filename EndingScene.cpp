@@ -42,10 +42,6 @@ void EndingScene::release(void)
 void EndingScene::update(void)
 {
     _count++;
-    if (_textIndex == 0 || _textIndex >= 3)
-    {
-        fadeIn();
-    }
    
     if (!_isFadeIn && _isStory && KEYMANAGER->isOnceKeyDown(VK_SPACE))
     {
@@ -97,38 +93,47 @@ void EndingScene::update(void)
 		{
 			float soundPos = 0.0f;
 			float maxSoundSize = 0.0f;
-			float cdt = 3;
+			float cdt = 5;
 			soundPos = SOUNDMANAGER->getPosition(_vSoundName[3]);
 			maxSoundSize = SOUNDMANAGER->getLength(_vSoundName[3]);//getLength 122070
-			if (soundPos / maxSoundSize * 100 >= cdt)
+			float indexCount = soundPos / maxSoundSize * 100;
+			if (indexCount < 100)
 			{
-				if (_bgIndex == 3)
+				if (_count % 600 == 0)
 				{
-					_bgIndex++;
-					SOUNDMANAGER->play(_vSoundName[++_soundIndex], 1.0f);//4
-					cout << "1. play :  _bgIndex " << _bgIndex << " _soundIndex " << _soundIndex << endl;
+					if (_bgIndex == 3)
+					{
+						_bgIndex++;
+						SOUNDMANAGER->play(_vSoundName[++_soundIndex], 1.0f);//4
+					}
+					else if (4 <= _bgIndex < 5)
+					{
+						_bgIndex++;
+						if (_soundIndex != 3) SOUNDMANAGER->stop(_vSoundName[_soundIndex]);
+						if (_soundIndex < 6)
+						{
+							SOUNDMANAGER->play(_vSoundName[++_soundIndex], 1.0f);
+						}
+						cout << "넘겨주기 " << endl;
+					}
+					_fadeAlpha = 255;
+					if (_fadeAlpha > 30)
+					{
+						_fadeAlpha -= 2.0f;
+					}
 				}
-				if (cdt < 100)
-				{
-					cdt += 20;
-					cout << "cdt                  " << cdt << endl;
-				}
-				else cdt = 100;
 			}
-			if (4 <= _bgIndex < BgImageNUMTWO)
+			else
 			{
-				if ( soundPos / maxSoundSize * 100 >= 100)
-				{
-					//_bgIndex++;
-					if(_soundIndex != 3)SOUNDMANAGER->stop(_vSoundName[_soundIndex]);
-					if(_soundIndex < 7 ) SOUNDMANAGER->play(_vSoundName[++_soundIndex], 1.0f);
-					cout << "2. 4 <= _bgIndex :" << _bgIndex << " _soundIndex " << _soundIndex << endl;
-				}
+				_isStory = true;
+				SOUNDMANAGER->stop(_vSoundName[3]);
+				SOUNDMANAGER->play("Tears",1.0f);
+				_textIndex  = 3;
+				_soundIndex = 7;
 			}
-			cout << "soundPos / maxSoundSize * 100 : " << soundPos / maxSoundSize * 100 << endl;
-
 		}
     }
+	cout << "1. play :  _bgIndex " << _bgIndex << " _soundIndex " << _soundIndex << endl;
 
     _alpha -= 10.0f;
     _bgAlpha += 4.0f;
@@ -140,6 +145,10 @@ void EndingScene::update(void)
     if (_eventAlpha >= 255) _eventAlpha = 255;
     if (_textAlpha >= 210) _textAlpha = 210;
 
+	if (_textIndex == 0)
+	{
+		fadeIn();
+	}
    // cout << "_isFadeIn" << _isFadeIn <<"_isStory" << _isStory << endl;
 }
 
@@ -204,20 +213,15 @@ void EndingScene::fadeout()
 
 void EndingScene::fadeIn()
 {
-    if (_fadeAlpha > 30) _fadeAlpha -= 1.0f;
+	if (_fadeAlpha > 30)
+	{
+		//_isFadeIn = true;
+		_fadeAlpha -= 2.0f;
+		cout << "_fadeAlpha" << _fadeAlpha << endl;
+	}
     else
     {
         _isFadeIn = false;
         _fadeAlpha = 255;
     }
 }
-
-//if (_isPlay && !_isPause)
-//{
-//    if (_score >= _maxScore)
-//    {
-//        nextSound();
-//    }
-//    _score = SOUNDMANAGER->getPosition(_vMp3Name[_playIndex]);
-//    _maxScore = SOUNDMANAGER->getLength(_vMp3Name[_playIndex]);
-//}

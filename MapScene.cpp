@@ -10,7 +10,9 @@ HRESULT MapScene::init(void)
 	_animation->AniStart();
 	_aniCursor = ANIMATIONMANAGER->findAnimation("normalCursor");
 	_aniCursor->AniStart();
-	SOUNDMANAGER->play("Prologue", 1.0f);
+	SOUNDMANAGER->addSound("Rage of Lion", "Resources/Sounds/Rage of Lion.mp3", true, true);
+
+	SOUNDMANAGER->play("Rage of Lion", 1.0f);
     _seaX = 0.0f;
     _seaY = -800.0f;
 	int buttonNum = 4;
@@ -59,7 +61,7 @@ void MapScene::update(void)
     else if (_moveNext && PtInRect(&_vMapButton[1]._buttonRect, _ptMouse) && KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
     {
 		SOUNDMANAGER->play("changeScene", 1.0f);
-		SOUNDMANAGER->stop("Prologue");
+		SOUNDMANAGER->stop("Rage of Lion");
         SCENEMANAGER->changeScene("final");
     }
 

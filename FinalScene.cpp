@@ -3,8 +3,8 @@
 
 HRESULT FinalScene::init(void)
 {
-	SOUNDMANAGER->addSound("General of Blonde 1", "Resources/Sounds/General of Blonde 1.mp3", true, true);
-	SOUNDMANAGER->play("General of Blonde 1", 1.0f);
+	SOUNDMANAGER->addSound("Unknown Blood", "Resources/Sounds/Unknown Blood.mp3", true, true);
+	SOUNDMANAGER->play("Unknown Blood", 1.0f);
 	_mapTileInfo = new MapTileInfo;
 	_mapTileInfo->init();
 
@@ -51,6 +51,7 @@ HRESULT FinalScene::init(void)
 	_endPointIndex = 0;
 	_moveIndex = 0;
 	_lerpPercentage = 0.0f;
+	_yPos = 0.0f;
 	_enemyPathGoal = { 0,0 };
 
 	_skill = new Skill;
@@ -73,6 +74,7 @@ HRESULT FinalScene::init(void)
     _beforeMouseType = CELL_TYPE::GOAL;
 	_isMoveTileOn = false;
 	_isAlphaIncrese = true;
+	_isPosIncrese = true;
 	return S_OK;
 }
 
@@ -475,6 +477,11 @@ void FinalScene::update(void)
 	{
 	    startShowAttackableTile(1, _cMoveStart, false);
 	}
+
+
+	if (_yPos < 0 || _yPos >= 3) _isPosIncrese = !_isPosIncrese;
+	if (_isPosIncrese)_yPos += 0.15f; else _yPos -= 0.15f;
+	cout << _yPos << endl;
 }
 
 void FinalScene::render(void)
@@ -622,8 +629,9 @@ void FinalScene::render(void)
 			}
         }
 	}
-	
-	POINT MarkPos = { -23,-63 };
+
+
+	POINT MarkPos = { -23,-63 + _yPos };
 	switch (_turnSystem->getStatus())
 	{
 	case CHANGINGSTATUS::PLAYERTURN:

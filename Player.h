@@ -32,7 +32,8 @@ private:
 	int _count;
 	int _indexA;
 	int _indexB;
-	int _indexC;
+	int _skyIndex;
+	int _windIndex;
 
 	float _currentHp;
 	float _maxHp;
