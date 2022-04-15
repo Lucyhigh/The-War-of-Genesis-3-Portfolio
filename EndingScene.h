@@ -3,7 +3,7 @@
 #include "Text.h"
 
 #define TEXTNumTWO 4
-#define BgImageNUMTWO 9
+#define BgImageNUMTWO 12
 class EndingScene:public GameNode
 {
 private:
@@ -30,7 +30,7 @@ private:
     int _count;
     int _cdt;
     bool _isStory;
-    bool _isfadeOut;
+    bool _isFadeOut;
     bool _isFadeIn;
 
 public:
@@ -51,15 +51,17 @@ public:
         {4,"01past"},
         {5,"02past"},
         {6,"brother"},
-        {7,"ending"},
-        {8,"cutChange"}
+        {7,"endingScript1"},
+        {8,"endingScript2"},
+        {9,"endingScript3"},
+        {10,"endingScript4"},
+        {11,"ending"}
     }, _text
     {
         L"버몬트",{"vermont"},L"죽여라...",
         L"살라딘",{"saladin"},L"...",
         L"버몬트",{"vermont"},L"그것만은... 제발 돌려줘 그것만은...",
-		//노래재생 이 후 + 타이밍 주고 성우 재생 2부터 애니메이션 재생
-        L"",{"이미지4"},L"좋은 왕이 되어야한다." //엔딩씬 띄우면서 06 이후로는 타이밍으로 성우재생
+        L"살라딘",{""},L"좋은 왕이 되어야한다." //엔딩씬 띄우면서 06 이후로는 타이밍으로 성우재생
     }{}
     ~EndingScene() {}
 };

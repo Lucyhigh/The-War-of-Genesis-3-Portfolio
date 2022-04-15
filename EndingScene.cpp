@@ -27,7 +27,7 @@ HRESULT EndingScene::init(void)
     _bgAlpha = 0;
     _textAlpha = 0;
     _fadeAlpha = 255;
-    _isfadeOut =false;
+    _isFadeOut =false;
     _isFadeIn =true;
     _bgMoved = WINSIZE_X;
     _isStory = false;
@@ -51,11 +51,11 @@ void EndingScene::update(void)
         }
         else if (_textBufferCnt == wcslen(_text[_textIndex].script))
         {
-            _textBufferCnt = 0;
             SOUNDMANAGER->play("changeScene", 0.5f);
 
+            _textBufferCnt = 0;
             _alpha = 150;
-            _fadeAlpha = 0;
+            _fadeAlpha = 255;
             _isStory = false;
 			_bgIndex++;
 			_textIndex++;
@@ -73,7 +73,7 @@ void EndingScene::update(void)
         }
     }
     
-    if (_count % 10 == 0 && _textBufferCnt < wcslen(_text[_textIndex].script))
+    if (_count % 5 == 0 && _textBufferCnt < wcslen(_text[_textIndex].script))
     {
         _textBufferCnt++;
     }
@@ -82,10 +82,11 @@ void EndingScene::update(void)
     {
         if (_textIndex <= 2)
         {
-            if (_count > _cdt)
+            if (_count % 200 ==0)
             {
                 _count = 0;
-				_cdt -= 40;
+                _textBufferCnt = 0;
+                _cdt = 40;
                 _isStory = true;
             }
         }
@@ -99,41 +100,51 @@ void EndingScene::update(void)
 			float indexCount = soundPos / maxSoundSize * 100;
 			if (indexCount < 100)
 			{
-				if (_count % 600 == 0)
+				if (_count % 500 == 0 || KEYMANAGER->isOnceKeyDown(VK_SPACE))
 				{
-					if (_bgIndex == 3)
+					if (2 <= _bgIndex && _bgIndex  <=10)
 					{
-						_bgIndex++;
-						SOUNDMANAGER->play(_vSoundName[++_soundIndex], 1.0f);//4
-					}
-					else if (4 <= _bgIndex < 5)
-					{
-						_bgIndex++;
+                        _bgIndex++;
+                        _count = 0;
+                        _fadeAlpha = 255;
+                        _isFadeIn = true;
 						if (_soundIndex != 3) SOUNDMANAGER->stop(_vSoundName[_soundIndex]);
-						if (_soundIndex < 6)
+                        /*
+                        7 8 
+                        9 10
+                        */
+                      //1 if ( _bgIndex == 7 || _bgIndex == 10) SOUNDMANAGER->stop(_vSoundName[_soundIndex]);
+						if (_soundIndex < 6 || _bgIndex == 7 || _bgIndex == 9)
 						{
 							SOUNDMANAGER->play(_vSoundName[++_soundIndex], 1.0f);
 						}
-						cout << "넘겨주기 " << endl;
 					}
-					_fadeAlpha = 255;
-					if (_fadeAlpha > 30)
-					{
-						_fadeAlpha -= 2.0f;
-					}
+
+                    if (_bgIndex == 11)
+                    {
+                        _isStory = true;
+                        _count = 0;
+                        SOUNDMANAGER->play(_vSoundName[++_soundIndex], 1.0f);
+                    }
 				}
-			}
-			else
-			{
-				_isStory = true;
-				SOUNDMANAGER->stop(_vSoundName[3]);
-				SOUNDMANAGER->play("Tears",1.0f);
-				_textIndex  = 3;
-				_soundIndex = 7;
 			}
 		}
     }
-	cout << "1. play :  _bgIndex " << _bgIndex << " _soundIndex " << _soundIndex << endl;
+    
+    if (_bgIndex == 11)
+    {
+        if (_count % 300 == 0)
+        {
+            _fadeAlpha = 0;
+            _isFadeOut = true;
+        }
+        else if (_count % 700 == 0)
+        {
+            SOUNDMANAGER->stop(_vSoundName[_soundIndex]);
+            SCENEMANAGER->changeScene("title");
+        }
+    }
+   cout << "  _bgIndex " << _bgIndex << "_soundIndex " << _soundIndex << endl;
 
     _alpha -= 10.0f;
     _bgAlpha += 4.0f;
@@ -141,15 +152,18 @@ void EndingScene::update(void)
 
     if (_bgMoved <= -WINSIZE_X) _bgMoved = WINSIZE_X;
     if (_bgAlpha >= 255) _bgAlpha = 255;
-    if (_alpha < 0) _alpha = 0;
+    if (_alpha < 10) _alpha = 0;
     if (_eventAlpha >= 255) _eventAlpha = 255;
     if (_textAlpha >= 210) _textAlpha = 210;
 
-	if (_textIndex == 0)
+	if (_isFadeIn ||_bgIndex ==3)
 	{
 		fadeIn();
 	}
-   // cout << "_isFadeIn" << _isFadeIn <<"_isStory" << _isStory << endl;
+    if (_isFadeOut)
+    {
+        fadeout();
+    }
 }
 
 void EndingScene::render(void)
@@ -188,7 +202,7 @@ void EndingScene::render(void)
                 wcslen(_text[_textIndex].script) - SCRIPT_MAX_LENGTH : _textBufferCnt - SCRIPT_MAX_LENGTH, TA_LEFT, RGB(255, 255, 255));
         }
     }
-    if (_isfadeOut || _isFadeIn)
+    if (_isFadeOut || _isFadeIn)
     {
         IMAGEMANAGER->alphaRender("cutChange", getMemDC(), _fadeAlpha);
     }
@@ -198,30 +212,30 @@ void EndingScene::render(void)
 
 void EndingScene::fadeout()
 {
-    if (_isfadeOut)
+    if (_isFadeOut)
     {
         _fadeAlpha += 1.0f;
         if (_fadeAlpha > 253)
         {
-            _isfadeOut = false;
+            _isFadeOut = false;
             _fadeAlpha = 0;
-            _textIndex++;
-            //if (_textIndex == 8) SCENEMANAGER->changeScene("title");
+           
         }
     }
 }
 
 void EndingScene::fadeIn()
 {
-	if (_fadeAlpha > 30)
-	{
-		//_isFadeIn = true;
-		_fadeAlpha -= 2.0f;
-		cout << "_fadeAlpha" << _fadeAlpha << endl;
-	}
-    else
+    if (_isFadeIn)
     {
-        _isFadeIn = false;
-        _fadeAlpha = 255;
+        if (_fadeAlpha > 10)
+        {
+            _fadeAlpha -= 1.0f;
+        }
+        else
+        {
+            _isFadeIn = false;
+            _fadeAlpha = 255;
+        }
     }
 }

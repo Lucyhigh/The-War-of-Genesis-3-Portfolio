@@ -77,6 +77,10 @@ HRESULT ImageClass::init(void)
 	IMAGEMANAGER->addImage("02past", "Resources/Images/BackGround/02past.bmp", WINSIZE_X, WINSIZE_Y);
 	IMAGEMANAGER->addImage("brother", "Resources/Images/BackGround/brother.bmp", WINSIZE_X, WINSIZE_Y);
 	IMAGEMANAGER->addImage("ending", "Resources/Images/BackGround/ending.bmp", WINSIZE_X, WINSIZE_Y);	
+	IMAGEMANAGER->addImage("endingScript1", "Resources/Images/BackGround/endingScript1.bmp", WINSIZE_X, WINSIZE_Y);
+    IMAGEMANAGER->addImage("endingScript2", "Resources/Images/BackGround/endingScript2.bmp", WINSIZE_X, WINSIZE_Y);
+    IMAGEMANAGER->addImage("endingScript3", "Resources/Images/BackGround/endingScript3.bmp", WINSIZE_X, WINSIZE_Y);
+    IMAGEMANAGER->addImage("endingScript4", "Resources/Images/BackGround/endingScript4.bmp", WINSIZE_X, WINSIZE_Y);
 	IMAGEMANAGER->addFrameImage("deadHer", "Resources/Images/UI/story/deadHer.bmp", 258,75,3,1, true, RGB(72, 221, 157));
 	IMAGEMANAGER->addFrameImage("truth", "Resources/Images/UI/story/truth.bmp", 432, 80,6,1, true, RGB(72, 221, 157));
 	// Stage 3
