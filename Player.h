@@ -30,6 +30,7 @@ private:
 	int _cdt;
     int _speed;
 	int _count;
+    int _skillCount;
 	int _indexA;
 	int _indexB;
 	int _skyIndex;

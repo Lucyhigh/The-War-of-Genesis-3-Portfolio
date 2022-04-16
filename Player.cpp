@@ -6,6 +6,7 @@ HRESULT Player::init(void)
 	_image = IMAGEMANAGER->findImage("pDamageSheet");
     _stateBit = 0;//Idle
 	_count = 0;
+    _skillCount = 0;
 	_indexA = _indexB = _skyIndex = _windIndex = 0;
 
     _speed = 10;
@@ -272,6 +273,7 @@ void Player::update(void)
     //010 000 Ç³¾Æ¿­°øÂü
     else if (_stateBit.test(4) == 1)
     {
+        _skillCount += 4;
         switch (_imageState)
         {
         case PLAYERSTATE::RIGHT:
@@ -292,15 +294,26 @@ void Player::update(void)
             break;
         }
         
-        if (_windIndex == 0 || _windIndex == 1 || _windIndex == 2 || _windIndex == 12 || _windIndex == 14 || _windIndex == 15 || _windIndex == 18)
+        if (_windIndex == 0)
         {
-            if (_count % 120 == 0) _windIndex++;
+            if (_count % 100 == 0) _windIndex++;
         }
-        else if (_windIndex == 3 || _windIndex == 4 || _windIndex == 7 || _windIndex == 13 || _windIndex == 16 || _windIndex == 17)
+        else if ( _windIndex == 1 || _windIndex == 2)
         {
             if (_count % 70 == 0) _windIndex++;
         }
-
+        else if (_windIndex == 3 || _windIndex == 4 || _windIndex == 7 || _windIndex == 13 )
+        {
+            if (_count % 15 == 0) _windIndex++;
+        }
+        else if ( _windIndex == 12 || _windIndex == 14 || _windIndex == 15 || _windIndex == 18)
+        {
+            if (_count % 50 == 0) _windIndex++;
+        }
+        else if ( _windIndex == 16 || _windIndex == 17)
+        {
+            if (_count % 40 == 0) _windIndex++;
+        }
         else if (_windIndex == 5 || _windIndex == 6 || _windIndex == 8 || _windIndex == 9 || _windIndex == 10 || _windIndex == 11 )
         {
             if (_count % 8 == 0) _windIndex++;
@@ -308,10 +321,11 @@ void Player::update(void)
         else if (_windIndex >= 19)
         {
             _isAttack = true;
-            if (_count % 2000 == 0)
+            if (_count % 1000 == 0)
             {
                 setPlayerIdle();
                 _windIndex = 0;
+                _skillCount = 0;
             }
         }
     }

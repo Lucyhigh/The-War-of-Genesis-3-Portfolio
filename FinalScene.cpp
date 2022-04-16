@@ -302,14 +302,12 @@ void FinalScene::update(void)
 				{
 					_turnSystem->changeToPlayer();
 					_moveTileBit.reset();
-					cout << "1번째" << _gameUI->getPlayerTurn() << endl;
 				}
 				else if(!_gameUI->getPlayerTurn() && !_gameUI->getSkillMenu() && _gameUI->getSkillNum() == SKILL_INDEX_NULL)
 				{
 					_vAttackableTile.clear();
 					_turnSystem->changeToEnemy();
 					_moveTileBit.reset();
-					cout<<"2번째 _gameUI->getPlayerTurn() "<< _gameUI->getPlayerTurn() <<endl;
 				}
 
 				if (_gameUI->getSkillMenu())
@@ -481,7 +479,6 @@ void FinalScene::update(void)
 
 	if (_yPos < 0 || _yPos >= 3) _isPosIncrese = !_isPosIncrese;
 	if (_isPosIncrese)_yPos += 0.15f; else _yPos -= 0.15f;
-	cout << _yPos << endl;
 }
 
 void FinalScene::render(void)

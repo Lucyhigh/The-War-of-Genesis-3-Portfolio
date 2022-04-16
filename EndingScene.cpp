@@ -109,13 +109,7 @@ void EndingScene::update(void)
                         _fadeAlpha = 255;
                         _isFadeIn = true;
 						if (!(_soundIndex == 3 || _bgIndex == 8 || _bgIndex ==10)) SOUNDMANAGER->stop(_vSoundName[_soundIndex]);
-                        /*
-                        3 bg 8 10
 
-                        7 8 
-                        9 10
-                        */
-                      //1 if ( _bgIndex == 7 || _bgIndex == 10) SOUNDMANAGER->stop(_vSoundName[_soundIndex]);
 						if (_soundIndex < 6 || _bgIndex == 7 || _bgIndex == 9)
 						{
 							SOUNDMANAGER->play(_vSoundName[++_soundIndex], 1.0f);
