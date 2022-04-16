@@ -169,6 +169,8 @@
     <ClCompile Include="Skill.cpp">
       <Filter>Portfolio\Skill</Filter>
     </ClCompile>
+    <ClCompile Include="CEffect.cpp" />
+    <ClCompile Include="EffectManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameNode.h">
@@ -343,6 +345,8 @@
     <ClInclude Include="Skill.h">
       <Filter>Portfolio\Skill</Filter>
     </ClInclude>
+    <ClInclude Include="CEffect.h" />
+    <ClInclude Include="EffectManager.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="API">

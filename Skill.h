@@ -4,6 +4,7 @@
 #include "Cell.h"
 #include "Player.h"
 #include "Camera.h"
+#include "EffectManager.h"
 
 struct tagWindSkill
 {
@@ -46,6 +47,7 @@ private:
 	int _soundIndex;
     bool _isStart;
 
+    EffectManager* _effectManager;
     Player* _player;
     Camera* _camera;
 	BYTE _skillAlpha;

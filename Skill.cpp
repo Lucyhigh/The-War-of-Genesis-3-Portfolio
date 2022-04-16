@@ -29,6 +29,7 @@ HRESULT Skill::init(void)
 	for (string name : _vSkySoundName)
 	{
 		SOUNDMANAGER->addSound(name, skyPath + name, false, false);
+        cout << name << endl;
 	}
 
 	string windPath = "Resources/Sounds/wind/";
@@ -37,7 +38,9 @@ HRESULT Skill::init(void)
 	{
 		SOUNDMANAGER->addSound(name, windPath + name, false, false);
 	}
-
+    _effectManager = new EffectManager;
+    _effectManager->init();
+    _effectManager->setCamera(_camera);
 	return S_OK;
 }
 
@@ -53,8 +56,8 @@ void Skill::update(void)
 
         float left = _player->getPlayerRect().left - _camera->getScreenRect().left;
         float top = _player->getPlayerRect().top - _camera->getScreenRect().top;
-        float cellLeft = _player->getPlayerRect().left - 20 - _camera->getScreenRect().left;
-        float cellTop = _player->getPlayerRect().top - 185 - _camera->getScreenRect().top;
+        float cellLeft = _player->getPlayerRect().left - 20;
+        float cellTop = _player->getPlayerRect().top - 185 ;
 
         _skillPlayerPos  = { (long)left - 95, (long)top - 40 };
         _skillPlayerPos2 = { (long)left - 95, (long)top - 40 };
@@ -107,6 +110,7 @@ void Skill::update(void)
             _vSkillCellPos[i + skillArr3 + 1] = { (long)left - 20 - 10 * (i + 1), (long)top + 20 + 8 * (i + 1) };
             _vSkillCellPos[i + skillArr3 + 3] = { (long)left - 20 + 10 * (i + 1), (long)top + 20 - 8 * (i + 1) };//========== groundCrack /가까운거부터 먼저랜더 필요 / 4가지 랜덤랜더필요 =============
         }
+
         POINT enemyPos = { (long)enemyCell->getCellX()*TILESIZEX - _camera->getScreenRect().left ,
                            (long)enemyCell->getCellY()*TILESIZEY - _camera->getScreenRect().top };
         for (int i = 0; i < 4; i += 4)
@@ -122,22 +126,32 @@ void Skill::update(void)
             _alphaB = 200;
         }
         else _alphaB = 0;
-        //cout << _cdt << endl;
-
+        int a = 0;
         if (!_isStart) return;
+        if (_cdt > 3)
+        {
+            _cdt = 0;
+            _skillIndex++;
+        }
+
+        if (_skillIndex == 40) {
+            int i = 0;
+        }
         for (viSkillList = vSkillList.begin(); viSkillList != vSkillList.end(); ++viSkillList)
         {
-            tagSkill skill = (*viSkillList);
-            if (skill._skillIndex == _skillIndex)
+           
+            if ((*viSkillList)._skillIndex == _skillIndex)
             {
-                skill._skillAnimation->AniStart();
+              
+                _effectManager->createEffect((*viSkillList)._skillName.c_str(), *(*viSkillList)._aniPos, 8, false, 230, 210,3.0f);
             }
             if (_skillIndex == 80 || _skillIndex == 210)
             {
                 _camera->shakeStart(0.5f);
             }
+
         }
-        if ((int)_cdt % 3 == 0) _skillIndex++;
+        _effectManager->update();
     }
     else if (_player->getPlayerStateBit(4) == 1)
     {
@@ -169,29 +183,15 @@ void Skill::update(void)
 			}
 		}
     }
-
 	playSound();
-
 }
 
 void Skill::render(void)
 {
 	IMAGEMANAGER->alphaRender("cutChange", getMemDC(), 0, 0, _alphaA);
-
     if (_player->getPlayerStateBit(3) == 1)
     {
-        if (!_isStart) return;
-        for (viSkillList = vSkillList.begin(); viSkillList != vSkillList.end(); ++viSkillList)
-        {
-            tagSkill skill = (*viSkillList);
-            if (skill._skillAnimation->getIsPlay() == false) continue;
-
-            IMAGEMANAGER->findImage(skill._skillName)-> aniAlphaRender(getMemDC(),
-														skill._aniPos->x,
-														skill._aniPos->y,
-														*skill._alpha,
-														skill._skillAnimation);
-        }
+        _effectManager->render();
     }
     else if (_player->getPlayerStateBit(4) == 1)
     {
@@ -224,11 +224,11 @@ void Skill::worldBrokenSkill()
 	
 	Animation* _skillAni4  = ANIMATIONMANAGER->findAnimation("tripleR");
 	Animation* _skillAni5  = ANIMATIONMANAGER->findAnimation("tripleL");
-	Animation* _skillAni6  = ANIMATIONMANAGER->findAnimation("fire");
-	Animation* _skillAni7  = ANIMATIONMANAGER->findAnimation("fireL");
-	Animation* _skillAni8  = ANIMATIONMANAGER->findAnimation("smog");
-	Animation* _skillAni9  = ANIMATIONMANAGER->findAnimation("groundCrack");
-	Animation* _skillAni10 = ANIMATIONMANAGER->findAnimation("groundCrackL");
+	Animation* _skillAni6  = ANIMATIONMANAGER->findAnimation("fire");               //
+	Animation* _skillAni7  = ANIMATIONMANAGER->findAnimation("fireL");              //
+	Animation* _skillAni8  = ANIMATIONMANAGER->findAnimation("smog");               //
+	Animation* _skillAni9  = ANIMATIONMANAGER->findAnimation("groundCrack");        //
+	Animation* _skillAni10 = ANIMATIONMANAGER->findAnimation("groundCrackL");       //
 	Animation* _skillAni11 = ANIMATIONMANAGER->findAnimation("one");
 	Animation* _skillAni12 = ANIMATIONMANAGER->findAnimation("95light");
 	Animation* _skillAni13 = ANIMATIONMANAGER->findAnimation("48fire");
@@ -236,26 +236,32 @@ void Skill::worldBrokenSkill()
 
 	for (int i = 0; i < skillArr1; ++i)
     {
-		if (i % 2 == 1 )					pushCellSkill(90, "tripleR", cellPosIdx++, _skillAlpha, _skillAni4);
-		else if (i % 2 == 0)				pushCellSkill(90, "tripleL", cellPosIdx++, _skillAlpha, _skillAni5);
+		if (i % 2 == 1 )					pushCellSkill(90 +i *2, "tripleR", cellPosIdx++, _skillAlpha, _skillAni4);
+		else if (i % 2 == 0)				pushCellSkill(90 +i *2, "tripleL", cellPosIdx++, _skillAlpha, _skillAni5);
     }
 
-	for (int i = 0; i < skillArr2; ++i)
+	for (int i = 0; i < skillArr2; ++i)//
 	{
-		if (i % 2 == 1)						pushCellSkill(120, "fire", cellPosIdx++, (BYTE)10,_skillAni6);
-		else if (i % 2 == 0)				pushCellSkill(120, "fireL", cellPosIdx++, (BYTE)10, _skillAni7);
+		if (i % 2 == 1)						pushCellSkill(120 + i * 2, "fire", cellPosIdx++, (BYTE)10, _skillAni6);
+        else if (i % 2 == 0)				pushCellSkill(120 + i * 2, "fireL", cellPosIdx++, (BYTE)10, _skillAni7);
+        //if (i % 2 == 1)		 _effectManager->createEffect("fire", _vSkillCellPos[cellPosIdx++],8, false,230,200,10.0f);
+        //else if (i % 2 == 0) _effectManager->createEffect("fireL", _vSkillCellPos[cellPosIdx++], 8, false, 230, 200, 10.0f);
 	}
 
-	for (int i = 0; i < skillArr2; ++i)
+	for (int i = 0; i < skillArr2; ++i)//
 	{
-		pushCellSkill(150, "smog", cellPosIdx++, (BYTE)30, _skillAni8);
+		pushCellSkill(150 + i * 2, "smog", cellPosIdx++, (BYTE)30, _skillAni8);
+        //_effectManager->createEffect("smog", _vSkillCellPos[cellPosIdx++], 10, false, 250, 210, 10.0f);
 	}
 
-	for (int i = 0; i < skillArr2; ++i)
+	for (int i = 0; i < skillArr2; ++i)//
 	{
-		if (i % 2 == 1)						pushCellSkill(150, "groundCrack", cellPosIdx++, (BYTE)10, _skillAni9);
-		else if (i % 2 == 0)				pushCellSkill(150, "groundCrackL", cellPosIdx++, (BYTE)10, _skillAni10);
-	}
+		if (i % 2 == 1)						pushCellSkill(150 + i * 2, "groundCrack", cellPosIdx++, (BYTE)10, _skillAni9);
+        else if (i % 2 == 0)				pushCellSkill(150 + i * 2, "groundCrackL", cellPosIdx++, (BYTE)10, _skillAni10);
+        //if (i % 2 == 1)						 _effectManager->createEffect("groundCrack", _vSkillCellPos[cellPosIdx++], 8, false, 230, 200, 10.0f);
+        //else if (i % 2 == 0)				 _effectManager->createEffect("groundCrackL", _vSkillCellPos[cellPosIdx++], 8, false, 230, 200, 10.0f);
+    
+    }
 
 	//enemy Effect - 검출후에 리스트에 수 넣고 사이즈 잰 이후에 업데이트에서 구현 필요 일단 1개로
 	for (int i = 0; i < 1; ++i)
@@ -289,7 +295,7 @@ void Skill::windEyun()
 {
 	int left = _player->getPlayerRect().left - 100 - _camera->getScreenRect().left;
 	int top = _player->getPlayerRect().top - 100 - _camera->getScreenRect().top;
-    //오른쪽기준으로 맞춤
+    //일단 오른쪽 기준으로 맞춤
 	string skillArr[10] = { "184light" ,"skill10R", "skill8", "skill4R","skill10R", "skill7", "184light", "skill7","skill8","skill3" };
     POINT skillPosArr[10] =
     {
@@ -365,8 +371,16 @@ void Skill::playSound()
 {
 	if (_player->getPlayerStateBit(3) == 1)
 	{
-		SOUNDMANAGER->play(_vSkySoundName[_soundIndex], 1.0f);
+        if (_isPlay)
+        {
+            SOUNDMANAGER->play(_vSkySoundName[_soundIndex], 1.0f);
+            _isPlay = false;
+        }
 
+        if (_soundIndex < 5 && SOUNDMANAGER->getPosition(_vSkySoundName[_soundIndex]) == SOUNDMANAGER->getLength(_vSkySoundName[_soundIndex]))
+        {
+            SOUNDMANAGER->play(_vSkySoundName[++_soundIndex], 1.0f);
+        }
 	}
 	else if (_player->getPlayerStateBit(4) == 1)
 	{
