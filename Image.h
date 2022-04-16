@@ -110,7 +110,7 @@ public:
 	void alphaRender(HDC hdc, int destX,int destY, BYTE alpha);
 	// 클리핑 알파렌더
 	void alphaRender(HDC hdc, int destX, int destY,int sourX,int sourY, int sourWidth, int sourHeight, BYTE alpha);
-	void alphaframeRender(HDC hdc, int destX, int destY, int currentFrameX, int currentFrameY, BYTE alpha);
+	void alphaFrameRender(HDC hdc, int destX, int destY, int currentFrameX, int currentFrameY, BYTE alpha);
 
 	// 프레임 렌더
 	void frameRender(HDC hdc, int destX, int destY);

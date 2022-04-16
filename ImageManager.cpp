@@ -200,7 +200,7 @@ void ImageManager::frameRender(string strKey, HDC hdc, int destX, int destY, int
 void ImageManager::alphaFrameRender(string strKey, HDC hdc, int destX, int destY, int currentFrameX, int currentFrameY, BYTE alpha)
 {
 	Image* img = findImage(strKey);
-	if (img) img->alphaframeRender(hdc, destX, destY, currentFrameX, currentFrameY, alpha);
+	if (img) img->alphaFrameRender(hdc, destX, destY, currentFrameX, currentFrameY, alpha);
 }
 
 void ImageManager::loopRender(string strKey, HDC hdc, const LPRECT dramArea, int offsetX, int offsetY)

@@ -48,7 +48,6 @@ void EffectManager::createEffect(const char* fileName, RECT rc)
 {
 	CEffect* effect = new CEffect;
 	effect->init(fileName, rc);
-    effect->setCamera(_camera);
 	_vEffect.push_back(effect);
 }
 
@@ -56,7 +55,6 @@ void EffectManager::createEffect(const char* fileName, POINT point)
 {
 	CEffect* effect = new CEffect;
 	effect->init(fileName, point);
-    effect->setCamera(_camera);
 	_vEffect.push_back(effect);
 }
 
@@ -64,7 +62,6 @@ void EffectManager::createEffect(const char* fileName, POINT point, int FPS)
 {
 	CEffect* effect = new CEffect;
 	effect->init(fileName, point, FPS);
-    effect->setCamera(_camera);
 	_vEffect.push_back(effect);
 }
 
@@ -72,7 +69,6 @@ void EffectManager::createEffect(const char * fileName, POINT point, int FPS, BY
 {
 	CEffect* effect = new CEffect;
 	effect->init(fileName, point, FPS, alpha);
-    effect->setCamera(_camera);
 	_vEffect.push_back(effect);
 }
 
@@ -80,6 +76,5 @@ void EffectManager::createEffect(const char * fileName, POINT point, int FPS, bo
 {
 	CEffect* effect = new CEffect;
 	effect->init(fileName, point, FPS, isAlphaIncrease, startAlpha,endAlpha,alphaOffset);
-    effect->setCamera(_camera);
 	_vEffect.push_back(effect);
 }

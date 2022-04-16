@@ -1,6 +1,5 @@
 #pragma once
 #include "GameNode.h"
-#include "Animation.h"
 #include "Cell.h"
 #include "Player.h"
 #include "Camera.h"
@@ -22,17 +21,17 @@ public:
     int _skillIndex;
     string _skillName;
     POINT* _aniPos;
-    BYTE* _alpha;
-    Animation* _skillAnimation;
+    BYTE _alpha;
+	int _fps;
 
     tagSkill() {}
-    tagSkill(int skillIndex, string skillName, POINT* aniPos, BYTE* alpha, Animation* animation) 
+    tagSkill(int skillIndex, string skillName, POINT* aniPos, BYTE alpha,int fps) //, Animation* animation
     {
         _skillIndex = skillIndex;
         _skillName = skillName;
         _aniPos = aniPos;
         _alpha = alpha;
-        _skillAnimation = animation;
+		_fps = fps;
     }
     ~tagSkill() {}
 };
@@ -62,7 +61,7 @@ private:
 
 	vector<tagWindSkill> _vWindSkill;
 
-	vector<string> _vSkySoundName;
+	vector<string> _vWorldSoundName;
 	vector<string> _vWindSoundName;
 	int _count;
 	float _cdt;
@@ -79,7 +78,7 @@ public:
     void setPlayer(Player* player);
     void setCamera(Camera* camera);
     void setCells(vector<Cell*>* cells);
-	void pushCellSkill(int idx, string imgKey, int vNum, BYTE alpha, Animation* anim);
+	void pushCellSkill(int idx, string imgKey, int vNum, BYTE alpha, int fps);
 
     void reset();
 	HRESULT init(void);

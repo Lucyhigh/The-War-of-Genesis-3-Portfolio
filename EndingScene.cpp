@@ -140,7 +140,7 @@ void EndingScene::update(void)
             SCENEMANAGER->changeScene("title");
         }
     }
-   cout << "  _bgIndex " << _bgIndex << "_soundIndex " << _soundIndex << endl;
+   //cout << "  _bgIndex " << _bgIndex << "_soundIndex " << _soundIndex << endl;
 
     _alpha -= 10.0f;
     _bgAlpha += 4.0f;

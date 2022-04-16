@@ -55,7 +55,6 @@ void Camera::update(void)
 
 	if (_isShaking)
 	{
-		cout << "_isShaking" << endl;
 		_shakingOffsetCount++;
 		if (_shakingOffsetCount > 1)
 		{
@@ -64,7 +63,6 @@ void Camera::update(void)
 			if (_isShakingIncrease)_trace.y += 3;
 			else _trace.y -= 3;
 		}
-		//cout << "_trace : "<< _trace.y  << endl;
 
 		if (TIMEMANAGER->getWorldTime() > _shakingStartTime + _shakingTime)
 		{

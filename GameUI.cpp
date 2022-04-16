@@ -87,14 +87,11 @@ void GameUI::update(void)
 					_isSkillMenu = true;
 					break;
 				case 1:
-                    cout << "캐릭터" << endl;
 					break;
 				case 2:
 					_isPlayerTurn = false;
-                    cout << "휴식" << endl;
 					break;
 				case 3:
-                    cout << "상태" << endl;
 					break;
 				}
 				_isMainMenu = false;
@@ -111,15 +108,14 @@ void GameUI::update(void)
 				switch (_viSkillButton->_index)
 				{
 				case 0:
-					cout << "연" << endl;
 					_skillIndex = SKILL_INDEX_EYUN;
+					_isSkillMenu = false;
 					break;
 				case 1:
-					cout << "댓쉬" << endl;
 					_skillIndex = SKILL_INDEX_DASH;
+					_isSkillMenu = false;
 					break;
 				case 2:
-					cout << "천지파열무" << endl;
 					_skillIndex = SKILL_INDEX_WORLDBROKEN;
 					_isSkillMenu = false;
 					break;

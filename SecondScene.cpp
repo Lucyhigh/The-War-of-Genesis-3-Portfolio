@@ -13,7 +13,6 @@ HRESULT SecondScene::init(void)
 	_vSoundName = getFilesInDirectory(path, "*.mp3");
 	for (string name : _vSoundName)
 	{
-		cout << name << endl;
 		SOUNDMANAGER->addSound(name, path + name, false, false);
 	}
 	SOUNDMANAGER->play(_vSoundName[_playIndex], 1.0f);
@@ -169,6 +168,4 @@ void SecondScene::fadeIn()
         }
 
     }
-    cout << _fadeAlpha << endl;
-
 }

@@ -42,7 +42,7 @@ HRESULT FinalScene::init(void)
 	for (auto cellsIter = _cells->begin(); cellsIter != _cells->end(); ++cellsIter)
 	{
 		Cell* cell = (*cellsIter);
-		if (cell->getType() == CELL_TYPE::WALL)
+		if (cell->getType() == CELL_TYPE::WALL || cell->getType() == CELL_TYPE::ENEMY)
 		{
 			_generator->addCollision({ cell->getCellX(),cell->getCellY() });
 		}
@@ -319,7 +319,7 @@ void FinalScene::update(void)
 				{
 					_turnSystem->setPlayerBit(4);
 					_player->setPlayerStateBit(3);
-					//_moveTileBit.set(0); //101- 공격타일 활성화 상태
+					_skill->setplaySound(true);
 				}
                 else if (_gameUI->getSkillNum() == SKILL_INDEX_WINDEYUN)
                 {
@@ -466,7 +466,7 @@ void FinalScene::update(void)
     {
 	    if (_moveTileBit.test(0) == 1 && _moveTileBit.test(1) == 1 && _moveTileBit.test(2) == 1)//111의 경우에서 쓰음
 	    {
-	    	startShowMoveableTile(4, _cMoveStart, false);
+	    	startShowMoveableTile(8, _cMoveStart, false);
 	    	_moveTileBit.reset(0);
 	    }
     }
@@ -953,7 +953,7 @@ void FinalScene::find4WaysTile()
 			{ _playerPathGoal.x,_playerPathGoal.y });
 
 		_check.clear();
-		int pathNum = 10;
+		int pathNum = 20;
 		int pathSize = path.size() < pathNum ? path.size() : pathNum;
 		for (int i = path.size() - pathSize; i < path.size(); ++i)
 		{
@@ -1119,7 +1119,11 @@ void FinalScene::startShowMoveableTile(int range, Cell* cell, bool isMoveable)
 
 	for (auto iter = _vMoveableTile.begin(); iter != _vMoveableTile.end(); ++iter)
 	{
-        (*iter)->setType(CELL_TYPE::MOVEABLE);
+		if (iter >= _vMoveableTile.end() - ((int)_vMoveableTile.size()*0.125)-1)
+		{
+			(*iter)->setType(CELL_TYPE::ATTACKABLE);
+		}
+		else (*iter)->setType(CELL_TYPE::MOVEABLE);
 	}
 }
 

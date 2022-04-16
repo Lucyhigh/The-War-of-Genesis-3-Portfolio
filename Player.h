@@ -33,7 +33,7 @@ private:
     int _skillCount;
 	int _indexA;
 	int _indexB;
-	int _skyIndex;
+	int _worldIndex;
 	int _windIndex;
 
 	float _currentHp;

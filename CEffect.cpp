@@ -123,7 +123,7 @@ void CEffect::release(void)
 void CEffect::update(void)
 {
 	animation();
-	if (_isAlphaChange) alphaChange();
+	alphaChange();
 }
 
 void CEffect::render(void)
@@ -133,17 +133,9 @@ void CEffect::render(void)
 
 void CEffect::draw(void)
 {
-	/*if (_useAlphaFrame)
-	{
-		_image->alphaframeRender(getMemDC(), _rc.left - _camera->getScreenRect().left, _rc.top- _camera->getScreenRect().top, (int)_currentFrame %_maxFrameX, (int)_currentFrame / _maxFrameX,_alpha);
-	}
-	else
-	{
-		_image->frameRender(getMemDC(), _rc.left - _camera->getScreenRect().left, _rc.top - _camera->getScreenRect().top, (int)_currentFrame %_maxFrameX ,  (int)_currentFrame/ _maxFrameX );
-	}*/
     if (_useAlphaFrame)
     {
-        _image->alphaframeRender(getMemDC(), _rc.left , _rc.top , (int)_currentFrame %_maxFrameX, (int)_currentFrame / _maxFrameX, _alpha);
+        _image->alphaFrameRender(getMemDC(), _rc.left , _rc.top , (int)_currentFrame %_maxFrameX, (int)_currentFrame / _maxFrameX,_alpha);
     }
     else
     {
@@ -178,6 +170,5 @@ void CEffect::alphaChange(void)
 			_alpha -= (BYTE)_alphaOffset;
 		else _alpha = _endAlpha;
 	}
-
 }
 

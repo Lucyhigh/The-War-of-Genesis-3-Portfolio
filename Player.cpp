@@ -7,7 +7,7 @@ HRESULT Player::init(void)
     _stateBit = 0;//Idle
 	_count = 0;
     _skillCount = 0;
-	_indexA = _indexB = _skyIndex = _windIndex = 0;
+	_indexA = _indexB = _worldIndex = _windIndex = 0;
 
     _speed = 10;
     _playerPos.x = 0;
@@ -257,13 +257,13 @@ void Player::update(void)
     //001 000 천지파열무
     else if (_stateBit.test(3) == 1)
     {
-        if (_count % 200 == 0)
+        if (_count % 110 == 0)
         {
-            if (_skyIndex < 4)_skyIndex++;
+            if (_worldIndex < 4)_worldIndex++;
             IMAGEMANAGER->findImage("skillStart")->setFrameY(0);
-            IMAGEMANAGER->findImage("skillStart")->setFrameX(_skyIndex);
+            IMAGEMANAGER->findImage("skillStart")->setFrameX(_worldIndex);
             _cdt++;
-            if (_cdt > 18)
+            if (_cdt > 80)
             {
                 setPlayerIdle();
                 _cdt = 0;
@@ -332,7 +332,6 @@ void Player::update(void)
 
     //100000 죽음
 	_rcPlayer = RectMakeCenter(_playerPos.x, _playerPos.y, _image->getFrameWidth(), _image->getFrameHeight());
-	//cout << _stateBit.to_string() << endl;
 }
 
 void Player::render(void)

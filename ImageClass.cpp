@@ -148,10 +148,10 @@ HRESULT ImageClass::init(void)
 	IMAGEMANAGER->addFrameImage("smog", "Resources/Images/Effect/all/smog.bmp", 448, 146,7,2,true, RGB(0, 0, 0));
 	IMAGEMANAGER->addFrameImage("smog2", "Resources/Images/Effect/all/smog2.bmp", 650, 650, 5,5,true,RGB(4,72,4));
 	IMAGEMANAGER->addFrameImage("circle", "Resources/Images/Effect/all/circle.bmp", 1592, 628, 8,4,true,RGB(4,108,0));
-	IMAGEMANAGER->addFrameImage("fire", "Resources/Images/Effect/all/fire.bmp", 660, 920, 12,4,true, RGB(8, 88, 8));
-	IMAGEMANAGER->addFrameImage("fireL", "Resources/Images/Effect/all/fireL.bmp", 660, 920, 12,4,true, RGB(8, 88, 8));
-	IMAGEMANAGER->addFrameImage("groundCrack", "Resources/Images/Effect/all/groundCrack.bmp", 600, 150, 12,3,true, RGB(8, 88, 8));
-	IMAGEMANAGER->addFrameImage("groundCrackL", "Resources/Images/Effect/all/groundCrackL.bmp", 600, 150, 12,3,true, RGB(8, 88, 8));
+	IMAGEMANAGER->addFrameImage("fire", "Resources/Images/Effect/all/fire.bmp", 660, 230, 12,1,true, RGB(8, 88, 8));
+	IMAGEMANAGER->addFrameImage("fireL", "Resources/Images/Effect/all/fireL.bmp", 660, 230, 12,1,true, RGB(8, 88, 8));
+	IMAGEMANAGER->addFrameImage("groundCrack", "Resources/Images/Effect/all/groundCrack.bmp", 600, 50, 12,1,true, RGB(8, 88, 8));
+	IMAGEMANAGER->addFrameImage("groundCrackL", "Resources/Images/Effect/all/groundCrackL.bmp", 600, 50, 12,1,true, RGB(8, 88, 8));
 	IMAGEMANAGER->addFrameImage("48fire", "Resources/Images/Effect/all/48fire.bmp", 872, 131, 8,1,true, RGB(252, 252, 236));
 	IMAGEMANAGER->addFrameImage("95light", "Resources/Images/Effect/all/95light.bmp", 3502, 218, 17,1,true, RGB(252, 252, 252));
 	IMAGEMANAGER->addFrameImage("184light", "Resources/Images/Effect/single/184light.bmp", 2460, 172, 12,1,true, RGB(0, 0, 0));

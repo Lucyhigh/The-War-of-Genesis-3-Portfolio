@@ -1,11 +1,9 @@
 #pragma once
 #include "GameNode.h"
-#include "Camera.h"
 class CEffect : public GameNode
 {
 private:
 	Image* _image;
-    Camera* _camera;
 	RECT _rc;
 	int _currentFrame;
 	int _maxFrameX;
@@ -31,10 +29,7 @@ public:
 	virtual HRESULT init(const char* imageName, POINT pt, int FPS);
 	virtual HRESULT init(const char* imageName, POINT pt, int FPS, BYTE alpha);
 	virtual HRESULT init(const char* imageName, POINT pt, int FPS, bool isAlphaIncrease, BYTE startAlpha, BYTE endAlpha , float alphaOffset);
-    void setCamera(Camera* camera) 
-    {
-        _camera = camera;
-    }
+
 	void release(void);
 	void update(void);
 	void render(void);

@@ -13,7 +13,6 @@ HRESULT SoundScene::init(void)
 	_vMp3Name = getFilesInDirectory(path,"*.mp3");
 	for (string name : _vMp3Name)
 	{
-		cout << name << endl;
 		SOUNDMANAGER->addSound(name, path + name, true, false);
 	}
 
@@ -25,7 +24,6 @@ HRESULT SoundScene::init(void)
 		string temp = path + imgName;
 		_controlBtnImg[index] = IMAGEMANAGER->addImage(imgName, temp.c_str(), 48, 48);
 		index++;
-		cout << temp << endl;
 	}
 
 	path = "Resource/Images/mp3player/";

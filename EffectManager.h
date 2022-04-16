@@ -10,13 +10,11 @@ private:
 private:
 	vEffect _vEffect;
     viEffect _viEffect;
-    Camera* _camera;
 public:
 	HRESULT init(void);
 	void release(void);
 	void update(void);
 	void render(void);
-    void setCamera(Camera* camera) { _camera = camera; }
 	void createEffect(const char* fileName, RECT rc);
 	void createEffect(const char* fileName, POINT point);
 	void createEffect(const char* fileName, POINT point, int FPS);

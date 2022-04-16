@@ -622,7 +622,7 @@ void Image::alphaRender(HDC hdc, int destX, int destY, int sourX, int sourY, int
 	}
 }
 
-void Image::alphaframeRender(HDC hdc, int destX, int destY, int currentFrameX, int currentFrameY, BYTE alpha)
+void Image::alphaFrameRender(HDC hdc, int destX, int destY, int currentFrameX, int currentFrameY, BYTE alpha)
 {
 	_imageInfo->currentFrameX = currentFrameX;
 	_imageInfo->currentFrameY = currentFrameY;
@@ -643,14 +643,14 @@ void Image::alphaframeRender(HDC hdc, int destX, int destY, int currentFrameX, i
 		GdiTransparentBlt(
 			_blendImage->hMemDC,
 			0,0,
-			_imageInfo->frameWidth,      //복사할 이미지 가로크기
-			_imageInfo->frameHeight,   //복사할 이미지 세로크기
-			_imageInfo->hMemDC,      //복사될 대상 DC
+			_imageInfo->frameWidth,  
+			_imageInfo->frameHeight, 
+			_imageInfo->hMemDC,      
 			_imageInfo->currentFrameX * _imageInfo->frameWidth,
-			_imageInfo->currentFrameY * _imageInfo->frameHeight,      //복사될 대상의 시작지점
-			_imageInfo->frameWidth,      //복사 영역 가로크기
-			_imageInfo->frameHeight,   //복사 영역 세로크기
-			_transColor);         //복사할때 제외할 색상(일반적으로 마젠타)
+			_imageInfo->currentFrameY * _imageInfo->frameHeight,  
+			_imageInfo->frameWidth,   
+			_imageInfo->frameHeight,  
+			_transColor);         
 
 		GdiAlphaBlend(hdc, destX, destY, _imageInfo->frameWidth, _imageInfo->frameHeight,
 			_blendImage->hMemDC, 0, 0, _imageInfo->frameWidth, _imageInfo->frameHeight, _blendFunc);
