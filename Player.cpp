@@ -257,7 +257,7 @@ void Player::update(void)
     //001 000 천지파열무
     else if (_stateBit.test(3) == 1)
     {
-        if (_count % 110 == 0)
+        if (_count % 50 == 0)
         {
             if (_worldIndex < 4)_worldIndex++;
             IMAGEMANAGER->findImage("skillStart")->setFrameY(0);

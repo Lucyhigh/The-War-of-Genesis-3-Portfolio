@@ -149,7 +149,13 @@ HRESULT ImageClass::init(void)
 	IMAGEMANAGER->addFrameImage("smog2", "Resources/Images/Effect/all/smog2.bmp", 650, 650, 5,5,true,RGB(4,72,4));
 	IMAGEMANAGER->addFrameImage("circle", "Resources/Images/Effect/all/circle.bmp", 1592, 628, 8,4,true,RGB(4,108,0));
 	IMAGEMANAGER->addFrameImage("fire", "Resources/Images/Effect/all/fire.bmp", 660, 230, 12,1,true, RGB(8, 88, 8));
+	IMAGEMANAGER->addFrameImage("fire2", "Resources/Images/Effect/all/fire2.bmp", 660, 230, 12,1,true, RGB(8, 88, 8));
+	IMAGEMANAGER->addFrameImage("fire3", "Resources/Images/Effect/all/fire3.bmp", 660, 230, 12,1,true, RGB(8, 88, 8));
+	IMAGEMANAGER->addFrameImage("fire4", "Resources/Images/Effect/all/fire4.bmp", 660, 230, 12,1,true, RGB(8, 88, 8));
 	IMAGEMANAGER->addFrameImage("fireL", "Resources/Images/Effect/all/fireL.bmp", 660, 230, 12,1,true, RGB(8, 88, 8));
+	IMAGEMANAGER->addFrameImage("fireL2", "Resources/Images/Effect/all/fireL2.bmp", 660, 230, 12, 1, true, RGB(8, 88, 8));
+	IMAGEMANAGER->addFrameImage("fireL3", "Resources/Images/Effect/all/fireL3.bmp", 660, 230, 12, 1, true, RGB(8, 88, 8));
+	IMAGEMANAGER->addFrameImage("fireL4", "Resources/Images/Effect/all/fireL4.bmp", 660, 230, 12,1,true, RGB(8, 88, 8));
 	IMAGEMANAGER->addFrameImage("groundCrack", "Resources/Images/Effect/all/groundCrack.bmp", 600, 50, 12,1,true, RGB(8, 88, 8));
 	IMAGEMANAGER->addFrameImage("groundCrackL", "Resources/Images/Effect/all/groundCrackL.bmp", 600, 50, 12,1,true, RGB(8, 88, 8));
 	IMAGEMANAGER->addFrameImage("48fire", "Resources/Images/Effect/all/48fire.bmp", 872, 131, 8,1,true, RGB(252, 252, 236));
@@ -165,29 +171,9 @@ HRESULT ImageClass::init(void)
 	IMAGEMANAGER->addFrameImage("tripleR", "Resources/Images/Effect/all/tripleR.bmp", 400, 1200, 8,4,true, RGB(252, 236, 212));
 	IMAGEMANAGER->addFrameImage("tripleL", "Resources/Images/Effect/all/tripleL.bmp", 400, 1200, 8,4,true, RGB(252, 236, 212));
 
-    //skill 풍아열공참
+    //skill 풍아열공참 캐릭터
 	IMAGEMANAGER->addFrameImage("playerSkillFrame", "Resources/Images/Player/playerSkillFrame.bmp", 3990, 400, 19,2,MGT);
 
-	//skill animation
-	ANIMATIONMANAGER->addAnimation("skillStart", "skillStart", 3, false, false);
-	ANIMATIONMANAGER->addAnimation("smog", "smog", 10, false, false);
-	ANIMATIONMANAGER->addAnimation("smog2", "smog2", 10, false, false);
-	ANIMATIONMANAGER->addAnimation("circle", "circle", 8, false, false);
-	ANIMATIONMANAGER->addAnimation("fire", "fire", 8, false, false);
-	ANIMATIONMANAGER->addAnimation("fireL", "fireL", 8, false, false);
-	ANIMATIONMANAGER->addAnimation("groundCrack", "groundCrack", 8, false, false);//0,11
-	ANIMATIONMANAGER->addAnimation("groundCrackL", "groundCrackL", 8, false, false);
-	ANIMATIONMANAGER->addAnimation("48fire", "48fire", 10, false, false);
-	ANIMATIONMANAGER->addAnimation("95light", "95light", 10, false, false);
-	ANIMATIONMANAGER->addAnimation("184light", "184light", 10, false, false);
-	ANIMATIONMANAGER->addAnimation("203smog", "203smog", 10, false, false);
-	ANIMATIONMANAGER->addAnimation("115stone", "115stone", 10, false, false);
-	ANIMATIONMANAGER->addAnimation("skillStartLight", "skillStartLight", 8, false, false);
-	ANIMATIONMANAGER->addAnimation("enemyAttack", "enemyAttack", 10, false, false);
-	ANIMATIONMANAGER->addAnimation("one", "one", 10, false, false);
-	ANIMATIONMANAGER->addAnimation("double", "double", 10, false, false);
-	ANIMATIONMANAGER->addAnimation("tripleR", "tripleR", 10, false, false);
-	ANIMATIONMANAGER->addAnimation("tripleL", "tripleL", 10, false, false);
 	//skill 풍아열공참
 	//skillStartLight
 	IMAGEMANAGER->addFrameImage("skill2", "Resources/Images/Effect/single/skill2.bmp", 1200, 2400, 4, 8, true, RGB(152, 0, 0));
