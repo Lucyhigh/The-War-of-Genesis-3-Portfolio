@@ -4,9 +4,7 @@
 HRESULT Skill::init(void)
 {
 	_playerPos = { _player->getPlayerRect().left, _player->getPlayerRect().top };
-	_skillAlpha = (BYTE)15;//
-	_skillAlpha2 = (BYTE)40;//
-	_skillAlpha3 = (BYTE)50;//
+
     _isStart = false;
     _skillIndex = 0;
 	_alphaA = 0;
@@ -99,10 +97,10 @@ void Skill::update(void)
 
         for (int i = 0; i < 48; i += 4)
         {
-            _vSkillCellPos[i + skillArr3]	  = { (long)left - 10 - 10 * (i + 1), (long)top - 8 * (i + 1) };
-            _vSkillCellPos[i + skillArr3 + 2] = { (long)left - 10 + 10 * (i + 1), (long)top + 8 * (i + 1) };
-            _vSkillCellPos[i + skillArr3 + 1] = { (long)left - 10 - 10 * (i + 1), (long)top + 8 * (i + 1) };
-            _vSkillCellPos[i + skillArr3 + 3] = { (long)left - 10 + 10 * (i + 1), (long)top - 8 * (i + 1) };//========== smog /가까운거부터 먼저랜더 필요=================
+            _vSkillCellPos[i + skillArr3]	  = { (long)left - 10 * (i + 1), (long)top+10 - 8 * (i + 1) };
+            _vSkillCellPos[i + skillArr3 + 2] = { (long)left + 10 * (i + 1), (long)top+10 + 8 * (i + 1) };
+            _vSkillCellPos[i + skillArr3 + 1] = { (long)left - 10 * (i + 1), (long)top+10 + 8 * (i + 1) };
+            _vSkillCellPos[i + skillArr3 + 3] = { (long)left + 10 * (i + 1), (long)top+10 - 8 * (i + 1) };//========== smog /가까운거부터 먼저랜더 필요=================
         }
         for (int i = 0; i < 48; i += 4)
         {
@@ -120,7 +118,8 @@ void Skill::update(void)
          _vSkillCellPos[skillArr5]     = { enemyPos.x, enemyPos.y - 100 };		  //"one");
          _vSkillCellPos[skillArr5 + 1] = { enemyPos.x, enemyPos.y - 40 };		  //"95light");
          _vSkillCellPos[skillArr5 + 2] = { enemyPos.x, enemyPos.y - 20 };		  //"48fire");
-         _vSkillCellPos[skillArr5 + 3] = { enemyPos.x, enemyPos.y + 20  };//========== enemy /가까운거부터 먼저랜더 필요 / 4가지 랜덤랜더필요  //"enemyAttack");==============
+         _vSkillCellPos[skillArr5 + 3] = { enemyPos.x, enemyPos.y - 30  };//118stone
+         _vSkillCellPos[skillArr5 + 4] = { enemyPos.x, enemyPos.y + 20  };//========== enemy /가까운거부터 먼저랜더 필요 / 4가지 랜덤랜더필요  //"enemyAttack");==============
         
         _cdt++;
 
@@ -145,11 +144,12 @@ void Skill::update(void)
 											  *(*viSkillList)._aniPos, (*viSkillList)._fps, false,
 											  (*viSkillList)._alpha, (*viSkillList)._alpha-40,10.0f);
             }
-            if (_skillIndex == 70 || _skillIndex == 120 || _skillIndex == 225)
-            {
-                _camera->shakeStart(1.0f);
-            }
         }
+        if (_skillIndex == 70 || _skillIndex == 100 || _skillIndex == 240)
+        {
+            _camera->shakeStart(2.0f);
+        }
+
         _effectManager->update();
     }
     else if (_player->getPlayerStateBit(4) == 1)
@@ -207,20 +207,24 @@ void Skill::render(void)
 
 void Skill::worldBrokenSkill()
 {
-	tagSkill skill  = tagSkill{ 13, "184light", &_skillPlayerPos, (BYTE)100,20 };
-	tagSkill skill2 = tagSkill{ 13, "circle", &_skillPlayerPos2,(BYTE)100,10 };
-	tagSkill skill3 = tagSkill{ 13, "smog2", &_skillPlayerPos3,(BYTE)100,20 };
+	tagSkill skill  = tagSkill{ 13, "184light", &_skillPlayerPos,120,20 };
+	tagSkill skill2 = tagSkill{ 13, "circle", &_skillPlayerPos2,80,10 };
+	tagSkill skill3 = tagSkill{ 13, "smog2", &_skillPlayerPos3,120,20 };
+
+	vSkillList.push_back(skill);
+	vSkillList.push_back(skill2);
+	vSkillList.push_back(skill3);
 
     int cellPosIdx = 0;
 	int skillArr1 = 24;
 	int skillArr2 = 48;
 
-    for (int i = 0; i < 220; ++i) _vSkillCellPos.push_back({ 0,0 });
+    for (int i = 0; i < 221; ++i) _vSkillCellPos.push_back({ 0,0 });
 	
 	for (int i = 0; i < skillArr1; ++i)
     {
-		if (i % 2 == 1)						pushCellSkill(30 + i % 2, "tripleR", cellPosIdx++, _skillAlpha, 15);
-		else if (i % 2 == 0)				pushCellSkill(30 + i % 2, "tripleL", cellPosIdx++, _skillAlpha, 15);
+		if (i % 2 == 1)						pushCellSkill(40 + i % 2, "tripleR", cellPosIdx++,170, 15);
+		else if (i % 2 == 0)				pushCellSkill(40 + i % 2, "tripleL", cellPosIdx++,170, 15);
     }
 
 	for (int i = 0; i < skillArr2; ++i)
@@ -229,43 +233,30 @@ void Skill::worldBrokenSkill()
 	}
 	for (int i = 0; i < skillArr2; ++i)
 	{
-		pushCellSkill(80 + i % 2, "fire", cellPosIdx++, (BYTE)170, 30);
+		pushCellSkill(75 + i % 2, "fire", cellPosIdx++, (BYTE)170, 30);
 	}
 
 	for (int i = 0; i < skillArr2; ++i)
 	{
-		pushCellSkill(120 + i, "smog", cellPosIdx++, (BYTE)30,20);
+		pushCellSkill(100 + i, "smog", cellPosIdx++, (BYTE)30,20);
 	}
 
 	for (int i = 0; i < skillArr2; ++i)
 	{
-		if (i % 2 == 1)						pushCellSkill(120 + i, "groundCrack", cellPosIdx++, (BYTE)170,15);
-		else if (i % 2 == 0)				pushCellSkill(120 + i, "groundCrackL", cellPosIdx++, (BYTE)170,15);
+		if (i % 2 == 1)						pushCellSkill(100 + i, "groundCrack",  cellPosIdx++, 170,3);
+		else if (i % 2 == 0)				pushCellSkill(100 + i, "groundCrackL", cellPosIdx++, 170,3);
     }
 
 	//enemy Effect - 검출후에 리스트에 수 넣고 사이즈 잰 이후에 업데이트에서 구현 필요 일단 1개로
-	for (int i = 0; i < 1; ++i)
-	{
-		pushCellSkill(200, "one", cellPosIdx++, (BYTE)190,10);
-	}
 
-	for (int i = 0; i < 1; ++i)
-	{
-		pushCellSkill(205, "95light", cellPosIdx++, (BYTE)190,20);
-	}
+		pushCellSkill(210, "one", cellPosIdx++, (BYTE)190,10);
+		pushCellSkill(220, "95light", cellPosIdx++, (BYTE)190,20);
+		pushCellSkill(225, "48fire", cellPosIdx++, (BYTE)190,15);
+		pushCellSkill(225, "115stone", cellPosIdx++, (BYTE)210,20);
+		pushCellSkill(235, "enemyAttack", cellPosIdx++, (BYTE)190,10);
 
-	for (int i = 0; i < 1; ++i)
-	{
-		pushCellSkill(210, "48fire", cellPosIdx++, (BYTE)190,15);
-	}
-
-	for (int i = 0; i < 1; ++i)
-	{
-		pushCellSkill(225, "enemyAttack", cellPosIdx++, (BYTE)190,15);
-	}
-	vSkillList.push_back(skill);
-	vSkillList.push_back(skill2);
-	vSkillList.push_back(skill3);
+		
+	
     startSkill();
 }
 

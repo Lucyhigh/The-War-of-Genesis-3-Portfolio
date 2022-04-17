@@ -156,13 +156,13 @@ HRESULT ImageClass::init(void)
 	IMAGEMANAGER->addFrameImage("fireL2", "Resources/Images/Effect/all/fireL2.bmp", 660, 230, 12, 1, true, RGB(8, 88, 8));
 	IMAGEMANAGER->addFrameImage("fireL3", "Resources/Images/Effect/all/fireL3.bmp", 660, 230, 12, 1, true, RGB(8, 88, 8));
 	IMAGEMANAGER->addFrameImage("fireL4", "Resources/Images/Effect/all/fireL4.bmp", 660, 230, 12,1,true, RGB(8, 88, 8));
-	IMAGEMANAGER->addFrameImage("groundCrack", "Resources/Images/Effect/all/groundCrack.bmp", 600, 50, 12,1,true, RGB(8, 88, 8));
-	IMAGEMANAGER->addFrameImage("groundCrackL", "Resources/Images/Effect/all/groundCrackL.bmp", 600, 50, 12,1,true, RGB(8, 88, 8));
+	IMAGEMANAGER->addFrameImage("groundCrack", "Resources/Images/Effect/all/groundCrack3.bmp", 600, 50, 12,1,true, RGB(8, 88, 8));
+	IMAGEMANAGER->addFrameImage("groundCrackL", "Resources/Images/Effect/all/groundCrackL3.bmp", 600, 50, 12,1,true, RGB(8, 88, 8));
 	IMAGEMANAGER->addFrameImage("48fire", "Resources/Images/Effect/all/48fire.bmp", 872, 131, 8,1,true, RGB(252, 252, 236));
 	IMAGEMANAGER->addFrameImage("95light", "Resources/Images/Effect/all/95light.bmp", 3502, 218, 17,1,true, RGB(252, 252, 252));
 	IMAGEMANAGER->addFrameImage("184light", "Resources/Images/Effect/single/184light.bmp", 2460, 172, 12,1,true, RGB(0, 0, 0));
 	IMAGEMANAGER->addFrameImage("203smog", "Resources/Images/Effect/all/203smog.bmp", 680, 72, 10,1,true, RGB(0, 0, 0));
-	IMAGEMANAGER->addFrameImage("115stone", "Resources/Images/Effect/all/115stone.bmp", 3502, 218, 8,2,true, RGB(156, 148, 140));
+	IMAGEMANAGER->addFrameImage("115stone", "Resources/Images/Effect/all/115stone.bmp", 660, 230, 12,1,true, RGB(156, 148, 140));
 	IMAGEMANAGER->addFrameImage("skillStartLight", "Resources/Images/Effect/all/skillStartLight.bmp", 1500, 1500, 5,5,true, RGB(80, 0, 0));
 	IMAGEMANAGER->addFrameImage("enemyAttack", "Resources/Images/Effect/all/enemyAttack.bmp", 660, 400, 6,4,true,RGB(8,88,8));
 
