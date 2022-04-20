@@ -157,16 +157,40 @@ void FinalScene::update(void)
 		case CELL_TYPE::ENEMY:
             _aniCursor = ANIMATIONMANAGER->findAnimation("attackMark");
 			_hpBar->setType(1);
-			_hpBar->update();
             break;
         case CELL_TYPE::START:
             _aniCursor = ANIMATIONMANAGER->findAnimation("normalCursor");
 			_hpBar->setType(0);
-			_hpBar->update();
             break;
         }
         _aniCursor->AniStart();
     }
+
+    for (auto cellsIter = _cells->begin(); cellsIter != _cells->end(); ++cellsIter)
+    {
+        POINT cameraMouse = {
+                              _ptMouse.x + _camera->getScreenRect().left,
+                              _ptMouse.y + _camera->getScreenRect().top
+        };
+
+        Cell* cell = (*cellsIter);
+        if (PtInRect(&cell->getRect(), cameraMouse))
+        {
+            switch (cell->getType())
+            {
+            case CELL_TYPE::ENEMY:
+                _hpBar->update();
+                break;
+            case CELL_TYPE::START:
+                _hpBar->update();
+                break;
+            default:
+                _hpBar->resetImgIdx();
+                break;
+            }
+        }
+    }
+
     POINT cameraMouse = {
                                     _ptMouse.x + _camera->getScreenRect().left,
                                     _ptMouse.y + _camera->getScreenRect().top
@@ -393,7 +417,6 @@ void FinalScene::update(void)
 				_skill->reset();
                 _turnSystem->changeToEnemy();
                 _moveTileBit.reset();
-                cout << "그만" << endl;
             }
         }
 	}
@@ -608,7 +631,7 @@ void FinalScene::render(void)
 			{
 			case CELL_TYPE::ENEMY:
 				IMAGEMANAGER->findImage("attackMark")->aniRender(getMemDC(), _ptMouse.x, _ptMouse.y, _aniCursor);
-				_hpBar->render(1, left,top);
+				_hpBar->render(left,top);
 				break;
             case CELL_TYPE::SKILLABLE:
                 IMAGEMANAGER->findImage("attackMark")->aniRender(getMemDC(), _ptMouse.x, _ptMouse.y, _aniCursor);
@@ -618,7 +641,9 @@ void FinalScene::render(void)
 				break;
             case CELL_TYPE::START:
 				IMAGEMANAGER->findImage("normalCursor")->aniRender(getMemDC(), _ptMouse.x, _ptMouse.y, _aniCursor);
-				_hpBar->render(0, left, top);
+				_hpBar->render(left, top);
+                cout << "프레임 돌아라 "<< endl;
+
 				break;
 			default:
 				IMAGEMANAGER->findImage("normalCursor")->aniRender(getMemDC(), _ptMouse.x, _ptMouse.y, _aniCursor);

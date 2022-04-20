@@ -138,7 +138,7 @@ void SoundScene::update(void)
 	}
 
 	_progressBar->setGauge(_score, _maxScore);
-	_progressBar->update();
+//	_progressBar->update();
 
 }
 
