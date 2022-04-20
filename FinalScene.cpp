@@ -1119,9 +1119,9 @@ void FinalScene::startShowMoveableTile(int range, Cell* cell, bool isMoveable)
 
 	for (auto iter = _vMoveableTile.begin(); iter != _vMoveableTile.end(); ++iter)
 	{
-		if (iter >= _vMoveableTile.end() - ((int)_vMoveableTile.size()*0.125)-1)
+		if (iter >= _vMoveableTile.end() - ((int)_vMoveableTile.size()*0.25)-1)
 		{
-			(*iter)->setType(CELL_TYPE::ATTACKABLE);
+			(*iter)->setType(CELL_TYPE::ATTACKABLE);//갯수 설정 필요
 		}
 		else (*iter)->setType(CELL_TYPE::MOVEABLE);
 	}
@@ -1164,7 +1164,6 @@ void FinalScene::startShowAttackableTile(int range, Cell* cell, bool isMoveable)
 void FinalScene::computeShowSkillAttackableTile(int range, Cell * cell, bool isMoveable)
 {
     //천지파열무
-    //풍아는 일반 공격과 범위가 같으므로 연동해서 할듯
     if (range < 0) return;
     if (cell->getType() == CELL_TYPE::WALL) return;
 
