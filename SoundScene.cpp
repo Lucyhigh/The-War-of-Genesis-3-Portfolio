@@ -37,7 +37,7 @@ HRESULT SoundScene::init(void)
 	}
 
 	_progressBar = new ProgressBar;
-	_progressBar->init(0, WINSIZE_Y - 78, WINSIZE_X, 20);
+//	_progressBar->init(0, WINSIZE_Y - 78, WINSIZE_X, 20);
 	_progressRc = RectMake(0, WINSIZE_Y - 68, WINSIZE_X, 20);
 
 	_controlBtnRect[PREVIUS] = RectMake(0, WINSIZE_Y - 48, 48, 48);

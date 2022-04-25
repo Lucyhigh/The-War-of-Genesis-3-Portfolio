@@ -28,7 +28,7 @@ HRESULT Rocket::init(void)
 	_currentHp = 10;
 	_maxHp = 10;
 	_hpBar = new ProgressBar;
-	_hpBar->init(_x,_y,52,4);
+//	_hpBar->init(_x,_y,52,4);
 	_beamIrradiation = false;
 
 	return S_OK;

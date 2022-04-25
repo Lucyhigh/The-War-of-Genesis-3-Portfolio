@@ -61,7 +61,7 @@ HRESULT FinalScene::init(void)
 	_skill->init();
 
 	_hpBar = new ProgressBar;
-	_hpBar->init(0,0, IMAGEMANAGER->findImage("pHpBar")->getFrameWidth(), IMAGEMANAGER->findImage("pHpBar")->getFrameHeight());
+	_hpBar->init(0,0,31,4);
 	_currentHp = 10;
 	_maxHp = 10;
 
@@ -179,9 +179,11 @@ void FinalScene::update(void)
             switch (cell->getType())
             {
             case CELL_TYPE::ENEMY:
+                _hpBar->setGauge(100,100);
                 _hpBar->update();
                 break;
             case CELL_TYPE::START:
+                _hpBar->setGauge(100, 100);
                 _hpBar->update();
                 break;
             default:
@@ -642,7 +644,6 @@ void FinalScene::render(void)
             case CELL_TYPE::START:
 				IMAGEMANAGER->findImage("normalCursor")->aniRender(getMemDC(), _ptMouse.x, _ptMouse.y, _aniCursor);
 				_hpBar->render(left, top);
-                cout << "프레임 돌아라 "<< endl;
 
 				break;
 			default:
