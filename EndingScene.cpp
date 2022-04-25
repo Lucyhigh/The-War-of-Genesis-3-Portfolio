@@ -137,6 +137,7 @@ void EndingScene::update(void)
         else if (_count % 700 == 0)
         {
             SOUNDMANAGER->stop(_vSoundName[_soundIndex]);
+            SOUNDMANAGER->stop(_vSoundName[3]);
             SCENEMANAGER->changeScene("title");
         }
     }

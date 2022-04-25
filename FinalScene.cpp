@@ -1119,7 +1119,7 @@ void FinalScene::startShowMoveableTile(int range, Cell* cell, bool isMoveable)
 
 	for (auto iter = _vMoveableTile.begin(); iter != _vMoveableTile.end(); ++iter)
 	{
-		if (iter >= _vMoveableTile.end() - ((int)_vMoveableTile.size()*0.125)-1)
+		if (iter >= _vMoveableTile.end() - ((int)_vMoveableTile.size()*0.25)-1)
 		{
 			(*iter)->setType(CELL_TYPE::ATTACKABLE);
 		}

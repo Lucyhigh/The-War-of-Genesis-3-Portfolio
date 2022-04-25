@@ -62,7 +62,7 @@ void MapScene::update(void)
     {
 		SOUNDMANAGER->play("changeScene", 1.0f);
 		SOUNDMANAGER->stop("Rage of Lion");
-        SCENEMANAGER->changeScene("final");
+        SCENEMANAGER->changeScene("second");
     }
 
 	if (_alpha < 15 || _alpha >= 190) _isAlphaIncrese = !_isAlphaIncrese;

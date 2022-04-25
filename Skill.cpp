@@ -57,7 +57,7 @@ void Skill::update(void)
         _skillPlayerPos2 = { (long)left+5, (long)top};
         _skillPlayerPos3 = { (long)left+5, (long)top};
 
-        Cell* enemyCell = nullptr;//일단 1명
+        Cell* enemyCell = nullptr;
         for (auto cellsiter = _vSkillableCells->begin(); cellsiter != _vSkillableCells->end(); ++cellsiter)
         {
             if ((*cellsiter)->getType() == CELL_TYPE::ENEMY)
@@ -79,7 +79,7 @@ void Skill::update(void)
 				_vSkillCellPos[i]	  = { (long)left + 10 - 20 * (i + 1), (long)top - 80 - 16 * (i + 1) };//LT
 				_vSkillCellPos[i + 2] = { (long)left + 10 + 20 * (i + 1), (long)top - 80 + 16 * (i + 1) };//RB
 				_vSkillCellPos[i + 1] = { (long)left + 10 - 20 * (i + 1), (long)top - 80 + 16 * (i + 1) };//LB
-				_vSkillCellPos[i + 3] = { (long)left + 10 + 20 * (i + 1), (long)top - 80 - 16 * (i + 1) };//RT========== triple 더블, 원 랜덤랜더필요
+				_vSkillCellPos[i + 3] = { (long)left + 10 + 20 * (i + 1), (long)top - 80 - 16 * (i + 1) };//RT
             }
         }
 
@@ -92,7 +92,7 @@ void Skill::update(void)
 		for (int i = 0; i < 48; i += 2)				  
 		{											  
 			_vSkillCellPos[i + skillArr2]	  = { (long)left - 16 * (i + 1), (long)top -20 + 12 * (i + 1) };
-			_vSkillCellPos[i + skillArr2 + 1] = { (long)left + 16 * (i + 1), (long)top -20 - 12 * (i + 1) };//========== fire 4가지 랜덤랜더필요 / 가까운거부터 먼저랜더 필요================
+			_vSkillCellPos[i + skillArr2 + 1] = { (long)left + 16 * (i + 1), (long)top -20 - 12 * (i + 1) };
 		}
 
         for (int i = 0; i < 48; i += 4)
@@ -100,14 +100,14 @@ void Skill::update(void)
             _vSkillCellPos[i + skillArr3]	  = { (long)left - 10 * (i + 1), (long)top+10 - 8 * (i + 1) };
             _vSkillCellPos[i + skillArr3 + 2] = { (long)left + 10 * (i + 1), (long)top+10 + 8 * (i + 1) };
             _vSkillCellPos[i + skillArr3 + 1] = { (long)left - 10 * (i + 1), (long)top+10 + 8 * (i + 1) };
-            _vSkillCellPos[i + skillArr3 + 3] = { (long)left + 10 * (i + 1), (long)top+10 - 8 * (i + 1) };//========== smog /가까운거부터 먼저랜더 필요=================
+            _vSkillCellPos[i + skillArr3 + 3] = { (long)left + 10 * (i + 1), (long)top+10 - 8 * (i + 1) };
         }
         for (int i = 0; i < 48; i += 4)
         {
 			_vSkillCellPos[i + skillArr4]	  =	{ (long)left + 20 - 10 * (i + 1), (long)top + 40 - 8 * (i + 1) };
 			_vSkillCellPos[i + skillArr4 + 2] = { (long)left + 20 + 10 * (i + 1), (long)top + 40 + 8 * (i + 1) };
 			_vSkillCellPos[i + skillArr4 + 1] = { (long)left + 20 - 10 * (i + 1), (long)top + 40 + 8 * (i + 1) };
-			_vSkillCellPos[i + skillArr4 + 3] = { (long)left + 20 + 10 * (i + 1), (long)top + 40 - 8 * (i + 1) };//========== groundCrack /가까운거부터 먼저랜더 필요 / 4가지 랜덤랜더필요 =============
+			_vSkillCellPos[i + skillArr4 + 3] = { (long)left + 20 + 10 * (i + 1), (long)top + 40 - 8 * (i + 1) };
         }
 
         POINT enemyPos = { 
@@ -118,8 +118,8 @@ void Skill::update(void)
          _vSkillCellPos[skillArr5]     = { enemyPos.x, enemyPos.y - 100 };		  //"one");
          _vSkillCellPos[skillArr5 + 1] = { enemyPos.x, enemyPos.y - 40 };		  //"95light");
          _vSkillCellPos[skillArr5 + 2] = { enemyPos.x, enemyPos.y - 20 };		  //"48fire");
-         _vSkillCellPos[skillArr5 + 3] = { enemyPos.x, enemyPos.y - 30  };//118stone
-         _vSkillCellPos[skillArr5 + 4] = { enemyPos.x, enemyPos.y + 20  };//========== enemy /가까운거부터 먼저랜더 필요 / 4가지 랜덤랜더필요  //"enemyAttack");==============
+         _vSkillCellPos[skillArr5 + 3] = { enemyPos.x, enemyPos.y - 30  };	//118stone
+         _vSkillCellPos[skillArr5 + 4] = { enemyPos.x+5, enemyPos.y + 30  };
         
         _cdt++;
 
@@ -249,14 +249,12 @@ void Skill::worldBrokenSkill()
 
 	//enemy Effect - 검출후에 리스트에 수 넣고 사이즈 잰 이후에 업데이트에서 구현 필요 일단 1개로
 
-		pushCellSkill(210, "one", cellPosIdx++, (BYTE)190,10);
-		pushCellSkill(220, "95light", cellPosIdx++, (BYTE)190,20);
-		pushCellSkill(225, "48fire", cellPosIdx++, (BYTE)190,15);
-		pushCellSkill(225, "115stone", cellPosIdx++, (BYTE)210,20);
-		pushCellSkill(235, "enemyAttack", cellPosIdx++, (BYTE)190,10);
-
+	pushCellSkill(210, "one", cellPosIdx++,			(BYTE)190,10);
+	pushCellSkill(230, "95light", cellPosIdx++,		(BYTE)190,30);
+	pushCellSkill(235, "48fire", cellPosIdx++,		(BYTE)190,30);
+	pushCellSkill(235, "115stone", cellPosIdx++,	(BYTE)210,30);
+	pushCellSkill(235, "enemyAttack", cellPosIdx++, (BYTE)190,8);
 		
-	
     startSkill();
 }
 

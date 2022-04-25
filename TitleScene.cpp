@@ -195,13 +195,13 @@ void TitleScene::fadeout()
 			}
 			else if (_startBit.test(0) == 1)
 			{
-				SCENEMANAGER->changeScene("map");
 				SOUNDMANAGER->stop("Tutorial");
+				SCENEMANAGER->changeScene("map");
 			}
 			else if (_startBit.test(1) == 1)
 			{
-				SCENEMANAGER->changeScene("second");
 				SOUNDMANAGER->stop("Prologue");
+				SCENEMANAGER->changeScene("second");
 			}
 		}
 	}

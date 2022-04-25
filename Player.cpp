@@ -36,7 +36,8 @@ void Player::update(void)
     _count += 4;
     if (KEYMANAGER->isOnceKeyDown('1'))
     {
-        _imageState = PLAYERSTATE::RIGHT;
+		SOUNDMANAGER->stop("Unknown Blood");
+		SCENEMANAGER->changeScene("ending");
     }
     else if (KEYMANAGER->isOnceKeyDown('2'))
     {
