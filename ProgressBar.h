@@ -3,10 +3,12 @@
 class ProgressBar : public GameNode
 {
 private:
-	Image* _progressBarUp;
+	Image* _progressHpBarUp;
+	Image* _progressMpBarUp;
     Image* _progressBarDown;
 
-	RECT _rc;
+	RECT _hpRc;
+	RECT _mpRc;
 	int _x;
 	int _y;
 	int _curIndex;

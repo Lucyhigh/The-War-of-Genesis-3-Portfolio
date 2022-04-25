@@ -112,12 +112,16 @@ HRESULT ImageClass::init(void)
 	IMAGEMANAGER->addImage("attackTile", "Resources/Images/UI/attackable.bmp", 40, 32);
 	IMAGEMANAGER->addImage("skillTile", "Resources/Images/UI/skillable.bmp", 40, 32);
 	IMAGEMANAGER->addImage("ScenarioClear", "Resources/Images/UI/ScenarioClear.bmp", 960, 90);
+	//IMAGEMANAGER->addImage("pHpGauge", "Resources/Images/UI/pHpGauge.bmp", 2, 12);
+	//IMAGEMANAGER->addImage("pMpGauge", "Resources/Images/UI/pMpGauge.bmp", 2, 12);
 
 	IMAGEMANAGER->addFrameImage("selectIcon", "Resources/Images/UI/selectIcon.bmp", 96,25,4,1, MGT);
 	IMAGEMANAGER->addFrameImage("skillIcon", "Resources/Images/UI/skillIcon.bmp", 68*1.5,17*1.5,4,1, MGT);
 	IMAGEMANAGER->addFrameImage("npcBar", "Resources/Images/UI/npcbar.bmp", 800, 91,8,1,MGT);
 	IMAGEMANAGER->addFrameImage("pHpBar", "Resources/Images/UI/pHpBar.bmp", 5400 * 0.2, 300 * 0.2, 15, 1, true, RGB(0, 44, 0));
 	IMAGEMANAGER->addFrameImage("eHpBar", "Resources/Images/UI/eHpBar.bmp", 5400 * 0.2, 300 * 0.2, 15, 1, true, RGB(0, 44, 0));
+	IMAGEMANAGER->addFrameImage("pHpBarNum", "Resources/Images/UI/pHpBarNum.bmp", 110, 14, 14, 1, true, RGB(80, 120, 116));
+
 	IMAGEMANAGER->addFrameImage("notMoveable", "Resources/Images/UI/notMoveable.bmp", 76, 24,2,1,true, RGB(80, 120, 116));
 	IMAGEMANAGER->addFrameImage("turnMark", "Resources/Images/UI/turnMark.bmp", 40, 7, 8, 1, true, RGB(80, 120, 116));
 	IMAGEMANAGER->addFrameImage("playerMark", "Resources/Images/UI/playerMark.bmp", 72, 11, 8, 1, true, RGB(80, 120, 116));

@@ -14,10 +14,11 @@ HRESULT ProgressBar::init(int x, int y, int width, int height)
     _cdt = 0;
     _count = 4;
 
-	//_rc = RectMakeCenter(_x, _y, width, height);//실제 피
+    _hpRc = RectMakeCenter(_x, _y, width, height);//실제 피
+    _mpRc = RectMakeCenter(_x, _y+50, width, height);//실제 피
 	//움직이는 실시간 바
-	//_progressBarUp = IMAGEMANAGER->addImage("BarUp", "Resources/Images/Object/HpBarUp.bmp",
-	//	0, 0, width, height, true, RGB(255, 0, 255));
+	_progressHpBarUp = IMAGEMANAGER->addImage("pHpGauge", "Resources/Images/Object/pHpGauge.bmp", 0, 0, width, height, MGT);
+    _progressMpBarUp = IMAGEMANAGER->addImage("pMpGauge", "Resources/Images/Object/pMpGauge.bmp", 0, 0, width, height, MGT);
 
 	//고정 디폴트로 있는 바
 	_progressBarDown = IMAGEMANAGER->findImage("pHpBar");
@@ -46,7 +47,11 @@ void ProgressBar::update()
                 {
                     _hpIndex++;
                 }
-                //else if(_playerIndex > 7)//_rc = RectMakeCenter(_x, _y, _progressBarDown->getFrameWidth(), _progressBarDown->getFrameHeight());
+                if (_hpIndex >= 7)
+                {
+                    _hpRc = RectMakeCenter(_x, _y, _progressBarDown->getFrameWidth(), _progressBarDown->getFrameHeight());
+                    _mpRc = RectMakeCenter(_x, _y, _progressBarDown->getFrameWidth(), _progressBarDown->getFrameHeight());
+                }
                 //else  _pastIndex =_curIndex;
                 break;
             case 1:
@@ -55,34 +60,31 @@ void ProgressBar::update()
                 {
                     _hpIndex++;
                 }
-                //else if( _enemyIndex > 7)//_rc = RectMakeCenter(_x, _y, _progressBarDown->getFrameWidth(), _progressBarDown->getFrameHeight());
-                //else  _pastIndex =_curIndex;
+                if (_hpIndex >= 7)
+                {
+                    _hpRc = RectMakeCenter(_x, _y, _progressBarDown->getFrameWidth(), _progressBarDown->getFrameHeight());
+                    _mpRc = RectMakeCenter(_x, _y, _progressBarDown->getFrameWidth(), _progressBarDown->getFrameHeight());
+                }
                 break;
             }
         }
     }
-    else
-    {
-      
-    }
-	
 }
-
+      
 void ProgressBar::render(int x, int y)
 {
 	switch (_curIndex)
 	{
 	case 0:
 		IMAGEMANAGER->frameRender("pHpBar",getMemDC(), x, y, _hpIndex,0);
-        //_progressBarUp->render(getMemDC(), _rc.left + _progressBarDown->getFrameWidth() / 2,
-        //	_y + _progressBarDown->getFrameHeight() / 2,
-        //	0, 0, _width, _progressBarDown->getFrameHeight());
+        _progressHpBarUp->render(getMemDC(), x, y, 0, 0, _width, _progressBarDown->getFrameHeight());
+        _progressMpBarUp->render(getMemDC(), x, y, 0, 0, _width, _progressBarDown->getFrameHeight());
 		break;
+
 	case 1:
 		IMAGEMANAGER->frameRender("eHpBar", getMemDC(), x, y, _hpIndex,0);
-        //_progressBarUp->render(getMemDC(), _rc.left + _progressBarDown->getFrameWidth() / 2,
-        //	_y + _progressBarDown->getFrameHeight() / 2,
-        //	0, 0, _width, _progressBarDown->getFrameHeight());
+        _progressHpBarUp->render(getMemDC(), x, y, 0, 0, _width, _progressBarDown->getFrameHeight());
+        _progressMpBarUp->render(getMemDC(), x, y, 0, 0, _width, _progressBarDown->getFrameHeight());
 		break;
 	}
 
@@ -90,11 +92,11 @@ void ProgressBar::render(int x, int y)
 
 void ProgressBar::setGauge(float currentScore, float maxScore)
 {
-	_width = (currentScore / maxScore) * _progressBarDown->getFrameWidth();//업 넓이로 교체필요
+	_width = (currentScore / maxScore) * _progressHpBarUp->getFrameWidth();
+	_width = (currentScore / maxScore) * _progressMpBarUp->getFrameWidth();
 }
 
 void ProgressBar::resetImgIdx()
 {
      _hpIndex = 0;
-     cout << "프레임 리셋 "<< endl;
 }
