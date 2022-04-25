@@ -29,7 +29,7 @@ HRESULT MainGame::init(void)
 	SCENEMANAGER->addScene("final", new FinalScene);
 	SCENEMANAGER->addScene("ending", new EndingScene);
 
-    SCENEMANAGER->changeScene("ending");
+    SCENEMANAGER->changeScene("final");
 	return S_OK;
 }
 

@@ -17,7 +17,7 @@ private:
 	typedef bitset<6> playerBit;
 	playerBit _stateBit;
 	Image* _image;
-	//ProgressBar* _hpBar;
+	ProgressBar* _hpBar;
 	RECT _rcPlayer;
 	Cell* _playerCell;
 
@@ -55,6 +55,7 @@ public:
 	void setPlayerPosX(float x);
     void setPlayerPosY(float y);
 
+	ProgressBar* getPlayerHpBar() { return _hpBar; }
 	RECT getPlayerRect();
     void setCameraRect(RECT rect);
 
@@ -63,8 +64,10 @@ public:
 
     void setPlayerIdle();
     unsigned int getPlayerStateBit(int index);
+
 	playerBit getPlayerStateBit();
     void setPlayerStateBit(int index);
+
 	bool getWaiting();
 	void setWaiting(bool isWaiting);
 

@@ -1,5 +1,7 @@
 #pragma once
 #include "GameNode.h"
+#include "ProgressBar.h"
+
 enum class SALADINSTATE
 {
 	RIGHT,
@@ -12,7 +14,7 @@ class Saladin:public GameNode
 private:
     bitset<5> _stateBit; //00000 대기 00001 이동중 00010 공격 00100 피격 01000 죽음
 	Image* _image;
-	//ProgressBar* _hpBar;
+	ProgressBar* _hpBar;
 	RECT _rcSaladin;
 	SALADINSTATE _imageState;
 	POINT _saladinPos;
@@ -38,6 +40,8 @@ public:
 	void release(void);
 	void update(void);
 	void render(void);
+
+	ProgressBar* getEnemyHpBar() { return _hpBar; }
 
 	float getSaladinPosX();
 	float getSaladinPosY();

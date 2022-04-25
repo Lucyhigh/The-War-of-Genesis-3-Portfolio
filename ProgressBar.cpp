@@ -75,28 +75,28 @@ void ProgressBar::update()
 void ProgressBar::render(int x, int y)
 {
     int progressPosX = 40;
-    if (_hpIndex >= 10)
+
+    switch (_curIndex)
     {
-        switch (_curIndex)
-        {
-        case 0:
-            IMAGEMANAGER->frameRender("pHpBar", getMemDC(), x, y, _hpIndex, 0);
-            _progressHpBarUp->render(getMemDC(), x + progressPosX, y + 14, 0, 0, _width, _progressHpBarUp->getHeight());
-            _progressMpBarUp->render(getMemDC(), x + progressPosX, y + 26, 0, 0, _width, _progressMpBarUp->getHeight());
-            //Rectangle(getMemDC(), x, y, x + 300, y + 12);
-            //cout<< "x + progressPosX : "<< x + progressPosX<<" y + 10 : " << y + 10 <<endl;
-            break;
+    case 0:
+        IMAGEMANAGER->frameRender("pHpBar", getMemDC(), x, y, _hpIndex, 0);
+		if (_hpIndex >= 10)
+		{
+			_progressHpBarUp->render(getMemDC(), x + progressPosX, y + 17, 0, 0, _width, _progressHpBarUp->getHeight());
+			_progressMpBarUp->render(getMemDC(), x + progressPosX, y + 25, 0, 0, _width, _progressMpBarUp->getHeight());
+		}
+        break;
 
-        case 1:
-            IMAGEMANAGER->frameRender("eHpBar", getMemDC(), x, y, _hpIndex, 0);
-            _progressHpBarUp->render(getMemDC(), x + progressPosX, y + 10, 0, 0, _width, _progressHpBarUp->getHeight());
-            _progressMpBarUp->render(getMemDC(), x + progressPosX, y + 25, 0, 0, _width, _progressMpBarUp->getHeight());
-            //cout << "x :" << x  << " y : " << y  << endl;
-            break;
-        }
+    case 1:
+        IMAGEMANAGER->frameRender("eHpBar", getMemDC(), x, y, _hpIndex, 0);
+		if (_hpIndex >= 10)
+		{
+			_progressHpBarUp->render(getMemDC(), x + progressPosX, y + 13, 0, 0, _width, _progressHpBarUp->getHeight());
+			_progressMpBarUp->render(getMemDC(), x + progressPosX, y + 25, 0, 0, _width, _progressMpBarUp->getHeight());
+		}
+        break;
     }
-
-}//카메라값 확인해서 적용안되면 매개변수로 카메라값 추가해주기
+}
 
 void ProgressBar::setGauge(float currentScore, float maxScore)
 {

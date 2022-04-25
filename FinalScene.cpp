@@ -60,11 +60,6 @@ HRESULT FinalScene::init(void)
 	_skill->setCells(_cells);
 	_skill->init();
 
-	_hpBar = new ProgressBar;
-	_hpBar->init(0,0,31,4);
-	_currentHp = 10;
-	_maxHp = 10;
-
 	_turnSystem = new TurnSystem();
 	_turnSystem->init();
 	_enemyBit = 0;
@@ -90,9 +85,6 @@ void FinalScene::release(void)
 
 	_saladin->release();
 	SAFE_DELETE(_saladin);
-
-	_hpBar->release();
-	SAFE_DELETE(_hpBar);
 
 	_camera->release();
 	SAFE_DELETE(_camera);
@@ -129,10 +121,7 @@ void FinalScene::update(void)
 		}
 		_vAttackableTile.clear();
 	}
-	/*_hpBar->setX(_x - (_rc.right - _rc.left) / 2);
-	_hpBar->setY(_y - 10 - (_rc.bottom - _rc.top) / 2);
-	_hpBar->update();
-	_hpBar->setGauge(_currentHp, _maxHp);*/
+
     if (_mouseType != _beforeMouseType) 
     {
         _aniCursor->AniStop();
@@ -156,11 +145,11 @@ void FinalScene::update(void)
             break;
 		case CELL_TYPE::ENEMY:
             _aniCursor = ANIMATIONMANAGER->findAnimation("attackMark");
-			_hpBar->setType(1);
+			_saladin->getEnemyHpBar()->setType(1);
             break;
         case CELL_TYPE::START:
             _aniCursor = ANIMATIONMANAGER->findAnimation("normalCursor");
-			_hpBar->setType(0);
+			_player->getPlayerHpBar()->setType(0);
             break;
         }
         _aniCursor->AniStart();
@@ -179,23 +168,24 @@ void FinalScene::update(void)
             switch (cell->getType())
             {
             case CELL_TYPE::ENEMY:
-                _hpBar->setGauge(100,100);
-                _hpBar->update();
+				_saladin->getEnemyHpBar()->setGauge(100,100);
+				_saladin->getEnemyHpBar()->update();
                 break;
             case CELL_TYPE::START:
-                _hpBar->setGauge(100, 100);
-                _hpBar->update();
+				_player->getPlayerHpBar()->setGauge(100, 100);
+				_player->getPlayerHpBar()->update();
                 break;
             default:
-                _hpBar->resetImgIdx();
+				_player->getPlayerHpBar()->resetImgIdx();
+				_saladin->getEnemyHpBar()->resetImgIdx();
                 break;
             }
         }
     }
 
     POINT cameraMouse = {
-                                    _ptMouse.x + _camera->getScreenRect().left,
-                                    _ptMouse.y + _camera->getScreenRect().top
+                            _ptMouse.x + _camera->getScreenRect().left,
+                            _ptMouse.y + _camera->getScreenRect().top
                         };
 	if (_turnSystem->getStatus() == CHANGINGSTATUS::PLAYERTURN)
 	{
@@ -633,7 +623,7 @@ void FinalScene::render(void)
 			{
 			case CELL_TYPE::ENEMY:
 				IMAGEMANAGER->findImage("attackMark")->aniRender(getMemDC(), _ptMouse.x, _ptMouse.y, _aniCursor);
-				_hpBar->render(left,top);
+				_saladin->getEnemyHpBar()->render(left,top);
 				break;
             case CELL_TYPE::SKILLABLE:
                 IMAGEMANAGER->findImage("attackMark")->aniRender(getMemDC(), _ptMouse.x, _ptMouse.y, _aniCursor);
@@ -643,7 +633,7 @@ void FinalScene::render(void)
 				break;
             case CELL_TYPE::START:
 				IMAGEMANAGER->findImage("normalCursor")->aniRender(getMemDC(), _ptMouse.x, _ptMouse.y, _aniCursor);
-				_hpBar->render(left, top);
+				_player->getPlayerHpBar()->render(left, top);
 
 				break;
 			default:

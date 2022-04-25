@@ -4,7 +4,7 @@
 HRESULT Player::init(void)
 {
 	_image = IMAGEMANAGER->findImage("pDamageSheet");
-    _stateBit = 0;//Idle
+    _stateBit = 0;
 	_count = 0;
     _skillCount = 0;
 	_indexA = _indexB = _worldIndex = _windIndex = 0;
@@ -18,17 +18,19 @@ HRESULT Player::init(void)
 	_currentHp = 10;
 	_maxHp = 10;
 
-	_playerCell = { 0 };//¿¨;
-	//_hpBar = new ProgressBar;
-	//_hpBar->init(0, 0, 52, 4);
+	_playerCell = { 0 };
+	_hpBar = new ProgressBar;
+	_hpBar->init(0, 0, 30, 4);
+	_currentHp = 350;
+	_maxHp = 350;
 	_imageState = PLAYERSTATE::BOTTOM;
 	return S_OK;
 }
 
 void Player::release(void)
 {
-	//_hpBar->release();
-	//SAFE_DELETE(_hpBar);
+	_hpBar->release();
+	SAFE_DELETE(_hpBar);
 }
 
 void Player::update(void)
@@ -264,7 +266,7 @@ void Player::update(void)
             IMAGEMANAGER->findImage("skillStart")->setFrameY(0);
             IMAGEMANAGER->findImage("skillStart")->setFrameX(_worldIndex);
             _cdt++;
-            if (_cdt > 80)
+            if (_cdt > 50)
             {
                 setPlayerIdle();
                 _cdt = 0;

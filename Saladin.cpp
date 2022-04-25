@@ -20,14 +20,18 @@ HRESULT Saladin::init(void)
    
 	_currentHp = 10;
 	_maxHp = 10;
-	//_hpBar = new ProgressBar;
-	//_hpBar->init(280, WINSIZE_Y - 250, 52, 4);
+	_hpBar = new ProgressBar;
+	_hpBar->init(0, 0, 30, 4);
+	_currentHp = 500;
+	_maxHp = 500;
 	_imageState = SALADINSTATE::BOTTOM;
 	return S_OK;
 }
 
 void Saladin::release(void)
 {
+	_hpBar->release();
+	SAFE_DELETE(_hpBar);
 }
 
 void Saladin::update(void)

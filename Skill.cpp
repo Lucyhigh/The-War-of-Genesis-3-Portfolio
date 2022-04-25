@@ -259,7 +259,6 @@ void Skill::windEyun()
 {
 	int left = _player->getPlayerRect().left - 100 - _camera->getScreenRect().left;
 	int top = _player->getPlayerRect().top - 100 - _camera->getScreenRect().top;
-    //�ϴ� ������ �������� ����
 	string skillArr[10] = { "184light" ,"skill10R", "skill8", "skill4R","skill10R", "skill7", "184light", "skill7","skill8","skill3" };
     POINT skillPosArr[10] =
     {
@@ -310,7 +309,7 @@ void Skill::windEyun()
                                            skillAlpha[_windSkillIndex++] };
 		_vWindSkill.push_back(skill);
 	
-		if (_windSkillIndex == 1) _windSkillTick = 60;//
+		if (_windSkillIndex == 1) _windSkillTick = 50;//
         else if (_windSkillIndex == 2 || _windSkillIndex == 3 ) _windSkillTick = 30;
         else if ( _windSkillIndex == 4 || _windSkillIndex == 5) _windSkillTick = 5;
         else if ( _windSkillIndex == 6) _windSkillTick = 10;

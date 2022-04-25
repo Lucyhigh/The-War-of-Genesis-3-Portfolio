@@ -25,7 +25,6 @@ private:
 	Animation* _tileClick;
 	Animation* _turnMark;
     Skill* _skill;
-	ProgressBar* _hpBar;
 	Player* _player;
 	TurnSystem* _turnSystem;
 	GameUI* _gameUI;
@@ -53,8 +52,7 @@ private:
     vector<Cell*> _vSkillableTile;
 	bitset<3> _moveTileBit;
 	//float _x, _y; //체력바 위치
-	float _currentHp;
-	float _maxHp;
+
 	float _lerpPercentage;
 	float _tileAlpha;
 	float _yPos;
