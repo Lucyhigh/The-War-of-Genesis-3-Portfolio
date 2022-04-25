@@ -57,7 +57,7 @@ void Skill::update(void)
         _skillPlayerPos2 = { (long)left+5, (long)top};
         _skillPlayerPos3 = { (long)left+5, (long)top};
 
-        Cell* enemyCell = nullptr;//ÀÏ´Ü 1¸í
+        Cell* enemyCell = nullptr;
         for (auto cellsiter = _vSkillableCells->begin(); cellsiter != _vSkillableCells->end(); ++cellsiter)
         {
             if ((*cellsiter)->getType() == CELL_TYPE::ENEMY)
@@ -79,7 +79,7 @@ void Skill::update(void)
 				_vSkillCellPos[i]	  = { (long)left + 10 - 20 * (i + 1), (long)top - 80 - 16 * (i + 1) };//LT
 				_vSkillCellPos[i + 2] = { (long)left + 10 + 20 * (i + 1), (long)top - 80 + 16 * (i + 1) };//RB
 				_vSkillCellPos[i + 1] = { (long)left + 10 - 20 * (i + 1), (long)top - 80 + 16 * (i + 1) };//LB
-				_vSkillCellPos[i + 3] = { (long)left + 10 + 20 * (i + 1), (long)top - 80 - 16 * (i + 1) };//RT========== triple ´õºí, ¿ø ·£´ý·£´õÇÊ¿ä
+				_vSkillCellPos[i + 3] = { (long)left + 10 + 20 * (i + 1), (long)top - 80 - 16 * (i + 1) };//RT
             }
         }
 
@@ -91,8 +91,8 @@ void Skill::update(void)
 													  
 		for (int i = 0; i < 48; i += 2)				  
 		{											  
-			_vSkillCellPos[i + skillArr2]	  = { (long)left - 16 * (i + 1), (long)top -30 + 12 * (i + 1) };
-			_vSkillCellPos[i + skillArr2 + 1] = { (long)left + 16 * (i + 1), (long)top -30 - 12 * (i + 1) };//========== fire 
+			_vSkillCellPos[i + skillArr2]	  = { (long)left - 16 * (i + 1), (long)top -20 + 12 * (i + 1) };
+			_vSkillCellPos[i + skillArr2 + 1] = { (long)left + 16 * (i + 1), (long)top -20 - 12 * (i + 1) };
 		}
 
         for (int i = 0; i < 48; i += 4)
@@ -100,14 +100,14 @@ void Skill::update(void)
             _vSkillCellPos[i + skillArr3]	  = { (long)left - 10 * (i + 1), (long)top+10 - 8 * (i + 1) };
             _vSkillCellPos[i + skillArr3 + 2] = { (long)left + 10 * (i + 1), (long)top+10 + 8 * (i + 1) };
             _vSkillCellPos[i + skillArr3 + 1] = { (long)left - 10 * (i + 1), (long)top+10 + 8 * (i + 1) };
-            _vSkillCellPos[i + skillArr3 + 3] = { (long)left + 10 * (i + 1), (long)top+10 - 8 * (i + 1) };//========== smog
+            _vSkillCellPos[i + skillArr3 + 3] = { (long)left + 10 * (i + 1), (long)top+10 - 8 * (i + 1) };
         }
         for (int i = 0; i < 48; i += 4)
         {
 			_vSkillCellPos[i + skillArr4]	  =	{ (long)left + 20 - 10 * (i + 1), (long)top + 40 - 8 * (i + 1) };
 			_vSkillCellPos[i + skillArr4 + 2] = { (long)left + 20 + 10 * (i + 1), (long)top + 40 + 8 * (i + 1) };
 			_vSkillCellPos[i + skillArr4 + 1] = { (long)left + 20 - 10 * (i + 1), (long)top + 40 + 8 * (i + 1) };
-			_vSkillCellPos[i + skillArr4 + 3] = { (long)left + 20 + 10 * (i + 1), (long)top + 40 - 8 * (i + 1) };//========== groundCrack
+			_vSkillCellPos[i + skillArr4 + 3] = { (long)left + 20 + 10 * (i + 1), (long)top + 40 - 8 * (i + 1) };
         }
 
         POINT enemyPos = { 
@@ -115,11 +115,11 @@ void Skill::update(void)
             (long)enemyCell->getCellY()*TILESIZEY      - _camera->getScreenRect().top 
 		};
 
-         _vSkillCellPos[skillArr5]     = { enemyPos.x, enemyPos.y - 100 };	//"one");
-         _vSkillCellPos[skillArr5 + 1] = { enemyPos.x, enemyPos.y - 40 };	//"95light");
-         _vSkillCellPos[skillArr5 + 2] = { enemyPos.x, enemyPos.y - 20 };	//"48fire");
+         _vSkillCellPos[skillArr5]     = { enemyPos.x, enemyPos.y - 100 };		  //"one");
+         _vSkillCellPos[skillArr5 + 1] = { enemyPos.x, enemyPos.y - 40 };		  //"95light");
+         _vSkillCellPos[skillArr5 + 2] = { enemyPos.x, enemyPos.y - 20 };		  //"48fire");
          _vSkillCellPos[skillArr5 + 3] = { enemyPos.x, enemyPos.y - 30  };	//118stone
-         _vSkillCellPos[skillArr5 + 4] = { enemyPos.x + 5, enemyPos.y + 30  };	//========== enemy
+         _vSkillCellPos[skillArr5 + 4] = { enemyPos.x+5, enemyPos.y + 30  };
         
         _cdt++;
 
@@ -259,7 +259,7 @@ void Skill::windEyun()
 {
 	int left = _player->getPlayerRect().left - 100 - _camera->getScreenRect().left;
 	int top = _player->getPlayerRect().top - 100 - _camera->getScreenRect().top;
-    //ÀÏ´Ü ¿À¸¥ÂÊ ±âÁØÀ¸·Î ¸ÂÃã
+    //ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	string skillArr[10] = { "184light" ,"skill10R", "skill8", "skill4R","skill10R", "skill7", "184light", "skill7","skill8","skill3" };
     POINT skillPosArr[10] =
     {

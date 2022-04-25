@@ -8,6 +8,7 @@ HRESULT SecondScene::init(void)
 	SOUNDMANAGER->addSound("changeScene", "Resources/Sounds/changeScene.mp3", false, false);
 	SOUNDMANAGER->addSound("Tears", "Resources/Sounds/Tears.mp3", true, true);
 	SOUNDMANAGER->play("Tears", 0.8f);
+	_playIndex = 0;
 
 	string path = "Resources/Sounds/secondScript/";
 	_vSoundName = getFilesInDirectory(path, "*.mp3");
@@ -20,10 +21,9 @@ HRESULT SecondScene::init(void)
     _count = 0;
     _moveCount = 0;
     _textBufferCnt = 0;
-    _textIndex = 0;
-	_playIndex = 0;
     _frameIndex = 0;
-    _loofIndex = 0;
+    _textIndex = 0;
+    _bgIndex = 0;
     _alpha = 255;
     _eventAlpha = 0;
     _bgAlpha = 0;
@@ -54,9 +54,13 @@ void SecondScene::update(void)
         {
             _textBufferCnt = 0;
 			SOUNDMANAGER->play("changeScene", 0.5f);
-           if(_textIndex<TEXTNum) _textIndex++;
+			if (_textIndex == _bgImage[_bgIndex]._textIndex)
+			{
+				_bgIndex++;
+			}
+			if(_textIndex<TEXTNum) _textIndex++;
 			_alpha = 150;
-			
+ 			
 			SOUNDMANAGER->stop(_vSoundName[_playIndex]);
 			if (_playIndex < _vSoundName.size() - 1)
 			{
@@ -69,7 +73,7 @@ void SecondScene::update(void)
 			SOUNDMANAGER->play(_vSoundName[_playIndex], 1.0f);
         }
     }
-    if (_textIndex == 9 || _textIndex == 47)
+    if (_count %100 ==0 && (_textIndex == 9 || _textIndex == 46))
     {
         _isFadeOut = true;
     }
@@ -88,6 +92,7 @@ void SecondScene::update(void)
     if (_alpha < 0) _alpha = 0;
     if (_eventAlpha >= 255) _eventAlpha = 255;
     if (_textAlpha >= 210) _textAlpha = 210;
+
     if (_isFadeOut)
     {
         fadeout();
@@ -96,38 +101,23 @@ void SecondScene::update(void)
 
 void SecondScene::render(void)
 {
-    for (size_t i = 0; i < BgImageNUM; i++)
-    {
-        if (_textIndex <= _bgImage[i]._textIndex)
-        {
-            IMAGEMANAGER->alphaRender(_bgImage[i]._fileName, getMemDC(), _bgAlpha);
-            break;
-        }
-    }
+    IMAGEMANAGER->alphaRender(_bgImage[_bgIndex]._fileName, getMemDC(), _bgAlpha);
 
 	int size = _text[_textIndex].imageVec.size();
-    for (int i = 0; i < size; i++)
-    {
-		if (size == 1)
-		{
-			IMAGEMANAGER->alphaRender(_text[_textIndex].imageVec[i], getMemDC(), CENTER_X - 230, CENTER_Y-120, _alpha);
-		}
-		else
-		{
-			IMAGEMANAGER->alphaRender(_text[_textIndex].imageVec[i], getMemDC(), (WINSIZE_X * (i + 1) / (size + 1)) - WINSIZE_X / 3, WINSIZE_Y / 10, _alpha);
-		}
-    }
+	IMAGEMANAGER->alphaRender(_text[_textIndex].imageVec[0], getMemDC(), CENTER_X - 230, CENTER_Y-120, _alpha);
+
 
     IMAGEMANAGER->alphaRender("storyText", getMemDC(), WINSIZE_X*0.16, WINSIZE_Y*0.72, _textAlpha);
     FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.17, WINSIZE_Y*0.75, "가을체", 20, 15, _text[_textIndex].name, wcslen(_text[_textIndex].name), TA_LEFT, RGB(72, 221, 157));
 
-    const int SCRIPT_MAX_LENGTH = 48;
+    const int SCRIPT_MAX_LENGTH = 44;
+	const int SCRIPT_MAX_LENGTH2 = 84;
     FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.17, WINSIZE_Y*0.80, "가을체", 18, 100, _text[_textIndex].script, 
 		((_textBufferCnt) > SCRIPT_MAX_LENGTH ? SCRIPT_MAX_LENGTH : (_textBufferCnt)), TA_LEFT, RGB(255, 255, 255));
 
     if (wcslen(_text[_textIndex].script) > SCRIPT_MAX_LENGTH && _textBufferCnt > SCRIPT_MAX_LENGTH)
     {
-        FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.17, WINSIZE_Y*0.84, "가을체", 18, 100,
+        FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.17, WINSIZE_Y * 0.84, "가을체", 18, 100,
             _text[_textIndex].script + SCRIPT_MAX_LENGTH, (_textBufferCnt > wcslen(_text[_textIndex].script)) ?
             wcslen(_text[_textIndex].script) - SCRIPT_MAX_LENGTH : _textBufferCnt - SCRIPT_MAX_LENGTH, TA_LEFT, RGB(255, 255, 255));
     }
@@ -150,22 +140,18 @@ void SecondScene::fadeout()
 			_fadeAlpha = 0;
             _textBufferCnt = 0;
             _alpha = 150;
-            _textIndex++;
-            if (_textIndex == 47 ) SCENEMANAGER->changeScene("final");
+			if (_textIndex == 9)
+			{
+				_playIndex++;
+				SOUNDMANAGER->play(_vSoundName[_playIndex], 1.0f);
+				_textIndex++;
+			}
+			if (_textIndex == 46 )
+			{
+				SOUNDMANAGER->stop("Tears");
+				SOUNDMANAGER->stop(_vSoundName[_playIndex]);
+				SCENEMANAGER->changeScene("final");
+			}
 		}
 	}
-}
-
-void SecondScene::fadeIn()
-{
-    if (_textIndex == 0)
-    {
-        if (_fadeAlpha < 30) _fadeAlpha -= 5.0f;
-        else
-        {
-            _isFadeIn = false;
-            if (_fadeAlpha <= 20) _fadeAlpha = 30;
-        }
-
-    }
 }

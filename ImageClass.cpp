@@ -160,7 +160,7 @@ HRESULT ImageClass::init(void)
 	IMAGEMANAGER->addFrameImage("fireL2", "Resources/Images/Effect/all/fireL2.bmp", 660, 230, 12, 1, true, RGB(8, 88, 8));
 	IMAGEMANAGER->addFrameImage("fireL3", "Resources/Images/Effect/all/fireL3.bmp", 660, 230, 12, 1, true, RGB(8, 88, 8));
 	IMAGEMANAGER->addFrameImage("fireL4", "Resources/Images/Effect/all/fireL4.bmp", 660, 230, 12,1,true, RGB(8, 88, 8));
-	IMAGEMANAGER->addFrameImage("groundCrack", "Resources/Images/Effect/all/groundCrack3.bmp", 600, 50, 12,1,true, RGB(8, 88, 8));
+	IMAGEMANAGER->addFrameImage("groundCrack", "Resources/Images/Effect/all/groundCrack.bmp", 600, 50, 12,1,true, RGB(8, 88, 8));
 	IMAGEMANAGER->addFrameImage("groundCrackL", "Resources/Images/Effect/all/groundCrackL3.bmp", 600, 50, 12,1,true, RGB(8, 88, 8));
 	IMAGEMANAGER->addFrameImage("48fire", "Resources/Images/Effect/all/48fire.bmp", 872, 131, 8,1,true, RGB(252, 252, 236));
 	IMAGEMANAGER->addFrameImage("95light", "Resources/Images/Effect/all/95light.bmp", 3502, 218, 17,1,true, RGB(252, 252, 252));
