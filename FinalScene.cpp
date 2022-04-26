@@ -392,7 +392,7 @@ void FinalScene::update(void)
             _skill->update();
             if (_player->getPlayerStateBit(3) == 0)
             {
-				_saladin->getEnemyStateBit(3);
+				_saladin->setEnemyStateBit(3);
                 _gameUI->setSkillNum(SKILL_NUMBER::SKILL_INDEX_NULL);
 				_skill->reset();
             }
@@ -481,7 +481,7 @@ void FinalScene::update(void)
     {
 	    if (_moveTileBit.test(0) == 1 && _moveTileBit.test(1) == 1 && _moveTileBit.test(2) == 1)//111의 경우에서 쓰음
 	    {
-	    	startShowMoveableTile(8, _cMoveStart, false);
+	    	startShowMoveableTile(6, _cMoveStart, false);
 	    	_moveTileBit.reset(0);
 	    }
     }
@@ -766,7 +766,7 @@ void FinalScene::rectMoveToPath()
 		else
 		{
 			changeImage();
-			float time = 4.0f;
+			float time = 7.0f;
 			float speed = TIMEMANAGER->getElapsedTime() * time;
 			_lerpPercentage += speed;
 
@@ -811,7 +811,7 @@ void FinalScene::rectMoveToPath()
 		else
 		{
 			changeImage();
-			float time = 4.0f;
+			float time = 7.0f;
 			float speed = TIMEMANAGER->getElapsedTime() * time;
 			_lerpPercentage += speed;
 
@@ -1135,7 +1135,7 @@ void FinalScene::startShowMoveableTile(int range, Cell* cell, bool isMoveable)
 
 	for (auto iter = _vMoveableTile.begin(); iter != _vMoveableTile.end(); ++iter)
 	{
-		if (iter >= _vMoveableTile.end() - ((int)_vMoveableTile.size()*0.25)-1)
+		if (iter >= _vMoveableTile.end() - (_vMoveableTile.size()*0.125))
 		{
 			(*iter)->setType(CELL_TYPE::ATTACKABLE);//갯수 설정 필요
 		}

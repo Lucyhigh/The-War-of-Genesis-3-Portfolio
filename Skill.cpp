@@ -48,10 +48,10 @@ void Skill::update(void)
 {
     if (_player->getPlayerStateBit(3) == 1)
     {
-        if (_alphaA < 100) _alphaA += 5;
+        if (_alphaA < 190) _alphaA += 5;
 
         float left = _player->getPlayerRect().left - _camera->getScreenRect().left;
-        float top =  _player->getPlayerRect().top+30 - _camera->getScreenRect().top;
+        float top =  _player->getPlayerRect().top + 30 - _camera->getScreenRect().top;
 
         _skillPlayerPos  = { (long)left+5, (long)top};
         _skillPlayerPos2 = { (long)left+5, (long)top};
@@ -91,8 +91,8 @@ void Skill::update(void)
 													  
 		for (int i = 0; i < 48; i += 2)				  
 		{											  
-			_vSkillCellPos[i + skillArr2]	  = { (long)left - 16 * (i + 1), (long)top -20 + 12 * (i + 1) };
-			_vSkillCellPos[i + skillArr2 + 1] = { (long)left + 16 * (i + 1), (long)top -20 - 12 * (i + 1) };
+			_vSkillCellPos[i + skillArr2]	  = { (long)left - 16 * (i + 1), (long)top -40 + 12 * (i + 1) };
+			_vSkillCellPos[i + skillArr2 + 1] = { (long)left + 16 * (i + 1), (long)top -40 - 12 * (i + 1) };
 		}
 
         for (int i = 0; i < 48; i += 4)
@@ -102,12 +102,12 @@ void Skill::update(void)
             _vSkillCellPos[i + skillArr3 + 1] = { (long)left - 10 * (i + 1), (long)top+10 + 8 * (i + 1) };
             _vSkillCellPos[i + skillArr3 + 3] = { (long)left + 10 * (i + 1), (long)top+10 - 8 * (i + 1) };
         }
-        for (int i = 0; i < 48; i += 4)
+        for (int i = 0; i < 36; i += 4)//
         {
-			_vSkillCellPos[i + skillArr4]	  =	{ (long)left + 20 - 10 * (i + 1), (long)top + 40 - 8 * (i + 1) };
-			_vSkillCellPos[i + skillArr4 + 2] = { (long)left + 20 + 10 * (i + 1), (long)top + 40 + 8 * (i + 1) };
-			_vSkillCellPos[i + skillArr4 + 1] = { (long)left + 20 - 10 * (i + 1), (long)top + 40 + 8 * (i + 1) };
-			_vSkillCellPos[i + skillArr4 + 3] = { (long)left + 20 + 10 * (i + 1), (long)top + 40 - 8 * (i + 1) };
+			_vSkillCellPos[i + 180]	  =	{ (long)left + 20 - 10 * (i + 1), (long)top + 40 - 8 * (i + 1) };
+			_vSkillCellPos[i + 180 + 2] = { (long)left + 20 + 10 * (i + 1), (long)top + 40 + 8 * (i + 1) };
+			_vSkillCellPos[i + 180 + 1] = { (long)left + 20 - 10 * (i + 1), (long)top + 40 + 8 * (i + 1) };
+			_vSkillCellPos[i + 180 + 3] = { (long)left + 20 + 10 * (i + 1), (long)top + 40 - 8 * (i + 1) };
         }
 
         POINT enemyPos = { 
@@ -142,7 +142,7 @@ void Skill::update(void)
             {
                 _effectManager->createEffect((*viSkillList)._skillName.c_str(), 
 											  *(*viSkillList)._aniPos, (*viSkillList)._fps, false,
-											  (*viSkillList)._alpha, (*viSkillList)._alpha-40,10.0f);
+											  (*viSkillList)._alpha, (*viSkillList)._alpha-60,10.0f);
             }
         }
         if (_skillIndex == 70 || _skillIndex == 100 || _skillIndex == 225)
@@ -153,7 +153,7 @@ void Skill::update(void)
     }
     else if (_player->getPlayerStateBit(4) == 1)
     {
-        if (_alphaA < 120) _alphaA += 5;
+        if (_alphaA < 180) _alphaA += 5;
 		_cdt++;
 		if (_count < _cdt)
 		{
@@ -227,11 +227,11 @@ void Skill::worldBrokenSkill()
 
 	for (int i = 0; i < skillArr2; ++i)
 	{
-		pushCellSkill(70 + i%2, "fireL", cellPosIdx++, (BYTE)170,30);
+		pushCellSkill(60 + i%2, "fireL", cellPosIdx++, (BYTE)170,30);
 	}
 	for (int i = 0; i < skillArr2; ++i)
 	{
-		pushCellSkill(75 + i % 2, "fire", cellPosIdx++, (BYTE)170, 30);
+		pushCellSkill(65 + i % 2, "fire", cellPosIdx++, (BYTE)170, 30);
 	}
 
 	for (int i = 0; i < skillArr2; ++i)
@@ -241,15 +241,15 @@ void Skill::worldBrokenSkill()
 
 	for (int i = 0; i < skillArr2; ++i)
 	{
-		if (i % 2 == 1)						pushCellSkill(100 + i, "groundCrack",  cellPosIdx++, 170,3);
-		else if (i % 2 == 0)				pushCellSkill(100 + i, "groundCrackL", cellPosIdx++, 170,3);
+		if (i % 2 == 1)						pushCellSkill(100 + i, "groundCrack",  cellPosIdx++, 170,5);
+		else if (i % 2 == 0)				pushCellSkill(100 + i, "groundCrackL", cellPosIdx++, 170,5);
     }
 
-	pushCellSkill(210, "one", cellPosIdx++, (BYTE)190,10);
-	pushCellSkill(220, "95light", cellPosIdx++, (BYTE)190,20);
-	pushCellSkill(225, "48fire", cellPosIdx++, (BYTE)190,15);
-	pushCellSkill(225, "115stone", cellPosIdx++, (BYTE)210,20);
-	pushCellSkill(235, "enemyAttack", cellPosIdx++, (BYTE)190,10);
+	pushCellSkill(200, "one", cellPosIdx++, (BYTE)190,10);
+	pushCellSkill(210, "95light", cellPosIdx++, (BYTE)190,20);
+	pushCellSkill(215, "48fire", cellPosIdx++, (BYTE)190,15);
+	pushCellSkill(215, "115stone", cellPosIdx++, (BYTE)210,20);
+	pushCellSkill(225, "enemyAttack", cellPosIdx++, (BYTE)190,10);
 
     startSkill();
 }
@@ -268,7 +268,7 @@ void Skill::windEyun()
 		{left - 40,  top - 30},	// "skill4R",
 		{left + 40,  top + 60}, // "skill10R"
 		{left + 40 , top - 10}, // "skill7",
-		{left + 20,	 top + 30},	// "184light"
+		{left + 20,	 top },	    // "184light"
 		{left + 40 , top - 10}, // "skill7"	
 		{left + 40 , top - 10}, // "skill8"	
 		{left + 60,  top}		// "skill3" 

@@ -11,7 +11,8 @@ HRESULT Saladin::init(void)
 	_tmp=1;
 	_cdt=0;
 	_count = 0;
-	_indexA = _indexB = _indexC= 0;
+	_indexA = _indexB = _indexC = _worldIndex = 0;
+    _skillCount = 0;
 	_alphaA = 0;
 	_speed = 5;
 	_saladinPos.x = 0;
@@ -154,62 +155,77 @@ void Saladin::update(void)
     //00010 공격 
     else if (_stateBit.test(1) == 1)
     {
-		if (_count % 30 == 0)
-		{
-			switch (_imageState)
-			{
-			case SALADINSTATE::RIGHT:
-				_indexC--;
-				IMAGEMANAGER->findImage("sAttacksheet")->setFrameY(3);
-				if (_indexC < 0)
-				{
-					_indexC = 5;
-					_isAttack = true;
-					setEnemyIdle();
+        if (_skillCount >= 5)
+        {
+            _stateBit.set(4);
+        }
+        else
+        {
+            if (_count % 30 == 0)
+            {
+                switch (_imageState)
+                {
+                case SALADINSTATE::RIGHT:
+                    _indexC--;
+                    IMAGEMANAGER->findImage("sAttacksheet")->setFrameY(3);
+                    if (_indexC < 0)
+                    {
+                        _indexC = 5;
+                        _isAttack = true;
+                        _skillCount++;
 
-				}
-				IMAGEMANAGER->findImage("sAttacksheet")->setFrameX(_indexC);
-				break;
-			case SALADINSTATE::LEFT:
-				_indexC++;
-				IMAGEMANAGER->findImage("sAttacksheet")->setFrameY(2);
-				if (_indexC >= 5)
-				{
-					_indexC = 0;
-					_isAttack = true;
-					setEnemyIdle();
-				}
-				IMAGEMANAGER->findImage("sAttacksheet")->setFrameX(_indexC);
-				break;
-			case SALADINSTATE::TOP:
-				_indexC++;
-				IMAGEMANAGER->findImage("sAttacksheet")->setFrameY(0);
-				if (_indexC >= 5)
-				{
-					_indexC = 0;
-					_isAttack = true;
-					setEnemyIdle();
-				}
-				IMAGEMANAGER->findImage("sAttacksheet")->setFrameX(_indexC);
-				break;
-			case SALADINSTATE::BOTTOM:
-				_indexC++;
-				IMAGEMANAGER->findImage("sAttacksheet")->setFrameY(1);
-				if (_indexC >= 5)
-				{
-					_indexC = 0;
-					_isAttack = true;
-					setEnemyIdle();
-				}
-				IMAGEMANAGER->findImage("sAttacksheet")->setFrameX(_indexC);
-				break;
-			}
-		}
+                        setEnemyIdle();
+
+                    }
+                    IMAGEMANAGER->findImage("sAttacksheet")->setFrameX(_indexC);
+                    break;
+                case SALADINSTATE::LEFT:
+                    _indexC++;
+                    IMAGEMANAGER->findImage("sAttacksheet")->setFrameY(2);
+                    if (_indexC >= 5)
+                    {
+                        _indexC = 0;
+                        _isAttack = true;
+                        _skillCount++;
+
+                        setEnemyIdle();
+                    }
+                    IMAGEMANAGER->findImage("sAttacksheet")->setFrameX(_indexC);
+                    break;
+                case SALADINSTATE::TOP:
+                    _indexC++;
+                    IMAGEMANAGER->findImage("sAttacksheet")->setFrameY(0);
+                    if (_indexC >= 5)
+                    {
+                        _indexC = 0;
+                        _isAttack = true;
+                        _skillCount++;
+
+                        setEnemyIdle();
+                    }
+                    IMAGEMANAGER->findImage("sAttacksheet")->setFrameX(_indexC);
+                    break;
+                case SALADINSTATE::BOTTOM:
+                    _indexC++;
+                    IMAGEMANAGER->findImage("sAttacksheet")->setFrameY(1);
+                    if (_indexC >= 5)
+                    {
+                        _indexC = 0;
+                        _isAttack = true;
+                        _skillCount++;
+
+                        setEnemyIdle();
+                    }
+                    IMAGEMANAGER->findImage("sAttacksheet")->setFrameX(_indexC);
+                    break;
+                }
+            }
+            cout << _skillCount << endl;
+        }
     }
     //00100 피격 
     else if (_stateBit.test(2) == 1)
     {
-
         switch (_imageState)
         {
             case SALADINSTATE::RIGHT:
@@ -258,6 +274,36 @@ void Saladin::update(void)
 	{
 		_isLive = false;
 	}
+    //10000 필살기
+    if (_stateBit.test(4) == 1)
+    {
+        IMAGEMANAGER->findImage("sSkill")->setFrameY(0);
+        IMAGEMANAGER->findImage("sSkill")->setFrameX(_worldIndex);
+        if (_worldIndex == 0)
+        {
+            if (_count % 100 == 0) _worldIndex++;
+        }
+        else if (_worldIndex == 1 || _worldIndex == 2)
+        {
+            if (_count % 70 == 0) _worldIndex++;
+        }
+        else if (_worldIndex == 3 || _worldIndex == 4 || _worldIndex == 5 )
+        {
+            if (_count % 15 == 0) _worldIndex++;
+        }
+        else if (_worldIndex == 5 || _worldIndex == 6 || _worldIndex == 7 )
+        {
+            if (_count % 8 == 0) _worldIndex++;
+        }
+        else if (_worldIndex == 8)
+        {
+            _isAttack = true;
+            if (_count % 1000 == 0)
+            {
+                _skillCount = 0;
+            }
+        }
+    }
      _rcSaladin = RectMakeCenter(_saladinPos.x, _saladinPos.y, _image->getFrameWidth(), _image->getFrameHeight());
 }
 
@@ -370,6 +416,11 @@ void Saladin::render(void)
 	{
 		//죽어서 이미지 없음
 	}
+    else if (_stateBit.test(4) == 1)
+    {
+        cout << "4로 들어옴" << endl;
+        IMAGEMANAGER->frameRender("sSkill", getMemDC(), left - 30, top - 20);
+    }
 }
 
 float Saladin::getSaladinPosX()

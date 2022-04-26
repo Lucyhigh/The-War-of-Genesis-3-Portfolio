@@ -27,6 +27,8 @@ private:
 	int _indexA;
 	int _indexB;
 	int _indexC;
+    int _worldIndex;
+    int _skillCount;
 	int _alphaA;
 	float _currentHp;
 	float _maxHp;

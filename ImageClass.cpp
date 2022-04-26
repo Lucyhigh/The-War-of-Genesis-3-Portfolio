@@ -47,6 +47,8 @@ HRESULT ImageClass::init(void)
     IMAGEMANAGER->addFrameImage("sAttacksheet", "Resources/Images/Saladin/attacksheet.bmp", 650, 520, 5, 4,true, RGB(168, 208, 168));
     //damage
     IMAGEMANAGER->addFrameImage("sDamageSheet", "Resources/Images/Saladin/damageSheet.bmp", 404, 87, 4, 1,true, RGB(168, 208, 168));
+    //SKILL
+    IMAGEMANAGER->addFrameImage("sSkill", "Resources/Images/Saladin/skill.bmp", 900, 101, 9, 1,true, RGB(168, 208, 168));
 
 #pragma endregion
 #pragma region Stage Scene
