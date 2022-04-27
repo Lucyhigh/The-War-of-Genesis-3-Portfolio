@@ -12,13 +12,13 @@ HRESULT Saladin::init(void)
 	_cdt=0;
 	_count = 0;
 	_indexA = _indexB = _indexC = _worldIndex = 0;
-    _skillCount = 0;
+    _skillCount = 5;
 	_alphaA = 0;
 	_speed = 5;
 	_saladinPos.x = 0;
 	_saladinPos.y = WINSIZE_Y - 140;
 	_rcSaladin = RectMakeCenter(_saladinPos.x, _saladinPos.y, _image->getFrameWidth(), _image->getFrameHeight());
-   
+	_timer = 0.0f;
 	_currentHp = 10;
 	_maxHp = 10;
 	_hpBar = new ProgressBar;
@@ -38,7 +38,6 @@ void Saladin::release(void)
 void Saladin::update(void)
 {
     _count += 4;
-    
     //00000 대기 
     if (_stateBit.none() == 1)
     {
@@ -157,7 +156,9 @@ void Saladin::update(void)
     {
         if (_skillCount >= 5)
         {
-            _stateBit.set(4);
+			_stateBit.reset();
+            _stateBit.set(4);//5번 이상 공격시 스킬사용
+			cout <<"스킬 쓸 거시다"<< _stateBit.to_string() << endl;
         }
         else
         {
@@ -175,7 +176,6 @@ void Saladin::update(void)
                         _skillCount++;
 
                         setEnemyIdle();
-
                     }
                     IMAGEMANAGER->findImage("sAttacksheet")->setFrameX(_indexC);
                     break;
@@ -220,7 +220,7 @@ void Saladin::update(void)
                     break;
                 }
             }
-            cout << _skillCount << endl;
+            cout <<"_skillCount"<< _skillCount << endl;
         }
     }
     //00100 피격 
@@ -274,35 +274,39 @@ void Saladin::update(void)
 	{
 		_isLive = false;
 	}
-    //10000 필살기
+    //10000 천지파열무
     if (_stateBit.test(4) == 1)
     {
+		_timer += TIMEMANAGER->getElapsedTime();
+		cout <<"_timer "<< _timer << endl;
         IMAGEMANAGER->findImage("sSkill")->setFrameY(0);
         IMAGEMANAGER->findImage("sSkill")->setFrameX(_worldIndex);
+
         if (_worldIndex == 0)
         {
-            if (_count % 100 == 0) _worldIndex++;
+            if (_timer >= 2.0f) _worldIndex++;
         }
         else if (_worldIndex == 1 || _worldIndex == 2)
         {
-            if (_count % 70 == 0) _worldIndex++;
+            if (_timer >= 3.0f) _worldIndex++;
         }
         else if (_worldIndex == 3 || _worldIndex == 4 || _worldIndex == 5 )
         {
-            if (_count % 15 == 0) _worldIndex++;
+            if (_timer >= 4.0f) _worldIndex++;
         }
-        else if (_worldIndex == 5 || _worldIndex == 6 || _worldIndex == 7 )
+        else if (_worldIndex == 6 || _worldIndex == 7 )
         {
-            if (_count % 8 == 0) _worldIndex++;
+            if (_timer >= 5.0f) _worldIndex++;
         }
         else if (_worldIndex == 8)
         {
             _isAttack = true;
-            if (_count % 1000 == 0)
+            if (_timer >= 7.0f)
             {
-                _skillCount = 0;
+               // _skillCount = 0;
             }
         }
+		cout << _worldIndex << endl;
     }
      _rcSaladin = RectMakeCenter(_saladinPos.x, _saladinPos.y, _image->getFrameWidth(), _image->getFrameHeight());
 }

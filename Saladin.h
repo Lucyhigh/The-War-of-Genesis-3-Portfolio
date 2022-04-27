@@ -32,7 +32,7 @@ private:
 	int _alphaA;
 	float _currentHp;
 	float _maxHp;
-
+	float _timer;
 	bool _isWaiting;
 	bool _isAttack;
 	bool _isDamage;
@@ -71,7 +71,7 @@ public:
 	bool getLive();
 
 	void hitDamage(float damage);
-
+	int getSkillCount() { return _skillCount; }
 public:
 	Saladin() :_isWaiting(true), _isLive(true), _isAttack(false), _isDamage(false){}
 	~Saladin() {}

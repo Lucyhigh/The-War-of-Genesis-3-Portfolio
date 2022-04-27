@@ -441,7 +441,7 @@ void FinalScene::update(void)
 		// 0000 0100 : 공격
 		else if (_turnSystem->getEnemyBit(2) == 1)
 		{
-            Attack();
+			Attack();
 		}
 		// 0000 1000 : 피격
 		else if (_turnSystem->getEnemyBit(3) == 1)
@@ -571,7 +571,7 @@ void FinalScene::render(void)
 	IMAGEMANAGER->alphaRender("shadow", getMemDC(), _saladin->getSaladinPosX()- cameraLeft-50, _saladin->getSaladinPosY()+10- cameraTop, 150);
 
 	
-	if(_saladin->getLive())_saladin->render();
+	_saladin->render();
 	if (_player->getPlayerStateBit(3) == 1 || _player->getPlayerStateBit(4) == 1)
 	{
 		_skill->render();
@@ -1095,13 +1095,18 @@ void FinalScene::Attack()
     else if (_turnSystem->getStatus() == CHANGINGSTATUS::ENEMYTURN)
     {
         _saladin->setEnemyStateBit(1);
-        if (_saladin->getAttack())
+        if (_saladin->getAttack() && _saladin->getSkillCount() < 5)
         {
             _player->setPlayerStateBit(2);
             _saladin->setEnemyIdle();
             _saladin->setAttack(false);
             _turnSystem->changeToPlayer();
         }
+		else
+		{
+			_skill->setplaySound(true);
+			_skill->update();
+		}
     }
 	changeImage();
 }
