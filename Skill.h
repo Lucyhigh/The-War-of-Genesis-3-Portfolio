@@ -87,7 +87,8 @@ public:
 	HRESULT init(void);
 	void release(void);
 	void update(void);
-	void render(void);
+	void worldrender(void);
+	void windRender(void);
 	void worldBrokenSkill();
 	void windEyun();
 	void setplaySound(bool isPlay);

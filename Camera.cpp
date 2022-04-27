@@ -60,8 +60,8 @@ void Camera::update(void)
 		{
 			_shakingOffsetCount = 0;
 			_isShakingIncrease = !_isShakingIncrease;
-			if (_isShakingIncrease)_trace.y += 3;
-			else _trace.y -= 3;
+			if (_isShakingIncrease)_trace.y += 4;
+			else _trace.y -= 4;
 		}
 
 		if (TIMEMANAGER->getWorldTime() > _shakingStartTime + _shakingTime)

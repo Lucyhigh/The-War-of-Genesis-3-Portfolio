@@ -116,11 +116,13 @@ void Skill::update(void)
 			(long)playerCell->getCellY()*TILESIZEY		- _camera->getScreenRect().top
 		};
 
-		_vSkillCellPos[skillArr5]	  = { enemyPos.x,	  enemyPos.y - 100 };		  //"one");
-		_vSkillCellPos[skillArr5 + 1] = { enemyPos.x,	  enemyPos.y - 40 };		  //"95light");
-		_vSkillCellPos[skillArr5 + 2] = { enemyPos.x,	  enemyPos.y - 20 };		  //"48fire");
-		_vSkillCellPos[skillArr5 + 3] = { enemyPos.x,	  enemyPos.y - 30 };		  //118stone
-		_vSkillCellPos[skillArr5 + 4] = { enemyPos.x + 5, enemyPos.y + 30 };
+		_vSkillCellPos[skillArr5]	  = { enemyPos.x,	  enemyPos.y - 60 };		  //"fire");
+		_vSkillCellPos[skillArr5 + 1] = { enemyPos.x,	  enemyPos.y - 60 };		  //"fireL");
+        _vSkillCellPos[skillArr5 + 2] = { enemyPos.x,	  enemyPos.y - 100 };		  //"one");
+        _vSkillCellPos[skillArr5 + 3] = { enemyPos.x,	  enemyPos.y - 40 };		  //"95light");
+        _vSkillCellPos[skillArr5 + 4] = { enemyPos.x,	  enemyPos.y - 20 };		  //"48fire");
+        _vSkillCellPos[skillArr5 + 5] = { enemyPos.x,	  enemyPos.y - 30 };		  //118stone
+		_vSkillCellPos[skillArr5 + 6] = { enemyPos.x + 5, enemyPos.y + 30 };
 
 		_cdt++;
 		if (200 <= _cdt && _cdt <= 230)
@@ -145,7 +147,7 @@ void Skill::update(void)
 					(*viSkillList)._alpha, (*viSkillList)._alpha - 60, 10.0f);
 			}
 		}
-		if (_skillIndex == 60 || _skillIndex == 100 || _skillIndex == 225)
+		if (_skillIndex == 60 || _skillIndex == 225)// || _skillIndex == 100 
 		{
 			_camera->shakeStart(2.0f);
 		}
@@ -187,32 +189,36 @@ void Skill::update(void)
 	playSound();
 }
 
-void Skill::render(void)
+void Skill::worldrender(void)
 {
 	IMAGEMANAGER->alphaRender("cutChange", getMemDC(), 0, 0, _alphaA);
     if (_saladin->getEnemyStateBit(4))
     {
         _effectManager->render();
     }
-    else if (_player->getPlayerStateBit(4))
+}
+
+void Skill::windRender(void)
+{
+    IMAGEMANAGER->alphaRender("cutChange", getMemDC(), 0, 0, _alphaA);
+    if (_player->getPlayerStateBit(4))
     {
-		for (auto iter = _vWindSkill.begin(); iter != _vWindSkill.end(); ++iter)
-		{
-			IMAGEMANAGER->alphaFrameRender(iter->imgKey,getMemDC(),
-										   iter->posX,	 iter->posY, 
-										   iter->frameX, iter->frameY,
-										   iter->alpha);
-		}
+        for (auto iter = _vWindSkill.begin(); iter != _vWindSkill.end(); ++iter)
+        {
+            IMAGEMANAGER->alphaFrameRender(iter->imgKey, getMemDC(),
+                iter->posX, iter->posY,
+                iter->frameX, iter->frameY,
+                iter->alpha);
+        }
     }
     IMAGEMANAGER->alphaRender("cutChangeRed", getMemDC(), 0, 0, _alphaB);
 }
-
 void Skill::worldBrokenSkill()
 {
-	tagSkill skill  = tagSkill{ 3, "skillStartLight", &_skillPlayerPos2,120,10 };
-	tagSkill skill1 = tagSkill{ 20, "184light", &_skillPlayerPos,120,20 };
-	tagSkill skill2 = tagSkill{ 20, "circle", &_skillPlayerPos2,80,10 };
-	tagSkill skill3 = tagSkill{ 20, "smog2", &_skillPlayerPos3,120,20 };
+	tagSkill skill  = tagSkill{ 3, "skillStartLight", &_skillPlayerPos2,120,20 };
+	tagSkill skill1 = tagSkill{ 40, "184light", &_skillPlayerPos,120,20 };
+	tagSkill skill2 = tagSkill{ 40, "circle", &_skillPlayerPos2,80,10 };
+	tagSkill skill3 = tagSkill{ 40, "smog2", &_skillPlayerPos3,120,20 };
 
 	vSkillList.push_back(skill);
 	vSkillList.push_back(skill1);
@@ -223,7 +229,7 @@ void Skill::worldBrokenSkill()
 	int skillArr1 = 24;
 	int skillArr2 = 48;
 
-    for (int i = 0; i < 221; ++i) _vSkillCellPos.push_back({ 0,0 });
+    for (int i = 0; i < 223; ++i) _vSkillCellPos.push_back({ 0,0 });
 	
 	for (int i = 0; i < skillArr1; ++i)
     {
@@ -233,16 +239,16 @@ void Skill::worldBrokenSkill()
 
 	for (int i = 0; i < skillArr2; ++i)
 	{
-		pushCellSkill(60 + i%2, "fireL", cellPosIdx++, (BYTE)170,30);
+		pushCellSkill(60 + i % 2, "fireL", cellPosIdx++, (BYTE)170,30);
 	}
 	for (int i = 0; i < skillArr2; ++i)
 	{
 		pushCellSkill(65 + i % 2, "fire", cellPosIdx++, (BYTE)170, 30);
-	}
+	} 
 
 	for (int i = 0; i < skillArr2; ++i)
 	{
-		pushCellSkill(100 + i, "smog", cellPosIdx++, (BYTE)30,20);
+		pushCellSkill(80 + i, "smog", cellPosIdx++, (BYTE)30,20);
 	}
 
 	for (int i = 0; i < skillArr2; ++i)
@@ -251,10 +257,12 @@ void Skill::worldBrokenSkill()
 		else if (i % 2 == 0)				pushCellSkill(100 + i, "groundCrackL", cellPosIdx++, 170,5);	//100
     }
 
-	pushCellSkill(200, "one", cellPosIdx++, (BYTE)190,10);
+	pushCellSkill(180, "fire", cellPosIdx++, (BYTE)190,10);
+	pushCellSkill(180, "fireL", cellPosIdx++, (BYTE)190,10);
+	pushCellSkill(190, "one", cellPosIdx++, (BYTE)190,10);
 	pushCellSkill(210, "95light", cellPosIdx++, (BYTE)190,20);
-	pushCellSkill(215, "48fire", cellPosIdx++, (BYTE)190,15);
-	pushCellSkill(215, "115stone", cellPosIdx++, (BYTE)210,20);
+	pushCellSkill(225, "48fire", cellPosIdx++, (BYTE)190,15);
+	pushCellSkill(225, "115stone", cellPosIdx++, (BYTE)210,20);
 	pushCellSkill(225, "enemyAttack", cellPosIdx++, (BYTE)190,10);
 
     startSkill();
@@ -350,7 +358,6 @@ void Skill::playSound()
         {
             SOUNDMANAGER->play(_vWorldSoundName[++_soundIndex], 1.0f);
         }
-		cout << _soundIndex << endl;
 	}
 	else if (_player->getPlayerStateBit(4))
 	{

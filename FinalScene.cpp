@@ -71,6 +71,7 @@ HRESULT FinalScene::init(void)
 	_isMoveTileOn = false;
 	_isAlphaIncrese = true;
 	_isPosIncrese = true;
+    _isWorldSkill = false;
 	return S_OK;
 }
 
@@ -376,11 +377,6 @@ void FinalScene::update(void)
 		{
 			changeImage();
 		}
-		//0001 0000 : 천지파열무 스킬 사용
-		else if (_turnSystem->getPlayerBit(4) == 1)
-		{
-			cout << "버몬트 스킬 파업" << endl;
-		}
         //0010 0000 : 풍아열공참 스킬 사용
         else if (_turnSystem->getPlayerBit(5) == 1)
         {
@@ -550,16 +546,23 @@ void FinalScene::render(void)
 		}
 	}
 	AstarTileInfo();
-	IMAGEMANAGER->alphaRender("shadow", getMemDC(), _player->getPlayerPosX()- cameraLeft-47, _player->getPlayerPosY()+10- cameraTop, 150);
+    if (_player->getLive())
+    {
+        IMAGEMANAGER->alphaRender("shadow", getMemDC(), _player->getPlayerPosX() - cameraLeft - 47, _player->getPlayerPosY() + 10 - cameraTop, 150);
+    }
 	IMAGEMANAGER->alphaRender("shadow", getMemDC(), _saladin->getSaladinPosX()- cameraLeft-50, _saladin->getSaladinPosY()+10- cameraTop, 150);
 
 	
-	if (_player->getPlayerStateBit(3) == 1 || _player->getPlayerStateBit(4) == 1 || _saladin->getSkillCount() >= 5)
+	if (_player->getLive())_player->render();
+	if (_saladin->getSkillCount() >= 5)
 	{
-		_skill->render();
+		_skill->worldrender();
 	}
 	_saladin->render();
-	if (_player->getLive())_player->render();
+    if (_player->getPlayerStateBit(4) == 1)
+    {
+		_skill->windRender();
+    }
     _gameUI->render();
 	IMAGEMANAGER->render("mapInfoAll", getMemDC(), WINSIZE_X - 230, 0);
 
@@ -1086,9 +1089,13 @@ void FinalScene::Attack()
             _turnSystem->changeToPlayer();
         }
 		else if(_saladin->getSkillCount() >= 5)
-		{
-			_saladin->setEnemyStateBit(4);//
-			_skill->setplaySound(true);//한번만 돌아야함
+        {
+            if (!_isWorldSkill)
+            {
+                _skill->setplaySound(true);//한번만 돌아야함
+                _isWorldSkill = true;
+            }
+                _saladin->setEnemyStateBit(4);//
 			_skill->update();
 		}
     }

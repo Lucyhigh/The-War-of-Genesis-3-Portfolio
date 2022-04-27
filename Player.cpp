@@ -23,6 +23,9 @@ HRESULT Player::init(void)
 	_hpBar->init(0, 0, 30, 4);
 	_currentHp = 350;
 	_maxHp = 350;
+    _isWaiting = true;
+    _isLive = true;
+
 	_imageState = PLAYERSTATE::BOTTOM;
 	return S_OK;
 }
@@ -318,9 +321,12 @@ void Player::update(void)
 	//100 000 Á×À½
 	else if (_stateBit.test(5) == 1)
 	{
-		_isLive = false;
-		SOUNDMANAGER->addSound("YouDied", "Resources/Sounds/YouDied.mp3", false, false);
-		SOUNDMANAGER->play("YouDied",1.0f);
+        if (_isLive)
+        {
+            SOUNDMANAGER->addSound("YouDied", "Resources/Sounds/YouDied.mp3", false, false);
+            SOUNDMANAGER->play("YouDied", 1.0f);
+            _isLive = false;
+        }
 	}
 	_rcPlayer = RectMakeCenter(_playerPos.x, _playerPos.y, _image->getFrameWidth(), _image->getFrameHeight());
 }
@@ -475,7 +481,6 @@ bool Player::getDamage()
 void Player::setDamage(bool isDamage)
 {
     _isDamage = isDamage;
-
 }
 
 bool Player::getLive()

@@ -41,21 +41,23 @@ void TimeManager::render(HDC hdc)
 
 #ifdef _DEBUG
 	//assert()
-	if (_timer != nullptr)
-	{
-		//프레임
-		sprintf_s(str, "FramePerSec : %d", _timer->getFrameRate());
-		TextOut(hdc, 0, 0, str, strlen(str));
+    if (KEYMANAGER->isToggleKey(VK_F9))
+    {
+        if (_timer != nullptr)
+        {
+            //프레임
+            sprintf_s(str, "FramePerSec : %d", _timer->getFrameRate());
+            TextOut(hdc, 0, 0, str, strlen(str));
 
-		//월드 시간
-		sprintf_s(str, "WorldTime : %f", _timer->getWorldTime());
-		TextOut(hdc, 0, 20, str, strlen(str));
+            //월드 시간
+            sprintf_s(str, "WorldTime : %f", _timer->getWorldTime());
+            TextOut(hdc, 0, 20, str, strlen(str));
 
-		//갱신 시간
-		sprintf_s(str, "ElapsedTime : %f", _timer->getElapsedTime());
-		TextOut(hdc, 0, 40, str, strlen(str));
-
-	}
+            //갱신 시간
+            sprintf_s(str, "ElapsedTime : %f", _timer->getElapsedTime());
+            TextOut(hdc, 0, 40, str, strlen(str));
+        }
+    }
 	//Release
 #else
 	if (_timer != nullptr)

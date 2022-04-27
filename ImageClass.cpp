@@ -48,7 +48,7 @@ HRESULT ImageClass::init(void)
     //damage
     IMAGEMANAGER->addFrameImage("sDamageSheet", "Resources/Images/Saladin/damageSheet.bmp", 404, 87, 4, 1,true, RGB(168, 208, 168));
     //SKILL
-    IMAGEMANAGER->addFrameImage("sSkill", "Resources/Images/Saladin/skill.bmp", 900, 101, 9, 1,true, RGB(168, 208, 168));
+    IMAGEMANAGER->addFrameImage("sSkill", "Resources/Images/Saladin/skill.bmp", 1100, 101, 11, 1,true, RGB(168, 208, 168));
 
 #pragma endregion
 #pragma region Stage Scene
@@ -151,7 +151,7 @@ HRESULT ImageClass::init(void)
 #pragma region Skill
 	//skill 천지파열무
 	IMAGEMANAGER->addFrameImage("skillStart", "Resources/Images/Player/skillStart.bmp", 832, 223, 4,1,MGT);
-	IMAGEMANAGER->addFrameImage("smog", "Resources/Images/Effect/all/smog.bmp", 448, 146,7,2,true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("smog", "Resources/Images/Effect/all/smog.bmp", 448*1.2, 146 * 1.2,7,2,true, RGB(0, 0, 0));
 	IMAGEMANAGER->addFrameImage("smog2", "Resources/Images/Effect/all/smog2.bmp", 650, 650, 5,5,true,RGB(4,72,4));
 	IMAGEMANAGER->addFrameImage("circle", "Resources/Images/Effect/all/circle.bmp", 1592, 628, 8,4,true,RGB(4,108,0));
 	IMAGEMANAGER->addFrameImage("fire", "Resources/Images/Effect/all/fire.bmp", 660, 230, 12,1,true, RGB(8, 88, 8));

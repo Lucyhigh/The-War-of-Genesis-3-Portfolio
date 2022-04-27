@@ -81,6 +81,6 @@ public:
 
 	void hitDamage(float damage);
 public:
-	Player():_isWaiting(true),_isLive(true){}
+	Player(){}
 	~Player() {}
 };

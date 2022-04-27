@@ -66,6 +66,7 @@ private:
 	bool _isMoveTileOn;
 	bool _isAlphaIncrese;
 	bool _isPosIncrese;
+    bool _isWorldSkill;
 
 public:
 	HRESULT init(void);

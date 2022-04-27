@@ -273,7 +273,7 @@ void Saladin::update(void)
 
         if (_worldIndex == 0)
         {
-			if (_cdt > 20)
+			if (_cdt > 120)
 			{
 				_worldIndex++;
 				_cdt = 0;
@@ -281,29 +281,29 @@ void Saladin::update(void)
         }
         else if (_worldIndex == 1 || _worldIndex == 2)
         {
-            if (_cdt > 10)
+            if (_cdt > 5)
 			{
 				_worldIndex++;
 				_cdt = 0;
 			}
         }
-        else if (_worldIndex == 3 || _worldIndex == 4 || _worldIndex == 5 )
+        else if (_worldIndex == 3 || _worldIndex == 4 || _worldIndex == 5 || _worldIndex == 6|| _worldIndex == 7 )
         {
-            if (_cdt > 20)
+            if (_cdt > 2)
 			{
 				_worldIndex++;
 				_cdt = 0;
 			}
         }
-        else if (_worldIndex == 6 || _worldIndex == 7 )
+        else if (_worldIndex == 8 || _worldIndex == 9 )
         {
-            if (_cdt > 10)
+            if (_cdt > 3)
 			{
 				_worldIndex++;
 				_cdt = 0;
 			}
         }
-        else if (_worldIndex == 8)
+        else if (_worldIndex == 10)
         {
             _isAttack = true;
             if (_cdt >500)
@@ -425,7 +425,7 @@ void Saladin::render(void)
     }
 	else if (_stateBit.test(3) == 1)
 	{
-		//죽어서 이미지 없음
+		//죽음
 	}
     else if (_stateBit.test(4) == 1)
     {
