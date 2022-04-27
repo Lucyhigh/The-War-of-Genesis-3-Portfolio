@@ -475,7 +475,6 @@ void FinalScene::update(void)
 	    startShowAttackableTile(1, _cMoveStart, false);
 	}
 
-
 	if (_yPos < 0 || _yPos >= 3) _isPosIncrese = !_isPosIncrese;
 	if (_isPosIncrese)_yPos += 0.15f; else _yPos -= 0.15f;
 }
@@ -1088,8 +1087,8 @@ void FinalScene::Attack()
         }
 		else if(_saladin->getSkillCount() >= 5)
 		{
-			_saladin->setEnemyStateBit(4);
-			_skill->setplaySound(true);
+			_saladin->setEnemyStateBit(4);//
+			_skill->setplaySound(true);//한번만 돌아야함
 			_skill->update();
 		}
     }

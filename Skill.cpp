@@ -78,7 +78,7 @@ void Skill::update(void)
 			{
 				_vSkillCellPos[i]	  = { (long)left + 20 - 20 * (i + 1), (long)top - 80 - 16 * (i + 1) };//LT
 				_vSkillCellPos[i + 2] = { (long)left + 20 + 20 * (i + 1), (long)top - 80 + 16 * (i + 1) };//RB
-				_vSkillCellPos[i + 1] = { (long)left + 20 - 20 * (i + 1), (long)top - 80 + 16 * (i + 1) };//LB
+				_vSkillCellPos[i + 1] = { (long)left + 20 - 20 * (i + 1), (long)top - 80 + 16 * (i + 1) };//LB========== triple
 				_vSkillCellPos[i + 3] = { (long)left + 20 + 20 * (i + 1), (long)top - 80 - 16 * (i + 1) };//RT
 			}
 		}
@@ -92,7 +92,7 @@ void Skill::update(void)
 		for (int i = 0; i < 48; i += 2)
 		{
 			_vSkillCellPos[i + skillArr2]	  = { (long)left - 16 * (i + 1), (long)top - 40 + 12 * (i + 1) };
-			_vSkillCellPos[i + skillArr2 + 1] = { (long)left + 16 * (i + 1), (long)top - 40 - 12 * (i + 1) };
+			_vSkillCellPos[i + skillArr2 + 1] = { (long)left + 16 * (i + 1), (long)top - 40 - 12 * (i + 1) };//========== fire
 		}
 
 		for (int i = 0; i < 48; i += 4)
@@ -100,14 +100,14 @@ void Skill::update(void)
 			_vSkillCellPos[i + skillArr3]	  = { (long)left + 20 - 10 * (i + 1), (long)top - 8 * (i + 1) };
 			_vSkillCellPos[i + skillArr3 + 2] = { (long)left + 20 + 10 * (i + 1), (long)top + 8 * (i + 1) };
 			_vSkillCellPos[i + skillArr3 + 1] = { (long)left + 20 - 10 * (i + 1), (long)top + 8 * (i + 1) };
-			_vSkillCellPos[i + skillArr3 + 3] = { (long)left + 20 + 10 * (i + 1), (long)top - 8 * (i + 1) };
+			_vSkillCellPos[i + skillArr3 + 3] = { (long)left + 20 + 10 * (i + 1), (long)top - 8 * (i + 1) };//========== smog
 		}
 		for (int i = 0; i < 48; i += 4)//
 		{
-			_vSkillCellPos[i + skillArr4]	  = { (long)left + 20 - 10 * (i + 1), (long)top + 10 - 8 * (i + 1) }; //   + 40 
-			_vSkillCellPos[i + skillArr4 + 2] = { (long)left + 20 + 10 * (i + 1), (long)top + 10 + 8 * (i + 1) }; //   + 40 
-			_vSkillCellPos[i + skillArr4 + 1] = { (long)left + 20 - 10 * (i + 1), (long)top + 10 + 8 * (i + 1) }; //   + 40 
-			_vSkillCellPos[i + skillArr4 + 3] = { (long)left + 20 + 10 * (i + 1), (long)top + 10 - 8 * (i + 1) }; //   + 40 
+			_vSkillCellPos[i + skillArr4]	  = { (long)left + 30 - 10 * (i + 1), (long)top + 10 - 8 * (i + 1) }; //   + 40 카메라 쉐이킹 없으면 안 이상함
+			_vSkillCellPos[i + skillArr4 + 2] = { (long)left + 30 + 10 * (i + 1), (long)top + 10 + 8 * (i + 1) }; //   + 40 
+			_vSkillCellPos[i + skillArr4 + 1] = { (long)left + 30 - 10 * (i + 1), (long)top + 10 + 8 * (i + 1) }; //   + 40 
+			_vSkillCellPos[i + skillArr4 + 3] = { (long)left + 30 + 10 * (i + 1), (long)top + 10 - 8 * (i + 1) }; //   + 40 
 		}
 
 		POINT enemyPos = 
@@ -148,6 +148,10 @@ void Skill::update(void)
 		if (_skillIndex == 60 || _skillIndex == 100 || _skillIndex == 225)
 		{
 			_camera->shakeStart(2.0f);
+		}
+		if (_skillIndex == 225)
+		{
+			_player->setPlayerStateBit(5);
 		}
 		_effectManager->update();
 	}
@@ -205,11 +209,13 @@ void Skill::render(void)
 
 void Skill::worldBrokenSkill()
 {
-	tagSkill skill  = tagSkill{ 13, "184light", &_skillPlayerPos,120,20 };
-	tagSkill skill2 = tagSkill{ 13, "circle", &_skillPlayerPos2,80,10 };
-	tagSkill skill3 = tagSkill{ 13, "smog2", &_skillPlayerPos3,120,20 };
+	tagSkill skill  = tagSkill{ 3, "skillStartLight", &_skillPlayerPos2,120,10 };
+	tagSkill skill1 = tagSkill{ 20, "184light", &_skillPlayerPos,120,20 };
+	tagSkill skill2 = tagSkill{ 20, "circle", &_skillPlayerPos2,80,10 };
+	tagSkill skill3 = tagSkill{ 20, "smog2", &_skillPlayerPos3,120,20 };
 
 	vSkillList.push_back(skill);
+	vSkillList.push_back(skill1);
 	vSkillList.push_back(skill2);
 	vSkillList.push_back(skill3);
 
@@ -241,8 +247,8 @@ void Skill::worldBrokenSkill()
 
 	for (int i = 0; i < skillArr2; ++i)
 	{
-		if (i % 2 == 1)						pushCellSkill(100 + i, "groundCrack",  cellPosIdx++, 170,5);
-		else if (i % 2 == 0)				pushCellSkill(100 + i, "groundCrackL", cellPosIdx++, 170,5);
+		if (i % 2 == 1)						pushCellSkill(100 + i, "groundCrack",  cellPosIdx++, 170,5);	//100
+		else if (i % 2 == 0)				pushCellSkill(100 + i, "groundCrackL", cellPosIdx++, 170,5);	//100
     }
 
 	pushCellSkill(200, "one", cellPosIdx++, (BYTE)190,10);
@@ -344,6 +350,7 @@ void Skill::playSound()
         {
             SOUNDMANAGER->play(_vWorldSoundName[++_soundIndex], 1.0f);
         }
+		cout << _soundIndex << endl;
 	}
 	else if (_player->getPlayerStateBit(4))
 	{

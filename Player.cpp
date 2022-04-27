@@ -112,7 +112,7 @@ void Player::update(void)
             }
         }
     }
-    //00001 이동중 
+    //000 001 이동중 
     else if (_stateBit.test(0) == 1)
     {
         if (_count % 30 == 0)
@@ -161,7 +161,7 @@ void Player::update(void)
             }
         }
     }
-    //00010 공격 
+    //000 010 공격 
     else if (_stateBit.test(1) == 1)
     {
         if (_count % 30 == 0)
@@ -255,23 +255,6 @@ void Player::update(void)
             setPlayerIdle();
             _cdt = 0;
         }
-        //001000 천지파열무
-    }
-    //001 000 천지파열무
-    else if (_stateBit.test(3) == 1)
-    {
-        if (_count % 50 == 0)
-        {
-            if (_worldIndex < 4)_worldIndex++;
-            IMAGEMANAGER->findImage("skillStart")->setFrameY(0);
-            IMAGEMANAGER->findImage("skillStart")->setFrameX(_worldIndex);
-            _cdt++;
-            if (_cdt > 50)
-            {
-                setPlayerIdle();
-                _cdt = 0;
-            }
-        }
     }
     //010 000 풍아열공참
     else if (_stateBit.test(4) == 1)
@@ -332,8 +315,13 @@ void Player::update(void)
             }
         }
     }
-
-    //100000 죽음
+	//100 000 죽음
+	else if (_stateBit.test(5) == 1)
+	{
+		_isLive = false;
+		SOUNDMANAGER->addSound("YouDied", "Resources/Sounds/YouDied.mp3", false, false);
+		SOUNDMANAGER->play("YouDied",1.0f);
+	}
 	_rcPlayer = RectMakeCenter(_playerPos.x, _playerPos.y, _image->getFrameWidth(), _image->getFrameHeight());
 }
 
@@ -341,7 +329,6 @@ void Player::render(void)
 {
     float left = _rcPlayer.left - _cameraRect.left;
     float top = _rcPlayer.top - _cameraRect.top;
-
 
     if (_stateBit.none() == 1)
     {
@@ -417,14 +404,18 @@ void Player::render(void)
             break;
         }
     }
-	else if (_stateBit.test(3) == 1)
-	{
-		IMAGEMANAGER->frameRender("skillStart", getMemDC(), left - 100, top - 70);
-	}
 	else if (_stateBit.test(4) == 1)
 	{
 		IMAGEMANAGER->frameRender("playerSkillFrame", getMemDC(), left - 100, top - 80);
 	}
+	else if (_stateBit.test(5) == 1)
+	{
+	}
+	//_hpBar->renderHpSpNumImg(100,
+	//	345,
+	//	345,
+	//	345);
+
 }
 
 float Player::getPlayerPosX()

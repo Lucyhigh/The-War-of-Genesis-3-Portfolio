@@ -306,9 +306,9 @@ void Saladin::update(void)
         else if (_worldIndex == 8)
         {
             _isAttack = true;
-            if (_cdt >30)
+            if (_cdt >500)
             {
-               // _skillCount = 0;
+                _skillCount = 10;
 				//_cdt = 0;
 				//setEnemyIdle();
             }

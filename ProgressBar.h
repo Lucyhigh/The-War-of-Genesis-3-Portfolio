@@ -31,6 +31,7 @@ public:
 	void setY(int y) { _y = y; }
 	void setType(int index) { _curIndex = index; }
     void resetImgIdx();
+	void renderHpSpNumImg(int x, int y, int curHp, int curSp, int MaxHp, int MaxSp);
 public:
 	ProgressBar() {}
 	virtual ~ProgressBar() {}

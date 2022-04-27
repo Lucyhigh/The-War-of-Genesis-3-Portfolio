@@ -71,6 +71,9 @@ void ProgressBar::update()
         }
     }
 }
+	//setGauge랑 curHp 두개 다 업데이트 계속 필요
+	//
+
       
 void ProgressBar::render(int x, int y)
 {
@@ -84,6 +87,7 @@ void ProgressBar::render(int x, int y)
 		{
 			_progressHpBarUp->render(getMemDC(), x + progressPosX, y + 17, 0, 0, _width, _progressHpBarUp->getHeight());
 			_progressMpBarUp->render(getMemDC(), x + progressPosX, y + 25, 0, 0, _width, _progressMpBarUp->getHeight());
+			//renderHpSpNumImg();
 		}
         break;
 
@@ -107,4 +111,30 @@ void ProgressBar::setGauge(float currentScore, float maxScore)
 void ProgressBar::resetImgIdx()
 {
      _hpIndex = 0;
+}
+
+void ProgressBar::renderHpSpNumImg(int x, int y, int curHp, int curSp, int MaxHp, int MaxSp)
+{
+	// HP
+	if (curHp > 99)      IMAGEMANAGER->frameRender("pHpBarNum", getMemDC(), x, y, curHp / 100 % 10, 0);
+	if (curHp > 9)       IMAGEMANAGER->frameRender("pHpBarNum", getMemDC(), x, y, curHp / 10 % 10, 0);
+	IMAGEMANAGER->frameRender("pHpBarNum", getMemDC(), 176, 11, curHp % 10, 0);
+
+	if (MaxHp > 99)      IMAGEMANAGER->frameRender("pHpBarNum", getMemDC(), x, y, MaxHp / 100 % 10, 0);
+	if (MaxHp > 9)       IMAGEMANAGER->frameRender("pHpBarNum", getMemDC(), x, y, MaxHp / 10 % 10, 0);
+	IMAGEMANAGER->frameRender("pHpBarNum", getMemDC(), 266, 21, MaxHp % 10, 0);
+
+	// SP
+	if (curSp > 99)      IMAGEMANAGER->frameRender("pHpBarNum", getMemDC(), x, y, curSp / 100 % 10, 0);
+	if (curSp > 9)       IMAGEMANAGER->frameRender("pHpBarNum", getMemDC(), x, y, curSp / 10 % 10, 0);
+	IMAGEMANAGER->frameRender("pHpBarNum", getMemDC(), 468, 11, curSp % 10, 0);
+
+	if (MaxSp > 99)      IMAGEMANAGER->frameRender("pHpBarNum", getMemDC(), x, y, MaxSp / 100 % 10, 0);
+	if (MaxSp > 9)       IMAGEMANAGER->frameRender("pHpBarNum", getMemDC(), x, y, MaxSp / 10 % 10, 0);
+	IMAGEMANAGER->frameRender("pHpBarNum", getMemDC(), 560, 21, MaxSp % 10, 0);
+
+	if (curHp <= 0)       IMAGEMANAGER->frameRender("pHpBarNum", getMemDC(), x, y, 0, 0);
+	if (curSp <= 0)       IMAGEMANAGER->frameRender("pHpBarNum", getMemDC(), x, y, 0, 0);
+
+
 }
