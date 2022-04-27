@@ -2,6 +2,7 @@
 #include "GameNode.h"
 #include "Cell.h"
 #include "Player.h"
+#include "Saladin.h"
 #include "Camera.h"
 #include "EffectManager.h"
 
@@ -48,6 +49,7 @@ private:
 
     EffectManager* _effectManager;
     Player* _player;
+	Saladin* _saladin;
     Camera* _camera;
 	BYTE _skillAlpha;
 	BYTE _skillAlpha2;
@@ -76,6 +78,7 @@ public:
 	int getSkillIndex() { return _skillIndex; }
     void startSkill();
     void setPlayer(Player* player);
+    void setSaladin(Saladin* saladin);
     void setCamera(Camera* camera);
     void setCells(vector<Cell*>* cells);
 	void pushCellSkill(int idx, string imgKey, int vNum, BYTE alpha, int fps);

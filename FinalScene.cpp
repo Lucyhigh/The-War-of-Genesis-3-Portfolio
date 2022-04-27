@@ -56,6 +56,7 @@ HRESULT FinalScene::init(void)
 
 	_skill = new Skill;
 	_skill->setPlayer(_player);
+	_skill->setSaladin(_saladin);
 	_skill->setCamera(_camera);
 	_skill->setCells(_cells);
 	_skill->init();
@@ -392,7 +393,7 @@ void FinalScene::update(void)
             _skill->update();
             if (_player->getPlayerStateBit(3) == 0)
             {
-				_saladin->setEnemyStateBit(3);
+				_saladin->setEnemyStateBit(2);
                 _gameUI->setSkillNum(SKILL_NUMBER::SKILL_INDEX_NULL);
 				_skill->reset();
             }
@@ -571,11 +572,11 @@ void FinalScene::render(void)
 	IMAGEMANAGER->alphaRender("shadow", getMemDC(), _saladin->getSaladinPosX()- cameraLeft-50, _saladin->getSaladinPosY()+10- cameraTop, 150);
 
 	
-	_saladin->render();
-	if (_player->getPlayerStateBit(3) == 1 || _player->getPlayerStateBit(4) == 1)
+	if (_player->getPlayerStateBit(3) == 1 || _player->getPlayerStateBit(4) == 1 || _saladin->getSkillCount() >= 5)
 	{
 		_skill->render();
 	}
+	_saladin->render();
 	if (_player->getLive())_player->render();
     _gameUI->render();
 	IMAGEMANAGER->render("mapInfoAll", getMemDC(), WINSIZE_X - 230, 0);
@@ -1102,8 +1103,9 @@ void FinalScene::Attack()
             _saladin->setAttack(false);
             _turnSystem->changeToPlayer();
         }
-		else
+		else if(_saladin->getSkillCount() >= 5)
 		{
+			_saladin->setEnemyStateBit(4);
 			_skill->setplaySound(true);
 			_skill->update();
 		}
