@@ -46,112 +46,7 @@ void Skill::release(void)
 
 void Skill::update(void)
 {
-    if (_player->getPlayerStateBit(3))
-    {
-        if (_alphaA < 190) _alphaA += 5;
-
-        float left = _player->getPlayerRect().left - _camera->getScreenRect().left;
-        float top =  _player->getPlayerRect().top + 30 - _camera->getScreenRect().top;
-
-        _skillPlayerPos  = { (long)left+5, (long)top};
-        _skillPlayerPos2 = { (long)left+5, (long)top};
-        _skillPlayerPos3 = { (long)left+5, (long)top};
-
-        Cell* enemyCell = nullptr;
-        for (auto cellsiter = _vSkillableCells->begin(); cellsiter != _vSkillableCells->end(); ++cellsiter)
-        {
-            if ((*cellsiter)->getType() == CELL_TYPE::ENEMY)
-            {
-                enemyCell = (*cellsiter);
-                break;
-            }
-        }
-
-        int skillArr1 = 24;
-        int skillArr2 = 72;
-        int skillArr3 = 120;
-        int skillArr4 = 168;
-        int skillArr5 = 216;
-        for (int i = 0; i < skillArr1; i += 4)
-        {
-			if (skillArr1 > i)
-			{
-				_vSkillCellPos[i]	  = { (long)left + 10 - 20 * (i + 1), (long)top - 80 - 16 * (i + 1) };//LT
-				_vSkillCellPos[i + 2] = { (long)left + 10 + 20 * (i + 1), (long)top - 80 + 16 * (i + 1) };//RB
-				_vSkillCellPos[i + 1] = { (long)left + 10 - 20 * (i + 1), (long)top - 80 + 16 * (i + 1) };//LB
-				_vSkillCellPos[i + 3] = { (long)left + 10 + 20 * (i + 1), (long)top - 80 - 16 * (i + 1) };//RT
-            }
-        }
-
-		for (int i = 0; i < 48; i += 2)
-		{
-			_vSkillCellPos[i + skillArr1]	  = { (long)left - 16 * (i + 1), (long)top -30 - 12 * (i + 1) };
-			_vSkillCellPos[i + skillArr1 + 1] = { (long)left + 16 * (i + 1), (long)top -30 + 12 * (i + 1) };
-		}											  
-													  
-		for (int i = 0; i < 48; i += 2)				  
-		{											  
-			_vSkillCellPos[i + skillArr2]	  = { (long)left - 16 * (i + 1), (long)top -40 + 12 * (i + 1) };
-			_vSkillCellPos[i + skillArr2 + 1] = { (long)left + 16 * (i + 1), (long)top -40 - 12 * (i + 1) };
-		}
-
-        for (int i = 0; i < 48; i += 4)
-        {
-            _vSkillCellPos[i + skillArr3]	  = { (long)left - 10 * (i + 1), (long)top+10 - 8 * (i + 1) };
-            _vSkillCellPos[i + skillArr3 + 2] = { (long)left + 10 * (i + 1), (long)top+10 + 8 * (i + 1) };
-            _vSkillCellPos[i + skillArr3 + 1] = { (long)left - 10 * (i + 1), (long)top+10 + 8 * (i + 1) };
-            _vSkillCellPos[i + skillArr3 + 3] = { (long)left + 10 * (i + 1), (long)top+10 - 8 * (i + 1) };
-        }
-        for (int i = 0; i < 36; i += 4)//
-        {
-			_vSkillCellPos[i + 180]	  =	{ (long)left + 20 - 10 * (i + 1), (long)top + 40 - 8 * (i + 1) };
-			_vSkillCellPos[i + 180 + 2] = { (long)left + 20 + 10 * (i + 1), (long)top + 40 + 8 * (i + 1) };
-			_vSkillCellPos[i + 180 + 1] = { (long)left + 20 - 10 * (i + 1), (long)top + 40 + 8 * (i + 1) };
-			_vSkillCellPos[i + 180 + 3] = { (long)left + 20 + 10 * (i + 1), (long)top + 40 - 8 * (i + 1) };
-        }
-
-        POINT enemyPos = { 
-			(long)enemyCell->getCellX()*TILESIZEX + 10 - _camera->getScreenRect().left ,
-            (long)enemyCell->getCellY()*TILESIZEY      - _camera->getScreenRect().top 
-		};
-
-         _vSkillCellPos[skillArr5]     = { enemyPos.x, enemyPos.y - 100 };		  //"one");
-         _vSkillCellPos[skillArr5 + 1] = { enemyPos.x, enemyPos.y - 40 };		  //"95light");
-         _vSkillCellPos[skillArr5 + 2] = { enemyPos.x, enemyPos.y - 20 };		  //"48fire");
-         _vSkillCellPos[skillArr5 + 3] = { enemyPos.x, enemyPos.y - 30  };	//118stone
-         _vSkillCellPos[skillArr5 + 4] = { enemyPos.x+5, enemyPos.y + 30  };
-        
-        _cdt++;
-
-        if (200 <= _cdt && _cdt <= 230)
-        {
-            _alphaB = 200;
-        }
-        else _alphaB = 0;
-        if (!_isStart) return;
-
-        if (_cdt > 3)
-        {
-            _cdt = 0;
-            _skillIndex++;
-        }
-
-        for (viSkillList = vSkillList.begin(); viSkillList != vSkillList.end(); ++viSkillList)
-        {
-            if ((*viSkillList)._skillIndex == _skillIndex)
-            {
-                _effectManager->createEffect((*viSkillList)._skillName.c_str(), 
-											  *(*viSkillList)._aniPos, (*viSkillList)._fps, false,
-											  (*viSkillList)._alpha, (*viSkillList)._alpha-60,10.0f);
-            }
-        }
-        if (_skillIndex == 60 || _skillIndex == 100 || _skillIndex == 225)
-        {
-            _camera->shakeStart(2.0f);
-        }
-        _effectManager->update();
-    }
-	else if (_saladin->getEnemyStateBit(4))
+	if (_saladin->getEnemyStateBit(4))
 	{
 		if (_alphaA < 190) _alphaA += 5;
 
@@ -181,10 +76,10 @@ void Skill::update(void)
 		{
 			if (skillArr1 > i)
 			{
-				_vSkillCellPos[i]	  = { (long)left + 10 - 20 * (i + 1), (long)top - 80 - 16 * (i + 1) };//LT
-				_vSkillCellPos[i + 2] = { (long)left + 10 + 20 * (i + 1), (long)top - 80 + 16 * (i + 1) };//RB
-				_vSkillCellPos[i + 1] = { (long)left + 10 - 20 * (i + 1), (long)top - 80 + 16 * (i + 1) };//LB
-				_vSkillCellPos[i + 3] = { (long)left + 10 + 20 * (i + 1), (long)top - 80 - 16 * (i + 1) };//RT
+				_vSkillCellPos[i]	  = { (long)left + 20 - 20 * (i + 1), (long)top - 80 - 16 * (i + 1) };//LT
+				_vSkillCellPos[i + 2] = { (long)left + 20 + 20 * (i + 1), (long)top - 80 + 16 * (i + 1) };//RB
+				_vSkillCellPos[i + 1] = { (long)left + 20 - 20 * (i + 1), (long)top - 80 + 16 * (i + 1) };//LB
+				_vSkillCellPos[i + 3] = { (long)left + 20 + 20 * (i + 1), (long)top - 80 - 16 * (i + 1) };//RT
 			}
 		}
 
@@ -202,23 +97,23 @@ void Skill::update(void)
 
 		for (int i = 0; i < 48; i += 4)
 		{
-			_vSkillCellPos[i + skillArr3]	  = { (long)left - 10 * (i + 1), (long)top + 10 - 8 * (i + 1) };
-			_vSkillCellPos[i + skillArr3 + 2] = { (long)left + 10 * (i + 1), (long)top + 10 + 8 * (i + 1) };
-			_vSkillCellPos[i + skillArr3 + 1] = { (long)left - 10 * (i + 1), (long)top + 10 + 8 * (i + 1) };
-			_vSkillCellPos[i + skillArr3 + 3] = { (long)left + 10 * (i + 1), (long)top + 10 - 8 * (i + 1) };
+			_vSkillCellPos[i + skillArr3]	  = { (long)left + 20 - 10 * (i + 1), (long)top - 8 * (i + 1) };
+			_vSkillCellPos[i + skillArr3 + 2] = { (long)left + 20 + 10 * (i + 1), (long)top + 8 * (i + 1) };
+			_vSkillCellPos[i + skillArr3 + 1] = { (long)left + 20 - 10 * (i + 1), (long)top + 8 * (i + 1) };
+			_vSkillCellPos[i + skillArr3 + 3] = { (long)left + 20 + 10 * (i + 1), (long)top - 8 * (i + 1) };
 		}
 		for (int i = 0; i < 48; i += 4)//
 		{
-			_vSkillCellPos[i + skillArr4]	  = { (long)left - 10 * (i + 1), (long)top- 8 * (i + 1) }; //+ 20   + 40 
-			_vSkillCellPos[i + skillArr4 + 2] = { (long)left + 10 * (i + 1), (long)top+ 8 * (i + 1) }; //+ 20   + 40 
-			_vSkillCellPos[i + skillArr4 + 1] = { (long)left - 10 * (i + 1), (long)top+ 8 * (i + 1) }; //+ 20   + 40 
-			_vSkillCellPos[i + skillArr4 + 3] = { (long)left + 10 * (i + 1), (long)top- 8 * (i + 1) }; //+ 20   + 40 
+			_vSkillCellPos[i + skillArr4]	  = { (long)left + 20 - 10 * (i + 1), (long)top + 10 - 8 * (i + 1) }; //   + 40 
+			_vSkillCellPos[i + skillArr4 + 2] = { (long)left + 20 + 10 * (i + 1), (long)top + 10 + 8 * (i + 1) }; //   + 40 
+			_vSkillCellPos[i + skillArr4 + 1] = { (long)left + 20 - 10 * (i + 1), (long)top + 10 + 8 * (i + 1) }; //   + 40 
+			_vSkillCellPos[i + skillArr4 + 3] = { (long)left + 20 + 10 * (i + 1), (long)top + 10 - 8 * (i + 1) }; //   + 40 
 		}
 
 		POINT enemyPos = 
 		{
 			(long)playerCell->getCellX()*TILESIZEX + 10 - _camera->getScreenRect().left ,
-			(long)playerCell->getCellY()*TILESIZEY - _camera->getScreenRect().top
+			(long)playerCell->getCellY()*TILESIZEY		- _camera->getScreenRect().top
 		};
 
 		_vSkillCellPos[skillArr5]	  = { enemyPos.x,	  enemyPos.y - 100 };		  //"one");
@@ -256,7 +151,7 @@ void Skill::update(void)
 		}
 		_effectManager->update();
 	}
-    else if (_player->getPlayerStateBit(4) == 1)
+    else if (_player->getPlayerStateBit(4))
     {
         if (_alphaA < 180) _alphaA += 5;
 		_cdt++;
@@ -291,12 +186,11 @@ void Skill::update(void)
 void Skill::render(void)
 {
 	IMAGEMANAGER->alphaRender("cutChange", getMemDC(), 0, 0, _alphaA);
-    if (_player->getPlayerStateBit(3) == 1 || _saladin->getEnemyStateBit(4))
+    if (_saladin->getEnemyStateBit(4))
     {
         _effectManager->render();
-		cout << " _effectManager->render();" << endl;
     }
-    else if (_player->getPlayerStateBit(4) == 1)
+    else if (_player->getPlayerStateBit(4))
     {
 		for (auto iter = _vWindSkill.begin(); iter != _vWindSkill.end(); ++iter)
 		{
@@ -438,7 +332,7 @@ void Skill::setplaySound(bool isPlay)
 
 void Skill::playSound()
 {
-	if (_player->getPlayerStateBit(3) == 1)
+	if (_saladin->getEnemyStateBit(4))
 	{
         if (_isPlay)
         {
@@ -451,7 +345,7 @@ void Skill::playSound()
             SOUNDMANAGER->play(_vWorldSoundName[++_soundIndex], 1.0f);
         }
 	}
-	else if (_player->getPlayerStateBit(4) == 1)
+	else if (_player->getPlayerStateBit(4))
 	{
 		if (_isPlay)
 		{

@@ -188,6 +188,7 @@ void FinalScene::update(void)
                             _ptMouse.x + _camera->getScreenRect().left,
                             _ptMouse.y + _camera->getScreenRect().top
                         };
+
 	if (_turnSystem->getStatus() == CHANGINGSTATUS::PLAYERTURN)
 	{
 		// 대기 - 대기이미지 타일클릭시 이동가능상태 /메뉴창 열수있고 공격타일 만들수잇음
@@ -251,12 +252,6 @@ void FinalScene::update(void)
                         }
                     }
 				}
-				//비트셋은 셋다 111로 키고 하나씩 꺼주면서 턴 종료할가
-				// 111 로 다 키고 시작
-				// (0)이 1일때 함수 발동 -> 그후 다시 0으로 꺼줌 110
-				// (2)이 1이고 (1)이 0일때 공격 타일 그려줌 100
-				// 이후 공격 타일 꺼내면서 101
-				// 원래는 이동 후 공격 타일이 가능해야함
 			}
 			POINT playerPos = { _player->getPlayerPosX()-TILESIZEX, _player->getPlayerPosY()};
 			for (auto cellsIter = _cells->begin(); cellsIter != _cells->end(); ++cellsIter)//클릭 가능한 타일만 되게 지정
@@ -332,13 +327,7 @@ void FinalScene::update(void)
 					_gameUI->showSkillMenu(playerUI);
 				}
 
-				if (_gameUI->getSkillNum() == SKILL_INDEX_WORLDBROKEN)
-				{
-					_turnSystem->setPlayerBit(4);
-					_player->setPlayerStateBit(3);
-					_skill->setplaySound(true);
-				}
-                else if (_gameUI->getSkillNum() == SKILL_INDEX_WINDEYUN)
+				if (_gameUI->getSkillNum() == SKILL_INDEX_WINDEYUN)
                 {
 					_moveTileBit.set(0,true); //101- 공격타일 활성화 상태
 					if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
@@ -390,13 +379,7 @@ void FinalScene::update(void)
 		//0001 0000 : 천지파열무 스킬 사용
 		else if (_turnSystem->getPlayerBit(4) == 1)
 		{
-            _skill->update();
-            if (_player->getPlayerStateBit(3) == 0)
-            {
-				_saladin->setEnemyStateBit(2);
-                _gameUI->setSkillNum(SKILL_NUMBER::SKILL_INDEX_NULL);
-				_skill->reset();
-            }
+			cout << "버몬트 스킬 파업" << endl;
 		}
         //0010 0000 : 풍아열공참 스킬 사용
         else if (_turnSystem->getPlayerBit(5) == 1)

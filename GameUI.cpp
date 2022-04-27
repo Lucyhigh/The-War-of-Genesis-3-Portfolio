@@ -108,15 +108,12 @@ void GameUI::update(void)
 				switch (_viSkillButton->_index)
 				{
 				case 0:
-					_skillIndex = SKILL_INDEX_EYUN;
 					_isSkillMenu = false;
 					break;
 				case 1:
-					_skillIndex = SKILL_INDEX_DASH;
 					_isSkillMenu = false;
 					break;
 				case 2:
-					_skillIndex = SKILL_INDEX_WORLDBROKEN;
 					_isSkillMenu = false;
 					break;
 				case 3:
@@ -162,38 +159,41 @@ void GameUI::render(void)
 		IMAGEMANAGER->alphaRender("skillText", getMemDC(), _PlayerPos.x+30, _PlayerPos.y - 60, 170);
         for (_viSkillButton = _vSkillButton.begin(); _viSkillButton != _vSkillButton.end(); ++_viSkillButton)
         {
-			IMAGEMANAGER->frameRender("skillIcon", getMemDC(), _viSkillButton->_buttonRect.left-30, _viSkillButton->_buttonRect.top+5, _viSkillButton->_index, 1);
+			IMAGEMANAGER->frameRender("skillIcon", getMemDC(), 
+												   _viSkillButton->_buttonRect.left-30,
+												   _viSkillButton->_buttonRect.top+5,
+												   _viSkillButton->_index, 1);
 			if (PtInRect(&_viSkillButton->_buttonRect, _ptMouse))
 			{
 				FONTMANAGER->drawText(getMemDC(),
-					_viSkillButton->_buttonRect.left,
-					_viSkillButton->_buttonRect.top + _textPosY,
-					"가을체", 20, 13, _viSkillButton->_skillNameInfo,
-					wcslen(_viSkillButton->_skillNameInfo),
-					TA_LEFT, RGB(255, 255, 255));
+									  _viSkillButton->_buttonRect.left,
+									  _viSkillButton->_buttonRect.top + _textPosY,
+									  "가을체", 20, 13, _viSkillButton->_skillNameInfo,
+									  wcslen(_viSkillButton->_skillNameInfo),
+									  TA_LEFT, RGB(255, 255, 255));
 			}
 			else
 			{
 				FONTMANAGER->drawText(getMemDC(),
-					_viSkillButton->_buttonRect.left,
-					_viSkillButton->_buttonRect.top + _textPosY,
-					"가을체", 20, 13, _viSkillButton->_skillNameInfo,
-					wcslen(_viSkillButton->_skillNameInfo),
-					TA_LEFT, RGB(170, 170, 170));
+									  _viSkillButton->_buttonRect.left,
+									  _viSkillButton->_buttonRect.top + _textPosY,
+									  "가을체", 20, 13, _viSkillButton->_skillNameInfo,
+									  wcslen(_viSkillButton->_skillNameInfo),
+									  TA_LEFT, RGB(170, 170, 170));
 			}
 			FONTMANAGER->drawText(getMemDC(),
-				_viSkillButton->_buttonRect.left + 110,
-				_viSkillButton->_buttonRect.top + _textPosY,
-				"가을체", 20, 13, _viSkillButton->_skillLvInfo,
-				wcslen(_viSkillButton->_skillLvInfo),
-				TA_LEFT, RGB(227, 155, 139));
+								  _viSkillButton->_buttonRect.left + 110,
+								  _viSkillButton->_buttonRect.top + _textPosY,
+								  "가을체", 20, 13, _viSkillButton->_skillLvInfo,
+								  wcslen(_viSkillButton->_skillLvInfo),
+								  TA_LEFT, RGB(227, 155, 139));
 
 			FONTMANAGER->drawText(getMemDC(),
-				_viSkillButton->_buttonRect.left+170,
-				_viSkillButton->_buttonRect.top + _textPosY,
-				"가을체", 20, 13, _viSkillButton->_skillSPInfo,
-				wcslen(_viSkillButton->_skillSPInfo),
-				TA_LEFT, RGB(252, 255, 181));
+								  _viSkillButton->_buttonRect.left+170,
+								  _viSkillButton->_buttonRect.top + _textPosY,
+								  "가을체", 20, 13, _viSkillButton->_skillSPInfo,
+								  wcslen(_viSkillButton->_skillSPInfo),
+								  TA_LEFT, RGB(252, 255, 181));
         }
 	}
 }

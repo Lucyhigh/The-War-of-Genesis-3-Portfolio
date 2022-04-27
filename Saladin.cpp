@@ -310,7 +310,7 @@ void Saladin::update(void)
             {
                // _skillCount = 0;
 				//_cdt = 0;
-				setEnemyIdle();
+				//setEnemyIdle();
             }
         }
 		//cout << _worldIndex << endl;

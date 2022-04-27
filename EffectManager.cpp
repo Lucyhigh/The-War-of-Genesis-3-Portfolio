@@ -37,6 +37,7 @@ void EffectManager::update(void)
 
 void EffectManager::render(void)
 {
+	cout << _vEffect.size() << endl;
 	_viEffect = _vEffect.begin();
 	for (; _viEffect != _vEffect.end(); ++_viEffect)
 	{

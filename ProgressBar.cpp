@@ -61,7 +61,7 @@ void ProgressBar::update()
                 {
                     _hpIndex++;
                 }
-                if (_hpIndex >= 10)
+                if (_hpIndex >= 14)
                 {
                     _hpRc = RectMakeCenter(_x, _y, _progressBarDown->getWidth(), _progressBarDown->getHeight());
                     _mpRc = RectMakeCenter(_x, _y, _progressBarDown->getWidth(), _progressBarDown->getHeight());
