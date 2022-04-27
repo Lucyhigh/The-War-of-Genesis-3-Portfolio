@@ -267,7 +267,6 @@ void Saladin::update(void)
     if (_stateBit.test(4) == 1)
     {
 		_cdt++;
-		//cout <<"_cdt : "<< _cdt << endl;
         IMAGEMANAGER->findImage("sSkill")->setFrameY(0);
         IMAGEMANAGER->findImage("sSkill")->setFrameX(_worldIndex);
 
@@ -429,7 +428,7 @@ void Saladin::render(void)
 	}
     else if (_stateBit.test(4) == 1)
     {
-        IMAGEMANAGER->frameRender("sSkill", getMemDC(), left - 30, top - 20);
+        IMAGEMANAGER->frameRender("sSkill", getMemDC(), left - 20, top - 20);
     }
 }
 

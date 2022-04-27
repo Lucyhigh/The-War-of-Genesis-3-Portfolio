@@ -42,12 +42,15 @@ class Skill: public GameNode
 private:
     tagSkill* _tagSkill;
     vector<tagSkill> vSkillList;
+    vector<tagSkill> vFrontSkillList;
     vector<tagSkill>::iterator viSkillList;
+    vector<tagSkill>::iterator viFrontSkillList;
     int _skillIndex;
 	int _soundIndex;
     bool _isStart;
 
     EffectManager* _effectManager;
+    EffectManager* _frontEffectManager;
     Player* _player;
 	Saladin* _saladin;
     Camera* _camera;
@@ -82,12 +85,14 @@ public:
     void setCamera(Camera* camera);
     void setCells(vector<Cell*>* cells);
 	void pushCellSkill(int idx, string imgKey, int vNum, BYTE alpha, int fps);
+	void pushCellFrontSkill(int idx, string imgKey, int vNum, BYTE alpha, int fps);
 
     void reset();
 	HRESULT init(void);
 	void release(void);
 	void update(void);
-	void worldrender(void);
+	void worldBackrender(void);
+	void worldFrontrender(void);
 	void windRender(void);
 	void worldBrokenSkill();
 	void windEyun();

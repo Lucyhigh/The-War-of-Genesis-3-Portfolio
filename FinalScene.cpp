@@ -553,16 +553,21 @@ void FinalScene::render(void)
 	IMAGEMANAGER->alphaRender("shadow", getMemDC(), _saladin->getSaladinPosX()- cameraLeft-50, _saladin->getSaladinPosY()+10- cameraTop, 150);
 
 	
-	if (_player->getLive())_player->render();
 	if (_saladin->getSkillCount() >= 5)
 	{
-		_skill->worldrender();
+		_skill->worldBackrender();
 	}
+	if (_player->getLive())_player->render();
+    if (_saladin->getSkillCount() >= 5)
+    {
+        _skill->worldFrontrender();
+    }
 	_saladin->render();
     if (_player->getPlayerStateBit(4) == 1)
     {
 		_skill->windRender();
     }
+
     _gameUI->render();
 	IMAGEMANAGER->render("mapInfoAll", getMemDC(), WINSIZE_X - 230, 0);
 
