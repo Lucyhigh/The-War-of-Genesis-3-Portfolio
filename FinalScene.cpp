@@ -3,8 +3,8 @@
 
 HRESULT FinalScene::init(void)
 {
-	SOUNDMANAGER->addSound("Unknown Blood", "Resources/Sounds/Unknown Blood.mp3", true, true);
-	SOUNDMANAGER->play("Unknown Blood", 1.0f);
+	SOUNDMANAGER->addSound("Unknown_Blood", "Resources/Sounds/UnknownBlood.mp3", true, true);
+	SOUNDMANAGER->play("Unknown_Blood", 1.0f);
 	_mapTileInfo = new MapTileInfo;
 	_mapTileInfo->init();
 
@@ -97,6 +97,12 @@ void FinalScene::release(void)
 
 void FinalScene::update(void)
 {
+    if (KEYMANAGER->isOnceKeyDown('F'))
+    {
+        cout << (SOUNDMANAGER->isPlaySound("Unknown_Blood")) << endl;
+       // SOUNDMANAGER->stop("Unknown_Blood");
+        cout << (SOUNDMANAGER->isPauseSound("Unknown_Blood")) << endl;
+    }
 	POINT playerUI = {
 						_player->getPlayerPosX() - _camera->getScreenRect().left,
 						_player->getPlayerPosY() - _camera->getScreenRect().top

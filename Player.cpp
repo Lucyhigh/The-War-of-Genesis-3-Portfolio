@@ -327,6 +327,15 @@ void Player::update(void)
             SOUNDMANAGER->play("YouDied", 1.0f);
             _isLive = false;
         }
+        else
+        {
+            _cdt++;
+            if (_cdt > 100)
+            {
+                SOUNDMANAGER->stop("Unknown_Blood");
+                SCENEMANAGER->changeScene("ending");
+            }
+        }
 	}
 	_rcPlayer = RectMakeCenter(_playerPos.x, _playerPos.y, _image->getFrameWidth(), _image->getFrameHeight());
 }

@@ -46,8 +46,8 @@ HRESULT Skill::init(void)
 
 void Skill::release(void)
 {
-   //_effectManager->release();
-   //_frontEffectManager->release();
+   _effectManager->release();
+   _frontEffectManager->release();
 }
 
 void Skill::update(void)

@@ -15,7 +15,6 @@ void EffectManager::release(void)
 		SAFE_DELETE(*_viEffect);
 	}
 	_vEffect.clear();
-
 }
 
 void EffectManager::update(void)

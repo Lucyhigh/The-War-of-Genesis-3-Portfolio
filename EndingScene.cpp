@@ -15,6 +15,8 @@ HRESULT EndingScene::init(void)
 	{
 		SOUNDMANAGER->addSound(name, path + name, false, false);
 	}
+
+    SOUNDMANAGER->stop("Unknown_Blood");
     SOUNDMANAGER->play(_vSoundName[_soundIndex], 1.0f);
 
     _count = 0;
@@ -42,7 +44,7 @@ void EndingScene::release(void)
 void EndingScene::update(void)
 {
     _count++;
-   
+ 
     if (!_isFadeIn && _isStory && KEYMANAGER->isOnceKeyDown(VK_SPACE))
     {
         if (_textBufferCnt < wcslen(_text[_textIndex].script))

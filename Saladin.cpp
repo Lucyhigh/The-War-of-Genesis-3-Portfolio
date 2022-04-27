@@ -3,8 +3,6 @@
 
 HRESULT Saladin::init(void)
 {
-	_image = IMAGEMANAGER->findImage("sDownIdle");
-	_image = IMAGEMANAGER->findImage("sMovesheet");
 	_image = IMAGEMANAGER->findImage("sDamageSheet");
     _stateBit = 0;
 
