@@ -224,11 +224,12 @@ void Player::update(void)
             _tmp *= -1;
             _cdt++;
         }
-        if (_cdt > 3)
+        if (_cdt > 5)
         {
             setPlayerIdle();
             _cdt = 0;
         }
+		cout << "¾Æ¾ß" << endl;
     }
     else if (_stateBit.test(4) == 1)
     {

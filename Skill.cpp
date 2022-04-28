@@ -165,7 +165,7 @@ void Skill::update(void)
                     (*viFrontSkillList)._alpha, (*viFrontSkillList)._alpha - 60, 10.0f);
             }
         }
-		if (_skillIndex == 70  || _skillIndex == 225)
+		if (_skillIndex == 70 || _skillIndex == 100 || _skillIndex == 225)
 		{
 			_camera->shakeStart(2.0f);
 		}
@@ -327,18 +327,18 @@ void Skill::windEyun()
         break;
     case PLAYERSTATE::LEFT:
 		skillArr[1] = { "skill10L" };
-        skillArr[3] = { "skill4L" };
+        skillArr[3] = {  "skill4L" };
         skillArr[4] = { "skill10L" };
         break;
     case PLAYERSTATE::TOP:
 		skillArr[1] = { "skill10T" };
-        skillArr[3] = { "skill4T" };
+        skillArr[3] = {  "skill4T" };
         skillArr[4] = { "skill10T" };
         break;
     case PLAYERSTATE::BOTTOM:
-		skillArr[1] = { "skill10R" };
-        skillArr[3] = { "skill4R" };
-        skillArr[4] = { "skill10R" };
+		skillArr[1] = { "skill10B" };
+        skillArr[3] = {  "skill4B" };
+        skillArr[4] = { "skill10B" };
         break;
     }
 

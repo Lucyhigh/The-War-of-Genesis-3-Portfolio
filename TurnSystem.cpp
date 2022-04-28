@@ -16,8 +16,6 @@ void TurnSystem::update(void)
 {
     switch (_changingStatus)
     {
-    case CHANGINGSTATUS::WAIT :
-            break;
     case CHANGINGSTATUS::PLAYERTURN :
             break;
            

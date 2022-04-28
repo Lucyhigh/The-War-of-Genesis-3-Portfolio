@@ -3,7 +3,6 @@
 
 enum class CHANGINGSTATUS
 {
-	WAIT,
 	PLAYERTURN,
 	ENEMYTURN
 };

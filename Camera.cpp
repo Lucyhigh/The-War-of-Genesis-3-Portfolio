@@ -60,7 +60,7 @@ void Camera::update(void)
 		{
 			_shakingOffsetCount = 0;
 			_isShakingIncrease = !_isShakingIncrease;
-			if (_isShakingIncrease)_trace.y += 4;
+			if (_isShakingIncrease)_trace.y += 5;
 			else _trace.y -= 4;
 		}
 

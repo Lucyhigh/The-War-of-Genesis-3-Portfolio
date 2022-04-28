@@ -21,12 +21,12 @@ HRESULT FinalScene::init(void)
 
 	_player = new Player;
 	_player->init();
-	_player->setPlayerPosX(16 * TILESIZEX);
+	_player->setPlayerPosX(26 * TILESIZEX);
 	_player->setPlayerPosY(10 * TILESIZEY);
 
 	_saladin = new Saladin;
 	_saladin->init();
-	_saladin->setSaladinPosX(25 * TILESIZEX);
+	_saladin->setSaladinPosX(35 * TILESIZEX);
 	_saladin->setSaladinPosY(15 * TILESIZEY);
     _saladin->setEnemyIdle();
 
@@ -1049,7 +1049,7 @@ void FinalScene::Attack()
 			if (_saladin->getEnemyStateBit(2) == 0)
 			{
 				_turnSystem->changeToEnemy();
-				for (auto cellsIter = _cells->begin(); cellsIter != _cells->end(); ++cellsIter)//클릭 가능한 타일만 되게 지정
+				for (auto cellsIter = _cells->begin(); cellsIter != _cells->end(); ++cellsIter)
 				{
 					Cell* cell = (*cellsIter);
 					if (PtInRect(&cell->getRect(), { (long)_player->getPlayerPosX() - TILESIZEX, (long)_player->getPlayerPosY() }))
@@ -1116,7 +1116,7 @@ void FinalScene::startShowMoveableTile(int range, Cell* cell, bool isMoveable)
 
 	for (auto iter = _vMoveableTile.begin(); iter != _vMoveableTile.end(); ++iter)
 	{
-		if (iter >= _vMoveableTile.end() - (_vMoveableTile.size()*0.125))
+		if (iter >= _vMoveableTile.end() - (_vMoveableTile.size()*0.25)-1)
 		{
 			(*iter)->setType(CELL_TYPE::ATTACKABLE);
 		}

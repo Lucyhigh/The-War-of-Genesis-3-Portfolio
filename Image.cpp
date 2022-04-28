@@ -349,7 +349,6 @@ void Image::render(HDC hdc)
 		BitBlt(hdc, 0, 0, _imageInfo->width, _imageInfo->height,
 			_imageInfo->hMemDC, 0, 0, SRCCOPY);
 	}
-
 }
 
 void Image::render(HDC hdc, int destX, int destY)
