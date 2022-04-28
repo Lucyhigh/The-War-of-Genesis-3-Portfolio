@@ -1,4 +1,4 @@
-#include "Stdafx.h"
+ï»¿#include "Stdafx.h"
 #include "FinalScene.h"
 
 HRESULT FinalScene::init(void)
@@ -560,16 +560,16 @@ void FinalScene::render(void)
 	IMAGEMANAGER->render("mapInfoAll", getMemDC(), WINSIZE_X - 230, 0);
 
     FONTMANAGER->drawText(getMemDC(),
-        WINSIZE_X - 115, 17, "°¡À»Ã¼", 19, 13, _uiText[0],
+        WINSIZE_X - 115, 17, "ê°€ì„ì²´", 19, 13, _uiText[0],
         wcslen(_uiText[0]), TA_CENTER, RGB(255, 255, 255));
     FONTMANAGER->drawText(getMemDC(),
-        WINSIZE_X - 50, 40, "°¡À»Ã¼", 21, 13, _uiText[1],
+        WINSIZE_X - 50, 40, "ê°€ì„ì²´", 21, 13, _uiText[1],
         wcslen(_uiText[1]), TA_CENTER, RGB(255, 255, 255));
     FONTMANAGER->drawText(getMemDC(),
-        WINSIZE_X - 50, 80, "°¡À»Ã¼", 17, 13, _uiText[2],
+        WINSIZE_X - 50, 80, "ê°€ì„ì²´", 17, 13, _uiText[2],
         wcslen(_uiText[2]), TA_CENTER, RGB(255, 255, 255));
 	FONTMANAGER->drawText(getMemDC(),
-		WINSIZE_X - 10, 82, "°¡À»Ã¼", 15, 13, _uiText[3],
+		WINSIZE_X - 10, 82, "ê°€ì„ì²´", 15, 13, _uiText[3],
 		wcslen(_uiText[2]), TA_CENTER, RGB(255, 255, 255));
 
     char cellIndex[512];
@@ -1049,7 +1049,7 @@ void FinalScene::Attack()
 			if (_saladin->getEnemyStateBit(2) == 0)
 			{
 				_turnSystem->changeToEnemy();
-				for (auto cellsIter = _cells->begin(); cellsIter != _cells->end(); ++cellsIter)//Å¬¸¯ °¡´ÉÇÑ Å¸ÀÏ¸¸ µÇ°Ô ÁöÁ¤
+				for (auto cellsIter = _cells->begin(); cellsIter != _cells->end(); ++cellsIter)//í´ë¦­ ê°€ëŠ¥í•œ íƒ€ì¼ë§Œ ë˜ê²Œ ì§€ì •
 				{
 					Cell* cell = (*cellsIter);
 					if (PtInRect(&cell->getRect(), { (long)_player->getPlayerPosX() - TILESIZEX, (long)_player->getPlayerPosY() }))

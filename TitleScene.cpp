@@ -188,7 +188,7 @@ void TitleScene::fadeout()
 			else if (_startBit.test(1) == 1)
 			{
 				SOUNDMANAGER->stop("Prologue");
-				SCENEMANAGER->changeScene("second");
+				SCENEMANAGER->changeScene("story");
 			}
 		}
 	}

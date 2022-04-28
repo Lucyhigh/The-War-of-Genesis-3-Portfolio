@@ -224,7 +224,7 @@ void Player::update(void)
             _tmp *= -1;
             _cdt++;
         }
-        if (_cdt > 5)
+        if (_cdt > 3)
         {
             setPlayerIdle();
             _cdt = 0;

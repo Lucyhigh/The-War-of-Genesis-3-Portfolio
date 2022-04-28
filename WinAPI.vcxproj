@@ -74,8 +74,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>Jsoncpp\inc;$(IncludePath)</IncludePath>
-    <LibraryPath>Jsoncpp\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>D:\Projects\The-War-of-Genesis-3-Portfolio\lib\FMOD;Jsoncpp\inc;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\Projects\The-War-of-Genesis-3-Portfolio\lib\FMOD;Jsoncpp\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>

@@ -22,7 +22,7 @@ HRESULT MainGame::init(void)
 
 	SCENEMANAGER->addScene("title", new TitleScene);
 	SCENEMANAGER->addScene("map", new MapScene);
-	SCENEMANAGER->addScene("second", new StoryScene);
+	SCENEMANAGER->addScene("story", new StoryScene);
 	SCENEMANAGER->addScene("final", new FinalScene);
 	SCENEMANAGER->addScene("ending", new EndingScene);
 
