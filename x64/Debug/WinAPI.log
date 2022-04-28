@@ -1,0 +1,139 @@
+﻿  Stdafx.cpp
+d:\projects\the-war-of-genesis-3-portfolio\soundmanager.h(38): warning C4267: 'return': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Animation.cpp
+  AnimationManager.cpp
+  Astar.cpp
+  Camera.cpp
+  CEffect.cpp
+  EffectManager.cpp
+  EndingScene.cpp
+d:\projects\the-war-of-genesis-3-portfolio\endingscene.cpp(49): warning C4267: '=': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+d:\projects\the-war-of-genesis-3-portfolio\endingscene.cpp(69): warning C4267: '=': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+d:\projects\the-war-of-genesis-3-portfolio\endingscene.cpp(177): warning C4267: '초기화 중': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+d:\projects\the-war-of-genesis-3-portfolio\endingscene.cpp(187): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+d:\projects\the-war-of-genesis-3-portfolio\endingscene.cpp(197): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  FinalScene.cpp
+d:\projects\the-war-of-genesis-3-portfolio\finalscene.cpp(107): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
+d:\projects\the-war-of-genesis-3-portfolio\finalscene.cpp(231): warning C4267: '=': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+d:\projects\the-war-of-genesis-3-portfolio\finalscene.cpp(259): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
+d:\projects\the-war-of-genesis-3-portfolio\finalscene.cpp(276): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
+d:\projects\the-war-of-genesis-3-portfolio\finalscene.cpp(386): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
+d:\projects\the-war-of-genesis-3-portfolio\finalscene.cpp(564): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+d:\projects\the-war-of-genesis-3-portfolio\finalscene.cpp(567): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+d:\projects\the-war-of-genesis-3-portfolio\finalscene.cpp(570): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+d:\projects\the-war-of-genesis-3-portfolio\finalscene.cpp(573): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+d:\projects\the-war-of-genesis-3-portfolio\finalscene.cpp(588): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+d:\projects\the-war-of-genesis-3-portfolio\finalscene.cpp(590): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+d:\projects\the-war-of-genesis-3-portfolio\finalscene.cpp(596): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+d:\projects\the-war-of-genesis-3-portfolio\finalscene.cpp(625): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
+d:\projects\the-war-of-genesis-3-portfolio\finalscene.cpp(701): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+d:\projects\the-war-of-genesis-3-portfolio\finalscene.cpp(884): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
+d:\projects\the-war-of-genesis-3-portfolio\finalscene.cpp(947): warning C4267: '초기화 중': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+d:\projects\the-war-of-genesis-3-portfolio\finalscene.cpp(948): warning C4267: '초기화 중': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+d:\projects\the-war-of-genesis-3-portfolio\finalscene.cpp(953): warning C4267: '=': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+d:\projects\the-war-of-genesis-3-portfolio\finalscene.cpp(958): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
+d:\projects\the-war-of-genesis-3-portfolio\finalscene.cpp(1025): warning C4267: '초기화 중': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+d:\projects\the-war-of-genesis-3-portfolio\finalscene.cpp(1026): warning C4267: '초기화 중': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+d:\projects\the-war-of-genesis-3-portfolio\finalscene.cpp(1031): warning C4267: '=': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  FontManager.cpp
+  GameNode.cpp
+  GameUI.cpp
+d:\projects\the-war-of-genesis-3-portfolio\gameui.cpp(34): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
+d:\projects\the-war-of-genesis-3-portfolio\gameui.cpp(34): warning C4838: 'double'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
+d:\projects\the-war-of-genesis-3-portfolio\gameui.cpp(152): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+d:\projects\the-war-of-genesis-3-portfolio\gameui.cpp(172): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+d:\projects\the-war-of-genesis-3-portfolio\gameui.cpp(181): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+d:\projects\the-war-of-genesis-3-portfolio\gameui.cpp(188): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+d:\projects\the-war-of-genesis-3-portfolio\gameui.cpp(195): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+d:\projects\the-war-of-genesis-3-portfolio\gameui.cpp(137): warning C4101: 'buttomText' :참조되지 않은 지역 변수입니다.
+  Image.cpp
+d:\projects\the-war-of-genesis-3-portfolio\image.cpp(67): warning C4302: '형식 캐스트': 'Image::LPIMAGE_INFO'에서 'WORD'(으)로 잘립니다.
+d:\projects\the-war-of-genesis-3-portfolio\image.cpp(111): warning C4267: '초기화 중': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+d:\projects\the-war-of-genesis-3-portfolio\image.cpp(157): warning C4267: '초기화 중': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+d:\projects\the-war-of-genesis-3-portfolio\image.cpp(205): warning C4267: '초기화 중': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+d:\projects\the-war-of-genesis-3-portfolio\image.cpp(254): warning C4267: '초기화 중': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  ImageClass.cpp
+  ImageManager.cpp
+  JsonSaveLoader.cpp
+d:\projects\the-war-of-genesis-3-portfolio\jsonsaveloader.cpp(37): warning C4267: '인수': 'size_t'에서 'DWORD'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  KeyManager.cpp
+  MainGame.cpp
+  Cell.cpp
+  MapScene.cpp
+d:\projects\the-war-of-genesis-3-portfolio\mapscene.cpp(121): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+d:\projects\the-war-of-genesis-3-portfolio\mapscene.cpp(122): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+d:\projects\the-war-of-genesis-3-portfolio\mapscene.cpp(134): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+d:\projects\the-war-of-genesis-3-portfolio\mapscene.cpp(143): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  MapTileInfo.cpp
+d:\projects\the-war-of-genesis-3-portfolio\maptileinfo.cpp(14): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+d:\projects\the-war-of-genesis-3-portfolio\maptileinfo.cpp(16): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+  코드를 생성하고 있습니다...
+  컴파일하고 있습니다...
+  Player.cpp
+  ProgressBar.cpp
+  Saladin.cpp
+  SceneManager.cpp
+  SecondScene.cpp
+d:\projects\the-war-of-genesis-3-portfolio\secondscene.cpp(45): warning C4267: '초기화 중': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+d:\projects\the-war-of-genesis-3-portfolio\secondscene.cpp(50): warning C4267: '=': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+d:\projects\the-war-of-genesis-3-portfolio\secondscene.cpp(70): warning C4267: '=': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+d:\projects\the-war-of-genesis-3-portfolio\secondscene.cpp(105): warning C4267: '초기화 중': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+d:\projects\the-war-of-genesis-3-portfolio\secondscene.cpp(110): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+d:\projects\the-war-of-genesis-3-portfolio\secondscene.cpp(120): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Skill.cpp
+  SoundClass.cpp
+  SoundManager.cpp
+  Text.cpp
+  TextDataManager.cpp
+d:\projects\the-war-of-genesis-3-portfolio\textdatamanager.cpp(18): warning C4267: '인수': 'size_t'에서 'DWORD'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+d:\projects\the-war-of-genesis-3-portfolio\textdatamanager.cpp(48): warning C4101: 'temp' :참조되지 않은 지역 변수입니다.
+  TimeManager.cpp
+d:\projects\the-war-of-genesis-3-portfolio\timemanager.cpp(41): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+d:\projects\the-war-of-genesis-3-portfolio\timemanager.cpp(44): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+d:\projects\the-war-of-genesis-3-portfolio\timemanager.cpp(47): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Timer.cpp
+  TitleScene.cpp
+d:\projects\the-war-of-genesis-3-portfolio\titlescene.cpp(133): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+d:\projects\the-war-of-genesis-3-portfolio\titlescene.cpp(140): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  TurnSystem.cpp
+  Utils.cpp
+  WinMain.cpp
+  코드를 생성하고 있습니다...
+d:\projects\the-war-of-genesis-3-portfolio\textdatamanager.cpp(30): warning C4172: 지역 변수 또는 임시: str의 주소를 반환하고 있습니다.
+JsonSaveLoader.obj : error LNK2019: "public: __cdecl Json::Value::Value(enum Json::ValueType)" (??0Value@Json@@QEAA@W4ValueType@1@@Z) 외부 기호(참조 위치: "public: class Json::Value __cdecl JsonSaveLoader::loadJsonFile(char *)" (?loadJsonFile@JsonSaveLoader@@QEAA?AVValue@Json@@PEAD@Z) 함수)에서 확인하지 못했습니다.
+JsonSaveLoader.obj : error LNK2019: "public: __cdecl Json::Value::Value(int)" (??0Value@Json@@QEAA@H@Z) 외부 기호(참조 위치: "public: class Json::Value __cdecl JsonSaveLoader::loadJsonFile(char *)" (?loadJsonFile@JsonSaveLoader@@QEAA?AVValue@Json@@PEAD@Z) 함수)에서 확인하지 못했습니다.
+JsonSaveLoader.obj : error LNK2019: "public: __cdecl Json::Value::Value(class Json::Value const &)" (??0Value@Json@@QEAA@AEBV01@@Z) 외부 기호(참조 위치: "public: class Json::Value __cdecl JsonSaveLoader::loadJsonFile(char *)" (?loadJsonFile@JsonSaveLoader@@QEAA?AVValue@Json@@PEAD@Z) 함수)에서 확인하지 못했습니다.
+MapTileInfo.obj : error LNK2001: "public: __cdecl Json::Value::Value(class Json::Value const &)" (??0Value@Json@@QEAA@AEBV01@@Z) 외부 기호를 확인할 수 없습니다.
+JsonSaveLoader.obj : error LNK2019: "public: __cdecl Json::Value::~Value(void)" (??1Value@Json@@QEAA@XZ) 외부 기호(참조 위치: "public: class Json::Value __cdecl JsonSaveLoader::loadJsonFile(char *)" (?loadJsonFile@JsonSaveLoader@@QEAA?AVValue@Json@@PEAD@Z) 함수)에서 확인하지 못했습니다.
+MapTileInfo.obj : error LNK2001: "public: __cdecl Json::Value::~Value(void)" (??1Value@Json@@QEAA@XZ) 외부 기호를 확인할 수 없습니다.
+JsonSaveLoader.obj : error LNK2019: "public: __cdecl Json::Reader::Reader(void)" (??0Reader@Json@@QEAA@XZ) 외부 기호(참조 위치: "public: class Json::Value __cdecl JsonSaveLoader::loadJsonFile(char *)" (?loadJsonFile@JsonSaveLoader@@QEAA?AVValue@Json@@PEAD@Z) 함수)에서 확인하지 못했습니다.
+JsonSaveLoader.obj : error LNK2019: "public: bool __cdecl Json::Reader::parse(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &,class Json::Value &,bool)" (?parse@Reader@Json@@QEAA_NAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AEAVValue@2@_N@Z) 외부 기호(참조 위치: "public: class Json::Value __cdecl JsonSaveLoader::loadJsonFile(char *)" (?loadJsonFile@JsonSaveLoader@@QEAA?AVValue@Json@@PEAD@Z) 함수)에서 확인하지 못했습니다.
+JsonSaveLoader.obj : error LNK2019: "public: class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl Json::Reader::getFormatedErrorMessages(void)const " (?getFormatedErrorMessages@Reader@Json@@QEBA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@XZ) 외부 기호(참조 위치: "public: class Json::Value __cdecl JsonSaveLoader::loadJsonFile(char *)" (?loadJsonFile@JsonSaveLoader@@QEAA?AVValue@Json@@PEAD@Z) 함수)에서 확인하지 못했습니다.
+JsonSaveLoader.obj : error LNK2019: "public: virtual __cdecl Json::Writer::~Writer(void)" (??1Writer@Json@@UEAA@XZ) 외부 기호(참조 위치: "public: virtual __cdecl Json::StyledWriter::~StyledWriter(void)" (??1StyledWriter@Json@@UEAA@XZ) 함수)에서 확인하지 못했습니다.
+JsonSaveLoader.obj : error LNK2019: "public: __cdecl Json::StyledWriter::StyledWriter(void)" (??0StyledWriter@Json@@QEAA@XZ) 외부 기호(참조 위치: "public: void __cdecl JsonSaveLoader::saveJsonFile(char *,class Json::Value)" (?saveJsonFile@JsonSaveLoader@@QEAAXPEADVValue@Json@@@Z) 함수)에서 확인하지 못했습니다.
+JsonSaveLoader.obj : error LNK2019: "public: virtual class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl Json::StyledWriter::write(class Json::Value const &)" (?write@StyledWriter@Json@@UEAA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AEBVValue@2@@Z) 외부 기호(참조 위치: "public: void __cdecl JsonSaveLoader::saveJsonFile(char *,class Json::Value)" (?saveJsonFile@JsonSaveLoader@@QEAAXPEADVValue@Json@@@Z) 함수)에서 확인하지 못했습니다.
+MapTileInfo.obj : error LNK2019: "public: int __cdecl Json::Value::asInt(void)const " (?asInt@Value@Json@@QEBAHXZ) 외부 기호(참조 위치: "public: void __cdecl MapTileInfo::mapSetup(void)" (?mapSetup@MapTileInfo@@QEAAXXZ) 함수)에서 확인하지 못했습니다.
+MapTileInfo.obj : error LNK2019: "public: unsigned int __cdecl Json::Value::size(void)const " (?size@Value@Json@@QEBAIXZ) 외부 기호(참조 위치: "public: void __cdecl MapTileInfo::mapSetup(void)" (?mapSetup@MapTileInfo@@QEAAXXZ) 함수)에서 확인하지 못했습니다.
+MapTileInfo.obj : error LNK2019: "public: class Json::Value & __cdecl Json::Value::operator[](unsigned int)" (??AValue@Json@@QEAAAEAV01@I@Z) 외부 기호(참조 위치: "public: void __cdecl MapTileInfo::mapSetup(void)" (?mapSetup@MapTileInfo@@QEAAXXZ) 함수)에서 확인하지 못했습니다.
+MapTileInfo.obj : error LNK2019: "public: class Json::Value & __cdecl Json::Value::operator[](char const *)" (??AValue@Json@@QEAAAEAV01@PEBD@Z) 외부 기호(참조 위치: "public: void __cdecl MapTileInfo::mapSetup(void)" (?mapSetup@MapTileInfo@@QEAAXXZ) 함수)에서 확인하지 못했습니다.
+SoundManager.obj : error LNK2019: FMOD_System_Create 외부 기호(참조 위치: "enum FMOD_RESULT __cdecl FMOD::System_Create(class FMOD::System * *)" (?System_Create@FMOD@@YA?AW4FMOD_RESULT@@PEAPEAVSystem@1@@Z) 함수)에서 확인하지 못했습니다.
+SoundManager.obj : error LNK2019: "public: enum FMOD_RESULT __cdecl FMOD::System::release(void)" (?release@System@FMOD@@QEAA?AW4FMOD_RESULT@@XZ) 외부 기호(참조 위치: "public: void __cdecl SoundManager::release(void)" (?release@SoundManager@@QEAAXXZ) 함수)에서 확인하지 못했습니다.
+SoundManager.obj : error LNK2019: "public: enum FMOD_RESULT __cdecl FMOD::System::init(int,unsigned int,void *)" (?init@System@FMOD@@QEAA?AW4FMOD_RESULT@@HIPEAX@Z) 외부 기호(참조 위치: "public: long __cdecl SoundManager::init(void)" (?init@SoundManager@@QEAAJXZ) 함수)에서 확인하지 못했습니다.
+SoundManager.obj : error LNK2019: "public: enum FMOD_RESULT __cdecl FMOD::System::close(void)" (?close@System@FMOD@@QEAA?AW4FMOD_RESULT@@XZ) 외부 기호(참조 위치: "public: void __cdecl SoundManager::release(void)" (?release@SoundManager@@QEAAXXZ) 함수)에서 확인하지 못했습니다.
+SoundManager.obj : error LNK2019: "public: enum FMOD_RESULT __cdecl FMOD::System::update(void)" (?update@System@FMOD@@QEAA?AW4FMOD_RESULT@@XZ) 외부 기호(참조 위치: "public: void __cdecl SoundManager::update(void)" (?update@SoundManager@@QEAAXXZ) 함수)에서 확인하지 못했습니다.
+SoundManager.obj : error LNK2019: "public: enum FMOD_RESULT __cdecl FMOD::System::createSound(char const *,unsigned int,struct FMOD_CREATESOUNDEXINFO *,class FMOD::Sound * *)" (?createSound@System@FMOD@@QEAA?AW4FMOD_RESULT@@PEBDIPEAUFMOD_CREATESOUNDEXINFO@@PEAPEAVSound@2@@Z) 외부 기호(참조 위치: "public: void __cdecl SoundManager::addSound(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,bool,bool)" (?addSound@SoundManager@@QEAAXV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@0_N1@Z) 함수)에서 확인하지 못했습니다.
+SoundManager.obj : error LNK2019: "public: enum FMOD_RESULT __cdecl FMOD::System::createStream(char const *,unsigned int,struct FMOD_CREATESOUNDEXINFO *,class FMOD::Sound * *)" (?createStream@System@FMOD@@QEAA?AW4FMOD_RESULT@@PEBDIPEAUFMOD_CREATESOUNDEXINFO@@PEAPEAVSound@2@@Z) 외부 기호(참조 위치: "public: void __cdecl SoundManager::addSound(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,bool,bool)" (?addSound@SoundManager@@QEAAXV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@0_N1@Z) 함수)에서 확인하지 못했습니다.
+SoundManager.obj : error LNK2019: "public: enum FMOD_RESULT __cdecl FMOD::System::playSound(enum FMOD_CHANNELINDEX,class FMOD::Sound *,bool,class FMOD::Channel * *)" (?playSound@System@FMOD@@QEAA?AW4FMOD_RESULT@@W4FMOD_CHANNELINDEX@@PEAVSound@2@_NPEAPEAVChannel@2@@Z) 외부 기호(참조 위치: "public: void __cdecl SoundManager::play(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,float)" (?play@SoundManager@@QEAAXV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@M@Z) 함수)에서 확인하지 못했습니다.
+SoundManager.obj : error LNK2019: "public: enum FMOD_RESULT __cdecl FMOD::Sound::release(void)" (?release@Sound@FMOD@@QEAA?AW4FMOD_RESULT@@XZ) 외부 기호(참조 위치: "public: void __cdecl SoundManager::release(void)" (?release@SoundManager@@QEAAXXZ) 함수)에서 확인하지 못했습니다.
+SoundManager.obj : error LNK2019: "public: enum FMOD_RESULT __cdecl FMOD::Sound::getLength(unsigned int *,unsigned int)" (?getLength@Sound@FMOD@@QEAA?AW4FMOD_RESULT@@PEAII@Z) 외부 기호(참조 위치: "public: unsigned int __cdecl SoundManager::getLength(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?getLength@SoundManager@@QEAAIV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z) 함수)에서 확인하지 못했습니다.
+SoundManager.obj : error LNK2019: "public: enum FMOD_RESULT __cdecl FMOD::Channel::stop(void)" (?stop@Channel@FMOD@@QEAA?AW4FMOD_RESULT@@XZ) 외부 기호(참조 위치: "public: void __cdecl SoundManager::release(void)" (?release@SoundManager@@QEAAXXZ) 함수)에서 확인하지 못했습니다.
+SoundManager.obj : error LNK2019: "public: enum FMOD_RESULT __cdecl FMOD::Channel::setPaused(bool)" (?setPaused@Channel@FMOD@@QEAA?AW4FMOD_RESULT@@_N@Z) 외부 기호(참조 위치: "public: void __cdecl SoundManager::pause(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?pause@SoundManager@@QEAAXV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z) 함수)에서 확인하지 못했습니다.
+SoundManager.obj : error LNK2019: "public: enum FMOD_RESULT __cdecl FMOD::Channel::setVolume(float)" (?setVolume@Channel@FMOD@@QEAA?AW4FMOD_RESULT@@M@Z) 외부 기호(참조 위치: "public: void __cdecl SoundManager::play(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,float)" (?play@SoundManager@@QEAAXV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@M@Z) 함수)에서 확인하지 못했습니다.
+SoundManager.obj : error LNK2019: "public: enum FMOD_RESULT __cdecl FMOD::Channel::getVolume(float *)" (?getVolume@Channel@FMOD@@QEAA?AW4FMOD_RESULT@@PEAM@Z) 외부 기호(참조 위치: "public: float __cdecl SoundManager::getVolume(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?getVolume@SoundManager@@QEAAMV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z) 함수)에서 확인하지 못했습니다.
+SoundManager.obj : error LNK2019: "public: enum FMOD_RESULT __cdecl FMOD::Channel::setPosition(unsigned int,unsigned int)" (?setPosition@Channel@FMOD@@QEAA?AW4FMOD_RESULT@@II@Z) 외부 기호(참조 위치: "public: void __cdecl SoundManager::setPosition(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,unsigned int)" (?setPosition@SoundManager@@QEAAXV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@I@Z) 함수)에서 확인하지 못했습니다.
+SoundManager.obj : error LNK2019: "public: enum FMOD_RESULT __cdecl FMOD::Channel::getPosition(unsigned int *,unsigned int)" (?getPosition@Channel@FMOD@@QEAA?AW4FMOD_RESULT@@PEAII@Z) 외부 기호(참조 위치: "public: unsigned int __cdecl SoundManager::getPosition(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?getPosition@SoundManager@@QEAAIV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z) 함수)에서 확인하지 못했습니다.
+SoundManager.obj : error LNK2019: "public: enum FMOD_RESULT __cdecl FMOD::Channel::isPlaying(bool *)" (?isPlaying@Channel@FMOD@@QEAA?AW4FMOD_RESULT@@PEA_N@Z) 외부 기호(참조 위치: "public: bool __cdecl SoundManager::isPauseSound(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?isPauseSound@SoundManager@@QEAA_NV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z) 함수)에서 확인하지 못했습니다.
+SoundManager.obj : error LNK2019: "public: enum FMOD_RESULT __cdecl FMOD::Channel::getCurrentSound(class FMOD::Sound * *)" (?getCurrentSound@Channel@FMOD@@QEAA?AW4FMOD_RESULT@@PEAPEAVSound@2@@Z) 외부 기호(참조 위치: "public: unsigned int __cdecl SoundManager::getLength(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?getLength@SoundManager@@QEAAIV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z) 함수)에서 확인하지 못했습니다.
+lib\FMOD\fmodex_vc.lib : warning LNK4272: 'x86' 라이브러리 컴퓨터 종류가 'x64' 대상 컴퓨터 종류와 충돌합니다.
+Jsoncpp\lib\json_vc71_libmtd.lib : warning LNK4272: 'x86' 라이브러리 컴퓨터 종류가 'x64' 대상 컴퓨터 종류와 충돌합니다.
+D:\Projects\The-War-of-Genesis-3-Portfolio\x64\Debug\WinAPI.exe : fatal error LNK1120: 32개의 확인할 수 없는 외부 참조입니다.
