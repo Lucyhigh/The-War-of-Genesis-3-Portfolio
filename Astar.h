@@ -1,14 +1,14 @@
 #pragma once
 #include <functional>
 #include <set>
-//비용 계산 다시해보깅...
+
 namespace AStar
 {
     struct Vec2i
     {
         int x, y;
 
-        bool operator == (const Vec2i& coordinates_);
+        bool operator == (const Vec2i& coordinates);
     };
 
     using uint = unsigned int;
@@ -21,7 +21,7 @@ namespace AStar
         Vec2i coordinates;
         Node *parent;
 
-        Node(Vec2i coord_, Node *parent_ = nullptr);
+        Node(Vec2i coord, Node *parent = nullptr);
         uint getScore();
     };
 
@@ -29,18 +29,18 @@ namespace AStar
 
     class Generator
     {
-        bool detectCollision(Vec2i coordinates_);
-        Node* findNodeOnList(NodeSet& nodes_, Vec2i coordinates_);
-        void releaseNodes(NodeSet& nodes_);
+        bool detectCollision(Vec2i coordinates);
+        Node* findNodeOnList(NodeSet& nodes, Vec2i coordinates);
+        void releaseNodes(NodeSet& nodes);
 
     public:
         Generator();
-        void setWorldSize(Vec2i worldSize_);
-        void setDiagonalMovement(bool enable_);
-        void setHeuristic(HeuristicFunction heuristic_);
-        CoordinateList findPath(Vec2i source_, Vec2i target_);
-        void addCollision(Vec2i coordinates_);
-        void removeCollision(Vec2i coordinates_);
+        void setWorldSize(Vec2i worldSize);
+        void setDiagonalMovement(bool enable);
+        void setHeuristic(HeuristicFunction heuristic);
+        CoordinateList findPath(Vec2i source, Vec2i target);
+        void addCollision(Vec2i coordinates);
+        void removeCollision(Vec2i coordinates);
         void clearCollisions();
 
     private:
@@ -52,11 +52,11 @@ namespace AStar
 
     class Heuristic
     {
-        static Vec2i getDelta(Vec2i source_, Vec2i target_);
+        static Vec2i getDelta(Vec2i source, Vec2i target);
 
     public:
-        static uint manhattan(Vec2i source_, Vec2i target_);
-        static uint euclidean(Vec2i source_, Vec2i target_);
-        static uint octagonal(Vec2i source_, Vec2i target_);
+        static uint manhattan(Vec2i source, Vec2i target);
+        static uint euclidean(Vec2i source, Vec2i target);
+        static uint octagonal(Vec2i source, Vec2i target);
     };
 }

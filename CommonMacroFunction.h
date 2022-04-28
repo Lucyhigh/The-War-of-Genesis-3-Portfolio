@@ -1,13 +1,5 @@
 #pragma once
-//===========================================================
-// # commomMacroFunction # (필요한 함수는 직접 만들어 추가하자)
-//===========================================================
-/*
-인라인 단점
-- 메모리 많이 먹음
-- 자료형에 독립적이지 못함
-ㄴ 그래서 템플릿으로 물림
-*/
+
 inline POINT PointMake(int x, int y)
 {
 	POINT pt = { x, y };
@@ -37,7 +29,7 @@ inline void RectangleMake(HDC hdc, int x, int y, int width, int height)
 	Rectangle(hdc, x, y, x + width, y + height);
 }
 
-inline void rcMake(HDC hdc, RECT &rc) // 0126add
+inline void rcMake(HDC hdc, RECT &rc)
 {
 	Rectangle(hdc, rc.left,rc.top,rc.right,rc.bottom);
 }

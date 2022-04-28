@@ -2,9 +2,7 @@
 #include "SingletonBase.h"
 
 constexpr auto soundBuffer = 10;
-//여분 채널 갯수 (버퍼)
 constexpr auto extraSoundChannel = 5;
-// 총 사운드 갯수
 constexpr auto totalSoundChannel = soundBuffer + extraSoundChannel;
 
 using namespace FMOD;
@@ -18,8 +16,8 @@ private:
 	typedef map<string, Channel**>::iterator arrChannelsIter;
 
 	System* _system;
-	Sound** _sound;         //사운드 음원 포인터
-	Channel** _channel;      //사운드 채널
+	Sound** _sound;       
+	Channel** _channel;   
 
 	arrSounds _mTotalSounds;
     bool isPlay;
@@ -39,9 +37,7 @@ public:
 
 	int getSoundCount() { return _mTotalSounds.size(); }
 
-	//sound 길이 
 	unsigned int getLength(string keyName);
-	//플레이 위치
 	unsigned int getPosition(string keyName);
 	void setPosition(string keyName, unsigned int position);
 
@@ -51,5 +47,4 @@ public:
 
 	SoundManager();
 	~SoundManager();
-
 };

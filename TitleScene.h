@@ -11,9 +11,6 @@ class TitleScene : public GameNode
 {
 private:
     bitset<4> _startBit;
-    // 0000 타이틀화면
-    // 0001 스타트버튼 - 씬 리스트씬으로 넘어감
-    // 0010 세이브화면
 	Animation* _animation;
 	Animation* _aniCursor;
 	Image* _image;
@@ -38,7 +35,7 @@ public:
     void fadeout();
 
 public:
-	TitleScene():_uiText { L"Start Game", L"Load Game", L"Exit" }{}
+	TitleScene():_uiText { L"Start Game", L"Saved Game", L"Exit" }{}
 	~TitleScene() {}
 
 };

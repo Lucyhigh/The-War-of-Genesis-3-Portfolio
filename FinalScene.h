@@ -84,10 +84,8 @@ public:
 
     void computeShowMoveableTile(int range,Cell* cell,bool isMoveable);
 	void computeShowAttackableTile(int range, Cell* cell, bool isMoveable);
-	void computeShowSkillAttackableTile(int range, Cell* cell, bool isMoveable);
     void startShowMoveableTile(int range,Cell* cell,bool isMoveable);
     void startShowAttackableTile(int range,Cell* cell,bool isMoveable);
-    void startShowSkillAttackableTile(int range,Cell* cell,bool isMoveable);
 
 	POINT lerp(POINT start, POINT end, float percentage);
 public:

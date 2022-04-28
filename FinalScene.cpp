@@ -4,7 +4,7 @@
 HRESULT FinalScene::init(void)
 {
 	SOUNDMANAGER->addSound("Unknown_Blood", "Resources/Sounds/UnknownBlood.mp3", true, true);
-	//SOUNDMANAGER->play("Unknown_Blood", 1.0f);
+	SOUNDMANAGER->play("Unknown_Blood", 1.0f);
 	_mapTileInfo = new MapTileInfo;
 	_mapTileInfo->init();
 
@@ -99,8 +99,7 @@ void FinalScene::update(void)
 {
     if (KEYMANAGER->isOnceKeyDown('F'))
     {
-        cout << (SOUNDMANAGER->isPlaySound("Unknown_Blood")) << endl;
-       // SOUNDMANAGER->stop("Unknown_Blood");
+        SOUNDMANAGER->stop("Unknown_Blood");
         cout << (SOUNDMANAGER->isPauseSound("Unknown_Blood")) << endl;
     }
 	POINT playerUI = {
@@ -303,16 +302,7 @@ void FinalScene::update(void)
 		// 0000 0001 : 메뉴창염 - 타일클릭해도 이동안되어야함 버튼클릭상태
 		else if (_turnSystem->getPlayerBit(0) == 1)
 		{
-			/*	if (_vMoveableTile.size() > 0)
-			{
-				for (auto iter = _vMoveableTile.begin(); iter != _vMoveableTile.end(); ++iter)
-				{
-					(*iter)->setType(CELL_TYPE::NORMAL);
-				}
-				_vMoveableTile.clear();
-			}*/ //=================================================================================스타트 에너미 지정도 다시 해줘야해서 보류
-
-			_moveTileBit.set(2);//100
+			_moveTileBit.set(2);
 			_gameUI->update();
 
 			if (!_gameUI->getMenu())
@@ -336,7 +326,7 @@ void FinalScene::update(void)
 
 				if (_gameUI->getSkillNum() == SKILL_INDEX_WINDEYUN)
                 {
-					_moveTileBit.set(0,true); //101- 공격타일 활성화 상태
+					_moveTileBit.set(0,true);
 					if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 					{
 						for (auto iterator = _vAttackableTile.begin(); iterator != _vAttackableTile.end(); ++iterator)
@@ -403,7 +393,6 @@ void FinalScene::update(void)
         //캐릭터 위치 파악 후 이동0 / 이동 후 공격1 / 스킬 사용 고름2
 		if (_turnSystem->isEnemyIdle() == 1)
 		{
-			// : 대기- 대기이미지 - 캐릭터 시작타일 파악후 캐릭터 좌우상하 4개 타일 중 가까운 타일 선택해 그곳을 목표로 3칸씩 이동?
             POINT playerPos = { _player->getPlayerPosX() - TILESIZEX, _player->getPlayerPosY() };
             for (auto cellsIter = _cells->begin(); cellsIter != _cells->end(); ++cellsIter)//클릭 가능한 타일만 되게 지정
             {

@@ -9,7 +9,6 @@ namespace MY_UTIL
 		float y = endY - startY;
 
 		return sqrt(x*x + y * y);
-	
 	}
 
 	float getAngle(float startX, float startY, float endX, float endY)
@@ -44,7 +43,6 @@ namespace MY_UTIL
 			} while (FindNextFile(hFind, &fd));
 			FindClose(hFind);
 		}
-
 		return vfileNameList;
 	}
 }

@@ -22,26 +22,8 @@
     <ClCompile Include="FontManager.cpp">
       <Filter>API\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>Portfolio\Character</Filter>
-    </ClCompile>
-    <ClCompile Include="Rocket.cpp">
-      <Filter>API\ExamClass\ShootingGame\Rocket</Filter>
-    </ClCompile>
-    <ClCompile Include="Flame.cpp">
-      <Filter>API\ExamClass\ShootingGame\Rocket</Filter>
-    </ClCompile>
     <ClCompile Include="Utils.cpp">
       <Filter>API\Utility</Filter>
-    </ClCompile>
-    <ClCompile Include="Bullets.cpp">
-      <Filter>API\ExamClass\ShootingGame\Rocket</Filter>
-    </ClCompile>
-    <ClCompile Include="TileMap.cpp">
-      <Filter>API\ExamClass\ShootingGame</Filter>
-    </ClCompile>
-    <ClCompile Include="Minion.cpp">
-      <Filter>Portfolio\Character</Filter>
     </ClCompile>
     <ClCompile Include="Timer.cpp">
       <Filter>API\Timer</Filter>
@@ -55,26 +37,11 @@
     <ClCompile Include="Animation.cpp">
       <Filter>API\Animation</Filter>
     </ClCompile>
-    <ClCompile Include="ShootingEffect.cpp">
-      <Filter>API\ExamClass\ShootingGame\ShootingEffect</Filter>
-    </ClCompile>
-    <ClCompile Include="collision.cpp">
-      <Filter>API\ExamClass\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="SceneManager.cpp">
       <Filter>API\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="PixelScene.cpp">
-      <Filter>Portfolio\Pixel</Filter>
-    </ClCompile>
-    <ClCompile Include="PixelCollision.cpp">
-      <Filter>Portfolio\Pixel</Filter>
-    </ClCompile>
     <ClCompile Include="TextDataManager.cpp">
       <Filter>API\Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="ShootingScene.cpp">
-      <Filter>API\ExamClass\ShootingGame</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>Portfolio\Player</Filter>
@@ -88,14 +55,8 @@
     <ClCompile Include="SoundManager.cpp">
       <Filter>API\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="SoundScene.cpp">
-      <Filter>API\ExamClass\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="JsonSaveLoader.cpp">
       <Filter>Portfolio\JSON\schema</Filter>
-    </ClCompile>
-    <ClCompile Include="JsonDataScene.cpp">
-      <Filter>API\ExamClass\Json</Filter>
     </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>Portfolio\Camera</Filter>
@@ -115,23 +76,11 @@
     <ClCompile Include="Cell.cpp">
       <Filter>Portfolio\TileMap</Filter>
     </ClCompile>
-    <ClCompile Include="Quest.cpp">
-      <Filter>Portfolio\JSON</Filter>
-    </ClCompile>
-    <ClCompile Include="QuestSample.cpp">
-      <Filter>Portfolio\JSON</Filter>
-    </ClCompile>
     <ClCompile Include="TitleScene.cpp">
       <Filter>Portfolio\GameScene</Filter>
     </ClCompile>
     <ClCompile Include="MapScene.cpp">
       <Filter>Portfolio\GameScene</Filter>
-    </ClCompile>
-    <ClCompile Include="Inventory.cpp">
-      <Filter>Portfolio\UI\Inventory</Filter>
-    </ClCompile>
-    <ClCompile Include="AniScene.cpp">
-      <Filter>API\Animation</Filter>
     </ClCompile>
     <ClCompile Include="Astar.cpp">
       <Filter>Portfolio\A%2a</Filter>
@@ -148,9 +97,6 @@
     <ClCompile Include="FinalScene.cpp">
       <Filter>Portfolio\GameScene</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyManager.cpp">
-      <Filter>Portfolio\Character</Filter>
-    </ClCompile>
     <ClCompile Include="TurnSystem.cpp">
       <Filter>Portfolio\TurnSystem</Filter>
     </ClCompile>
@@ -160,17 +106,18 @@
     <ClCompile Include="Saladin.cpp">
       <Filter>Portfolio\Player</Filter>
     </ClCompile>
-    <ClCompile Include="BFS.cpp">
-      <Filter>Portfolio\A%2a</Filter>
-    </ClCompile>
     <ClCompile Include="AnimationManager.cpp">
       <Filter>API\Manager</Filter>
     </ClCompile>
     <ClCompile Include="Skill.cpp">
       <Filter>Portfolio\Skill</Filter>
     </ClCompile>
-    <ClCompile Include="CEffect.cpp" />
-    <ClCompile Include="EffectManager.cpp" />
+    <ClCompile Include="CEffect.cpp">
+      <Filter>Portfolio\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="EffectManager.cpp">
+      <Filter>Portfolio\Effect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameNode.h">
@@ -200,26 +147,8 @@
     <ClInclude Include="FontManager.h">
       <Filter>API\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="Enemy.h">
-      <Filter>Portfolio\Character</Filter>
-    </ClInclude>
-    <ClInclude Include="Rocket.h">
-      <Filter>API\ExamClass\ShootingGame\Rocket</Filter>
-    </ClInclude>
-    <ClInclude Include="Flame.h">
-      <Filter>API\ExamClass\ShootingGame\Rocket</Filter>
-    </ClInclude>
     <ClInclude Include="Utils.h">
       <Filter>API\Utility</Filter>
-    </ClInclude>
-    <ClInclude Include="Bullets.h">
-      <Filter>API\ExamClass\ShootingGame\Rocket</Filter>
-    </ClInclude>
-    <ClInclude Include="TileMap.h">
-      <Filter>API\ExamClass\ShootingGame</Filter>
-    </ClInclude>
-    <ClInclude Include="Minion.h">
-      <Filter>Portfolio\Character</Filter>
     </ClInclude>
     <ClInclude Include="Timer.h">
       <Filter>API\Timer</Filter>
@@ -233,23 +162,11 @@
     <ClInclude Include="Animation.h">
       <Filter>API\Animation</Filter>
     </ClInclude>
-    <ClInclude Include="ShootingEffect.h">
-      <Filter>API\ExamClass\ShootingGame\ShootingEffect</Filter>
-    </ClInclude>
     <ClInclude Include="SceneManager.h">
       <Filter>API\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="PixelCollision.h">
-      <Filter>Portfolio\Pixel</Filter>
-    </ClInclude>
-    <ClInclude Include="PixelScene.h">
-      <Filter>Portfolio\Pixel</Filter>
-    </ClInclude>
     <ClInclude Include="TextDataManager.h">
       <Filter>API\Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="ShootingScene.h">
-      <Filter>API\ExamClass\ShootingGame</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>Portfolio\Player</Filter>
@@ -262,12 +179,6 @@
     </ClInclude>
     <ClInclude Include="SoundManager.h">
       <Filter>API\Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="SoundScene.h">
-      <Filter>API\ExamClass\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="JsonDataScene.h">
-      <Filter>API\ExamClass\Json</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
       <Filter>Portfolio\Camera</Filter>
@@ -284,12 +195,6 @@
     <ClInclude Include="Text.h">
       <Filter>Portfolio\Text</Filter>
     </ClInclude>
-    <ClInclude Include="Quest.h">
-      <Filter>Portfolio\JSON</Filter>
-    </ClInclude>
-    <ClInclude Include="QuestSample.h">
-      <Filter>Portfolio\JSON</Filter>
-    </ClInclude>
     <ClInclude Include="JsonSaveLoader.h">
       <Filter>Portfolio\JSON\schema</Filter>
     </ClInclude>
@@ -298,12 +203,6 @@
     </ClInclude>
     <ClInclude Include="MapScene.h">
       <Filter>Portfolio\GameScene</Filter>
-    </ClInclude>
-    <ClInclude Include="Inventory.h">
-      <Filter>Portfolio\UI\Inventory</Filter>
-    </ClInclude>
-    <ClInclude Include="AniScene.h">
-      <Filter>API\Animation</Filter>
     </ClInclude>
     <ClInclude Include="resource.h" />
     <ClInclude Include="AStar.h">
@@ -321,9 +220,6 @@
     <ClInclude Include="FinalScene.h">
       <Filter>Portfolio\GameScene</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyManager.h">
-      <Filter>Portfolio\Character</Filter>
-    </ClInclude>
     <ClInclude Include="TurnSystem.h">
       <Filter>Portfolio\TurnSystem</Filter>
     </ClInclude>
@@ -336,17 +232,18 @@
     <ClInclude Include="Saladin.h">
       <Filter>Portfolio\Player</Filter>
     </ClInclude>
-    <ClInclude Include="BFS.h">
-      <Filter>Portfolio\A%2a</Filter>
-    </ClInclude>
     <ClInclude Include="AnimationManager.h">
       <Filter>API\Manager</Filter>
     </ClInclude>
     <ClInclude Include="Skill.h">
       <Filter>Portfolio\Skill</Filter>
     </ClInclude>
-    <ClInclude Include="CEffect.h" />
-    <ClInclude Include="EffectManager.h" />
+    <ClInclude Include="CEffect.h">
+      <Filter>Portfolio\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="EffectManager.h">
+      <Filter>Portfolio\Effect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="API">
@@ -370,26 +267,8 @@
     <Filter Include="API\Image">
       <UniqueIdentifier>{8d922d20-6355-46b1-8bdb-4e7951c55ed6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="API\ExamClass">
-      <UniqueIdentifier>{ce243ada-8677-40d8-b61e-44530ea6d6b1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="API\ExamClass\ShootingGame">
-      <UniqueIdentifier>{408bc134-7ea0-4bb3-bf1b-1933646ca1c8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="API\ExamClass\ShootingGame\Rocket">
-      <UniqueIdentifier>{cb63210e-b68e-4152-a9b8-1f543b85cefb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="API\Timer">
       <UniqueIdentifier>{b94c673f-b8d9-40cd-bbbb-5d108b009938}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="API\ExamClass\ShootingGame\ShootingEffect">
-      <UniqueIdentifier>{e21da2b0-3546-453c-9be7-502611ab946f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="API\ExamClass\Scene">
-      <UniqueIdentifier>{5d595346-4a13-4989-8775-c38e4ab68e16}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="API\ExamClass\Json">
-      <UniqueIdentifier>{ac22e39c-2cbb-4337-bc9c-95dd7bcc5f4a}</UniqueIdentifier>
     </Filter>
     <Filter Include="Portfolio">
       <UniqueIdentifier>{2d2da932-48ee-4669-a446-7e3953c93772}</UniqueIdentifier>
@@ -412,9 +291,6 @@
     <Filter Include="Portfolio\Player">
       <UniqueIdentifier>{5cb9168e-f640-42a5-8957-b0b3f38ef300}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Portfolio\Pixel">
-      <UniqueIdentifier>{bb1b2208-3ac4-410e-92d3-4e03e2195b4f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Portfolio\ProgressBar">
       <UniqueIdentifier>{905cfd2d-6e67-4e37-945e-a6de492133cd}</UniqueIdentifier>
     </Filter>
@@ -432,9 +308,6 @@
     </Filter>
     <Filter Include="Portfolio\UI">
       <UniqueIdentifier>{b5c2e6c0-be59-4879-9ba8-ef6201c68472}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Portfolio\UI\Inventory">
-      <UniqueIdentifier>{0516f7d9-f795-4766-9b26-be6d1c8dc9f9}</UniqueIdentifier>
     </Filter>
     <Filter Include="API\Animation">
       <UniqueIdentifier>{3248fe14-aa4d-4119-9af6-8a6f638706b2}</UniqueIdentifier>
@@ -457,11 +330,12 @@
     <Filter Include="Portfolio\TurnSystem">
       <UniqueIdentifier>{89794040-647c-4721-a51f-70ab7862a6ab}</UniqueIdentifier>
     </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="..\MatricFunction.txt">
-      <Filter>API\Utility</Filter>
-    </Text>
+    <Filter Include="Portfolio\Effect">
+      <UniqueIdentifier>{8cb2d713-0f62-4e0c-a8af-416b21463ce4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Portfolio\SoundClass">
+      <UniqueIdentifier>{5cd3fd1c-f904-415f-9dc8-be83bcde24e1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="jItem.json">

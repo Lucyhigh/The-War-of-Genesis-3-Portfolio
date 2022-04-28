@@ -8,8 +8,7 @@ isPlay(false)
 {
 }
 
-SoundManager::~SoundManager()
-{
+SoundManager::~SoundManager(){
 }
 
 HRESULT SoundManager::init(void)
@@ -49,7 +48,6 @@ void SoundManager::release(void)
 		_system->release();
 		_system->close();
 	}
-
 }
 
 void SoundManager::update(void)
@@ -75,7 +73,6 @@ void SoundManager::addSound(string keyName, string soundName, bool backGround, b
 		_system->createSound(soundName.c_str(), FMOD_DEFAULT, 0, &_sound[_mTotalSounds.size()]);
 	}
 	_mTotalSounds.insert(make_pair(keyName.c_str(), &_sound[_mTotalSounds.size()]));
-    //cout <<"keyName  "<< keyName<< _mTotalSounds.size() << endl;
 }
 
 
@@ -100,7 +97,6 @@ void SoundManager::stop(string keyName)
 	arrSoundsIter iter = _mTotalSounds.begin();
 	for (iter; iter != _mTotalSounds.end(); ++iter, count++)
 	{
-       // cout << keyName << endl;
 		if (keyName == iter->first)
 		{
 			_channel[count]->stop();

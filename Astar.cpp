@@ -37,29 +37,29 @@ AStar::Generator::Generator()
     };
 }
 
-void AStar::Generator::setWorldSize(Vec2i worldSize_)
+void AStar::Generator::setWorldSize(Vec2i worldSize)
 {
-    worldSize = worldSize_;
+    worldSize = worldSize;
 }
 
-void AStar::Generator::setDiagonalMovement(bool enable_)
+void AStar::Generator::setDiagonalMovement(bool enable)
 {
-    directions = (enable_ ? 8 : 4);
+    directions = (enable ? 8 : 4);
 }
 
-void AStar::Generator::setHeuristic(HeuristicFunction heuristic_)
+void AStar::Generator::setHeuristic(HeuristicFunction heuristic)
 {
-    heuristic = std::bind(heuristic_, _1, _2);
+    heuristic = std::bind(heuristic, _1, _2);
 }
 
-void AStar::Generator::addCollision(Vec2i coordinates_)
+void AStar::Generator::addCollision(Vec2i coordinates)
 {
-    walls.push_back(coordinates_);
+    walls.push_back(coordinates);
 }
 
-void AStar::Generator::removeCollision(Vec2i coordinates_)
+void AStar::Generator::removeCollision(Vec2i coordinates)
 {
-    auto it = std::find(walls.begin(), walls.end(), coordinates_);
+    auto it = std::find(walls.begin(), walls.end(), coordinates);
     if (it != walls.end()) {
         walls.erase(it);
     }
@@ -70,13 +70,13 @@ void AStar::Generator::clearCollisions()
     walls.clear();
 }
 
-AStar::CoordinateList AStar::Generator::findPath(Vec2i source_, Vec2i target_)
+AStar::CoordinateList AStar::Generator::findPath(Vec2i source, Vec2i target)
 {
     Node *current = nullptr;
     NodeSet openSet, closedSet;
     openSet.reserve(100);
     closedSet.reserve(100);
-    openSet.push_back(new Node(source_));
+    openSet.push_back(new Node(source));
 
     while (!openSet.empty()) {
         auto current_it = openSet.begin();
@@ -90,7 +90,7 @@ AStar::CoordinateList AStar::Generator::findPath(Vec2i source_, Vec2i target_)
             }
         }
 
-        if (current->coordinates == target_) {
+        if (current->coordinates == target) {
             break;
         }
 
@@ -110,7 +110,7 @@ AStar::CoordinateList AStar::Generator::findPath(Vec2i source_, Vec2i target_)
             if (successor == nullptr) {
                 successor = new Node(newCoordinates, current);
                 successor->G = totalCost;
-                successor->H = heuristic(successor->coordinates, target_);
+                successor->H = heuristic(successor->coordinates, target);
                 openSet.push_back(successor);
             }
             else if (totalCost < successor->G) {
@@ -132,54 +132,54 @@ AStar::CoordinateList AStar::Generator::findPath(Vec2i source_, Vec2i target_)
     return path;
 }
 
-AStar::Node* AStar::Generator::findNodeOnList(NodeSet& nodes_, Vec2i coordinates_)
+AStar::Node* AStar::Generator::findNodeOnList(NodeSet& nodes, Vec2i coordinates)
 {
-    for (auto node : nodes_) {
-        if (node->coordinates == coordinates_) {
+    for (auto node : nodes) {
+        if (node->coordinates == coordinates) {
             return node;
         }
     }
     return nullptr;
 }
 
-void AStar::Generator::releaseNodes(NodeSet& nodes_)
+void AStar::Generator::releaseNodes(NodeSet& nodes)
 {
-    for (auto it = nodes_.begin(); it != nodes_.end();) {
+    for (auto it = nodes.begin(); it != nodes.end();) {
         delete *it;
-        it = nodes_.erase(it);
+        it = nodes.erase(it);
     }
 }
 
-bool AStar::Generator::detectCollision(Vec2i coordinates_)
+bool AStar::Generator::detectCollision(Vec2i coordinates)
 {
-    if (coordinates_.x < 0 || coordinates_.x >= worldSize.x ||
-        coordinates_.y < 0 || coordinates_.y >= worldSize.y ||
-        std::find(walls.begin(), walls.end(), coordinates_) != walls.end()) {
+    if (coordinates.x < 0 || coordinates.x >= worldSize.x ||
+        coordinates.y < 0 || coordinates.y >= worldSize.y ||
+        std::find(walls.begin(), walls.end(), coordinates) != walls.end()) {
         return true;
     }
     return false;
 }
 
-AStar::Vec2i AStar::Heuristic::getDelta(Vec2i source_, Vec2i target_)
+AStar::Vec2i AStar::Heuristic::getDelta(Vec2i source, Vec2i target)
 {
-    return{ abs(source_.x - target_.x),  abs(source_.y - target_.y) };
+    return{ abs(source.x - target.x),  abs(source.y - target.y) };
 }
 
-AStar::uint AStar::Heuristic::manhattan(Vec2i source_, Vec2i target_)
+AStar::uint AStar::Heuristic::manhattan(Vec2i source, Vec2i target)
 {
-    auto delta = std::move(getDelta(source_, target_));
+    auto delta = std::move(getDelta(source, target));
     return static_cast<uint>(10 * (delta.x + delta.y));
 }
 
-AStar::uint AStar::Heuristic::euclidean(Vec2i source_, Vec2i target_)
+AStar::uint AStar::Heuristic::euclidean(Vec2i source, Vec2i target)
 {
-    auto delta = std::move(getDelta(source_, target_));
+    auto delta = std::move(getDelta(source, target));
     return static_cast<uint>(10 * sqrt(pow(delta.x, 2) + pow(delta.y, 2)));
 }
 
-AStar::uint AStar::Heuristic::octagonal(Vec2i source_, Vec2i target_)
+AStar::uint AStar::Heuristic::octagonal(Vec2i source, Vec2i target)
 {
-    auto delta = std::move(getDelta(source_, target_));
+    auto delta = std::move(getDelta(source, target));
 	int minValue = delta.x < delta.y ? delta.x : delta.y;
     return 10 * (delta.x + delta.y) + (-6) * minValue;
 }

@@ -352,7 +352,6 @@ void Skill::windEyun()
                                            (int)skillPosArr[_windSkillIndex].y,
                                            skillAlpha[_windSkillIndex++] };
 		_vWindSkill.push_back(skill);
-		//string skillArr[10] = { "184light" ,"skill10R", "skill8", "skill4R","skill10R", "skill7", "184light", "skill7","skill8","skill3" };
 
 		if (_windSkillIndex == 1) _windSkillTick = 46;
         else if (_windSkillIndex == 2) _windSkillTick = 12;

@@ -54,12 +54,6 @@ void TitleScene::release(void){
 
 void TitleScene::update(void)
 {
-
-	if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
-	{
-		SOUNDMANAGER->play("changeScene", 1.0f);
-	}
-    // 0000 타이틀화면
     if (_startBit.none() == 1)
     {
 		_alpha += 1.0f;
@@ -69,7 +63,6 @@ void TitleScene::update(void)
         {
             if (PtInRect(&_viTitleButton->_buttonRect, _ptMouse) && KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
             {
-                    //애니메이션이 다 돌면 다른 화면으로 넘어가야함
                 switch (_viTitleButton->_index)
                 {
                 case 0:
@@ -91,7 +84,6 @@ void TitleScene::update(void)
             }
         }
     }
-    // 0001 스타트게임
     else if (_startBit.test(0) == 1)
     {
         for (_viSceneButton = _vSceneButton.begin(); _viSceneButton != _vSceneButton.end(); ++_viSceneButton)
@@ -108,7 +100,6 @@ void TitleScene::update(void)
             }
         }
     }
-    // 0010 로드게임 - 일단은 맵씬으로 이동하게 만듬
     else if (_startBit.test(1) == 1)
     {
 		if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))

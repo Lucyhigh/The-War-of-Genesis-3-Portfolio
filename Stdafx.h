@@ -40,7 +40,6 @@
 using namespace std;
 #include <bitset>
 #include <list>
-//===================================
 #include "commonMacroFunction.h"
 #include "randomFunction.h"
 #include "KeyManager.h"
@@ -75,7 +74,7 @@ using namespace MY_UTIL;
 #define WINSTART_Y	 0
 #define WINSIZE_X	 960
 #define WINSIZE_Y	 720
-#define WINSTYLE	 WS_CAPTION  | WS_SYSMENU   // WS_CAPTION  | WS_SYSMENU |WS_POPUP | WS_BORDER | WS_SYSMENU 
+#define WINSTYLE	 WS_CAPTION  | WS_SYSMENU 
 
 #define CENTER_X WINSIZE_X/2
 #define CENTER_Y WINSIZE_Y/2
@@ -85,20 +84,6 @@ using namespace MY_UTIL;
 #define SAFE_DELETE_ARRAY(p)	{if(p) {delete[] (p); (p) = nullptr;}}
 #define SAFE_RELEASE(p)			{if(p) {(p)->release(); (p) = nullptr;}}
 
-////델리게이트 필요 콜백언제시킬지 정함
-//#define SAFE_RELEASE(p)	 \
-//{                        \
-////언제호출될지정하기
-//}
-//
-
-
 extern HINSTANCE	_hInstance;
 extern HWND			_hWnd;
 extern POINT		_ptMouse;
-
-
-//#include "TurnSystem.h"
-//#include "Player.h"
-//Player _player;
-//TurnSystem _turnSystem;

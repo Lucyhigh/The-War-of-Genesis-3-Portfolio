@@ -6,7 +6,6 @@ HRESULT EndingScene::init(void)
     _aniCursor = ANIMATIONMANAGER->findAnimation("normalCursor");
     _aniCursor->AniStart();
     SOUNDMANAGER->addSound("changeScene", "Resources/Sounds/changeScene.mp3", false, false);
-    SOUNDMANAGER->addSound("Tears", "Resources/Sounds/Tears.mp3", true, true);
     _soundIndex = 0;
 
 	string path = "Resources/Sounds/endingScript/";
@@ -37,8 +36,7 @@ HRESULT EndingScene::init(void)
     return S_OK;
 }
 
-void EndingScene::release(void)
-{
+void EndingScene::release(void){
 }
 
 void EndingScene::update(void)
@@ -187,16 +185,16 @@ void EndingScene::render(void)
             }
         }
 
-        IMAGEMANAGER->alphaRender("storyText", getMemDC(), WINSIZE_X*0.16, WINSIZE_Y*0.72, _textAlpha);
-        FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.17, WINSIZE_Y*0.75, "가을체", 20, 15, _text[_textIndex].name, wcslen(_text[_textIndex].name), TA_LEFT, RGB(72, 221, 157));
+        IMAGEMANAGER->alphaRender("storyText", getMemDC(), WINSIZE_X*0.16, WINSIZE_Y*0.76, _textAlpha);
+        FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.17, WINSIZE_Y*0.79, "가을체", 20, 15, _text[_textIndex].name, wcslen(_text[_textIndex].name), TA_LEFT, RGB(72, 221, 157));
 
         const int SCRIPT_MAX_LENGTH = 48;
-        FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.17, WINSIZE_Y*0.80, "가을체", 18, 100, _text[_textIndex].script,
+        FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.17, WINSIZE_Y*0.85, "가을체", 18, 100, _text[_textIndex].script,
             ((_textBufferCnt) > SCRIPT_MAX_LENGTH ? SCRIPT_MAX_LENGTH : (_textBufferCnt)), TA_LEFT, RGB(255, 255, 255));
 
         if (wcslen(_text[_textIndex].script) > SCRIPT_MAX_LENGTH && _textBufferCnt > SCRIPT_MAX_LENGTH)
         {
-            FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.17, WINSIZE_Y*0.84, "가을체", 18, 100,
+            FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.17, WINSIZE_Y*0.89, "가을체", 18, 100,
                 _text[_textIndex].script + SCRIPT_MAX_LENGTH, (_textBufferCnt > wcslen(_text[_textIndex].script)) ?
                 wcslen(_text[_textIndex].script) - SCRIPT_MAX_LENGTH : _textBufferCnt - SCRIPT_MAX_LENGTH, TA_LEFT, RGB(255, 255, 255));
         }
@@ -218,7 +216,6 @@ void EndingScene::fadeout()
         {
             _isFadeOut = false;
             _fadeAlpha = 0;
-           
         }
     }
 }
