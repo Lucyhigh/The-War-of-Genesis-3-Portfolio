@@ -5,7 +5,7 @@
 #include "ImageClass.h"
 #include "SoundClass.h"
 #include "TitleScene.h"
-#include "SecondScene.h"
+#include "StoryScene.h"
 #include "FinalScene.h"
 #include "EndingScene.h"
 #include "MapScene.h"
@@ -22,7 +22,7 @@ HRESULT MainGame::init(void)
 
 	SCENEMANAGER->addScene("title", new TitleScene);
 	SCENEMANAGER->addScene("map", new MapScene);
-	SCENEMANAGER->addScene("second", new SecondScene);
+	SCENEMANAGER->addScene("second", new StoryScene);
 	SCENEMANAGER->addScene("final", new FinalScene);
 	SCENEMANAGER->addScene("ending", new EndingScene);
 

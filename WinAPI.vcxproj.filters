@@ -82,9 +82,6 @@
     <ClCompile Include="EndingScene.cpp">
       <Filter>Portfolio\GameScene</Filter>
     </ClCompile>
-    <ClCompile Include="SecondScene.cpp">
-      <Filter>Portfolio\GameScene</Filter>
-    </ClCompile>
     <ClCompile Include="FinalScene.cpp">
       <Filter>Portfolio\GameScene</Filter>
     </ClCompile>
@@ -111,6 +108,9 @@
     </ClCompile>
     <ClCompile Include="SoundClass.cpp">
       <Filter>Portfolio\SoundClass</Filter>
+    </ClCompile>
+    <ClCompile Include="StoryScene.cpp">
+      <Filter>Portfolio\GameScene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -199,9 +199,6 @@
     <ClInclude Include="EndingScene.h">
       <Filter>Portfolio\GameScene</Filter>
     </ClInclude>
-    <ClInclude Include="SecondScene.h">
-      <Filter>Portfolio\GameScene</Filter>
-    </ClInclude>
     <ClInclude Include="FinalScene.h">
       <Filter>Portfolio\GameScene</Filter>
     </ClInclude>
@@ -231,6 +228,9 @@
     </ClInclude>
     <ClInclude Include="SoundClass.h">
       <Filter>Portfolio\SoundClass</Filter>
+    </ClInclude>
+    <ClInclude Include="StoryScene.h">
+      <Filter>Portfolio\GameScene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
