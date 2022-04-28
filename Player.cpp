@@ -262,6 +262,7 @@ void Player::update(void)
     //010 000 Ç³¾Æ¿­°øÂü
     else if (_stateBit.test(4) == 1)
     {
+		_cdt++;
         _skillCount += 4;
         switch (_imageState)
         {
@@ -285,38 +286,63 @@ void Player::update(void)
         
         if (_windIndex == 0)
         {
-            if (_count % 100 == 0) _windIndex++;
+			if (_cdt > 24)
+			{
+				_windIndex++;
+				_cdt = 0;
+			}
         }
         else if ( _windIndex == 1 || _windIndex == 2)
         {
-            if (_count % 70 == 0) _windIndex++;
+            if (_cdt > 18)
+			{
+				_windIndex++;
+				_cdt = 0;
+			}
         }
         else if (_windIndex == 3 || _windIndex == 4 || _windIndex == 7 || _windIndex == 13 )
         {
-            if (_count % 15 == 0) _windIndex++;
+            if (_cdt > 4)
+			{
+				_windIndex++;
+				_cdt = 0;
+			}
         }
         else if ( _windIndex == 12 || _windIndex == 14 || _windIndex == 15 || _windIndex == 18)
         {
-            if (_count % 50 == 0) _windIndex++;
+            if (_cdt > 23)
+			{
+				_windIndex++;
+				_cdt = 0;
+			}
         }
         else if ( _windIndex == 16 || _windIndex == 17)
         {
-            if (_count % 40 == 0) _windIndex++;
+            if (_cdt > 14)
+			{
+				_windIndex++;
+				_cdt = 0;
+			}
         }
         else if (_windIndex == 5 || _windIndex == 6 || _windIndex == 8 || _windIndex == 9 || _windIndex == 10 || _windIndex == 11 )
         {
-            if (_count % 8 == 0) _windIndex++;
+            if (_cdt > 2)
+			{
+				_windIndex++;
+				_cdt = 0;
+			}
         }
         else if (_windIndex >= 19)
         {
             _isAttack = true;
-            if (_count % 1000 == 0)
+            if (_cdt > 250)
             {
                 setPlayerIdle();
                 _windIndex = 0;
                 _skillCount = 0;
             }
         }
+		cout << "_windIndex : " << _windIndex << endl;
     }
 	//100 000 Á×À½
 	else if (_stateBit.test(5) == 1)

@@ -4,7 +4,7 @@
 HRESULT FinalScene::init(void)
 {
 	SOUNDMANAGER->addSound("Unknown_Blood", "Resources/Sounds/UnknownBlood.mp3", true, true);
-	SOUNDMANAGER->play("Unknown_Blood", 1.0f);
+	//SOUNDMANAGER->play("Unknown_Blood", 1.0f);
 	_mapTileInfo = new MapTileInfo;
 	_mapTileInfo->init();
 
@@ -563,16 +563,22 @@ void FinalScene::render(void)
 	{
 		_skill->worldBackrender();
 	}
+
+    if (_player->getPlayerStateBit(4) == 1)
+    {
+		_skill->windRender();
+    }
 	if (_player->getLive())_player->render();
     if (_saladin->getSkillCount() >= 5)
     {
         _skill->worldFrontrender();
     }
 	_saladin->render();
-    if (_player->getPlayerStateBit(4) == 1)
-    {
-		_skill->windRender();
-    }
+
+	if (_player->getPlayerStateBit(4) == 1)
+	{
+		_skill->windFrontRender();
+	}
 
     _gameUI->render();
 	IMAGEMANAGER->render("mapInfoAll", getMemDC(), WINSIZE_X - 230, 0);

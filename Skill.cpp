@@ -47,7 +47,10 @@ HRESULT Skill::init(void)
 void Skill::release(void)
 {
    _effectManager->release();
+   SAFE_DELETE(_effectManager);
+
    _frontEffectManager->release();
+   SAFE_DELETE(_frontEffectManager);
 }
 
 void Skill::update(void)
@@ -162,7 +165,7 @@ void Skill::update(void)
                     (*viFrontSkillList)._alpha, (*viFrontSkillList)._alpha - 60, 10.0f);
             }
         }
-		if (_skillIndex == 60 || _skillIndex == 99 || _skillIndex == 225)
+		if (_skillIndex == 60  || _skillIndex == 225)//|| _skillIndex == 99
 		{
 			_camera->shakeStart(2.0f);
 		}
@@ -225,23 +228,26 @@ void Skill::worldFrontrender(void)
 void Skill::windRender(void)
 {
     IMAGEMANAGER->alphaRender("cutChange", getMemDC(), 0, 0, _alphaA);
-    if (_player->getPlayerStateBit(4))
-    {
-        for (auto iter = _vWindSkill.begin(); iter != _vWindSkill.end(); ++iter)
-        {
-            IMAGEMANAGER->alphaFrameRender(iter->imgKey, getMemDC(),
-                iter->posX, iter->posY,
-                iter->frameX, iter->frameY,
-                iter->alpha);
-        }
-    }
-    IMAGEMANAGER->alphaRender("cutChangeRed", getMemDC(), 0, 0, _alphaB);
+}
+void Skill::windFrontRender(void)
+{
+	if (_player->getPlayerStateBit(4))
+	{
+		for (auto iter = _vWindSkill.begin(); iter != _vWindSkill.end(); ++iter)
+		{
+			IMAGEMANAGER->alphaFrameRender(iter->imgKey, getMemDC(),
+				iter->posX, iter->posY,
+				iter->frameX, iter->frameY,
+				iter->alpha);
+		}
+	}
+	IMAGEMANAGER->alphaRender("cutChangeRed", getMemDC(), 0, 0, _alphaB);
 }
 void Skill::worldBrokenSkill()
 {
 	tagSkill skill  = tagSkill{ 0, "skillStartLight", &_skillPlayerPos2,170,20 };
 	tagSkill skill1 = tagSkill{ 40, "184light", &_skillPlayerPos,170,20 };
-	tagSkill skill2 = tagSkill{ 40, "circle", &_skillPlayerPos2,130,10 };
+	tagSkill skill2 = tagSkill{ 40, "circle", &_skillPlayerPos2,130,15 };
 	tagSkill skill3 = tagSkill{ 40, "smog2", &_skillPlayerPos3,170,20 };
 
 	vSkillList.push_back(skill);
@@ -277,8 +283,8 @@ void Skill::worldBrokenSkill()
      
 	for (int i = 0; i < skillArr2; ++i)
 	{
-		if (i % 2 == 1)						pushCellSkill(100 + i, "groundCrack",  cellPosIdx++, 170,5);	//100
-		else if (i % 2 == 0)				pushCellSkill(100 + i, "groundCrackL", cellPosIdx++, 170,5);	//100
+		if (i % 2 == 1)						pushCellSkill(100 + i, "groundCrack",  cellPosIdx++, 170,5);
+		else if (i % 2 == 0)				pushCellSkill(100 + i, "groundCrackL", cellPosIdx++, 170,5);
     }
 
 	pushCellFrontSkill(182, "fire", cellPosIdx++, (BYTE)190,10);
@@ -301,17 +307,17 @@ void Skill::windEyun()
     POINT skillPosArr[10] =
     {
 		{left ,		 top },		// "184light"
-		{left + 40,  top + 60},	// "skill10R"
+		{left + 40,  top + 50},	// "skill10R"
 		{left + 40 , top - 10}, // "skill8",
-		{left - 40,  top - 30},	// "skill4R",
-		{left + 40,  top + 60}, // "skill10R"
+		{left - 70,  top - 50},	// "skill4R",
+		{left + 40,  top + 50}, // "skill10R"
 		{left + 40 , top - 10}, // "skill7",
-		{left + 20,	 top },	    // "184light"
+		{left,		 top + 20 },// "184light"
 		{left + 40 , top - 10}, // "skill7"	
 		{left + 40 , top - 10}, // "skill8"	
 		{left + 60,  top}		// "skill3" 
     };			
-	BYTE skillAlpha[10] = { 160,235,120,200,200,120,160,120,120,235 };
+	BYTE skillAlpha[10] = { 190,235,120,190,200,120,160,120,120,235 };
     switch(_player->getImageState())
     {
     case PLAYERSTATE::RIGHT:
@@ -341,18 +347,20 @@ void Skill::windEyun()
 	{
 		_windSkillCnt = 0;
 		if (_windSkillIndex > 9) return;
-		tagWindSkill skill = tagWindSkill{ skillArr[_windSkillIndex],0,0,
+		tagWindSkill skill = tagWindSkill{ skillArr[_windSkillIndex],-1,0,
                                            (int)skillPosArr[_windSkillIndex].x,
                                            (int)skillPosArr[_windSkillIndex].y,
                                            skillAlpha[_windSkillIndex++] };
 		_vWindSkill.push_back(skill);
-	
-		if (_windSkillIndex == 1) _windSkillTick = 50;//
-        else if (_windSkillIndex == 2 || _windSkillIndex == 3 ) _windSkillTick = 30;
-        else if ( _windSkillIndex == 4 || _windSkillIndex == 5) _windSkillTick = 5;
-        else if ( _windSkillIndex == 6) _windSkillTick = 10;
-        else if ( _windSkillIndex == 7 || _windSkillIndex == 8) _windSkillTick = 10;
-        else if (_windSkillIndex == 9) _windSkillTick = 60;
+		//string skillArr[10] = { "184light" ,"skill10R", "skill8", "skill4R","skill10R", "skill7", "184light", "skill7","skill8","skill3" };
+
+		if (_windSkillIndex == 1) _windSkillTick = 46;
+        else if (_windSkillIndex == 2) _windSkillTick = 12;
+        else if (_windSkillIndex == 3 ) _windSkillTick = 4;
+        else if ( _windSkillIndex == 4 || _windSkillIndex == 5) _windSkillTick = 25;
+        else if ( _windSkillIndex == 6) _windSkillTick = 30;
+        else if ( _windSkillIndex == 7 || _windSkillIndex == 8) _windSkillTick = 20;
+        else if (_windSkillIndex == 9) _windSkillTick = 70;
 	
         if (_windSkillIndex == 3 || _windSkillIndex == 8)
         {

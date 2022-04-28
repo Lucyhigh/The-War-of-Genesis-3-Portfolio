@@ -26,7 +26,7 @@ public:
 	int _fps;
 
     tagSkill() {}
-    tagSkill(int skillIndex, string skillName, POINT* aniPos, BYTE alpha,int fps) //, Animation* animation
+    tagSkill(int skillIndex, string skillName, POINT* aniPos, BYTE alpha,int fps)
     {
         _skillIndex = skillIndex;
         _skillName = skillName;
@@ -94,6 +94,7 @@ public:
 	void worldBackrender(void);
 	void worldFrontrender(void);
 	void windRender(void);
+	void windFrontRender(void);
 	void worldBrokenSkill();
 	void windEyun();
 	void setplaySound(bool isPlay);

@@ -10,7 +10,7 @@ HRESULT Saladin::init(void)
 	_cdt=0;
 	_count = 0;
 	_indexA = _indexB = _indexC = _worldIndex = 0;
-    _skillCount = 5;
+    _skillCount = 0;
 	_alphaA = 0;
 	_speed = 5;
 	_saladinPos.x = 0;
