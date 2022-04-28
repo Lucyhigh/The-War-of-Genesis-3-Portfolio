@@ -40,7 +40,6 @@ void SoundManager::release(void)
 			}
 		}
 	}
-
 	SAFE_DELETE_ARRAY(_channel);
 	SAFE_DELETE_ARRAY(_sound);
 	if (_system != nullptr)
@@ -146,7 +145,6 @@ bool SoundManager::isPlaySound(string keyName)
         }
     }
     return isPlay;
-
 }
 
 bool SoundManager::isPauseSound(string keyName)

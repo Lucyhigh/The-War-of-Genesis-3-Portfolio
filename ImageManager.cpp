@@ -90,10 +90,7 @@ Image* ImageManager::addFrameImage(string strKey, const char * fileName, float x
 		SAFE_DELETE(img);
 		return NULL;
 	}
-
-	//_mImageList.insert(pair<string, Image*>(strKey, img));
 	_mImageList.insert(make_pair(strKey, img));
-
 	return img;
 }
 
@@ -101,13 +98,10 @@ Image* ImageManager::findImage(string strKey)
 {
 	auto key = _mImageList.find(strKey);
 
-	//검색한 키를 찾았다면
 	if (key != _mImageList.end())
 	{
 		return key->second;
 	}
-	
-	// 검색한 키로 이미지를 못찾았다면 nullptr 리턴
 	return nullptr;
 }
 
@@ -120,10 +114,8 @@ bool ImageManager::deleteImage(string strKey)
 		key->second->release();
 		SAFE_DELETE(key->second);
 		_mImageList.erase(key);
-
 		return true;
 	}
-
 	return false;
 }
 
@@ -144,11 +136,9 @@ bool ImageManager::deleteAll()
 		}
 	}
 	_mImageList.clear();
-
 	return true;
 }
 
-//이미지를 찾아서 렌더
 void ImageManager::render(string strKey, HDC hdc)
 {
 	Image* img = findImage(strKey);

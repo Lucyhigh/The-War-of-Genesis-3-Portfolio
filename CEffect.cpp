@@ -1,7 +1,6 @@
 #include "Stdafx.h"
 #include "CEffect.h"
 
-
 CEffect::CEffect(void) :_rc(RectMake(0, 0, 0, 0)),
 _currentFrame(0),
 _x(0.0f),
@@ -61,7 +60,6 @@ HRESULT CEffect::init(const char* imageName, POINT pt)
 	return S_OK;
 }
 
-
 HRESULT CEffect::init(const char* imageName, POINT pt, int FPS)
 {
 	_worldTimeCount = TIMEMANAGER->getWorldTime();
@@ -116,8 +114,7 @@ HRESULT CEffect::init(const char * imageName, POINT pt, int FPS, bool isAlphaInc
 	return S_OK;
 }
 
-void CEffect::release(void)
-{
+void CEffect::release(void){
 }
 
 void CEffect::update(void)
@@ -171,4 +168,3 @@ void CEffect::alphaChange(void)
 		else _alpha = _endAlpha;
 	}
 }
-

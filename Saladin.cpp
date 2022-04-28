@@ -19,7 +19,7 @@ HRESULT Saladin::init(void)
 	_currentHp = 10;
 	_maxHp = 10;
 	_hpBar = new ProgressBar;
-	_hpBar->init(0, 0, 30, 4);
+	_hpBar->init(0, 0, 31, 5);
 	_currentHp = 500;
 	_maxHp = 500;
 	_imageState = SALADINSTATE::BOTTOM;
@@ -35,7 +35,6 @@ void Saladin::release(void)
 void Saladin::update(void)
 {
     _count += 4;
-    //00000 대기 
     if (_stateBit.none() == 1)
     {
         switch (_imageState)
@@ -93,7 +92,6 @@ void Saladin::update(void)
             break;
         }
     }
-    //00001 이동중 
     else if (_stateBit.test(0) == 1)
     {
         switch (_imageState)
@@ -148,7 +146,6 @@ void Saladin::update(void)
             break;
         }
     }
-    //00010 공격 
     else if (_stateBit.test(1) == 1)
     {
         if (_count % 30 == 0)
@@ -210,7 +207,6 @@ void Saladin::update(void)
             }
         }
     }
-    //00100 피격 
     else if (_stateBit.test(2) == 1)
     {
         switch (_imageState)
@@ -256,12 +252,10 @@ void Saladin::update(void)
 			setEnemyIdle();
 		}
     }
-    //01000 죽음
 	else if (_stateBit.test(3) == 1)
 	{
 		_isLive = false;
 	}
-    //10000 천지파열무
     if (_stateBit.test(4) == 1)
     {
 		_cdt++;
@@ -306,11 +300,8 @@ void Saladin::update(void)
             if (_cdt >500)
             {
                 _skillCount = 10;
-				//_cdt = 0;
-				//setEnemyIdle();
             }
         }
-		//cout << _worldIndex << endl;
     }
      _rcSaladin = RectMakeCenter(_saladinPos.x, _saladinPos.y, _image->getFrameWidth(), _image->getFrameHeight());
 }

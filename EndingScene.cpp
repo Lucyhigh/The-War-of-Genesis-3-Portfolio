@@ -5,7 +5,6 @@ HRESULT EndingScene::init(void)
 {
     _aniCursor = ANIMATIONMANAGER->findAnimation("normalCursor");
     _aniCursor->AniStart();
-    SOUNDMANAGER->addSound("changeScene", "Resources/Sounds/changeScene.mp3", false, false);
     _soundIndex = 0;
 
 	string path = "Resources/Sounds/endingScript/";
@@ -15,7 +14,7 @@ HRESULT EndingScene::init(void)
 		SOUNDMANAGER->addSound(name, path + name, false, false);
 	}
 
-    SOUNDMANAGER->stop("Unknown_Blood");
+    SOUNDMANAGER->stop("UnknownBlood");
     SOUNDMANAGER->play(_vSoundName[_soundIndex], 1.0f);
 
     _count = 0;
@@ -96,7 +95,7 @@ void EndingScene::update(void)
 			float maxSoundSize = 0.0f;
 			float cdt = 5;
 			soundPos = SOUNDMANAGER->getPosition(_vSoundName[3]);
-			maxSoundSize = SOUNDMANAGER->getLength(_vSoundName[3]);//getLength 122070
+			maxSoundSize = SOUNDMANAGER->getLength(_vSoundName[3]);
 			float indexCount = soundPos / maxSoundSize * 100;
 			if (indexCount < 100)
 			{
@@ -141,7 +140,6 @@ void EndingScene::update(void)
             SCENEMANAGER->changeScene("title");
         }
     }
-   //cout << "  _bgIndex " << _bgIndex << "_soundIndex " << _soundIndex << endl;
 
     _alpha -= 10.0f;
     _bgAlpha += 4.0f;

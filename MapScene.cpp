@@ -10,7 +10,6 @@ HRESULT MapScene::init(void)
 	_animation->AniStart();
 	_aniCursor = ANIMATIONMANAGER->findAnimation("normalCursor");
 	_aniCursor->AniStart();
-	SOUNDMANAGER->addSound("Rage of Lion", "Resources/Sounds/Rage of Lion.mp3", true, true);
 
 	SOUNDMANAGER->play("Rage of Lion", 1.0f);
     _seaX = 0.0f;
@@ -81,7 +80,6 @@ void MapScene::update(void)
 			_isCameraArrived = true;
 		}
 	}
-
 	_camera->update();
 	_camera->setCameraPos(_camera->getCameraPos());
 	_camera->setScreenRect(_camera->getScreenRect());
@@ -145,8 +143,6 @@ void MapScene::render(void)
 				wcslen(_viMapButton->_textInfo), TA_CENTER, RGB(207, 207, 207));
 		}
 	}
-
 	IMAGEMANAGER->findImage("normalCursor")->aniRender(getMemDC(), _ptMouse.x, _ptMouse.y, _aniCursor);
-
     _camera->render();
 }

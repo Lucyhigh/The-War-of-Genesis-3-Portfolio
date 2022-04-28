@@ -1,6 +1,7 @@
 #include "Stdafx.h"
 #include "SceneManager.h"
 #include "GameNode.h"
+
 GameNode* SceneManager::_currentScene = nullptr;
 GameNode* SceneManager::_loadingScene = nullptr;
 GameNode* SceneManager::_readyScene = nullptr;
@@ -8,9 +9,7 @@ GameNode* SceneManager::_readyScene = nullptr;
 DWORD CALLBACK loadingThread(LPVOID prc)
 {
 	SceneManager::_readyScene->init();
-
 	SceneManager::_currentScene = SceneManager::_readyScene;
-
 	SceneManager::_loadingScene->release();
 	SceneManager::_loadingScene = nullptr;
 	SceneManager::_readyScene = nullptr;
@@ -41,7 +40,6 @@ void SceneManager::release(void)
 		}
 		else ++miSceneList;
 	}
-
 	_mSceneList.clear();
 }
 
@@ -58,36 +56,27 @@ void SceneManager::render(void)
 GameNode* SceneManager::addScene(string sceneName, GameNode* scene)
 {
 	if (!scene) return nullptr;
-
 	_mSceneList.insert(make_pair(sceneName, scene));
-
 	return nullptr;
 }
 
 GameNode * SceneManager::addLoadingScene(string loadingSceneName, GameNode * scene)
 {
 	if (!scene) return nullptr;
-
 	_mSceneList.insert(make_pair(loadingSceneName, scene));
 	return nullptr;
 }
 
 HRESULT SceneManager::changeScene(string sceneName)
 {
-
 	mapSceneIter find = _mSceneList.find(sceneName);
-
 	if (find == _mSceneList.end()) return E_FAIL;
-
 	if (find->second == _currentScene) return S_OK;
-
 	if (SUCCEEDED(find->second->init()))
 	{
 		_currentScene = find->second;
-
 		return S_OK;
 	}
-
 	return E_FAIL;
 }
 

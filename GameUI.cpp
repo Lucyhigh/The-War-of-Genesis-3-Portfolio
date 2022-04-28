@@ -59,7 +59,6 @@ HRESULT GameUI::init(void)
         _vSkillButton[_buttonIndex]._skillSPInfo = _uiSkillSPText[_buttonIndex];
         _buttonIndex++;
     }
-   
 	return S_OK;
 }
 

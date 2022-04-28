@@ -8,7 +8,7 @@ class EndingScene:public GameNode
 {
 private:
     tagBgImage _bgImage[BgImageNUMTWO];
-    tagText _text[TEXTNumTWO];//이후 json에 대사 이동
+    tagText _text[TEXTNumTWO];
     Animation* _aniCursor;
     RECT _mouseRc;
     RECT _endRc;
@@ -61,7 +61,7 @@ public:
         L"버몬트",{"vermont"},L"죽여라...",
         L"살라딘",{"saladin"},L"...",
         L"버몬트",{"vermont"},L"그것만은... 제발 돌려줘 그것만은...",
-        L"살라딘",{""},L"좋은 왕이 되어야한다." //엔딩씬 띄우면서 06 이후로는 타이밍으로 성우재생
+        L"살라딘",{""},L"좋은 왕이 되어야한다."
     }{}
     ~EndingScene() {}
 };

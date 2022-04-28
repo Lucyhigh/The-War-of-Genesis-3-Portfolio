@@ -25,7 +25,6 @@
 #include <mmsystem.h>
 #include <mciapi.h>
 
-//! C++ 
 #include <iostream>
 #include <random>
 #include <bitset>
@@ -33,7 +32,6 @@
 #include <map>
 #include <cassert>
 #include <algorithm>
-// bind 
 #include <functional>
 #include <fstream>
 #include <queue>
@@ -55,7 +53,6 @@ using namespace std;
 
 using namespace MY_UTIL;
 
-//========================
 #define RND RandomFunction::getSingleton()
 #define KEYMANAGER KeyManager::getSingleton()
 #define IMAGEMANAGER ImageManager::getSingleton()
@@ -66,7 +63,6 @@ using namespace MY_UTIL;
 #define ANIMATIONMANAGER AnimationManager::getSingleton()
 #define SOUNDMANAGER SoundManager::getSingleton()
 #define JSONDATAMANAGER JsonSaveLoader::getSingleton()
-//============================
 
 #define WINNAME		 (LPTSTR)(TEXT("WindowsAPI"))
 

@@ -125,7 +125,6 @@ AStar::CoordinateList AStar::Generator::findPath(Vec2i source, Vec2i target)
         path.push_back(current->coordinates);
         current = current->parent;
     }
-
     releaseNodes(openSet);
     releaseNodes(closedSet);
 

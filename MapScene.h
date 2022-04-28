@@ -43,4 +43,3 @@ public:
 	MapScene() :_isAlphaIncrese(false),_moveNext(false), _isCameraArrived(false), _uiText{ L"이 동", L"진 입", L"상 태",L"턴종료" } {}
 	~MapScene() {}
 };
-

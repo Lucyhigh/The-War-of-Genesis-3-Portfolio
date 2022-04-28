@@ -3,8 +3,7 @@
 
 HRESULT FinalScene::init(void)
 {
-	SOUNDMANAGER->addSound("Unknown_Blood", "Resources/Sounds/UnknownBlood.mp3", true, true);
-	SOUNDMANAGER->play("Unknown_Blood", 1.0f);
+	SOUNDMANAGER->play("UnknownBlood", 1.0f);
 	_mapTileInfo = new MapTileInfo;
 	_mapTileInfo->init();
 
@@ -27,8 +26,8 @@ HRESULT FinalScene::init(void)
 
 	_saladin = new Saladin;
 	_saladin->init();
-	_saladin->setSaladinPosX(18 * TILESIZEX);
-	_saladin->setSaladinPosY(10 * TILESIZEY);
+	_saladin->setSaladinPosX(25 * TILESIZEX);
+	_saladin->setSaladinPosY(15 * TILESIZEY);
     _saladin->setEnemyIdle();
 
 	_camera = new Camera;
@@ -53,7 +52,6 @@ HRESULT FinalScene::init(void)
 	_lerpPercentage = 0.0f;
 	_yPos = 0.0f;
 	_enemyPathGoal = { 0,0 };
-
 	_skill = new Skill;
 	_skill->setPlayer(_player);
 	_skill->setSaladin(_saladin);
@@ -99,15 +97,15 @@ void FinalScene::update(void)
 {
     if (KEYMANAGER->isOnceKeyDown('F'))
     {
-        SOUNDMANAGER->stop("Unknown_Blood");
-        cout << (SOUNDMANAGER->isPauseSound("Unknown_Blood")) << endl;
+        SOUNDMANAGER->stop("UnknownBlood");
+        cout << (SOUNDMANAGER->isPlaySound("UnknownBlood")) << endl;
     }
+
 	POINT playerUI = {
 						_player->getPlayerPosX() - _camera->getScreenRect().left,
 						_player->getPlayerPosY() - _camera->getScreenRect().top
 					 };
 
-    //검사용 버튼
 	if (KEYMANAGER->isOnceKeyDown('H'))
 	{
 		_turnSystem->changeToEnemy();
@@ -197,7 +195,6 @@ void FinalScene::update(void)
 
 	if (_turnSystem->getStatus() == CHANGINGSTATUS::PLAYERTURN)
 	{
-		// 대기 - 대기이미지 타일클릭시 이동가능상태 /메뉴창 열수있고 공격타일 만들수잇음
 		if (_turnSystem->isPlayerIdle() == 1)
 		{
 			if (_tileAlpha < 100 || _tileAlpha >= 200) _isAlphaIncrese = !_isAlphaIncrese;
@@ -205,11 +202,11 @@ void FinalScene::update(void)
 
 			if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 			{
-				if (_moveTileBit.none() == 1)//000
+				if (_moveTileBit.none() == 1)
 				{
-					_moveTileBit.set();//111
+					_moveTileBit.set();
 				}
-                else if (_moveTileBit.test(2) == 1 && _moveTileBit.test(1) == 1 && _moveTileBit.test(0) == 0)//110 - 이동타일 활성화 상태
+                else if (_moveTileBit.test(2) == 1 && _moveTileBit.test(1) == 1 && _moveTileBit.test(0) == 0)
                 {
                     for (auto iterator = _vMoveableTile.begin(); iterator != _vMoveableTile.end(); ++iterator)
                     {
@@ -244,11 +241,11 @@ void FinalScene::update(void)
                         }
                     }
                 }
-				else if (_moveTileBit.test(2) == 1 && _moveTileBit.test(1) == 0 && _moveTileBit.test(0) == 0)//100
+				else if (_moveTileBit.test(2) == 1 && _moveTileBit.test(1) == 0 && _moveTileBit.test(0) == 0)
 				{
-					_moveTileBit.set(0);//101
+					_moveTileBit.set(0);
 				}
-				else if (_moveTileBit.test(2) == 1 && _moveTileBit.test(1) == 0 && _moveTileBit.test(0) == 1)//101- 공격타일 활성화 상태
+				else if (_moveTileBit.test(2) == 1 && _moveTileBit.test(1) == 0 && _moveTileBit.test(0) == 1)
 				{
                     for (auto iterator = _vAttackableTile.begin(); iterator != _vAttackableTile.end(); ++iterator)
                     {
@@ -260,7 +257,7 @@ void FinalScene::update(void)
 				}
 			}
 			POINT playerPos = { _player->getPlayerPosX()-TILESIZEX, _player->getPlayerPosY()};
-			for (auto cellsIter = _cells->begin(); cellsIter != _cells->end(); ++cellsIter)//클릭 가능한 타일만 되게 지정
+			for (auto cellsIter = _cells->begin(); cellsIter != _cells->end(); ++cellsIter)
 			{
 				Cell* cell = (*cellsIter);
 				if (PtInRect(&cell->getRect(), playerPos))
@@ -299,7 +296,6 @@ void FinalScene::update(void)
 				_gameUI->showBattleMenu(playerUI);
 			}
 		}
-		// 0000 0001 : 메뉴창염 - 타일클릭해도 이동안되어야함 버튼클릭상태
 		else if (_turnSystem->getPlayerBit(0) == 1)
 		{
 			_moveTileBit.set(2);
@@ -353,27 +349,22 @@ void FinalScene::update(void)
 							}
 						}
 					}
-
                 }
 			}
 		}
-		// 0000 0010 : 이동중 - 메뉴창 뜨면 안됨 다른곳으로 이동못함
 		else if (_turnSystem->getPlayerBit(1) == 1)
 		{
 			_player->setPlayerStateBit(0);
 			rectMoveToPath();
 		}
-		// 0000 0100 : 공격
 		else if (_turnSystem->getPlayerBit(2) == 1)
 		{
             Attack();
 		}
-		// 0000 1000 : 피격
 		else if (_turnSystem->getPlayerBit(3) == 1)
 		{
 			changeImage();
 		}
-        //0010 0000 : 풍아열공참 스킬 사용
         else if (_turnSystem->getPlayerBit(5) == 1)
         {
 			_skill->windEyun();
@@ -390,11 +381,10 @@ void FinalScene::update(void)
 	}
 	else if (_turnSystem->getStatus() == CHANGINGSTATUS::ENEMYTURN)
 	{
-        //캐릭터 위치 파악 후 이동0 / 이동 후 공격1 / 스킬 사용 고름2
 		if (_turnSystem->isEnemyIdle() == 1)
 		{
             POINT playerPos = { _player->getPlayerPosX() - TILESIZEX, _player->getPlayerPosY() };
-            for (auto cellsIter = _cells->begin(); cellsIter != _cells->end(); ++cellsIter)//클릭 가능한 타일만 되게 지정
+            for (auto cellsIter = _cells->begin(); cellsIter != _cells->end(); ++cellsIter)
             {
                 Cell* cell = (*cellsIter);
                 if (PtInRect(&cell->getRect(), playerPos))
@@ -408,17 +398,14 @@ void FinalScene::update(void)
             }
             find4WaysTile();
 		}
-		// 0000 0010 : 이동중 - 
 		else if (_turnSystem->getEnemyBit(1) == 1)
 		{
 			rectMoveToPath();
 		}
-		// 0000 0100 : 공격
 		else if (_turnSystem->getEnemyBit(2) == 1)
 		{
 			Attack();
 		}
-		// 0000 1000 : 피격
 		else if (_turnSystem->getEnemyBit(3) == 1)
 		{
 			changeImage();
@@ -454,14 +441,14 @@ void FinalScene::update(void)
 
     if (_turnSystem->isPlayerIdle() == 1 && _turnSystem->getStatus() == CHANGINGSTATUS::PLAYERTURN)
     {
-	    if (_moveTileBit.test(0) == 1 && _moveTileBit.test(1) == 1 && _moveTileBit.test(2) == 1)//111의 경우에서 쓰음
+	    if (_moveTileBit.test(0) == 1 && _moveTileBit.test(1) == 1 && _moveTileBit.test(2) == 1)
 	    {
 	    	startShowMoveableTile(6, _cMoveStart, false);
 	    	_moveTileBit.reset(0);
 	    }
     }
 
-	if (_moveTileBit.test(0) == 1 && _moveTileBit.test(1) == 0 && _moveTileBit.test(2) == 1)//101
+	if (_moveTileBit.test(0) == 1 && _moveTileBit.test(1) == 0 && _moveTileBit.test(2) == 1)
 	{
 	    startShowAttackableTile(1, _cMoveStart, false);
 	}
@@ -605,7 +592,7 @@ void FinalScene::render(void)
 
 			if (zPos < 0)      zPos = 1;
 			else if (zPos >= 5)      zPos = 3;
-			sprintf_s(cellIndex, "%d", zPos);//z축위치
+			sprintf_s(cellIndex, "%d", zPos);
 			TextOut(getMemDC(), WINSIZE_X - 150, 45, cellIndex, strlen(cellIndex));
 
 			int left = cell->getRect().left - 20 - cameraLeft;
@@ -635,7 +622,6 @@ void FinalScene::render(void)
         }
 	}
 
-
 	POINT MarkPos = { -23,-63 + _yPos };
 	switch (_turnSystem->getStatus())
 	{
@@ -652,7 +638,7 @@ void FinalScene::render(void)
 	}
 }
 
-void FinalScene::drawMapCellInfo()//디버그용
+void FinalScene::drawMapCellInfo()
 {
 	char cellIndex[1024];
 	SetTextColor(getMemDC(), RGB(0, 0, 0));
@@ -661,9 +647,7 @@ void FinalScene::drawMapCellInfo()//디버그용
 	for (auto cellsIter = _cells->begin(); cellsIter != _cells->end(); ++cellsIter)
 	{
 		Cell* cell = (*cellsIter);
-		
-		curAstar();// 이동경로 표시
-
+		curAstar();
 		HBRUSH brush = CreateSolidBrush(RGB(255, 0, 0));
 		HBRUSH oldBrush = (HBRUSH)SelectObject(getMemDC(), brush);
 
@@ -739,7 +723,6 @@ void FinalScene::rectMoveToPath()
 			}
 			_vMoveableTile.clear();
 			_vAttackableTile.clear();
-			//_moveTileBit.reset();
 
 			_moveTileBit.reset(1);
 			if (_cMoveStart->getCellX() == _enemyPathGoal.x && _cMoveStart->getCellY() == _enemyPathGoal.y)
@@ -797,7 +780,7 @@ void FinalScene::rectMoveToPath()
 
 			_moveIndex = 0;
 			_lerpPercentage = 0.0f;
-			_check.clear();//==============================================================================================
+			_check.clear();
 			return;
 		}
 		else
@@ -833,7 +816,7 @@ void FinalScene::curAstar()
 	int cameraTop = _camera->getScreenRect().top;
 	for (auto checkIter = _check.begin(); checkIter != _check.end(); ++checkIter)
 	{
-		HBRUSH rectBrush = CreateSolidBrush(RGB(0, 120, 120)); // 색 설정
+		HBRUSH rectBrush = CreateSolidBrush(RGB(0, 120, 120));
 		HBRUSH oldRectBrush = (HBRUSH)SelectObject(getMemDC(), rectBrush);
 		int left = (checkIter->x * TILESIZEX) - cameraLeft;
 		int top = (checkIter->y * TILESIZEY) - cameraTop;
@@ -912,7 +895,6 @@ void FinalScene::find4WaysTile()
 			}
 		}
 
-		// Stop find path if the enemy is already near the player.
 		auto currentPath = _generator->findPath({ _cMoveStart->getCellX(), _cMoveStart->getCellY() },
 												{ _tempGoal.x, _tempGoal.y });
 		if (currentPath.size() == 3)
@@ -991,7 +973,6 @@ void FinalScene::find4WaysTile()
 			}
 		}
 
-		// Stop find path if the enemy is already near the player.
 		auto currentPath = _generator->findPath(
 			{ _cMoveStart->getCellX(), _cMoveStart->getCellY() },
 			{ _tempGoal.x, _tempGoal.y });
@@ -1022,7 +1003,6 @@ void FinalScene::find4WaysTile()
 				Cell* cell = (*cellsIter);
 				if (cell->getCellX() == temp.x && cell->getCellY() == temp.y)
 				{
-					//if (cell->getType() == CELL_TYPE::NORMAL || cell->getType() == CELL_TYPE::MOVEPATH || cell->getType() == CELL_TYPE::MOVEABLE || cell->getType() == CELL_TYPE::ATTACKABLE)//==================================
 					if (cell->getType() != CELL_TYPE::WALL && cell->getType() != CELL_TYPE::GOAL )
 					{
 						float distance = getDistance(_cMoveStart->getCellX(), _cMoveStart->getCellY(), temp.x, temp.y);
@@ -1036,7 +1016,6 @@ void FinalScene::find4WaysTile()
 				}
 			}
 		}
-
 		auto path = _generator->findPath(
 			{ _cMoveStart->getCellX(), _cMoveStart->getCellY() },
 			{ _enemyPathGoal.x,_enemyPathGoal.y });
@@ -1098,10 +1077,10 @@ void FinalScene::Attack()
         {
             if (!_isWorldSkill)
             {
-                _skill->setplaySound(true);//한번만 돌아야함
+                _skill->setplaySound(true);
                 _isWorldSkill = true;
             }
-                _saladin->setEnemyStateBit(4);//
+                _saladin->setEnemyStateBit(4);
 			_skill->update();
 		}
     }
@@ -1139,7 +1118,7 @@ void FinalScene::startShowMoveableTile(int range, Cell* cell, bool isMoveable)
 	{
 		if (iter >= _vMoveableTile.end() - (_vMoveableTile.size()*0.125))
 		{
-			(*iter)->setType(CELL_TYPE::ATTACKABLE);//갯수 설정 필요
+			(*iter)->setType(CELL_TYPE::ATTACKABLE);
 		}
 		else (*iter)->setType(CELL_TYPE::MOVEABLE);
 	}
@@ -1176,46 +1155,6 @@ void FinalScene::startShowAttackableTile(int range, Cell* cell, bool isMoveable)
     for (auto iter = _vAttackableTile.begin(); iter != _vAttackableTile.end(); ++iter)
     {
         if ((*iter)->getType() != CELL_TYPE::ENEMY) (*iter)->setType(CELL_TYPE::ATTACKABLE);
-    }
-}
-
-void FinalScene::computeShowSkillAttackableTile(int range, Cell * cell, bool isMoveable)
-{
-    //천지파열무
-    if (range < 0) return;
-    if (cell->getType() == CELL_TYPE::WALL) return;
-
-    int tempX = cell->getCellX();
-    int tempY = cell->getCellY();
-
-    if (std::find(_vSkillableTile.begin(), _vSkillableTile.end(), cell) == _vSkillableTile.end())
-        _vSkillableTile.push_back(cell);
-
-    _qSkillTile.push(make_pair(range - 1, (*_cells)[tempX + 1 + tempY * STAGE3TILEX]));
-    _qSkillTile.push(make_pair(range - 1, (*_cells)[tempX - 1 + tempY * STAGE3TILEX]));
-    _qSkillTile.push(make_pair(range - 1, (*_cells)[tempX + (tempY + 1) * STAGE3TILEX]));
-    _qSkillTile.push(make_pair(range - 1, (*_cells)[tempX + (tempY - 1)* STAGE3TILEX]));
-    _qSkillTile.push(make_pair(range - 1, (*_cells)[tempX + 1 + (tempY - 1) * STAGE3TILEX]));
-    _qSkillTile.push(make_pair(range - 1, (*_cells)[tempX + 1 + (tempY + 1) * STAGE3TILEX]));
-    _qSkillTile.push(make_pair(range - 1, (*_cells)[tempX - 1 + (tempY - 1) * STAGE3TILEX]));
-    _qSkillTile.push(make_pair(range - 1, (*_cells)[tempX - 1 + (tempY + 1) * STAGE3TILEX]));
-
-}
-
-void FinalScene::startShowSkillAttackableTile(int range, Cell * cell, bool isMoveable)
-{
-    _vSkillableTile.clear();
-    _qSkillTile.push(make_pair(range, cell));
-
-    while (!_qSkillTile.empty())
-    {
-        computeShowSkillAttackableTile(_qSkillTile.front().first, _qSkillTile.front().second, isMoveable);
-        _qSkillTile.pop();
-    }
-
-    for (auto iter = _vSkillableTile.begin(); iter != _vSkillableTile.end(); ++iter)
-    {
-        (*iter)->setType(CELL_TYPE::SKILLABLE);
     }
 }
 

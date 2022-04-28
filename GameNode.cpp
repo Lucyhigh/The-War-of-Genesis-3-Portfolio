@@ -13,36 +13,19 @@ HRESULT GameNode::init(bool managerInit)
 
 	if (managerInit)
 	{
-		// 로케일 설정(#include "locale.h)
 		setlocale(LC_ALL, "Korean");
 
-		// 타이머 초기화
 		SetTimer(_hWnd, 1, 10, NULL);
 
-		// 키매니저 초기화
 		KEYMANAGER->init();
-
-		// 랜덤펑션 초기화
 		RND->init();
-
-		// 이미지매니저 초기화
 		IMAGEMANAGER->init();
-
-		//타임 매니저 초기화
 		TIMEMANAGER->init();
-        //텍스트 데이터 매니저 초기화
         TEXTDATAMANAGER->init();
-		//씬 매니저 초기화
 		SCENEMANAGER->init();
-
-		//애니메이션 매니저 초기화
 		ANIMATIONMANAGER->init();
-
-		//사운드 매니저 초기화
 		SOUNDMANAGER->init();
-
 	}
-
 	return S_OK;
 }
 
@@ -50,54 +33,32 @@ void GameNode::release(void)
 {
 	if (_managerInit)
 	{
-		// 타이머 해제
 		KillTimer(_hWnd, 1);
-
-		// 키매니저 싱글톤 해제
 		KEYMANAGER->releaseSingleton();
-
-		// 랜덤펑션 싱글톤 해제
 		RND->releaseSingleton();
-
-		// 이미지매니저 해제, 싱글톤 해제
 		IMAGEMANAGER->release();
 		IMAGEMANAGER->releaseSingleton();
-
-		//폰트매니저 싱글톤해제
 		FONTMANAGER->releaseSingleton();
-
-		//타임매니저 해제, 싱글톤 해제
 		TIMEMANAGER->release();
 		TIMEMANAGER->releaseSingleton();
-
-        //타임매니저 해제, 싱글톤 해제
         TEXTDATAMANAGER->release();
         TEXTDATAMANAGER->releaseSingleton();
-        //씬 매니저 해제, 싱글톤 해제
 		SCENEMANAGER->release();
 		SCENEMANAGER->releaseSingleton();
-		
-		//애니메이션 매니저 해제, 싱글톤 해제
 		ANIMATIONMANAGER->release();
 		ANIMATIONMANAGER->releaseSingleton();
-		
-        //사운드 매니저 해제, 싱글톤 해제
 		SOUNDMANAGER->release();
 		SOUNDMANAGER->releaseSingleton();
-
-        //사운드 매니저 해제, 싱글톤 해제
 		JSONDATAMANAGER->release();
 		JSONDATAMANAGER->releaseSingleton();
 	}
 	ReleaseDC(_hWnd, _hdc);
 }
 
-void GameNode::update(void)
-{
+void GameNode::update(void){
 }
 
-void GameNode::render(void)
-{
+void GameNode::render(void){
 }
 
 LRESULT GameNode::MainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
@@ -133,6 +94,5 @@ LRESULT GameNode::MainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lPara
 		PostQuitMessage(0);
 		return 0;
 	}
-
 	return (DefWindowProc(hWnd, iMessage, wParam, lParam));
 }

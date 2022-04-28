@@ -3,6 +3,7 @@
 
 #pragma region include Scene
 #include "ImageClass.h"
+#include "SoundClass.h"
 #include "TitleScene.h"
 #include "SecondScene.h"
 #include "FinalScene.h"
@@ -16,6 +17,8 @@ HRESULT MainGame::init(void)
 	GameNode::init(TRUE);
 	ImageClass imageClass = ImageClass();
 	imageClass.init();
+	SoundClass soundClass = SoundClass();
+	soundClass.init();
 
 	SCENEMANAGER->addScene("title", new TitleScene);
 	SCENEMANAGER->addScene("map", new MapScene);
@@ -23,7 +26,7 @@ HRESULT MainGame::init(void)
 	SCENEMANAGER->addScene("final", new FinalScene);
 	SCENEMANAGER->addScene("ending", new EndingScene);
 
-    SCENEMANAGER->changeScene("ending");
+    SCENEMANAGER->changeScene("final");
 	return S_OK;
 }
 

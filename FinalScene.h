@@ -51,7 +51,6 @@ private:
     vector<Cell*> _vAttackableTile;
     vector<Cell*> _vSkillableTile;
 	bitset<3> _moveTileBit;
-	//float _x, _y; //체력바 위치
 
 	float _lerpPercentage;
 	float _tileAlpha;
@@ -60,7 +59,6 @@ private:
 	int _mouseIndex;
 	int _endPointIndex;
 	int _moveIndex;
-	int _count;
 	int _enemyBit;
 
 	bool _isMoveTileOn;

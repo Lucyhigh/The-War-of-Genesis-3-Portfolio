@@ -36,8 +36,7 @@ HRESULT SecondScene::init(void)
 	return S_OK;
 }
 
-void SecondScene::release(void)
-{
+void SecondScene::release(void){
 }
 
 void SecondScene::update(void)

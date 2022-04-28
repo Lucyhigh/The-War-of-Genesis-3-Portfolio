@@ -12,61 +12,46 @@ HRESULT ImageClass::init(void)
 
 #pragma endregion
 #pragma region Player Image
-	//Idle
 	IMAGEMANAGER->addFrameImage("pRightIdle", "Resources/Images/Player/rightIdle.bmp", 185,75, 5, 1, MGT);
 	IMAGEMANAGER->addFrameImage("pLeftIdle", "Resources/Images/Player/leftIdle.bmp", 185, 75, 5, 1, MGT);
 	IMAGEMANAGER->addFrameImage("pUpIdle", "Resources/Images/Player/upIdle.bmp", 265,87, 5, 1, MGT);
 	IMAGEMANAGER->addFrameImage("pDownIdle", "Resources/Images/Player/downIdle.bmp", 245,78, 5, 1, MGT);
 	IMAGEMANAGER->addImage("test", "Resources/Images/Player/1-1.bmp", 53,84,true, RGB(0,0,0));
 
-	//move
 	IMAGEMANAGER->addFrameImage("pRightMove", "Resources/Images/Player/rightMove.bmp",462, 76, 6, 1, MGT);
 	IMAGEMANAGER->addFrameImage("pLeftMove", "Resources/Images/Player/leftMove.bmp", 462, 76, 6, 1, MGT);
 	IMAGEMANAGER->addFrameImage("pUpMove", "Resources/Images/Player/upMove.bmp", 228,80, 6, 1, MGT);
 	IMAGEMANAGER->addFrameImage("pDownMove", "Resources/Images/Player/downMove.bmp", 372, 91, 6, 1, MGT);
 
-	//attack
 	IMAGEMANAGER->addFrameImage("pRightAtt", "Resources/Images/Player/rightAtt.bmp", 340, 110, 4, 1, MGT);
 	IMAGEMANAGER->addFrameImage("pLeftAtt", "Resources/Images/Player/leftAtt.bmp", 340, 110, 4, 1, MGT);
 	IMAGEMANAGER->addFrameImage("pUpAtt", "Resources/Images/Player/upAtt.bmp", 400,80, 4, 1, MGT);
 	IMAGEMANAGER->addFrameImage("pDownAtt", "Resources/Images/Player/downAtt.bmp", 352, 104, 4, 1, MGT);
-    //damage
 	IMAGEMANAGER->addFrameImage("pDamageSheet", "Resources/Images/Player/pDamageSheet.bmp", 248,84, 4,1, MGT);
 
 #pragma endregion
 #pragma region Saladin Image
-	//Idle
 	IMAGEMANAGER->addFrameImage("sRightIdle", "Resources/Images/Saladin/rightIdle.bmp", 272, 90, 4, 1, MGT);
 	IMAGEMANAGER->addFrameImage("sLeftIdle", "Resources/Images/Saladin/leftIdle.bmp", 272, 90, 4, 1, MGT);
 	IMAGEMANAGER->addFrameImage("sUpIdle", "Resources/Images/Saladin/upIdle.bmp", 280, 90, 4, 1, MGT);
 	IMAGEMANAGER->addFrameImage("sDownIdle", "Resources/Images/Saladin/downIdle.bmp", 280, 90, 4, 1, MGT);
 
-    //move
     IMAGEMANAGER->addFrameImage("sMovesheet", "Resources/Images/Saladin/movesheet.bmp", 720, 480, 6, 4,true, RGB(168, 208, 168));
-	//attack
     IMAGEMANAGER->addFrameImage("sAttacksheet", "Resources/Images/Saladin/attacksheet.bmp", 650, 520, 5, 4,true, RGB(168, 208, 168));
-    //damage
     IMAGEMANAGER->addFrameImage("sDamageSheet", "Resources/Images/Saladin/damageSheet.bmp", 404, 87, 4, 1,true, RGB(168, 208, 168));
-    //SKILL
     IMAGEMANAGER->addFrameImage("sSkill", "Resources/Images/Saladin/skill.bmp", 1100, 101, 11, 1,true, RGB(168, 208, 168));
 
 #pragma endregion
 #pragma region Stage Scene
-	//Title
 	IMAGEMANAGER->addImage("TitleBg", "Resources/Images/BackGround/Title.bmp", WINSIZE_X, WINSIZE_Y);
 	IMAGEMANAGER->addImage("TitleName", "Resources/Images/UI/TitleGameName.bmp", WINSIZE_X, WINSIZE_Y, MGT);
 	IMAGEMANAGER->addFrameImage("TitleEfx", "Resources/Images/UI/titleEfx.bmp", 2241,2025,6,6,true,RGB(4, 0, 4));
-
-	//Map
 	IMAGEMANAGER->addImage("Map", "Resources/Images/UI/map.bmp", 1657, 1737, true, RGB(255,252,0));
 	IMAGEMANAGER->addImage("Sea", "Resources/Images/UI/sea.bmp", WINSIZE_X, WINSIZE_Y);
 
-	//Scene List
 	IMAGEMANAGER->addFrameImage("SceneList", "Resources/Images/BackGround/SceneList.bmp", 1900, WINSIZE_Y,2,1);
-	// Stage 1
 	IMAGEMANAGER->addImage("Field", "Resources/Images/BackGround/Field.bmp", 2120, 1536);
 	IMAGEMANAGER->addImage("battleScene", "Resources/Images/BackGround/Field.bmp", 839, 1121);
-	// Stage 2
 	IMAGEMANAGER->addImage("storyStart", "Resources/Images/BackGround/storyStart.bmp", WINSIZE_X, WINSIZE_Y);
 	IMAGEMANAGER->addImage("battleBefore", "Resources/Images/BackGround/battleBefore.bmp", WINSIZE_X, WINSIZE_Y);
 	IMAGEMANAGER->addImage("battleAfter1", "Resources/Images/BackGround/battleAfter1.bmp", WINSIZE_X, WINSIZE_Y);
@@ -85,15 +70,11 @@ HRESULT ImageClass::init(void)
     IMAGEMANAGER->addImage("endingScript4", "Resources/Images/BackGround/endingScript4.bmp", WINSIZE_X, WINSIZE_Y);
 	IMAGEMANAGER->addFrameImage("deadHer", "Resources/Images/UI/story/deadHer.bmp", 258,75,3,1, true, RGB(72, 221, 157));
 	IMAGEMANAGER->addFrameImage("truth", "Resources/Images/UI/story/truth.bmp", 432, 80,6,1, true, RGB(72, 221, 157));
-	// Stage 3
 	IMAGEMANAGER->addImage("Final", "Resources/Images/BackGround/Final.bmp", 1557, 1080);
 #pragma endregion
 #pragma region recall Scene
-	// Stage 1
 	IMAGEMANAGER->addImage("Devil", "Resources/Images/BackGround/Devil.bmp", WINSIZE_X, WINSIZE_Y);
-	// Stage 2
 	IMAGEMANAGER->addImage("Field", "Resources/Images/BackGround/Field.bmp", 2120, 1536);
-	// Stage 3
 	IMAGEMANAGER->addImage("brother", "Resources/Images/BackGround/final.bmp", 2120, 1536);
 #pragma endregion
 #pragma region UI Scene
@@ -114,8 +95,6 @@ HRESULT ImageClass::init(void)
 	IMAGEMANAGER->addImage("attackTile", "Resources/Images/UI/attackable.bmp", 40, 32);
 	IMAGEMANAGER->addImage("skillTile", "Resources/Images/UI/skillable.bmp", 40, 32);
 	IMAGEMANAGER->addImage("ScenarioClear", "Resources/Images/UI/ScenarioClear.bmp", 960, 90);
-	//IMAGEMANAGER->addImage("pHpGauge", "Resources/Images/UI/pHpGauge.bmp", 2, 12);
-	//IMAGEMANAGER->addImage("pMpGauge", "Resources/Images/UI/pMpGauge.bmp", 2, 12);
 
 	IMAGEMANAGER->addFrameImage("selectIcon", "Resources/Images/UI/selectIcon.bmp", 96,25,4,1, MGT);
 	IMAGEMANAGER->addFrameImage("skillIcon", "Resources/Images/UI/skillIcon.bmp", 68*1.5,17*1.5,4,1, MGT);
@@ -134,7 +113,6 @@ HRESULT ImageClass::init(void)
 #pragma endregion
 #pragma region Animation
 	ANIMATIONMANAGER->addAnimation("sMovesheet", "sMovesheet", 0, 23, 5, false, true);
-    //UI
 	ANIMATIONMANAGER->addAnimation("TitleEfx", "TitleEfx", 10, false, true);
 	ANIMATIONMANAGER->addAnimation("notMoveable", "notMoveable",5, false, true);
 	ANIMATIONMANAGER->addAnimation("turnMark", "turnMark", 5, false, true);
@@ -149,7 +127,6 @@ HRESULT ImageClass::init(void)
 	
 #pragma endregion
 #pragma region Skill
-	//skill 천지파열무
 	IMAGEMANAGER->addFrameImage("skillStart", "Resources/Images/Player/skillStart.bmp", 832, 223, 4,1,MGT);
 	IMAGEMANAGER->addFrameImage("smog", "Resources/Images/Effect/all/smog.bmp", 448*1.2, 146 * 1.2,7,2,true, RGB(0, 0, 0));
 	IMAGEMANAGER->addFrameImage("smog2", "Resources/Images/Effect/all/smog2.bmp", 650, 650, 5,5,true,RGB(4,72,4));
@@ -171,17 +148,13 @@ HRESULT ImageClass::init(void)
 	IMAGEMANAGER->addFrameImage("115stone", "Resources/Images/Effect/all/115stone.bmp", 660, 230, 12,1,true, RGB(156, 148, 140));
 	IMAGEMANAGER->addFrameImage("skillStartLight", "Resources/Images/Effect/all/skillStartLight.bmp", 1500, 1500, 5,5,true, RGB(80, 0, 0));
 	IMAGEMANAGER->addFrameImage("enemyAttack", "Resources/Images/Effect/all/enemyAttack.bmp", 660, 400, 6,4,true,RGB(8,88,8));
-
 	IMAGEMANAGER->addFrameImage("one", "Resources/Images/Effect/all/one.bmp", 200, 2400, 4,8,true, RGB(252, 236, 212));
 	IMAGEMANAGER->addFrameImage("double", "Resources/Images/Effect/all/double.bmp", 300, 1500, 6,5,true, RGB(252, 236, 212));
 	IMAGEMANAGER->addFrameImage("tripleR", "Resources/Images/Effect/all/tripleR.bmp", 400, 1200, 8,4,true, RGB(252, 236, 212));
 	IMAGEMANAGER->addFrameImage("tripleL", "Resources/Images/Effect/all/tripleL.bmp", 400, 1200, 8,4,true, RGB(252, 236, 212));
 
-    //skill 풍아열공참 캐릭터
 	IMAGEMANAGER->addFrameImage("playerSkillFrame", "Resources/Images/Player/playerSkillFrame.bmp", 3990, 400, 19,2,MGT);
-
-	//skill 풍아열공참
-	//skillStartLight
+	
 	IMAGEMANAGER->addFrameImage("skill2", "Resources/Images/Effect/single/skill2.bmp", 1200, 2400, 4, 8, true, RGB(152, 0, 0));
 	IMAGEMANAGER->addFrameImage("skill3", "Resources/Images/Effect/single/skill3.bmp", 2700, 900, 9, 3, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addFrameImage("skill4L", "Resources/Images/Effect/single/skill4L.bmp", 1200, 300, 4, 1, true, RGB(0, 0, 0));

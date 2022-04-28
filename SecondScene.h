@@ -1,7 +1,6 @@
 ﻿#pragma once
 #include "GameNode.h"
 #include "Text.h"
-//#include "SoundScene.h"
 
 #define TEXTNum 47
 #define BgImageNUM 5
@@ -16,9 +15,6 @@ private:
 	RECT _moveRc;
 
 	vector<string> _vSoundName;
-	int _playIndex;
-
-
     float _bgMoved;
     float _textAlpha;
     float _eventAlpha;
@@ -27,6 +23,7 @@ private:
     float _fadeAlpha;
     int _moveCount;
     int _textBufferCnt;
+	int _playIndex;
     int _textIndex;
     int _nameIndex;
     int _frameIndex;

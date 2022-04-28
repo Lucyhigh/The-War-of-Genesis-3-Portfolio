@@ -4,9 +4,6 @@
 HRESULT TitleScene::init(void)
 {
     _startBit = 0;
-	SOUNDMANAGER->addSound("changeScene", "Resources/Sounds/changeScene.mp3",false,false);
-	SOUNDMANAGER->addSound("Tutorial", "Resources/Sounds/Tutorial.mp3",true,true);
-	SOUNDMANAGER->addSound("Prologue", "Resources/Sounds/Prologue.mp3",true,true);
 
 	_animation = ANIMATIONMANAGER->findAnimation("TitleEfx");
 	_animation->AniStart();
@@ -166,7 +163,6 @@ void TitleScene::render(void)
 	{
 		IMAGEMANAGER->alphaRender("cutChange", getMemDC(), _fadeAlpha);
 	}
-
 }
 
 void TitleScene::fadeout()

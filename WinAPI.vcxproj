@@ -159,7 +159,6 @@
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="ImageClass.cpp" />
     <ClCompile Include="ImageManager.cpp" />
-    <ClCompile Include="Item.cpp" />
     <ClCompile Include="JsonSaveLoader.cpp" />
     <ClCompile Include="KeyManager.cpp" />
     <ClCompile Include="MainGame.cpp">
@@ -174,6 +173,7 @@
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SecondScene.cpp" />
     <ClCompile Include="Skill.cpp" />
+    <ClCompile Include="SoundClass.cpp" />
     <ClCompile Include="SoundManager.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClCompile>
@@ -181,10 +181,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="Store.cpp" />
     <ClCompile Include="Text.cpp" />
     <ClCompile Include="TextDataManager.cpp" />
-    <ClCompile Include="FirstScene.cpp" />
     <ClCompile Include="TimeManager.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="TitleScene.cpp" />
@@ -210,7 +208,6 @@
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageClass.h" />
     <ClInclude Include="ImageManager.h" />
-    <ClInclude Include="Item.h" />
     <ClInclude Include="JsonSaveLoader.h" />
     <ClInclude Include="KeyManager.h" />
     <ClInclude Include="MainGame.h">
@@ -228,14 +225,13 @@
     <ClInclude Include="SecondScene.h" />
     <ClInclude Include="SingletonBase.h" />
     <ClInclude Include="Skill.h" />
+    <ClInclude Include="SoundClass.h" />
     <ClInclude Include="SoundManager.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="Stdafx.h" />
-    <ClInclude Include="Store.h" />
     <ClInclude Include="Text.h" />
     <ClInclude Include="TextDataManager.h" />
-    <ClInclude Include="FirstScene.h" />
     <ClInclude Include="TimeManager.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="TitleScene.h" />
@@ -243,11 +239,7 @@
     <ClInclude Include="Utils.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="character.json" />
     <None Include="map.json" />
-    <None Include="quest.json" />
-    <None Include="jItem.json" />
-    <None Include="Script.json" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="WinAPI.rc" />

@@ -12,7 +12,7 @@ enum class SALADINSTATE
 class Saladin:public GameNode
 {
 private:
-    bitset<5> _stateBit; //00000 대기 00001 이동중 00010 공격 00100 피격 01000 죽음
+    bitset<5> _stateBit;
 	Image* _image;
 	ProgressBar* _hpBar;
 	RECT _rcSaladin;
@@ -78,4 +78,3 @@ public:
 	Saladin() :_isWaiting(true), _isLive(true), _isAttack(false), _isDamage(false){}
 	~Saladin() {}
 };
-

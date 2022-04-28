@@ -1,9 +1,7 @@
 #pragma once
-//타일의 크기
 #define TILESIZEX 40
 #define TILESIZEY 32
 
-//타일갯수
 #define STAGE1TILEX 53
 #define STAGE1TILEY 49
 
@@ -35,7 +33,7 @@ protected:
     int _startX;
     int _startY;
     int _endX;
-    int _endY;//마우스로 클릭한 좌표값
+    int _endY; 
 
 	CELL_TYPE _cellType;
 	RECT _cellRc;
@@ -60,4 +58,3 @@ public:
 	Cell() {}
 	~Cell() {}
 };
-

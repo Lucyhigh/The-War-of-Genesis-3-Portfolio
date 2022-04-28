@@ -42,4 +42,3 @@ public:
 	CEffect(void);
 	virtual~CEffect(void);
 };
-

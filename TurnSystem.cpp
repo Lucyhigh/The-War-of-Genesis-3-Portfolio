@@ -3,8 +3,8 @@
 
 HRESULT TurnSystem::init(void)
 {
-	_playerbit = 0;	 //0은 대기(턴 맨 처음)
-	_enemybit = 0;	 //0은 대기
+	_playerbit = 0;
+	_enemybit = 0;	 
 	_changingStatus = CHANGINGSTATUS::PLAYERTURN;
 	return S_OK;
 }
@@ -14,7 +14,7 @@ void TurnSystem::release(void){
 
 void TurnSystem::update(void)
 {
-    switch (_changingStatus)//걍 스위치 두개로만 해도됨
+    switch (_changingStatus)
     {
     case CHANGINGSTATUS::WAIT :
             break;
@@ -24,7 +24,6 @@ void TurnSystem::update(void)
     case CHANGINGSTATUS::ENEMYTURN :
             break;
     }
-	//cout << _playerbit.to_string() << endl;
 }
 
 void TurnSystem::render(void){
@@ -78,8 +77,6 @@ unsigned int TurnSystem::isEnemyIdle()
 {
 	return _enemybit.none();
 }
-
-
 
 CHANGINGSTATUS TurnSystem::getStatus()
 {

@@ -12,33 +12,28 @@ private:
 	float _topLimit;
 	float _bottomLimit;
 
-
-	bool   _isShaking;
-	bool   _isShakingIncrease;
-	int      _shakingOffsetCount;
 	POINT   _beforeShakingPt;
+	int      _shakingOffsetCount;
 	float   _shakingStartTime;
 	float   _shakingTime;
+	bool   _isShakingIncrease;
+	bool   _isShaking;
 
 public:
 	Camera();
 	~Camera() {}
+	POINT getCameraPos();
+	RECT getScreenRect();
+
 	HRESULT init(void);
 	void release(void);
 	void update(void);
 	void render(void);
-     
-	POINT getCameraPos();
 	void setCameraPos(POINT cameraPos);
-
-	RECT getScreenRect();
 	void setScreenRect(RECT screenRect);
-
 	void setLimitsX(float leftLimit, float rightLimit);
 	void setLimitsY(float topLimit, float bottomLimit);
+	void shakeStart(float time);
 	float getLeftLimit() { return _leftLimit; }
 	float getTopLImit() { return _topLimit; }
-
-	void shakeStart(float time);
-	
 };

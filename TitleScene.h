@@ -37,5 +37,4 @@ public:
 public:
 	TitleScene():_uiText { L"Start Game", L"Saved Game", L"Exit" }{}
 	~TitleScene() {}
-
 };

@@ -17,4 +17,3 @@ public:
     TextDataManager() {}
     ~TextDataManager() {}
 };
-

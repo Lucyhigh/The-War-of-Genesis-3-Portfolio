@@ -6,12 +6,10 @@
 class KeyManager : public SingletonBase <KeyManager>
 {
 private : 
-	
 	bitset<KEY_MAX> _keyUp;
 	bitset<KEY_MAX> _keyDown;
 
 public :
-
 	KeyManager() {}
 	~KeyManager() {}
 	HRESULT init(void);
@@ -26,7 +24,5 @@ public :
 
 	void setKeyDown(int key, bool state) { _keyDown.set(key, state); }
 	void setKeyUp(int key, bool state) { _keyUp.set(key, state); }
-
-
 };
 

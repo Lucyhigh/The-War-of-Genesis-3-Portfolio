@@ -11,6 +11,7 @@ enum class PLAYERSTATE
 	TOP,
 	BOTTOM
 };
+
 class Player : public GameNode
 {
 private:

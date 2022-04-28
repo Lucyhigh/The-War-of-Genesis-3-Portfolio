@@ -21,7 +21,6 @@ public:
 	void createEffect(const char* fileName, POINT point, int FPS,BYTE alpha);
 	void createEffect(const char* fileName, POINT point, int FPS, bool isAlphaIncrease, BYTE startAlpha, BYTE endAlpha, float alphaOffset);
 
-
 	EffectManager() {}
 	~EffectManager() {}
 };

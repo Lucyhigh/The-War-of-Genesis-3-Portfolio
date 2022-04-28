@@ -88,4 +88,3 @@ public:
 		_uiSkillLvText{ L"LV10", L"LV5", L"LV1", L"LV1"}, _uiSkillSPText{ L"30", L"40", L"140", L"200"}{}
 	~GameUI() {}
 };
-

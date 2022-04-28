@@ -20,7 +20,7 @@ HRESULT Player::init(void)
 
 	_playerCell = { 0 };
 	_hpBar = new ProgressBar;
-	_hpBar->init(0, 0, 30, 4);
+	_hpBar->init(0, 0, 31, 5);
 	_currentHp = 350;
 	_maxHp = 350;
     _isWaiting = true;
@@ -39,33 +39,7 @@ void Player::release(void)
 void Player::update(void)
 {
     _count += 4;
-    if (KEYMANAGER->isOnceKeyDown('1'))
-    {
-		SOUNDMANAGER->stop("Unknown Blood");
-		SCENEMANAGER->changeScene("ending");
-    }
-    else if (KEYMANAGER->isOnceKeyDown('2'))
-    {
-        _imageState = PLAYERSTATE::LEFT;
-    }
-    else if (KEYMANAGER->isOnceKeyDown('3'))
-    {
-        _imageState = PLAYERSTATE::TOP;
-    }
-    else if (KEYMANAGER->isOnceKeyDown('4'))
-    {
-        _imageState = PLAYERSTATE::BOTTOM;
-    }
-    else if (KEYMANAGER->isOnceKeyDown('5'))
-    {
-        this->setPlayerIdle();
-    }
-    else if (KEYMANAGER->isOnceKeyDown('6'))
-    {
-        this->setPlayerStateBit(0);
-    }
 
-    //00000 대기 
     if (_stateBit.none() == 1)
     {
         if (_count % 30 == 0)
@@ -115,7 +89,6 @@ void Player::update(void)
             }
         }
     }
-    //000 001 이동중 
     else if (_stateBit.test(0) == 1)
     {
         if (_count % 30 == 0)
@@ -164,7 +137,6 @@ void Player::update(void)
             }
         }
     }
-    //000 010 공격 
     else if (_stateBit.test(1) == 1)
     {
         if (_count % 30 == 0)
@@ -218,7 +190,6 @@ void Player::update(void)
             }
         }
     }
-    //00100 피격 
     else if (_stateBit.test(2) == 1)
     {
         switch (_imageState)
@@ -259,7 +230,6 @@ void Player::update(void)
             _cdt = 0;
         }
     }
-    //010 000 풍아열공참
     else if (_stateBit.test(4) == 1)
     {
 		_cdt++;
@@ -342,26 +312,23 @@ void Player::update(void)
                 _skillCount = 0;
             }
         }
-		cout << "_windIndex : " << _windIndex << endl;
     }
-	//100 000 죽음
 	else if (_stateBit.test(5) == 1)
 	{
         if (_isLive)
         {
-            SOUNDMANAGER->addSound("YouDied", "Resources/Sounds/YouDied.mp3", false, false);
             SOUNDMANAGER->play("YouDied", 1.0f);
             _isLive = false;
         }
-        else
-        {
-            _cdt++;
-            if (_cdt > 100)
-            {
-                SOUNDMANAGER->stop("Unknown_Blood");
-                SCENEMANAGER->changeScene("ending");
-            }
-        }
+		else
+		{
+			_cdt++;
+			if (_cdt > 100)
+			{
+				SOUNDMANAGER->stop("UnknownBlood");
+				SCENEMANAGER->changeScene("ending");
+			}
+		}
 	}
 	_rcPlayer = RectMakeCenter(_playerPos.x, _playerPos.y, _image->getFrameWidth(), _image->getFrameHeight());
 }
@@ -452,11 +419,6 @@ void Player::render(void)
 	else if (_stateBit.test(5) == 1)
 	{
 	}
-	//_hpBar->renderHpSpNumImg(100,
-	//	345,
-	//	345,
-	//	345);
-
 }
 
 float Player::getPlayerPosX()

@@ -44,13 +44,7 @@
       <Filter>API\Manager</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
-      <Filter>Portfolio\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="Item.cpp">
-      <Filter>Portfolio\Store</Filter>
-    </ClCompile>
-    <ClCompile Include="Store.cpp">
-      <Filter>Portfolio\Store</Filter>
+      <Filter>Portfolio\Character</Filter>
     </ClCompile>
     <ClCompile Include="SoundManager.cpp">
       <Filter>API\Manager</Filter>
@@ -85,9 +79,6 @@
     <ClCompile Include="Astar.cpp">
       <Filter>Portfolio\A%2a</Filter>
     </ClCompile>
-    <ClCompile Include="FirstScene.cpp">
-      <Filter>Portfolio\GameScene</Filter>
-    </ClCompile>
     <ClCompile Include="EndingScene.cpp">
       <Filter>Portfolio\GameScene</Filter>
     </ClCompile>
@@ -101,10 +92,10 @@
       <Filter>Portfolio\TurnSystem</Filter>
     </ClCompile>
     <ClCompile Include="GameUI.cpp">
-      <Filter>Portfolio\UI</Filter>
+      <Filter>Portfolio\GameUI</Filter>
     </ClCompile>
     <ClCompile Include="Saladin.cpp">
-      <Filter>Portfolio\Player</Filter>
+      <Filter>Portfolio\Character</Filter>
     </ClCompile>
     <ClCompile Include="AnimationManager.cpp">
       <Filter>API\Manager</Filter>
@@ -117,6 +108,9 @@
     </ClCompile>
     <ClCompile Include="EffectManager.cpp">
       <Filter>Portfolio\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundClass.cpp">
+      <Filter>Portfolio\SoundClass</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -169,13 +163,7 @@
       <Filter>API\Manager</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
-      <Filter>Portfolio\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="Item.h">
-      <Filter>Portfolio\Store</Filter>
-    </ClInclude>
-    <ClInclude Include="Store.h">
-      <Filter>Portfolio\Store</Filter>
+      <Filter>Portfolio\Character</Filter>
     </ClInclude>
     <ClInclude Include="SoundManager.h">
       <Filter>API\Manager</Filter>
@@ -208,9 +196,6 @@
     <ClInclude Include="AStar.h">
       <Filter>Portfolio\A%2a</Filter>
     </ClInclude>
-    <ClInclude Include="FirstScene.h">
-      <Filter>Portfolio\GameScene</Filter>
-    </ClInclude>
     <ClInclude Include="EndingScene.h">
       <Filter>Portfolio\GameScene</Filter>
     </ClInclude>
@@ -224,13 +209,13 @@
       <Filter>Portfolio\TurnSystem</Filter>
     </ClInclude>
     <ClInclude Include="GameUI.h">
-      <Filter>Portfolio\UI</Filter>
+      <Filter>Portfolio\GameUI</Filter>
     </ClInclude>
     <ClInclude Include="Cell.h">
       <Filter>Portfolio\JSON</Filter>
     </ClInclude>
     <ClInclude Include="Saladin.h">
-      <Filter>Portfolio\Player</Filter>
+      <Filter>Portfolio\Character</Filter>
     </ClInclude>
     <ClInclude Include="AnimationManager.h">
       <Filter>API\Manager</Filter>
@@ -243,6 +228,9 @@
     </ClInclude>
     <ClInclude Include="EffectManager.h">
       <Filter>Portfolio\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundClass.h">
+      <Filter>Portfolio\SoundClass</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -276,9 +264,6 @@
     <Filter Include="Portfolio\MainGame">
       <UniqueIdentifier>{3659e94e-c15f-4f2a-a005-dd8f48d76e5b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Portfolio\Store">
-      <UniqueIdentifier>{da616956-659c-4cc2-9f3c-1886e6c9f3f5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Portfolio\JSON">
       <UniqueIdentifier>{cb8c2fbf-f61c-4fcf-ad8e-ed1897b11b40}</UniqueIdentifier>
     </Filter>
@@ -287,9 +272,6 @@
     </Filter>
     <Filter Include="Portfolio\Camera">
       <UniqueIdentifier>{756836a5-9ce4-435c-a130-1305d420f581}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Portfolio\Player">
-      <UniqueIdentifier>{5cb9168e-f640-42a5-8957-b0b3f38ef300}</UniqueIdentifier>
     </Filter>
     <Filter Include="Portfolio\ProgressBar">
       <UniqueIdentifier>{905cfd2d-6e67-4e37-945e-a6de492133cd}</UniqueIdentifier>
@@ -306,23 +288,11 @@
     <Filter Include="Portfolio\Text">
       <UniqueIdentifier>{06d4b348-5105-41fd-bf35-3683388a9066}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Portfolio\UI">
-      <UniqueIdentifier>{b5c2e6c0-be59-4879-9ba8-ef6201c68472}</UniqueIdentifier>
-    </Filter>
     <Filter Include="API\Animation">
       <UniqueIdentifier>{3248fe14-aa4d-4119-9af6-8a6f638706b2}</UniqueIdentifier>
     </Filter>
     <Filter Include="Portfolio\A%2a">
       <UniqueIdentifier>{c2e60e67-13fa-4bb9-afd3-2554d52d8e05}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Portfolio\UI\BattleUI">
-      <UniqueIdentifier>{b1eb2d5e-7b2c-4a51-9f0e-5f3621370e2b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Portfolio\UI\MapUI">
-      <UniqueIdentifier>{4b27e0f5-bed1-4fde-8e0f-5d82c34487cf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Portfolio\Character">
-      <UniqueIdentifier>{e41ec2b4-efce-4d15-b917-39c0635f522b}</UniqueIdentifier>
     </Filter>
     <Filter Include="Portfolio\Skill">
       <UniqueIdentifier>{31ac36bc-a87a-47d5-92dd-1f4b367eb2bd}</UniqueIdentifier>
@@ -336,21 +306,15 @@
     <Filter Include="Portfolio\SoundClass">
       <UniqueIdentifier>{5cd3fd1c-f904-415f-9dc8-be83bcde24e1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Portfolio\GameUI">
+      <UniqueIdentifier>{b5c2e6c0-be59-4879-9ba8-ef6201c68472}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Portfolio\Character">
+      <UniqueIdentifier>{5cb9168e-f640-42a5-8957-b0b3f38ef300}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="jItem.json">
-      <Filter>Portfolio\JSON\schema</Filter>
-    </None>
-    <None Include="character.json">
-      <Filter>Portfolio\JSON\schema</Filter>
-    </None>
-    <None Include="quest.json">
-      <Filter>Portfolio\JSON\schema</Filter>
-    </None>
     <None Include="map.json">
-      <Filter>Portfolio\JSON</Filter>
-    </None>
-    <None Include="Script.json">
       <Filter>Portfolio\JSON</Filter>
     </None>
   </ItemGroup>

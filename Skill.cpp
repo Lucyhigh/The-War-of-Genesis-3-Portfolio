@@ -94,8 +94,8 @@ void Skill::update(void)
 
 		for (int i = 0; i < 48; i += 2)
 		{
-			_vSkillCellPos[i + skillArr1]	  = { (long)left - 16 * (i + 1), (long)top - 40 - 12 * (i + 1) };
-			_vSkillCellPos[i + skillArr1 + 1] = { (long)left + 16 * (i + 1), (long)top - 40 + 12 * (i + 1) };
+			_vSkillCellPos[i + skillArr1]	  = { (long)left + 50 - 16 * (i + 1), (long)top - 40 - 12 * (i + 1) };
+			_vSkillCellPos[i + skillArr1 + 1] = { (long)left + 50 + 16 * (i + 1), (long)top - 40 + 12 * (i + 1) };
 		}
 
 		for (int i = 0; i < 48; i += 2)
@@ -125,12 +125,12 @@ void Skill::update(void)
 			(long)playerCell->getCellY()*TILESIZEY		- _camera->getScreenRect().top
 		};
 
-		_vSkillCellPos[skillArr5]	  = { enemyPos.x + 10,enemyPos.y - 70 };		  //"fire");
-		_vSkillCellPos[skillArr5 + 1] = { enemyPos.x + 10,enemyPos.y - 70 };		  //"fireL");
-        _vSkillCellPos[skillArr5 + 2] = { enemyPos.x + 5, enemyPos.y - 100 };		  //"one");
-        _vSkillCellPos[skillArr5 + 3] = { enemyPos.x + 5, enemyPos.y - 40 };		  //"95light");
-        _vSkillCellPos[skillArr5 + 4] = { enemyPos.x,	  enemyPos.y - 20 };		  //"48fire");
-        _vSkillCellPos[skillArr5 + 5] = { enemyPos.x,	  enemyPos.y - 30 };		  //118stone
+		_vSkillCellPos[skillArr5]	  = { enemyPos.x + 10,enemyPos.y - 70 };	
+		_vSkillCellPos[skillArr5 + 1] = { enemyPos.x + 10,enemyPos.y - 70 };	
+        _vSkillCellPos[skillArr5 + 2] = { enemyPos.x + 5, enemyPos.y - 100 };	
+        _vSkillCellPos[skillArr5 + 3] = { enemyPos.x + 5, enemyPos.y - 40 };	
+        _vSkillCellPos[skillArr5 + 4] = { enemyPos.x,	  enemyPos.y - 20 };	
+        _vSkillCellPos[skillArr5 + 5] = { enemyPos.x,	  enemyPos.y - 30 };	
 		_vSkillCellPos[skillArr5 + 6] = { enemyPos.x + 5, enemyPos.y + 30 };
 
 		_cdt++;
@@ -165,7 +165,7 @@ void Skill::update(void)
                     (*viFrontSkillList)._alpha, (*viFrontSkillList)._alpha - 60, 10.0f);
             }
         }
-		if (_skillIndex == 60  || _skillIndex == 225)//|| _skillIndex == 99
+		if (_skillIndex == 70  || _skillIndex == 225)
 		{
 			_camera->shakeStart(2.0f);
 		}
@@ -269,11 +269,11 @@ void Skill::worldBrokenSkill()
 
 	for (int i = 0; i < skillArr2; ++i)
 	{
-		pushCellSkill(60 + i % 2, "fireL", cellPosIdx++, (BYTE)170,30);
+		pushCellSkill(70 + i % 2, "fireL", cellPosIdx++, (BYTE)170,30);
 	}
 	for (int i = 0; i < skillArr2; ++i)
 	{
-		pushCellSkill(65 + i % 2, "fire", cellPosIdx++, (BYTE)170, 30);
+		pushCellSkill(75 + i % 2, "fire", cellPosIdx++, (BYTE)170, 30);
 	} 
 
 	for (int i = 0; i < skillArr2; ++i)
@@ -306,16 +306,16 @@ void Skill::windEyun()
 	string skillArr[10] = { "184light" ,"skill10R", "skill8", "skill4R","skill10R", "skill7", "184light", "skill7","skill8","skill3" };
     POINT skillPosArr[10] =
     {
-		{left ,		 top },		// "184light"
-		{left + 40,  top + 50},	// "skill10R"
-		{left + 40 , top - 10}, // "skill8",
-		{left - 70,  top - 50},	// "skill4R",
-		{left + 40,  top + 50}, // "skill10R"
-		{left + 40 , top - 10}, // "skill7",
-		{left,		 top + 20 },// "184light"
-		{left + 40 , top - 10}, // "skill7"	
-		{left + 40 , top - 10}, // "skill8"	
-		{left + 60,  top}		// "skill3" 
+		{left ,		 top },		
+		{left + 40,  top + 50},	
+		{left + 40 , top - 10}, 
+		{left - 70,  top - 50},	
+		{left + 40,  top + 50}, 
+		{left + 40 , top - 10}, 
+		{left,		 top + 20 },
+		{left + 40 , top - 10}, 
+		{left + 40 , top - 10}, 
+		{left + 60,  top}		
     };			
 	BYTE skillAlpha[10] = { 190,235,120,190,200,120,160,120,120,235 };
     switch(_player->getImageState())
