@@ -297,7 +297,7 @@ void Player::update(void)
         }
         else if (_windIndex == 5 || _windIndex == 6 || _windIndex == 8 || _windIndex == 9 || _windIndex == 10 || _windIndex == 11 )
         {
-            if (_cdt > 2)
+            if (_cdt > 1)
 			{
 				_windIndex++;
 				_cdt = 0;
