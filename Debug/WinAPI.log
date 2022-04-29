@@ -1,79 +1,25 @@
-﻿  Stdafx.cpp
-c:\users\kga_03\the-war-of-genesis-3-portfolio\animation.h(57): warning C4018: '>=': signed 또는 unsigned가 일치하지 않습니다.
-  Animation.cpp
-  AnimationManager.cpp
-  Astar.cpp
-  Camera.cpp
-  CEffect.cpp
-  EffectManager.cpp
-  EndingScene.cpp
-c:\users\kga_03\the-war-of-genesis-3-portfolio\endingscene.cpp(47): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\kga_03\the-war-of-genesis-3-portfolio\endingscene.cpp(63): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\kga_03\the-war-of-genesis-3-portfolio\endingscene.cpp(75): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\kga_03\the-war-of-genesis-3-portfolio\endingscene.cpp(196): warning C4018: '>': signed 또는 unsigned가 일치하지 않습니다.
+﻿  Animation.cpp
   FinalScene.cpp
-c:\users\kga_03\the-war-of-genesis-3-portfolio\maptileinfo.h(16): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\kga_03\the-war-of-genesis-3-portfolio\finalscene.cpp(107): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-c:\users\kga_03\the-war-of-genesis-3-portfolio\finalscene.cpp(259): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-c:\users\kga_03\the-war-of-genesis-3-portfolio\finalscene.cpp(276): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-c:\users\kga_03\the-war-of-genesis-3-portfolio\finalscene.cpp(386): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-c:\users\kga_03\the-war-of-genesis-3-portfolio\finalscene.cpp(625): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-c:\users\kga_03\the-war-of-genesis-3-portfolio\finalscene.cpp(884): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-c:\users\kga_03\the-war-of-genesis-3-portfolio\finalscene.cpp(947): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\kga_03\the-war-of-genesis-3-portfolio\finalscene.cpp(948): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\kga_03\the-war-of-genesis-3-portfolio\finalscene.cpp(958): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-c:\users\kga_03\the-war-of-genesis-3-portfolio\finalscene.cpp(1025): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\kga_03\the-war-of-genesis-3-portfolio\finalscene.cpp(1026): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+d:\projects\the-war-of-genesis-3-portfolio\maptileinfo.h(16): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+d:\projects\the-war-of-genesis-3-portfolio\finalscene.cpp(102): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
+d:\projects\the-war-of-genesis-3-portfolio\finalscene.cpp(233): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
+d:\projects\the-war-of-genesis-3-portfolio\finalscene.cpp(250): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
+d:\projects\the-war-of-genesis-3-portfolio\finalscene.cpp(360): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
+d:\projects\the-war-of-genesis-3-portfolio\finalscene.cpp(599): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
+d:\projects\the-war-of-genesis-3-portfolio\finalscene.cpp(858): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
+d:\projects\the-war-of-genesis-3-portfolio\finalscene.cpp(921): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+d:\projects\the-war-of-genesis-3-portfolio\finalscene.cpp(922): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+d:\projects\the-war-of-genesis-3-portfolio\finalscene.cpp(932): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
+d:\projects\the-war-of-genesis-3-portfolio\finalscene.cpp(999): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+d:\projects\the-war-of-genesis-3-portfolio\finalscene.cpp(1000): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
   FontManager.cpp
-  GameNode.cpp
-  GameUI.cpp
-c:\users\kga_03\the-war-of-genesis-3-portfolio\gameui.cpp(34): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-c:\users\kga_03\the-war-of-genesis-3-portfolio\gameui.cpp(34): warning C4838: 'double'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-c:\users\kga_03\the-war-of-genesis-3-portfolio\gameui.cpp(137): warning C4101: 'buttomText' :참조되지 않은 지역 변수입니다.
-  Image.cpp
-c:\users\kga_03\the-war-of-genesis-3-portfolio\image.cpp(67): warning C4302: '형식 캐스트': 'Image::LPIMAGE_INFO'에서 'WORD'(으)로 잘립니다.
-  ImageClass.cpp
-  ImageManager.cpp
-  JsonSaveLoader.cpp
-  KeyManager.cpp
-  Cell.cpp
-  MapScene.cpp
-  MapTileInfo.cpp
-c:\users\kga_03\the-war-of-genesis-3-portfolio\maptileinfo.h(16): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\kga_03\the-war-of-genesis-3-portfolio\maptileinfo.cpp(14): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\kga_03\the-war-of-genesis-3-portfolio\maptileinfo.cpp(16): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-  Player.cpp
   코드를 생성하고 있습니다...
-  컴파일하고 있습니다...
-  ProgressBar.cpp
-  Saladin.cpp
-  SceneManager.cpp
-  StoryScene.cpp
-c:\users\kga_03\the-war-of-genesis-3-portfolio\storyscene.cpp(46): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\kga_03\the-war-of-genesis-3-portfolio\storyscene.cpp(62): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\kga_03\the-war-of-genesis-3-portfolio\storyscene.cpp(78): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\kga_03\the-war-of-genesis-3-portfolio\storyscene.cpp(117): warning C4018: '>': signed 또는 unsigned가 일치하지 않습니다.
-  Skill.cpp
-  SoundClass.cpp
-  Text.cpp
-  TextDataManager.cpp
-c:\users\kga_03\the-war-of-genesis-3-portfolio\textdatamanager.cpp(25): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\kga_03\the-war-of-genesis-3-portfolio\textdatamanager.cpp(28): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\kga_03\the-war-of-genesis-3-portfolio\textdatamanager.cpp(48): warning C4101: 'temp' :참조되지 않은 지역 변수입니다.
-  TimeManager.cpp
-  Timer.cpp
-  TitleScene.cpp
-  TurnSystem.cpp
-  Utils.cpp
-  코드를 생성하고 있습니다...
-c:\users\kga_03\the-war-of-genesis-3-portfolio\textdatamanager.cpp(30): warning C4172: 지역 변수 또는 임시: str의 주소를 반환하고 있습니다.
   MainGame.cpp
-c:\users\kga_03\the-war-of-genesis-3-portfolio\maptileinfo.h(16): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+d:\projects\the-war-of-genesis-3-portfolio\maptileinfo.h(16): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
   SoundManager.cpp
   WinMain.cpp
   코드를 생성하고 있습니다...
-  LINK : C:\Users\KGA_03\The-War-of-Genesis-3-Portfolio\Debug\WinAPI.exe을(를) 찾을 수 없거나 마지막 증분 링크에 의해 빌드되지 않았습니다. 전체 링크를 수행하고 있습니다.
-json_vc71_libmtd.lib(json_reader.obj) : warning LNK4099: 'lib_json.pdb' PDB를 'json_vc71_libmtd.lib(json_reader.obj)' 또는 'C:\Users\KGA_03\The-War-of-Genesis-3-Portfolio\Debug\lib_json.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
-json_vc71_libmtd.lib(json_value.obj) : warning LNK4099: 'lib_json.pdb' PDB를 'json_vc71_libmtd.lib(json_value.obj)' 또는 'C:\Users\KGA_03\The-War-of-Genesis-3-Portfolio\Debug\lib_json.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
-json_vc71_libmtd.lib(json_writer.obj) : warning LNK4099: 'lib_json.pdb' PDB를 'json_vc71_libmtd.lib(json_writer.obj)' 또는 'C:\Users\KGA_03\The-War-of-Genesis-3-Portfolio\Debug\lib_json.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
-  WinAPI.vcxproj -> C:\Users\KGA_03\The-War-of-Genesis-3-Portfolio\Debug\WinAPI.exe
+json_vc71_libmtd.lib(json_reader.obj) : warning LNK4099: 'lib_json.pdb' PDB를 'json_vc71_libmtd.lib(json_reader.obj)' 또는 'D:\Projects\The-War-of-Genesis-3-Portfolio\Debug\lib_json.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+json_vc71_libmtd.lib(json_value.obj) : warning LNK4099: 'lib_json.pdb' PDB를 'json_vc71_libmtd.lib(json_value.obj)' 또는 'D:\Projects\The-War-of-Genesis-3-Portfolio\Debug\lib_json.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+json_vc71_libmtd.lib(json_writer.obj) : warning LNK4099: 'lib_json.pdb' PDB를 'json_vc71_libmtd.lib(json_writer.obj)' 또는 'D:\Projects\The-War-of-Genesis-3-Portfolio\Debug\lib_json.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+  WinAPI.vcxproj -> D:\Projects\The-War-of-Genesis-3-Portfolio\Debug\WinAPI.exe

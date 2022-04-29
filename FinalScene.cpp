@@ -95,37 +95,11 @@ void FinalScene::release(void)
 
 void FinalScene::update(void)
 {
-	if (KEYMANAGER->isOnceKeyDown('F'))
+	POINT playerUI = 
 	{
-		SOUNDMANAGER->stop("UnknownBlood");
-		cout << (SOUNDMANAGER->isPlaySound("UnknownBlood")) << endl;
-	}
-
-	POINT playerUI = {
-						_player->getPlayerPosX() - _camera->getScreenRect().left,
-						_player->getPlayerPosY() - _camera->getScreenRect().top
+		_player->getPlayerPosX() - _camera->getScreenRect().left,
+		_player->getPlayerPosY() - _camera->getScreenRect().top
 	};
-
-	if (KEYMANAGER->isOnceKeyDown('H'))
-	{
-		_turnSystem->changeToEnemy();
-		for (auto iter = _vAttackableTile.begin(); iter != _vAttackableTile.end(); ++iter)
-		{
-			(*iter)->setType(CELL_TYPE::NORMAL);
-		}
-		_vAttackableTile.clear();
-		_moveTileBit.reset();
-	}
-	else if (KEYMANAGER->isOnceKeyDown('N'))
-	{
-		_turnSystem->changeToPlayer();
-		_moveTileBit.reset();
-		for (auto iter = _vAttackableTile.begin(); iter != _vAttackableTile.end(); ++iter)
-		{
-			(*iter)->setType(CELL_TYPE::NORMAL);
-		}
-		_vAttackableTile.clear();
-	}
 
 	if (_mouseType != _beforeMouseType)
 	{
