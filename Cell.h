@@ -2,14 +2,8 @@
 #define TILESIZEX 40
 #define TILESIZEY 32
 
-#define STAGE1TILEX 53
-#define STAGE1TILEY 49
-
-#define STAGE2TILEX 53
-#define STAGE2TILEY 49
-
-#define STAGE3TILEX 39
-#define STAGE3TILEY 34
+#define STAGETILEX 39
+#define STAGETILEY 34
 
 enum class CELL_TYPE
 {

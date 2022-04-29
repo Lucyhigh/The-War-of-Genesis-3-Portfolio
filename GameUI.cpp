@@ -31,7 +31,7 @@ HRESULT GameUI::init(void)
 		for (int j = -1; j < 1; j++)
 		{
 			tagBattleMenu _battleImageInfo;
-			POINT _buttomPos = { startX * (-1)*i+30, startY * (-2.5)*j +10 };
+			POINT _buttomPos = { (long)startX * (-1)*i+30, (long)startY * (-2.5)*j +10 };
 			_battleImageInfo._imgPos = _buttomPos;
 			_battleImageInfo._iconPos = _buttomPos;
 			_battleImageInfo._buttonRect = RectMake(_buttomPos.x, _buttomPos.y, _image->getWidth(), _image->getHeight());
@@ -134,7 +134,6 @@ void GameUI::render(void)
 	int _buttonAlpha = 100;
 	int _textPosX = -57;
 	int _textPosY = 8;
-	char buttomText[512];
 	if (_isMainMenu)
 	{
         for (_viMenuButton = _vMenuButton.begin(); _viMenuButton != _vMenuButton.end(); ++_viMenuButton)

@@ -8,7 +8,6 @@ HRESULT ImageManager::init(void)
 
 void ImageManager::release(void)
 {
-	this->deleteAll();
 }
 
 Image* ImageManager::addImage(string strKey, int width, int height)

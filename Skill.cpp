@@ -165,7 +165,7 @@ void Skill::update(void)
 					(*viFrontSkillList)._alpha, (*viFrontSkillList)._alpha - 60, 10.0f);
 			}
 		}
-		if (_skillIndex == 70 || _skillIndex == 235)//100
+		if (_skillIndex == 70 || _skillIndex == 235)
 		{
 			_camera->shakeStart(2.0f);
 		}

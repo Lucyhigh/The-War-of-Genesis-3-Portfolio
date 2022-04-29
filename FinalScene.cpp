@@ -3,7 +3,7 @@
 
 HRESULT FinalScene::init(void)
 {
-	//SOUNDMANAGER->play("UnknownBlood", 1.0f);
+	SOUNDMANAGER->play("UnknownBlood", 1.0f);
 	_mapTileInfo = new MapTileInfo;
 	_mapTileInfo->init();
 
@@ -21,13 +21,13 @@ HRESULT FinalScene::init(void)
 
 	_player = new Player;
 	_player->init();
-	_player->setPlayerPosX(22 * TILESIZEX);
+	_player->setPlayerPosX(8 * TILESIZEX);
 	_player->setPlayerPosY(19 * TILESIZEY);
 
 	_saladin = new Saladin;
 	_saladin->init();
 	_saladin->setSaladinPosX(24 * TILESIZEX);
-	_saladin->setSaladinPosY(19 * TILESIZEY);
+	_saladin->setSaladinPosY(15 * TILESIZEY);
 	_saladin->setEnemyIdle();
 
 	_camera = new Camera;
@@ -36,7 +36,7 @@ HRESULT FinalScene::init(void)
 	_camera->setLimitsY(CENTER_Y, _image->getHeight());
 
 	_generator = new AStar::Generator;
-	_generator->setWorldSize({ STAGE3TILEX, STAGE3TILEY });
+	_generator->setWorldSize({ STAGETILEX, STAGETILEY });
 
 	for (auto cellsIter = _cells->begin(); cellsIter != _cells->end(); ++cellsIter)
 	{
@@ -1073,10 +1073,10 @@ void FinalScene::computeShowMoveableTile(int range, Cell* cell, bool isMoveable)
 	if (std::find(_vMoveableTile.begin(), _vMoveableTile.end(), cell) == _vMoveableTile.end())
 		_vMoveableTile.push_back(cell);
 
-	_qMoveTile.push(make_pair(range - 1, (*_cells)[tempX + 1 + tempY * STAGE3TILEX]));
-	_qMoveTile.push(make_pair(range - 1, (*_cells)[tempX - 1 + tempY * STAGE3TILEX]));
-	_qMoveTile.push(make_pair(range - 1, (*_cells)[tempX + (tempY + 1) * STAGE3TILEX]));
-	_qMoveTile.push(make_pair(range - 1, (*_cells)[tempX + (tempY - 1)* STAGE3TILEX]));
+	_qMoveTile.push(make_pair(range - 1, (*_cells)[tempX + 1 + tempY * STAGETILEX]));
+	_qMoveTile.push(make_pair(range - 1, (*_cells)[tempX - 1 + tempY * STAGETILEX]));
+	_qMoveTile.push(make_pair(range - 1, (*_cells)[tempX + (tempY + 1) * STAGETILEX]));
+	_qMoveTile.push(make_pair(range - 1, (*_cells)[tempX + (tempY - 1)* STAGETILEX]));
 }
 
 void FinalScene::startShowMoveableTile(int range, Cell* cell, bool isMoveable)
@@ -1110,10 +1110,10 @@ void FinalScene::computeShowAttackableTile(int range, Cell* cell, bool isMoveabl
 	if (std::find(_vAttackableTile.begin(), _vAttackableTile.end(), cell) == _vAttackableTile.end())
 		_vAttackableTile.push_back(cell);
 
-	_qAttackTile.push(make_pair(range - 1, (*_cells)[tempX + 2 + tempY * STAGE3TILEX]));
-	_qAttackTile.push(make_pair(range - 1, (*_cells)[tempX - 2 + tempY * STAGE3TILEX]));
-	_qAttackTile.push(make_pair(range - 1, (*_cells)[tempX + (tempY + 2) * STAGE3TILEX]));
-	_qAttackTile.push(make_pair(range - 1, (*_cells)[tempX + (tempY - 2)* STAGE3TILEX]));
+	_qAttackTile.push(make_pair(range - 1, (*_cells)[tempX + 2 + tempY * STAGETILEX]));
+	_qAttackTile.push(make_pair(range - 1, (*_cells)[tempX - 2 + tempY * STAGETILEX]));
+	_qAttackTile.push(make_pair(range - 1, (*_cells)[tempX + (tempY + 2) * STAGETILEX]));
+	_qAttackTile.push(make_pair(range - 1, (*_cells)[tempX + (tempY - 2)* STAGETILEX]));
 }
 
 void FinalScene::startShowAttackableTile(int range, Cell* cell, bool isMoveable)

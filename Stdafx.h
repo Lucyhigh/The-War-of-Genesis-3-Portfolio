@@ -7,10 +7,9 @@
 
 #include <Windows.h>
 
-#pragma comment(linker,"/entry:WinMainCRTStartup /subsystem:console")
 #pragma comment(lib,"Winmm.lib")
 #pragma comment(lib,"lib/FMOD/fmodex_vc.lib")
-#pragma comment (lib, "Jsoncpp/lib/json_vc71_libmtd.lib")
+#pragma comment(lib, "Jsoncpp/lib/json_vc71_libmtd.lib")
 
 #include "inc/FMOD/fmod.hpp"
 #include "Jsoncpp/inc/json.h"
@@ -35,7 +34,9 @@
 #include <functional>
 #include <fstream>
 #include <queue>
+
 using namespace std;
+
 #include <bitset>
 #include <list>
 #include "commonMacroFunction.h"

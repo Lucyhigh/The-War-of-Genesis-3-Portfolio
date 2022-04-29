@@ -3,35 +3,31 @@ class Animation;
 class Image
 {
 public:
-	// 자주 사용하는 API 자료형
-	// DWORD : Unsigened long
-	// WORD : Unsigened short
-	// BYTE : Unsigend char : 음수없이 256 (char = 128 -> *2)
 	enum IMAGE_LOAD_KIND
 	{
-		LOAD_RESOURCE = 0, // 리소스 필터에서 가져오기
-		LOAD_FILE, // 디렉토리로 파일읽기
-		LOAD_EMPTY, // 빈 비트맵
-		LOAD_END // 아무것도
+		LOAD_RESOURCE = 0,  
+		LOAD_FILE,  
+		LOAD_EMPTY,  
+		LOAD_END  
 	};
 
 	typedef struct tagImage
 	{
-		DWORD resID; // 리소스 ID
-		HDC hMemDC; // 메모리 DC : 맵 나오면 메모리
-		HBITMAP hBit; // 비트맵 가져옴
-		HBITMAP hOBit; // 올드 비트맵 : 데이터 병목현상 방지용
+		DWORD resID; 
+		HDC hMemDC; 
+		HBITMAP hBit;  
+		HBITMAP hOBit; 
 		int x;
 		int y;
-		int width; // 이미지 가로 
-		int height; // 이미지 세로 
+		int width; 
+		int height;  
 		int maxFrameX;
 		int maxFrameY;
 		int currentFrameX;
 		int currentFrameY;
 		int frameWidth;
 		int frameHeight;
-		BYTE loadType; // 이미지 로드 타입 정의함
+		BYTE loadType; 
 
 		tagImage()
 		{
@@ -152,4 +148,3 @@ public:
 	Image();
 	~Image() {};
 };
-

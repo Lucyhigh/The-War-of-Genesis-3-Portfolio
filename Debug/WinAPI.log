@@ -1,25 +1,3 @@
-﻿  Animation.cpp
-  FinalScene.cpp
+﻿  MainGame.cpp
 d:\projects\the-war-of-genesis-3-portfolio\maptileinfo.h(16): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-d:\projects\the-war-of-genesis-3-portfolio\finalscene.cpp(102): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-d:\projects\the-war-of-genesis-3-portfolio\finalscene.cpp(233): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-d:\projects\the-war-of-genesis-3-portfolio\finalscene.cpp(250): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-d:\projects\the-war-of-genesis-3-portfolio\finalscene.cpp(360): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-d:\projects\the-war-of-genesis-3-portfolio\finalscene.cpp(599): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-d:\projects\the-war-of-genesis-3-portfolio\finalscene.cpp(858): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-d:\projects\the-war-of-genesis-3-portfolio\finalscene.cpp(921): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-d:\projects\the-war-of-genesis-3-portfolio\finalscene.cpp(922): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-d:\projects\the-war-of-genesis-3-portfolio\finalscene.cpp(932): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-d:\projects\the-war-of-genesis-3-portfolio\finalscene.cpp(999): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-d:\projects\the-war-of-genesis-3-portfolio\finalscene.cpp(1000): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-  FontManager.cpp
-  코드를 생성하고 있습니다...
-  MainGame.cpp
-d:\projects\the-war-of-genesis-3-portfolio\maptileinfo.h(16): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-  SoundManager.cpp
-  WinMain.cpp
-  코드를 생성하고 있습니다...
-json_vc71_libmtd.lib(json_reader.obj) : warning LNK4099: 'lib_json.pdb' PDB를 'json_vc71_libmtd.lib(json_reader.obj)' 또는 'D:\Projects\The-War-of-Genesis-3-Portfolio\Debug\lib_json.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
-json_vc71_libmtd.lib(json_value.obj) : warning LNK4099: 'lib_json.pdb' PDB를 'json_vc71_libmtd.lib(json_value.obj)' 또는 'D:\Projects\The-War-of-Genesis-3-Portfolio\Debug\lib_json.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
-json_vc71_libmtd.lib(json_writer.obj) : warning LNK4099: 'lib_json.pdb' PDB를 'json_vc71_libmtd.lib(json_writer.obj)' 또는 'D:\Projects\The-War-of-Genesis-3-Portfolio\Debug\lib_json.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
   WinAPI.vcxproj -> D:\Projects\The-War-of-Genesis-3-Portfolio\Debug\WinAPI.exe
